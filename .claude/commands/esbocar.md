@@ -33,6 +33,7 @@ Esta é a **Fase 0** — a única rodada de perguntas de toda a esteira.
 | Tamanho | Qual o tamanho do livro? | Tipo = Livro | P — 1 Parte, 4 capítulos, ~40 páginas \| M — 2 Partes, 8 capítulos, ~80 páginas (Recommended) \| G — 3 Partes, 12 capítulos, ~120 páginas \| GG — 4 Partes, 16 capítulos, ~160 páginas |
 | Qtd. Artigos | Quantos artigos científicos? | Artigos = Sim | 1 \| 2 \| 3 \| 4 \| 5 |
 | Qtd. Ebooks | Quantos e-books? | Ebooks = Sim | 1-3 \| 4-6 \| 7-10 |
+| Série | Esta obra faz parte de uma série/coleção? | sempre | Não, standalone (Recommended) \| Other (nome da série) |
 
 O `AskUserQuestion` aceita no máximo 4 opções por pergunta. Para o tier **XG — 5
 Partes, 20 capítulos, ~200 páginas** (o maior da tabela, acima de GG), o operador
@@ -40,7 +41,8 @@ seleciona "Other" na pergunta Tamanho e digita `XG`.
 
 Se "Qtd. Ebooks" vier como faixa, use o valor médio da faixa (2, 5 ou 8) como `qtd_ebooks`.
 Se o operador selecionar "Other" em qualquer pergunta, use o valor livre fornecido,
-respeitando os limites: refs 5-20, artigos 1-5, ebooks 1-10, tamanho P/M/G/GG/XG.
+respeitando os limites: refs 5-20, artigos 1-5, ebooks 1-10, tamanho P/M/G/GG/XG,
+série: qualquer texto livre (ou `null` se "Não, standalone").
 
 ## Passo 2 — Gravar `config_obra.json`
 
@@ -55,6 +57,7 @@ no schema:
   "tipo_obra": "livro | tcc",
   "min_referencias_por_capitulo": 5,
   "tamanho_obra": "P | M | G | GG | XG | null",
+  "serie": "<nome-da-serie> | null",
   "gerar_artigos": true,
   "qtd_artigos": 3,
   "gerar_ebooks": true,
