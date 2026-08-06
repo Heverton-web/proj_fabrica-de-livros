@@ -68,7 +68,7 @@ cada um internamente em lotes de 4:
    foi gerado nesta execução:
 
 ```
-OBRA: <título> (<tipo_obra>, tamanho <P/M/G ou N/A>)
+OBRA: <título> (<tipo_obra>, tamanho <P/M/G/GG/XG ou N/A>)
   Principal    : output/<slug>/livro_final.pdf — <veredito da auditoria>
   Artigos      : <N> gerado(s) — output/<slug>/artigos/artigo_<i>/livro_final.pdf (cada um)
   E-books      : <N> gerado(s) — output/<slug>/ebooks/ebook_<i>/ebook_<i>.epub + .pdf (cada um)

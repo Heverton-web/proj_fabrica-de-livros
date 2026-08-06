@@ -131,7 +131,7 @@ Os agentes leem o JSON produzido por eles e agem sobre a evidência.
 | `scripts/validar-codigo.py` | 3 — CI de código | Valida a sintaxe de cada bloco de código (python, js, ts, bash, powershell, json, yaml, toml, xml) sem executar nada |
 | `scripts/auditar-obra.py` | 1 — Peer review | Audita os requisitos automatizáveis por tipo de obra (`--tipo livro\|tcc\|artigo\|ebook`), detecta sobreposição entre capítulos, grafia inconsistente e truncamento |
 | `scripts/metadados_livro.py` | 5 — Capa/CIP | Deriva paleta, ficha catalográfica (Cutter, ISBN, CDD, assuntos) e sinopse da contracapa (livro); resumo/abstract (TCC/artigo) |
-| `scripts/parametros_obra.py` | V4 | Lê `esboco/config_obra.json`, tabela de tamanhos P/M/G, regex de citação por tipo (numérica vs. autor-data) |
+| `scripts/parametros_obra.py` | V4 | Lê `esboco/config_obra.json`, tabela de tamanhos P/M/G/GG/XG, regex de citação por tipo (numérica vs. autor-data) |
 | `scripts/validar-abnt-tcc.py` | V4 | Valida elementos pré-textuais do TCC no documento compilado (resumo, abstract, numeração sem saltos) |
 | `scripts/fatiar-obra.py` | V4 | Particiona o `sumario_macro.json` do livro-mãe em N artigos ou N ebooks |
 | `scripts/gerar-epub.py` | V4 | Converte um ebook derivado para EPUB reflowable via Pandoc (com ou sem capa) |

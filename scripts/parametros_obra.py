@@ -6,7 +6,7 @@ Modulo importado por auditar-obra.py, arquiteto (via scripts), validar-abnt-tcc.
 fatiar-obra.py e gerar-epub.py. Centraliza:
   - leitura de output/<slug>/config_obra.json (schema da Fase 0 / `/esbocar`; <slug>
     inclui o prefixo de tipo, ex. livros/<slug-livro>, tccs/<slug-tcc>)
-  - tabela de tamanhos de livro (P/M/G) -> capitulos e caracteres minimos
+  - tabela de tamanhos de livro (P/M/G/GG/XG) -> capitulos e caracteres minimos
   - padroes de citacao por tipo de obra (numerica [N] vs autor-data)
   - valores-padrao para obras V3 sem esboco/ (retrocompatibilidade)
 
@@ -33,11 +33,10 @@ TIPOS_VALIDOS = ("livro", "tcc", "artigo", "ebook")
 # Tabela de tamanhos de LIVRO (Fase 0, pergunta Q5). Caracteres ~2.500/pagina ABNT.
 TAMANHOS = {
     "P": {"partes": 1, "capitulos": 4, "paginas": 40, "caracteres": 100_000},
-    "M": {"partes": 3, "capitulos": 9, "paginas": 90, "caracteres": 180_000},
-    "G": {"partes": 5, "capitulos": 10, "paginas": 150, "caracteres": 375_000},
-    # Tier mega-obra: fora do fluxo padrao de /esbocar, criado sob demanda
-    # explicita do operador quando G (maior preset padrao) nao cobre o escopo.
-    "GG": {"partes": 10, "capitulos": 50, "paginas": 1000, "caracteres": 2_500_000},
+    "M": {"partes": 2, "capitulos": 8, "paginas": 80, "caracteres": 200_000},
+    "G": {"partes": 3, "capitulos": 12, "paginas": 120, "caracteres": 300_000},
+    "GG": {"partes": 4, "capitulos": 16, "paginas": 160, "caracteres": 400_000},
+    "XG": {"partes": 5, "capitulos": 20, "paginas": 200, "caracteres": 500_000},
 }
 TAMANHO_PADRAO = "M"
 
@@ -137,7 +136,7 @@ def validar_config(config):
     if tipo == "livro":
         tam = config.get("tamanho_obra")
         if tam not in TAMANHOS:
-            erros.append(f"tamanho_obra deve ser P, M, G ou GG quando tipo_obra=livro, recebido: {tam!r}")
+            erros.append(f"tamanho_obra deve ser P, M, G, GG ou XG quando tipo_obra=livro, recebido: {tam!r}")
     if config.get("gerar_artigos"):
         qtd = config.get("qtd_artigos")
         if not isinstance(qtd, int) or not (1 <= qtd <= 5):

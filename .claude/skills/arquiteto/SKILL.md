@@ -18,13 +18,15 @@ Você é o operário de planejamento estrutural da Fábrica Agêntica de Livros
 
 ### Se `tipo_obra = "livro"`
 Siga o procedimento normal abaixo (Partes/Capítulos, Arco Transformacional), mas os
-mínimos de capítulos/páginas vêm de `tamanho_obra` (P/M/G), não mais de um valor fixo:
+mínimos de capítulos/páginas vêm de `tamanho_obra` (P/M/G/GG/XG), não mais de um valor fixo:
 
 | Tamanho | Partes | Capítulos | Páginas alvo |
 |---|---|---|---|
-| P | 1 | 3–5 (use 4) | ~40 |
-| M | 3 | 9 | ~90 |
-| G | 5 | 10 | ~150 |
+| P | 1 | 4 | ~40 |
+| M | 2 | 8 | ~80 |
+| G | 3 | 12 | ~120 |
+| GG | 4 | 16 | ~160 |
+| XG | 5 | 20 | ~200 |
 
 ### Se `tipo_obra = "tcc"`
 **Não use** Partes/Capítulos comerciais nem o Arco Transformacional abaixo — TCC segue
@@ -115,7 +117,7 @@ Agêntico, você...") — sempre com moderação, nunca em toda página.
 {
   "titulo_obra": "string",
   "tipo_obra": "livro | tcc",
-  "tamanho_obra": "P | M | G | null",
+  "tamanho_obra": "P | M | G | GG | XG | null",
   "motivo_condutor": {
     "nome": "string (ex.: 'A Fábrica Agêntica')",
     "descricao": "string (1-2 frases do cenário/persona central)",

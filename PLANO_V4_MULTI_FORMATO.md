@@ -54,16 +54,14 @@ resposta anterior for Sim).
 
 | # | Pergunta | Condição | Opções |
 |---|---|---|---|
-| Q5 | Tamanho do livro | Q1 = Livro | P (1 Parte, 3–5 cap., ~40 pág.) \| M (3 Partes, 9 cap., ~90 pág.) \| G (5 Partes, 10 cap., ~150 pág.) |
+| Q5 | Tamanho do livro | Q1 = Livro | P (1 Parte, 4 cap., ~40 pág.) \| M (2 Partes, 8 cap., ~80 pág.) \| G (3 Partes, 12 cap., ~120 pág.) \| GG (4 Partes, 16 cap., ~160 pág.) (+ "Other" p/ XG: 5 Partes, 20 cap., ~200 pág.) |
 | Q6 | Quantos artigos científicos? | Q3 = Sim | 1 \| 2 \| 3 \| 4 \| 5 |
 | Q7 | Quantos e-books? | Q4 = Sim | 1–3 \| 4–6 \| 7–10 (+ "Other" p/ valor exato) |
 
-> **Nota sobre o tamanho G:** a especificação do operador tem G com **menos capítulos que M
-> (10 vs. 9... na verdade 10 > 9) mas com apenas 5 Partes/10 Capítulos para 150 páginas**,
-> ou seja, capítulos mais densos e menos numerosos por parte que M (9 cap. em 3 partes = 3
-> cap./parte; G tem 10 cap. em 5 partes = 2 cap./parte). Isso é assumido como intencional
-> (capítulos mais profundos em vez de mais numerosos) — **flagado para confirmação**, ver
-> seção 9.
+> **Revisão da tabela de tamanhos:** a tabela original (P/M/G) tinha G com menos capítulos
+> por parte que M, o que exigia confirmação (ver seção 9). A tabela vigente (P/M/G/GG/XG,
+> ver `scripts/parametros_obra.py`) escala de forma monotônica — 2 capítulos por parte em
+> todos os tamanhos — eliminando a ambiguidade.
 
 ### 1.3 Saída da Fase 0
 
@@ -84,7 +82,7 @@ output/<slug>/
   "tema": "string",
   "tipo_obra": "livro | tcc",
   "min_referencias_por_capitulo": 5,
-  "tamanho_obra": "P | M | G | null",
+  "tamanho_obra": "P | M | G | GG | XG | null",
   "gerar_artigos": true,
   "qtd_artigos": 3,
   "gerar_ebooks": true,
@@ -118,9 +116,9 @@ individuais (`/criar-livro <slug>`, `/criar-tcc <slug>`, `/criar-artigo <slug>`,
 ### 2.2 Livro (parametrizado)
 
 Já implementado no V3 (Upgrades 1–6); ganha 2 parâmetros novos vindos de `config_obra.json`:
-- `tamanho_obra` (P/M/G) → substitui a constante `MIN_CAPITULOS=16` fixa em `auditar-obra.py`
-  por uma tabela `{P: 4, M: 9, G: 10}` (capítulos) e `{P: 100_000, M: 225_000, G: 375_000}`
-  (caracteres, ~2.500/página).
+- `tamanho_obra` (P/M/G/GG/XG) → substitui a constante `MIN_CAPITULOS=16` fixa em
+  `auditar-obra.py` por uma tabela `{P: 4, M: 8, G: 12, GG: 16, XG: 20}` (capítulos) e
+  `{P: 100_000, M: 200_000, G: 300_000, GG: 400_000, XG: 500_000}` (caracteres, ~2.500/página).
 - `min_referencias_por_capitulo` → substitui `MIN_REFS_CAPITULO=3` fixo.
 
 ### 2.3 TCC (Trabalho de Conclusão de Curso)
@@ -385,9 +383,10 @@ O pedido menciona "encadeados (ou assíncronos, o que gastar menos tokens)". A r
 
 ## 9. Decisões Assumidas (flagadas para confirmação antes da Fase A)
 
-1. **Tamanho G do livro** (5 Partes, 10 Capítulos, 150 páginas) tem menos capítulos que M
+1. ~~**Tamanho G do livro** (5 Partes, 10 Capítulos, 150 páginas) tem menos capítulos que M
    proporcionalmente às partes — assumido como capítulos mais densos e profundos (2 por
-   parte), não um erro de digitação. **Confirmar.**
+   parte), não um erro de digitação. **Confirmar.**~~ Superado: a tabela de tamanhos foi
+   revisada para P/M/G/GG/XG, todos com 2 capítulos por parte (ver `scripts/parametros_obra.py`).
 2. **Citação em TCC/Artigo = autor-data**, diferente do `[N]` numérico do livro/ebook. Essa
    é a convenção real mais usada em TCCs brasileiros sob NBR 10520 (que permite ambas), e
    reforça a diferença de tom acadêmico vs. comercial. **Confirmar ou manter `[N]` em tudo
