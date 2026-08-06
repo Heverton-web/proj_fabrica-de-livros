@@ -50,22 +50,36 @@ abaixo de forma determinística.
   capítulo/manuscrito devem conter apenas Markdown limpo — sem "Aqui está o capítulo...".
 - **REGRA 3 (Autonomia Total Agêntica):** após o operador definir o TEMA na mensagem/pergunta inicial, toda a esteira da fábrica (agentes, subagentes e MCPs) funcionará 100% autônoma, sem paradas ou interações no chat. O squad realiza auto-validações internas de qualidade antes de avançar cada etapa.
 - **REGRA 4 (Auto-Correção Interna):** desvios estruturais ou falhas de formatação detectados por um agente/skill/subagente devem ser corrigidos internamente pelo squad antes da compilação final.
-- **REGRA 5 (Identidade Visual da Editora Agêntica — Padrão 2D Plano):** As capas DEVEM ser geradas exclusivamente como arte gráfica 2D plana retangular da página frontal (flat 2D front cover page), sendo estritamente PROIBIDO a inclusão de mockups 3D, bordas de lombada simuladas, faixas laterais de encadernação, sombras de efeito livro ou estética amadora de "IA 3D neon". O padrão oficial exige:
-  a) **Fundo Matte Sóbrio:** #0d1117 (matte escuro)
-  b) **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra
+- **REGRA 5 (Identidade Visual da Editora Agêntica — Padrão 2D Plano):** Aplica-se a
+  Livro e E-book (TCC/Artigo usam capa sóbria ABNT própria, fora desta regra). As
+  capas DEVEM ser geradas exclusivamente como arte gráfica 2D plana retangular da
+  página frontal (flat 2D front cover page), sendo estritamente PROIBIDO a inclusão
+  de mockups 3D, bordas de lombada simuladas, faixas laterais de encadernação,
+  sombras de efeito livro ou estética amadora de "IA 3D neon". O padrão oficial
+  exige:
+  a) **Fundo Matte Sóbrio:** #0d1117 (matte escuro, fixo, independente de obra/série)
+  b) **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra/série
   c) **Padding Lateral:** 80px mínimo
-  d) **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto, topo esquerda)
-  e) **Terminal:** à esquerda com comandos reais da ferramenta/tema
-  f) **Código:** flutuante à direita, cor #484f58, com syntax highlight
-  g) **Título:** Inter 900 72px, **COR DO ACCENT** (ex: #58a6ff, #2ecc9a, #a855f7)
-  h) **Subtítulo:** Inter 300 18px, cor #8b949e
-  i) **Autor:** Inter 600 18px, cor #e6edf3
-  j) **Cargo:** Inter 600 11px, cor do accent
-  k) **Cores por Obra:** cada livro/ebook tem sua cor de accent que define
-     TODOS os elementos visuais: barras, título, cargo, divider, ilustrações
-  l) **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
-  m) **Script:** `scripts/gerar-capa-ebook-padrao.py` (HTML/CSS + Playwright)
-  n) **Salvar:** `imagens/capa.png` (PNG)
+  d) **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda)
+  e) **Ilustração temática:** gerada pelo `subagente-ilustrador` (Modo Capa), remete
+     ao tema central da obra, área central fixa do layout
+  f) **Título:** branco (#e6edf3), Inter 900 72px, **máx. 2 linhas, nenhuma linha
+     com 1 palavra só** (validado por `scripts/validar-capa-texto.py`), última
+     palavra destacada na cor de accent
+  g) **Subtítulo:** Inter 300 18-24px, cor #8b949e, **máx. 2 linhas, nenhuma linha
+     com 1 palavra só**, objetivo (sem prolixidade)
+  h) **Badge (opcional):** pill de texto com 1 frase de destaque, cor de accent
+  i) **Divider:** faixa fina decorativa, cor de accent
+  j) **Autor:** Heverton Eduardo Peres (fixo, Inter 600 18-20px, cor #e6edf3)
+  k) **Qualificação:** "Especialista em Marketing e Desenvolvimento de Soluções"
+     (fixo em TODAS as capas, Inter 600 11-12px, cor do accent — nunca varia por tema)
+  l) **Cor de accent por Série:** obras da mesma série (campo `serie` em
+     `config_obra.json`, ou mãe+derivados via `livro_mae`) compartilham a mesma cor,
+     resolvida e persistida em `output/_series.json` (ver `scripts/series_capa.py`)
+  m) **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
+  n) **Script:** `scripts/gerar-capa.py --tipo livro|ebook` (HTML/CSS + Playwright,
+     único gerador — substitui as variantes anteriores)
+  o) **Salvar:** `imagens/capa.png` (PNG)
 
 
 

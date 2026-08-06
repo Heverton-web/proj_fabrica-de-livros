@@ -43,26 +43,35 @@ abaixo de forma determinística.
   DEVE começar com o capítulo fixo que explica a metodologia EITA e suas 7 seções
   (`templates/capitulo_eita.md`). Este capítulo é inserido automaticamente pelo
   compilador na Fase 3, antes do primeiro capítulo da obra. Não é opcional.
-- **REGRA 7 (Capa Padrão Editora Agêntica):** toda capa (livro ou ebook) DEVE
-  seguir o padrão flat 2D definido neste projeto:
-  - **Fundo:** #0d1117 (matte escuro)
-  - **Barras:** topo (8px) + rodapé (6px) na cor de accent
-  - **Padding lateral:** 80px mínimo
-  - **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto)
-  - **Terminal:** à esquerda com comandos reais da ferramenta
-  - **Código:** flutuante à direita, cor #484f58, com syntax highlight
-  - **Título:** Inter 900 72px, **COR DO ACCENT** (ex: #58a6ff, #2ecc9a, #a855f7)
-  - **Subtítulo:** Inter 300 18px, cor #8b949e
-  - **Autor:** Inter 600 18px, cor #e6edf3
-  - **Cargo:** Inter 600 11px, cor do accent
-  - **Cores por obra:** cada livro/ebook tem sua cor de accent que define
-    TUDO: barra topo/rodapé, título, cargo, divider, ilustrações
-  - **Script:** `scripts/gerar-capa-ebook-padrao.py` (HTML/CSS + Playwright)
-  - **Salvar:** `imagens/capa.png` (PNG 1200x1600px para ebooks, 1600x2263px para livros)
-- **REGRA 8 (Cores Unificadas):** a cor de accent de cada obra define visualmente
-  TODOS os elementos: capa (barras, título, cargo, divider), ilustrações dos
-  capítulos e badges. Use `--cor` no `gerar-ilustracoes.py` para manter
-  consistência. Exemplo: ebook verde usa #2ecc9a em tudo.
+- **REGRA 7 (Capa Padrão Editora Agêntica — Padrão 2D Plano):** Aplica-se a Livro
+  e E-book (TCC/Artigo usam capa sóbria ABNT própria, fora desta regra). As capas
+  DEVEM ser geradas exclusivamente como arte gráfica 2D plana retangular da página
+  frontal (flat 2D front cover page), sendo estritamente PROIBIDO a inclusão de
+  mockups 3D, bordas de lombada simuladas, faixas laterais de encadernação,
+  sombras de efeito livro ou estética amadora de "IA 3D neon". O padrão oficial exige:
+  - **Fundo Matte Sóbrio:** #0d1117 (matte escuro, fixo, independente de obra/série)
+  - **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra/série
+  - **Padding Lateral:** 80px mínimo
+  - **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda)
+  - **Ilustração temática:** gerada pelo `subagente-ilustrador` (Modo Capa), remete
+    ao tema central da obra, área central fixa do layout
+  - **Título:** branco (#e6edf3), Inter 900 72px, **máx. 2 linhas, nenhuma linha
+    com 1 palavra só** (validado por `scripts/validar-capa-texto.py`), última
+    palavra destacada na cor de accent
+  - **Subtítulo:** Inter 300 18-24px, cor #8b949e, **máx. 2 linhas, nenhuma linha
+    com 1 palavra só**, objetivo (sem prolixidade)
+  - **Badge (opcional):** pill de texto com 1 frase de destaque, cor de accent
+  - **Divider:** faixa fina decorativa, cor de accent
+  - **Autor:** Heverton Eduardo Peres (fixo, Inter 600 18-20px, cor #e6edf3)
+  - **Qualificação:** "Especialista em Marketing e Desenvolvimento de Soluções"
+    (fixo em TODAS as capas, Inter 600 11-12px, cor do accent — nunca varia por tema)
+  - **Cor de accent por Série:** obras da mesma série (campo `serie` em
+    `config_obra.json`, ou mãe+derivados via `livro_mae`) compartilham a mesma cor,
+    resolvida e persistida em `output/_series.json` (ver `scripts/series_capa.py`)
+  - **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
+  - **Script:** `scripts/gerar-capa.py --tipo livro|ebook` (HTML/CSS + Playwright,
+    único gerador — substitui `gerar-capa-ebook-padrao.py` e demais variantes)
+  - **Salvar:** `imagens/capa.png` (PNG)
 
 ## 1.5 Módulos por Tipo de Obra (V4)
 
