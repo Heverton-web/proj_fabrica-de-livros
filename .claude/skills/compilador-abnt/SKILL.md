@@ -116,7 +116,7 @@ O template Typst implementa:
 | **Parágrafos** | Justificados, espaçamento 0.75em, recuo 1.25cm |
 | **Cabeçalho** | Título da obra (a partir da página 2) |
 | **Rodapé** | Paginação "X de Y" |
-| **Capa gráfica** | PNG gerado por `scripts/gerar-capa.py --tipo livro` (padrão Editora Agêntica, ver REGRA 5), embutido full-bleed via `capa_imagem`; fallback Typst nativo (6 paletas por slug) só se a geração falhar |
+| **Capa gráfica** | PNG gerado por `scripts/gerar-capa.py --tipo livro` (padrão Editora Agêntica, ver REGRA 5), embutido full-bleed via `capa_imagem`; se a geração falhar, o Typst desenha uma capa tipográfica de fallback, mas já na mesma `cor_acento` da obra/série — nunca uma paleta fixa isolada |
 | **Folha de rosto** | ABNT NBR 6029: autor, título, nota da obra, local e ano |
 | **Ficha catalográfica** | Box 12,5 × 7,5 cm no verso da folha de rosto, com Cutter, imprenta, paginação, ISBN fictício, assuntos e CDD |
 | **Contracapa** | Página colorida com sinopse e assinatura do autor (se `sinopse` disponível) |
