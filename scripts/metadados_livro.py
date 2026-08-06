@@ -6,7 +6,7 @@ Deriva de forma determinística todas as variaveis que o `templates/template.typ
 consome para montar capa grafica, folha de rosto, ficha catalografica (CIP
 ficticia) e contracapa:
 
-    paleta, cip_sobrenome, cip_nome, cip_cutter, cip_ano, cip_paginas,
+    cor_acento, cip_sobrenome, cip_nome, cip_cutter, cip_ano, cip_paginas,
     cip_palavras, cip_cdd, cip_isbn, cip_local, cip_editora, sinopse
 
 Importavel (usado por compilar-para-pdf.py) e executavel:
@@ -28,7 +28,8 @@ from pathlib import Path
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
-PALETAS = ["indigo", "grafite", "vinho", "floresta", "ambar", "oceano"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from series_capa import resolver_cor, resolver_serie_key  # noqa: E402
 
 AUTOR_PADRAO = "Heverton Eduardo Peres"
 LOCAL_PADRAO = "São Paulo"
@@ -68,12 +69,6 @@ STOPWORDS_TITULO = {
 def sem_acento(texto):
     texto = unicodedata.normalize("NFKD", texto)
     return "".join(c for c in texto if not unicodedata.combining(c))
-
-
-def escolher_paleta(slug):
-    """Paleta estavel por obra: mesma obra sempre gera a mesma identidade visual."""
-    digest = hashlib.sha1(slug.encode("utf-8")).digest()
-    return PALETAS[digest[0] % len(PALETAS)]
 
 
 def partir_autor(autor):
@@ -207,6 +202,15 @@ def coletar(slug, autor=AUTOR_PADRAO, paginas=None, dir_livro=None):
     sobrenome, nome = partir_autor(autor)
     ano = str(sumario.get("ano") or __import__("datetime").date.today().year)
 
+    config_obra = {}
+    caminho_config = dir_livro / "config_obra.json"
+    if caminho_config.exists():
+        try:
+            config_obra = json.loads(caminho_config.read_text(encoding="utf-8"))
+        except ValueError:
+            config_obra = {}
+    cor_acento = resolver_cor(resolver_serie_key(config_obra, slug), slug)
+
     # Capa grafica: verifica se existe imagens/capa_livro.png ou imagens/capa.png
     capa_imagem = ""
     for nome_capa in ("capa_livro.png", "capa.png"):
@@ -220,7 +224,7 @@ def coletar(slug, autor=AUTOR_PADRAO, paginas=None, dir_livro=None):
         "titulo": titulo,
         "subtitulo": subtitulo,
         "autor": autor,
-        "paleta": escolher_paleta(slug),
+        "cor_acento": cor_acento,
         "cip_sobrenome": sobrenome,
         "cip_nome": nome,
         "cip_cutter": cutter(sobrenome, titulo),
@@ -237,7 +241,7 @@ def coletar(slug, autor=AUTOR_PADRAO, paginas=None, dir_livro=None):
 
 
 CHAVES_PANDOC = (
-    "paleta", "cip_sobrenome", "cip_nome", "cip_cutter", "cip_ano", "cip_paginas",
+    "cor_acento", "cip_sobrenome", "cip_nome", "cip_cutter", "cip_ano", "cip_paginas",
     "cip_palavras", "cip_cdd", "cip_isbn", "cip_local", "cip_editora", "sinopse",
     "capa_imagem",
 )
