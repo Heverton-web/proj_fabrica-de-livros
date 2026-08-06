@@ -51,6 +51,14 @@ o número do capítulo de origem e o conceito a retomar, ex.: `"Capítulo 3: o
 conceito de Janela de Contexto, agora aplicado a memória distribuída"`. Deixe
 `null` apenas no Capítulo 1 (não há o que retomar).
 
+## Adaptação por Senioridade (Variável `senioridade_obra`)
+
+O estrategista DEVE identificar a senioridade principal em `config_obra.json` para planejar os pilares, a complexidade técnica projetada e a âncora visual:
+- **Iniciante**: Pilares focados no essencial de alto nível, explicando conceitos fundamentais. A `entrega_tecnica` deve planejar comandos simples ou scripts básicos comentados passo a passo. A `ancora_visual` deve projetar diagramas de fluxo de alto nível e fáceis de assimilar.
+- **Intermediário**: Pilares focando na ponte entre teoria e práticas de times. A `entrega_tecnica` projeta scripts funcionais modularizados. A `ancora_visual` projeta diagramas de blocos de processos reais de média complexidade.
+- **Avançado**: Pilares que focam em trade-offs de engenharia, concorrência, performance e resiliência. A `entrega_tecnica` projeta códigos robustos, otimizados e com tratamento completo de erros. A `ancora_visual` projeta diagramas de arquitetura detalhados ou diagramas de sequência complexos.
+- **Técnico** (Acadêmico): Pilares focados no estado da arte e rigor conceitual. A `entrega_tecnica` planeja algoritmos formais ou pseudocódigos. A `ancora_visual` projeta diagramas metodológicos formais ou de rigor conceitual.
+
 ## Procedimento
 1. Carregue as coordenadas do capítulo (`parte`, `capitulo`), seu `objetivo`,
    `pilares_previstos` e o `motivo_condutor` (se presente) em `sumario_macro.json`.

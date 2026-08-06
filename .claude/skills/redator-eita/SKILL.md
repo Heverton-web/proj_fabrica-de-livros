@@ -78,6 +78,31 @@ Use estes pares como referência de calibração antes de fechar o capítulo:
 O critério é simples: se a frase soa como manchete de notícia ou linha de
 relatório, reescreva-a para soar como um mentor falando diretamente com você.
 
+## Modulação por Senioridade (Variável `senioridade_obra`)
+
+O redator-eita DEVE modular dinamicamente o estilo de redação das 7 seções com base no campo `"senioridade_obra"` configurado em `config_obra.json`:
+
+1. **Iniciante**:
+   - **Tom**: Extremamente amigável, acolhedor e dialógico. Evitar jargões densos; explicar todo termo técnico no momento em que surge ("tim-tim por tim-tim").
+   - **Ilustra**: Use metáforas do cotidiano geral (ex.: fila de banco, correios).
+   - **Técnica**: Forneça scripts extremamente curtos, explicados linha por linha, com foco em demonstrar a sintaxe sem complicação.
+   - **Aplica**: Focar em automações pequenas e melhorias de produtividade diária do leitor.
+2. **Intermediário**:
+   - **Tom**: Profissional de mentoria equilibrado. Jargões de mercado aceitos (ex.: "CI/CD", "deploy") com breves contextualizações.
+   - **Ilustra**: Misture metáforas gerais com analogias de escritório ou processos estruturais.
+   - **Técnica**: Exemplos estruturados, modulares e focados no "como funciona na prática do dia a dia".
+   - **Aplica**: Solução de gargalos reais enfrentados em equipes de engenharia de software tradicionais.
+3. **Avançado**:
+   - **Tom**: Direto ao ponto, pragmático e focado em engenharia de alta performance. Assume conhecimento sólido de toda a fundação técnica.
+   - **Ilustra**: Utilize diagramas de arquitetura, topologia de microsserviços e sequência lógica detalhada. As analogias conceituais são focadas em trade-offs de infraestrutura.
+   - **Técnica**: Código limpo de padrão de produção, focado em otimização, concorrência, tolerância a falhas, testes robustos e segurança.
+   - **Aplica**: Foco em alta escala, problemas distribuídos de produção real, e governança.
+4. **Técnico** (Acadêmico/Científico):
+   - **Tom**: Estilo acadêmico formal, rigoroso, objetivo e impessoal (sempre em 3ª pessoa ou plural majestático). Uso zero de humor ou expressões dialógicas coloquiais.
+   - **Ilustra**: Diagramas formais de arquitetura, esquemáticos conceituais de engenharia ou fluxos metodológicos formais.
+   - **Técnica**: Demonstração de algoritmos puros, pseudocódigos acadêmicos e fórmulas matemáticas formais.
+   - **Aplica**: Validação de hipóteses experimentais, impacto na literatura científica ou provas de conceito de pesquisa teórica/prática rigorosa.
+
 ## Motivo Condutor da Obra (unidade narrativa entre capítulos)
 
 Antes de escrever a seção Ilustra, leia `output/<livro>/sumario_macro.json` e

@@ -29,6 +29,7 @@ DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
 TIPOS_VALIDOS = ("livro", "tcc", "artigo", "ebook")
+SENIORIDADES_VALIDAS = ("iniciante", "intermediario", "avancado", "tecnico")
 
 # Tabela de tamanhos de LIVRO (Fase 0, pergunta Q5). Caracteres ~2.500/pagina ABNT.
 TAMANHOS = {
@@ -97,6 +98,7 @@ def carregar_config(slug):
             "tipo_obra": "livro",
             "min_referencias_por_capitulo": MIN_REFS_V3,
             "tamanho_obra": None,
+            "senioridade_obra": "iniciante",
             "gerar_artigos": False,
             "qtd_artigos": 0,
             "gerar_ebooks": False,
@@ -108,6 +110,7 @@ def carregar_config(slug):
     dados.setdefault("min_referencias_por_capitulo",
                      DEFAULTS_POR_TIPO.get(dados["tipo_obra"], {}).get("min_refs", MIN_REFS_V3))
     dados.setdefault("tamanho_obra", TAMANHO_PADRAO if dados["tipo_obra"] == "livro" else None)
+    dados.setdefault("senioridade_obra", "tecnico" if dados["tipo_obra"] in ("tcc", "artigo") else "intermediario")
     dados.setdefault("gerar_artigos", False)
     dados.setdefault("qtd_artigos", 0)
     dados.setdefault("gerar_ebooks", False)
@@ -133,6 +136,9 @@ def validar_config(config):
     refs = config.get("min_referencias_por_capitulo")
     if not isinstance(refs, int) or not (5 <= refs <= 20):
         erros.append(f"min_referencias_por_capitulo deve estar entre 5 e 20, recebido: {refs!r}")
+    sen = config.get("senioridade_obra")
+    if sen not in SENIORIDADES_VALIDAS:
+        erros.append(f"senioridade_obra deve ser 'iniciante', 'intermediario', 'avancado' ou 'tecnico', recebido: {sen!r}")
     if tipo == "livro":
         tam = config.get("tamanho_obra")
         if tam not in TAMANHOS:

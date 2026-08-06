@@ -22,15 +22,16 @@ Esta é a **Fase 0** — a única rodada de perguntas de toda a esteira.
 | Header | Pergunta | Opções |
 |---|---|---|
 | Tipo | Qual o tipo de obra a ser escrita? | Livro (Recommended) \| TCC |
+| Senioridade | Qual o nível de senioridade principal do público-alvo? | Iniciante \| Intermediário (Recommended) \| Avançado \| Técnico |
 | Refs | Mínimo de referências por capítulo? | 5 \| 8 \| 12 \| 16 \| 20 |
 | Artigos | Deseja gerar artigos científicos a partir do tema? | Sim \| Não (Recommended) |
-| Ebooks | Deseja gerar e-books a partir da obra? | Sim \| Não (Recommended) |
 
 **Rodada 2 — só as perguntas aplicáveis às respostas da Rodada 1:**
 
 | Header | Pergunta | Condição | Opções |
 |---|---|---|---|
 | Tamanho | Qual o tamanho do livro? | Tipo = Livro | P — 1 Parte, 4 capítulos, ~40 páginas \| M — 2 Partes, 8 capítulos, ~80 páginas (Recommended) \| G — 3 Partes, 12 capítulos, ~120 páginas \| GG — 4 Partes, 16 capítulos, ~160 páginas |
+| Ebooks | Deseja gerar e-books a partir da obra? | Tipo = Livro | Sim \| Não (Recommended) |
 | Qtd. Artigos | Quantos artigos científicos? | Artigos = Sim | 1 \| 2 \| 3 \| 4 \| 5 |
 | Qtd. Ebooks | Quantos e-books? | Ebooks = Sim | 1-3 \| 4-6 \| 7-10 |
 | Série | Esta obra faz parte de uma série/coleção? | sempre | Não, standalone (Recommended) \| Other (nome da série) |
@@ -42,6 +43,7 @@ seleciona "Other" na pergunta Tamanho e digita `XG`.
 Se "Qtd. Ebooks" vier como faixa, use o valor médio da faixa (2, 5 ou 8) como `qtd_ebooks`.
 Se o operador selecionar "Other" em qualquer pergunta, use o valor livre fornecido,
 respeitando os limites: refs 5-20, artigos 1-5, ebooks 1-10, tamanho P/M/G/GG/XG,
+senioridade: iniciante/intermediario/avancado/tecnico,
 série: qualquer texto livre (ou `null` se "Não, standalone").
 
 ## Passo 2 — Gravar `config_obra.json`
@@ -57,6 +59,7 @@ no schema:
   "tipo_obra": "livro | tcc",
   "min_referencias_por_capitulo": 5,
   "tamanho_obra": "P | M | G | GG | XG | null",
+  "senioridade_obra": "iniciante | intermediario | avancado | tecnico",
   "serie": "<nome-da-serie> | null",
   "gerar_artigos": true,
   "qtd_artigos": 3,

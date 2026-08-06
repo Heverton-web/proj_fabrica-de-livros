@@ -15,27 +15,33 @@ de concorrência (`scripts/pool-capitulos.py`), nunca todos de uma vez.
 
 ## Entrada
 - Coordenadas `{parte, capitulo}` e o `slug` da obra.
+- `output/<slug>/config_obra.json`.
 - `output/<slug>/sumario_macro.json`.
 - Índice RAG do dossiê em `output/<slug>/pesquisa/indice_dossie.json`.
 
 ## Procedimento
-1. **Pesquisa contextual (RAG — não carregue o dossiê inteiro):**
+1. **Carregar Configuração e Senioridade**:
+   Leia `output/<slug>/config_obra.json` e identifique o campo `"senioridade_obra"` (`iniciante`, `intermediario`, `avancado` ou `tecnico`). Este campo deve guiar rigorosamente o nível de complexidade e o tom conceitual das skills `estrategista` e `redator-eita`.
+2. **Pesquisa contextual (RAG — não carregue o dossiê inteiro):**
    ```bash
    python scripts/indexar-dossie.py <slug> --buscar "<termos do título e dos pilares>" --topo 4
    ```
    Guarde as URLs da linha `FONTES:` — são as únicas fontes autorizadas para as
    referências deste capítulo.
-2. Invoque a skill `estrategista` para decompor o capítulo em 3 pilares lógicos de ensino,
-   gerando `cap_<n>_draft.json` (com `ancora_visual` = especificação do diagrama Mermaid,
-   `entrega_tecnica` = artefato de código de cada pilar, `conceito_denso` = flag do
-   pilar que exige dupla camada de analogia, e `callback_capitulo_anterior` = conceito
+3. Invoque a skill `estrategista` para decompor o capítulo em 3 pilares lógicos de ensino,
+   adaptando a profundidade pedagógica, a complexidade técnica projetada e os diagramas
+   para a senioridade indicada. Gere `cap_<n>_draft.json` (com `ancora_visual` = especificação
+   do diagrama Mermaid, `entrega_tecnica` = artefato de código de cada pilar, `conceito_denso` = flag
+   do pilar que exige dupla camada de analogia, e `callback_capitulo_anterior` = conceito
    nomeado de um capítulo anterior a retomar — `null` só no Capítulo 1).
-3. Invoque a skill `redator-eita` para escrever o capítulo nas 7 seções do EITA-V2 e salvar
-   `cap_<n>.md`, incluindo obrigatoriamente:
+4. Invoque a skill `redator-eita` para escrever o capítulo nas 7 seções do EITA-V2 e salvar
+   `cap_<n>.md`, aplicando estritamente as regras de estilo, tom de linguagem, densidade conceitual,
+   complexidade do código e tipos de analogias especificados para a senioridade escolhida. O capítulo
+   deve incluir obrigatoriamente:
    - **1+ diagrama ```mermaid** na seção 3 (Ilustra), com `%% legenda:` na primeira linha (R11).
    - **1+ bloco de código com linguagem declarada** na seção 4 (Técnica) (R12).
    - **3+ referências ABNT** (seção 7) e **3+ citações `[N]`** no corpo (R4/R10).
-4. Execute a **Auto-Validação Agêntica determinística** (não confie na leitura, rode os scripts):
+5. Execute a **Auto-Validação Agêntica determinística** (não confie na leitura, rode os scripts):
    ```bash
    python scripts/validar-codigo.py <slug> --capitulo <n>
    python scripts/renderizar-diagramas.py <slug> --capitulos --validar
