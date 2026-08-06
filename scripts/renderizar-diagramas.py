@@ -40,6 +40,9 @@ from pathlib import Path
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from series_capa import resolver_cor, resolver_serie_key  # noqa: E402
+
 RE_BLOCO = re.compile(
     r"^(?P<indent>[ \t]*)```(?P<lang>mermaid|plantuml)[ \t]*\n(?P<code>.*?)^[ \t]*```[ \t]*$",
     re.DOTALL | re.MULTILINE,
@@ -75,7 +78,25 @@ def config_puppeteer():
     return tmp
 
 
-def renderizar_um(base_mmdc, codigo, destino, formato, escala, cfg_puppeteer, tema="neutral"):
+def config_mermaid_cor(cor_acento):
+    """Config de tema Mermaid (theme 'base' + themeVariables) na cor de accent
+    da obra/serie — mesma cor da capa grafica (REGRA 5, series_capa.py)."""
+    cfg = {
+        "theme": "base",
+        "themeVariables": {
+            "primaryColor": cor_acento,
+            "primaryBorderColor": cor_acento,
+            "lineColor": cor_acento,
+            "primaryTextColor": "#1a1a1a",
+        },
+    }
+    tmp = Path(tempfile.gettempdir()) / "fabrica_mermaid_tema.json"
+    tmp.write_text(json.dumps(cfg), encoding="utf-8")
+    return tmp
+
+
+def renderizar_um(base_mmdc, codigo, destino, formato, escala, cfg_puppeteer, tema="neutral",
+                  cfg_mermaid=None):
     """Renderiza um diagrama. Retorna (ok, mensagem_erro)."""
     with tempfile.NamedTemporaryFile("w", suffix=".mmd", delete=False,
                                      encoding="utf-8") as fh:
@@ -86,9 +107,14 @@ def renderizar_um(base_mmdc, codigo, destino, formato, escala, cfg_puppeteer, te
             "-i", str(origem),
             "-o", str(destino),
             "-b", "white",
-            "-t", tema,
             "--puppeteerConfigFile", str(cfg_puppeteer),
         ]
+        if cfg_mermaid:
+            # "base" (necessario para themeVariables customizadas) nao e um valor
+            # aceito pelo flag -t desta versao do mmdc; o tema vem só do --configFile.
+            comando += ["-c", str(cfg_mermaid)]
+        else:
+            comando += ["-t", tema]
         if formato == "png":
             comando += ["-s", str(escala)]
         resultado = subprocess.run(comando, capture_output=True, text=True, timeout=120)
@@ -105,7 +131,8 @@ def renderizar_um(base_mmdc, codigo, destino, formato, escala, cfg_puppeteer, te
 
 
 def processar_texto(texto, contexto, dir_imagens, dir_relativo, base_mmdc,
-                    formato, escala, cfg_puppeteer, contador_inicial=0, tema="neutral"):
+                    formato, escala, cfg_puppeteer, contador_inicial=0, tema="neutral",
+                    cfg_mermaid=None):
     """Substitui blocos mermaid por figuras. Retorna (novo_texto, relatorio)."""
     relatorio = {"total": 0, "renderizados": 0, "cache": 0, "falhas": [], "ignorados": []}
     contador = contador_inicial
@@ -142,7 +169,7 @@ def processar_texto(texto, contexto, dir_imagens, dir_relativo, base_mmdc,
                     {"contexto": contexto, "arquivo": nome, "erro": "mmdc nao encontrado"})
                 return m.group(0)
             ok, erro = renderizar_um(base_mmdc, codigo_limpo, destino, formato,
-                                     escala, cfg_puppeteer, tema)
+                                     escala, cfg_puppeteer, tema, cfg_mermaid)
             if not ok:
                 relatorio["falhas"].append({"contexto": contexto, "arquivo": nome, "erro": erro})
                 return m.group(0)
@@ -156,7 +183,7 @@ def processar_texto(texto, contexto, dir_imagens, dir_relativo, base_mmdc,
     return RE_BLOCO.sub(substituir, texto), relatorio
 
 
-def validar_apenas(texto, contexto, base_mmdc, cfg_puppeteer, tema="neutral"):
+def validar_apenas(texto, contexto, base_mmdc, cfg_puppeteer, tema="neutral", cfg_mermaid=None):
     """Valida a sintaxe dos blocos mermaid sem gravar figuras definitivas."""
     relatorio = {"total": 0, "validos": 0, "falhas": []}
     for m in RE_BLOCO.finditer(texto):
@@ -169,7 +196,8 @@ def validar_apenas(texto, contexto, base_mmdc, cfg_puppeteer, tema="neutral"):
             continue
         with tempfile.TemporaryDirectory() as tmpdir:
             destino = Path(tmpdir) / "check.svg"
-            ok, erro = renderizar_um(base_mmdc, codigo, destino, "svg", 1, cfg_puppeteer, tema)
+            ok, erro = renderizar_um(base_mmdc, codigo, destino, "svg", 1, cfg_puppeteer, tema,
+                                     cfg_mermaid)
         if ok:
             relatorio["validos"] += 1
         else:
@@ -192,6 +220,8 @@ def main():
                     choices=("neutral", "default", "base", "forest", "dark"))
     ap.add_argument("--json", action="store_true", help="imprime relatorio JSON")
     ap.add_argument("--estrito", action="store_true", help="exit 1 se houver qualquer falha")
+    ap.add_argument("--cor", help="cor de accent hex (#rrggbb); por padrao resolve via "
+                                   "series_capa.py (mesma cor da capa)")
     args = ap.parse_args()
 
     dir_livro = DIR_OUTPUT / args.slug
@@ -204,6 +234,19 @@ def main():
         print("[AVISO] mermaid-cli (mmdc) nao encontrado. "
               "Instale com: npm install -g @mermaid-js/mermaid-cli")
     cfg = config_puppeteer()
+
+    if args.cor:
+        cor_acento = args.cor
+    else:
+        config_obra = {}
+        caminho_config = dir_livro / "config_obra.json"
+        if caminho_config.exists():
+            try:
+                config_obra = json.loads(caminho_config.read_text(encoding="utf-8"))
+            except ValueError:
+                config_obra = {}
+        cor_acento = resolver_cor(resolver_serie_key(config_obra, args.slug), args.slug)
+    cfg_mermaid = config_mermaid_cor(cor_acento)
 
     dir_imagens = dir_livro / "imagens" / "diagramas"
     dir_imagens.mkdir(parents=True, exist_ok=True)
@@ -223,7 +266,7 @@ def main():
             texto = cap.read_text(encoding="utf-8", errors="replace")
             ctx = re.search(r"cap_(\d+)", cap.stem).group(1)
             if args.validar:
-                rel = validar_apenas(texto, ctx, base_mmdc, cfg, args.tema)
+                rel = validar_apenas(texto, ctx, base_mmdc, cfg, args.tema, cfg_mermaid)
                 consolidado["total"] += rel["total"]
                 consolidado["validos"] += rel["validos"]
                 consolidado["falhas"].extend(rel["falhas"])
@@ -232,7 +275,7 @@ def main():
             else:
                 novo, rel = processar_texto(texto, ctx, dir_imagens, "../imagens/diagramas",
                                             base_mmdc, args.formato, args.escala, cfg,
-                                            tema=args.tema)
+                                            tema=args.tema, cfg_mermaid=cfg_mermaid)
                 destino = cap.parent / f"_{cap.stem}_render.md"
                 destino.write_text(novo, encoding="utf-8")
                 consolidado["arquivos"].append(caminho_rel(destino))
@@ -250,7 +293,8 @@ def main():
         saida = Path(args.saida).resolve() if args.saida else dir_livro / "_livro_render.md"
         texto = entrada.read_text(encoding="utf-8", errors="replace")
         novo, rel = processar_texto(texto, "livro", dir_imagens, "imagens/diagramas",
-                                    base_mmdc, args.formato, args.escala, cfg, tema=args.tema)
+                                    base_mmdc, args.formato, args.escala, cfg, tema=args.tema,
+                                    cfg_mermaid=cfg_mermaid)
         saida.write_text(novo, encoding="utf-8")
         consolidado["modo"] = "livro"
         consolidado["arquivos"].append(caminho_rel(saida))
