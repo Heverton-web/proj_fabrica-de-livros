@@ -21,6 +21,8 @@ o leitor a visualizar conceitos abstratos de forma concreta.
 ## Entrada
 - `output/<slug>/capitulos/cap_<n>.md` — capítulo a ser ilustrado
 - `output/<slug>/sumario_macro.json` — contexto da obra
+- Cor de accent da obra/série (mesma da capa), obtida com:
+  `python scripts/series_capa.py <slug> --json` (campo `cor`)
 
 ## Saída
 - `output/<slug>/imagens/ilustracoes/ilust_<cap>_<n>.png` — ilustração(ões) PNG (1200x800px)
@@ -44,7 +46,8 @@ Crie um arquivo HTML temporário com:
 - Fundo: `#0d1117` (matte escuro)
 - Largura: 1200px, Altura: 800px
 - Fonte: Inter ou Arial (sans-serif)
-- Cores: texto `#e6edf3`, acento `#2ecc9a`, secundário `#58a6ff`
+- Cores: texto `#e6edf3`, acento = cor de accent da obra/série (ver "Entrada"
+  acima — nunca um hex fixo), secundário `#58a6ff`
 - Estilo: flat 2D, sem sombras 3D, sem gradientes complexos
 - Ícones: use caracteres Unicode ou formas CSS (círculos, retângulos, setas)
 
@@ -125,8 +128,10 @@ temática da capa** da obra (livro ou ebook) — invocado pelo `compilador-abnt`
 - **Fundo:** #0d1117 (matte escuro)
 - **Texto principal:** #e6edf3 (branco suave)
 - **Texto secundário:** #8b949e (cinza)
-- **Acento principal:** #2ecc9a (verde terminal)
-- **Acento secundário:** #58a6ff (azul)
+- **Acento principal:** cor de accent da obra/série (a mesma da capa — REGRA 5,
+  resolvida via `scripts/series_capa.py`, nunca um hex fixo)
+- **Acento secundário:** #58a6ff (azul, só quando precisar de 2 cores na mesma
+  ilustração — o principal continua sendo o accent da obra)
 - **Formas:** retângulos arredondados, círculos, setas simples
 - **Sem:** gradientes complexos, sombras 3D, texturas, fotos
 
