@@ -88,15 +88,15 @@ O operador acabou de disparar este comando com o tema central da obra em `$ARGUM
     ```
     Opcional: ilustração específica: `--capitulo 5`
 16. Gere a capa gráfica A4 (obrigatório, antes da compilação — o template Typst
-     embute `imagens/capa_livro.png` se existir):
-     **PADRÃO EDITORA AGÊNTICA:** usar HTML/CSS + Playwright para capas de livros
-     (flat 2D, fundo #0d1117, terminal ilustrativo, código de exemplo).
-     O script `gerar-capa-ebooks.py --livro-mae` gera capa Pillow (para ebooks).
-     Para livros, crie HTML customizado e renderize com Playwright:
-     ```python
-     from playwright.sync_api import sync_playwright
-     # Gerar HTML com estilo flat 2D → renderizar para capa_livro.png
-     ```
+     embute `imagens/capa.png` se existir). Padrão único Editora Agêntica (REGRA 5):
+     1. Invoque `subagente-ilustrador` (Modo Capa) → `imagens/capa_ilustracao.png`
+        (best-effort, não bloqueia se falhar).
+     2. Gere a capa:
+        ```bash
+        python scripts/gerar-capa.py <slug> --tipo livro
+        ```
+        Se imprimir `[AVISO]` de quebra de linha inválida, encurte
+        título/subtítulo em `sumario_macro.json` e repita (máx. 3 tentativas).
 17. Compile o PDF (renderiza os diagramas Mermaid em PNG, monta capa gráfica e ficha
      catalográfica, e usa o caminho Pandoc → `.typ` → Typst):
      ```bash
