@@ -116,7 +116,7 @@ O template Typst implementa:
 | **Parágrafos** | Justificados, espaçamento 0.75em, recuo 1.25cm |
 | **Cabeçalho** | Título da obra (a partir da página 2) |
 | **Rodapé** | Paginação "X de Y" |
-| **Capa gráfica** | Página colorida (6 paletas determinísticas por slug), título, subtítulo, autor, ano |
+| **Capa gráfica** | PNG gerado por `scripts/gerar-capa.py --tipo livro` (padrão Editora Agêntica, ver REGRA 5), embutido full-bleed via `capa_imagem`; fallback Typst nativo (6 paletas por slug) só se a geração falhar |
 | **Folha de rosto** | ABNT NBR 6029: autor, título, nota da obra, local e ano |
 | **Ficha catalográfica** | Box 12,5 × 7,5 cm no verso da folha de rosto, com Cutter, imprenta, paginação, ISBN fictício, assuntos e CDD |
 | **Contracapa** | Página colorida com sinopse e assinatura do autor (se `sinopse` disponível) |
@@ -260,8 +260,22 @@ Siga o procedimento abaixo passo a passo:
     Gera `imagens/diagramas/*.png` + `_livro_render.md`. Já é chamado automaticamente
     por `compilar-para-pdf.py` e por `converter-md-pdf.ps1`.
 
-### Nó 9.6 — Capa e ficha catalográfica (Upgrade 5)
-7.2 Confira os metadados visuais derivados da obra:
+### Nó 9.6 — Capa gráfica e ficha catalográfica (Upgrade 5 + Padronização de Capas)
+7.2 Gere a capa gráfica ANTES de derivar os metadados (o passo seguinte
+    detecta `imagens/capa.png` e injeta como `capa_imagem` no Typst):
+    1. Invoque `subagente-ilustrador` (Modo Capa) para gerar
+       `imagens/capa_ilustracao.png` a partir do tema geral da obra
+       (`sumario_macro.json`) — passo best-effort, não trava a esteira se falhar.
+    2. Gere a capa no padrão único:
+       ```bash
+       python scripts/gerar-capa.py <slug> --tipo livro
+       ```
+    3. Se o passo anterior imprimir `[AVISO] titulo/subtitulo viola a regra
+       de quebra de linha`, encurte o título/subtítulo no `sumario_macro.json`
+       (REGRA 4) e repita o passo 2 — no máximo 3 tentativas; esgotadas,
+       siga com a melhor versão e registre a não conformidade.
+7.3 Confira os demais metadados visuais derivados da obra (paleta interna,
+    CIP, sinopse — **não afeta a capa gráfica**, que já foi gerada no 7.2):
     ```bash
     python scripts/metadados_livro.py <slug>
     ```
