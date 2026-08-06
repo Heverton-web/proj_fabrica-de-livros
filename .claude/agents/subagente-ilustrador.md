@@ -88,6 +88,39 @@ Delete o arquivo HTML temporário após o screenshot.
 - `ilust_<cap>_<n>.png` (ex.: `ilust_05_1.png`, `ilust_05_2.png`)
 - Máximo 2 ilustrações por capítulo
 
+## Modo Capa (ilustração da capa da obra)
+
+Além de ilustrar capítulos, este subagente também gera **a ilustração
+temática da capa** da obra (livro ou ebook) — invocado pelo `compilador-abnt`
+(livro) e pelo `subagente-adaptador-ebook` (ebook) na Fase 3, antes de rodar
+`scripts/gerar-capa.py`.
+
+### Entrada (Modo Capa)
+- `output/<slug>/sumario_macro.json` — título e temas gerais da obra (não um
+  capítulo específico)
+- Cor de accent da obra/série, informada pelo orquestrador (resultado de
+  `python scripts/series_capa.py <slug> --json`)
+
+### Saída (Modo Capa)
+- `output/<slug>/imagens/capa_ilustracao.png` — **1000×600px**, fundo `#0d1117`
+  (idêntico ao fundo da capa, para não deixar borda visível quando embutida)
+
+### Procedimento (Modo Capa)
+1. Leia `sumario_macro.json` e identifique o **tema central** da obra inteira
+   (não um capítulo isolado) — normalmente o assunto do título/subtítulo e os
+   títulos das Partes.
+2. Gere 1 ilustração simples e representativa do tema (mesmos princípios do
+   modo capítulo: flat 2D, sem sombras 3D, sem fotos, sem texto extenso
+   embutido na imagem).
+3. Use a **cor de accent recebida** (não o `#2ecc9a` fixo do modo capítulo)
+   como acento principal desta ilustração, para casar com as faixas e o
+   destaque do título na capa.
+4. Renderize com o mesmo procedimento Playwright já usado no modo capítulo
+   (viewport `1000x600`), salvando em `output/<slug>/imagens/capa_ilustracao.png`.
+5. Se não for possível produzir algo relevante ao tema (assunto muito
+   abstrato), é aceitável pular este passo — a capa é gerada sem ilustração
+   em vez de travar a esteira (REGRA 3).
+
 ## Estilo Visual (Padrão Editora Agêntica)
 - **Fundo:** #0d1117 (matte escuro)
 - **Texto principal:** #e6edf3 (branco suave)
