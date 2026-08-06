@@ -37,15 +37,17 @@ dentro da pasta do livro-mãe — a referência cruzada é o campo `slug_livro_m
    ```json
    {"titulo": "...", "autor": "Heverton Eduardo Peres", "subtitulo": "...", "selo_serie": null}
    ```
-5. Gere a capa no padrão Editora Agêntica (flat 2D, 1200×1600px) — passo
+5. Gere a capa no padrão único Editora Agêntica (flat 2D, 1200×1600px) — passo
    **obrigatório**, nunca manual, nunca pulado:
-   ```bash
-   python scripts/gerar-capa-ebook-padrao.py <titulo> <subtitulo> --cor <cor> --cmd <comando> --output <dir_ebook>
-   ```
-   Exemplo:
-   ```bash
-   python scripts/gerar-capa-ebook-padrao.py "FUNDAMENTOS" "O Problema dos Tokens" --cor "#58a6ff" --cmd "code-review-graph build" --output output/ebooks/meu-ebook
-   ```
+   1. Invoque `subagente-ilustrador` (Modo Capa) para gerar
+      `output/<slug_ebook>/imagens/capa_ilustracao.png` a partir do tema do
+      ebook — best-effort, não bloqueia se falhar.
+   2. Gere a capa:
+      ```bash
+      python scripts/gerar-capa.py <slug_ebook> --tipo ebook
+      ```
+   3. Se imprimir `[AVISO]` de quebra de linha inválida, encurte
+      título/subtítulo em `ebook_metadados.json` e repita (máx. 3 tentativas).
 6. Audite a estrutura mínima (inclui piso de ~45.000 caracteres/18 páginas
    contra ebook raso — requisito EBOOK-LEN), usando `<slug_ebook>` como slug
    (o ebook vive no topo de `output/`):
