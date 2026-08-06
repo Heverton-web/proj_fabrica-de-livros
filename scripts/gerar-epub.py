@@ -25,6 +25,9 @@ from pathlib import Path
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
+sys.path.insert(0, str(DIR_PROJETO / "scripts"))
+from series_capa import resolver_cor, resolver_serie_key  # noqa: E402
+
 PANDOC = r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages\JohnMacFarlane.Pandoc_Microsoft.Winget.Source_8wekyb3d8bbwe\pandoc-3.10\pandoc.exe"
 
 
@@ -102,6 +105,15 @@ def gerar(slug, gerar_pdf_tambem=False):
         template_typ = DIR_PROJETO / "templates" / "template.typ"
         
         # Gerar .typ
+        config_obra = {}
+        config_path = dir_ebook / "config_obra.json"
+        if config_path.exists():
+            try:
+                config_obra = json.loads(config_path.read_text(encoding="utf-8"))
+            except ValueError:
+                config_obra = {}
+        cor_acento = resolver_cor(resolver_serie_key(config_obra, slug), slug)
+
         typst_cmd = [
             PANDOC, str(md_path), "-o", str(typ_path),
             "--to=typst",
@@ -110,6 +122,7 @@ def gerar(slug, gerar_pdf_tambem=False):
             "--resource-path", str(dir_ebook),
             "-V", f"title={titulo}",
             "-V", f"author={autor}",
+            "-V", f"cor_acento={cor_acento}",
         ]
         
         # Incluir capa se existir
