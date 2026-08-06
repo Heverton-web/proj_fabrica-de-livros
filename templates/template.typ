@@ -3,7 +3,8 @@
 //
 // Variaveis Pandoc suportadas (-V chave=valor):
 //   title, subtitle, author            -> capa, folha de rosto e cabecalho
-//   paleta                             -> indigo | grafite | vinho | floresta | ambar | oceano
+//   cor_acento                         -> hex (#rrggbb) da cor de accent da obra/serie,
+//                                          mesma da capa grafica (scripts/series_capa.py)
 //   cip_sobrenome, cip_nome            -> ficha catalografica (autoria invertida)
 //   cip_cutter, cip_ano, cip_paginas   -> ficha catalografica
 //   cip_palavras, cip_cdd, cip_isbn    -> ficha catalografica
@@ -18,21 +19,16 @@
   date: datetime.today(),
 )
 
-// ── Paleta cromatica da obra ──────────────────────────────────────
-#let paletas = (
-  indigo:    (primaria: rgb("#1b2559"), secundaria: rgb("#3d55a5"), destaque: rgb("#f0b429"), clara: rgb("#eef1fa")),
-  grafite:   (primaria: rgb("#22262b"), secundaria: rgb("#4a5259"), destaque: rgb("#59c1bd"), clara: rgb("#eef0f1")),
-  vinho:     (primaria: rgb("#5b1420"), secundaria: rgb("#8c2b3c"), destaque: rgb("#e0a458"), clara: rgb("#f8eef0")),
-  floresta:  (primaria: rgb("#123324"), secundaria: rgb("#2c6e49"), destaque: rgb("#d8f3a3"), clara: rgb("#eef5ef")),
-  ambar:     (primaria: rgb("#432818"), secundaria: rgb("#99582a"), destaque: rgb("#ffe6a7"), clara: rgb("#f8f1e7")),
-  oceano:    (primaria: rgb("#03254c"), secundaria: rgb("#1167b1"), destaque: rgb("#7fd6f7"), clara: rgb("#e9f3fa")),
+// ── Cor cromatica da obra (derivada da mesma cor de accent da capa —
+// REGRA 5 / scripts/series_capa.py — nunca mais uma paleta fixa isolada) ──
+#let cor-acento-str = "$cor_acento$"
+#let cor-acento = if cor-acento-str == "" { rgb("#58a6ff") } else { rgb(cor-acento-str) }
+#let cor = (
+  primaria: cor-acento.darken(55%),
+  secundaria: cor-acento.darken(20%),
+  destaque: cor-acento,
+  clara: cor-acento.lighten(88%),
 )
-
-#let chave-paleta = {
-  let p = "$paleta$"
-  if p == "" or not p in paletas { "indigo" } else { p }
-}
-#let cor = paletas.at(chave-paleta)
 
 // ── Pagina, tipografia e paragrafos (ABNT) ────────────────────────
 #set page(
