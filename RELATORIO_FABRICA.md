@@ -8,7 +8,7 @@ Data: 28/07/2026
 > O conteúdo abaixo documenta o estado histórico da fábrica e pode conter referências
 > a esses componentes que já não fazem mais parte do fluxo operacional.
 > Ver `docs/fluxo-fabrica-de-livros.md` para o fluxo atual.
-Diretório do projeto: `C:\Users\trcnologia\Desktop\proj_livros`
+Diretório do projeto: `C:\Users\trcnologia\Desktop\01_Projetos_e_Desenvolvimento\proj_fabrica-de-livros`
 
 ## 1. Contexto e decisões de arquitetura
 

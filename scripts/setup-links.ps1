@@ -69,6 +69,12 @@ Set-Junction "agentic\agents"                             ".claude\agents"
 Set-Junction "agentic\commands"                           ".claude\commands"
 Set-Junction "agentic\mcp-servers"                        ".claude\mcp-servers"
 
+Write-Output "`n== Pastas .agents\ (junction para .claude\..., harnesses alternativos) =="
+Set-Junction ".agents\skills"                             ".claude\skills"
+Set-Junction ".agents\agents"                             ".claude\agents"
+Set-Junction ".agents\commands"                           ".claude\commands"
+Set-Junction ".agents\mcp-servers"                        ".claude\mcp-servers"
+
 Write-Output "`n== MCP traduzido para VS Code (schema diferente, gerado por script) =="
 node "$raiz\scripts\sync-vscode-mcp.mjs"
 

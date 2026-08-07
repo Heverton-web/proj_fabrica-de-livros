@@ -19,6 +19,12 @@ agentic/
 __pycache__/
 *.pyc
 
+# Banco de estado da esteira (runtime, não versionar)
+data/estado_fabrica.db
+
+# Scripts legado (one-offs, movidos de scripts/)
+scripts/_legado/
+
 # Sistema
 .DS_Store
 Thumbs.db
@@ -29,3 +35,4 @@ Thumbs.db
 # Logs
 *.log
 logs/
+.agents/

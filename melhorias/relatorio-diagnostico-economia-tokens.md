@@ -1,7 +1,7 @@
 # Relatório de Diagnóstico — Impacto da Stack de Economia de Tokens na Fábrica de Livros
 
 **Data:** 2026-08-02
-**Escopo:** todo o repositório `proj_livros` (raiz) e o subprojeto `fabrica-de-livros`.
+**Escopo:** todo o repositório `proj_fabrica-de-livros`.
 **Gatilho:** após a instalação da stack de economia severa de tokens (RTK, Headroom,
 LeanCTX, Cavecrew, Caveman) no repositório pai, o operador relatou bugs incontáveis,
 perda de qualidade do material produzido e falhas na geração dos PDFs.
@@ -238,7 +238,7 @@ incompleta de um lote de capítulos pelo `pool-capitulos.py`.
 |---|---|---|
 | 1 | [scripts/auditar-obra.py](../scripts/auditar-obra.py) | Fix do falso-positivo `\bTODO\b`/"todo" finalizado e verificado (R13 volta a passar); `import itertools` movido para o topo do arquivo |
 | 2 | [CLAUDE.md](../CLAUDE.md) (fábrica) | Reescritos itens 2-4 da seção 0 (escopo restrito a terminal/código); adicionado item 8 (exceção de fidelidade de conteúdo, prioridade máxima) |
-| 3 | `../../CLAUDE.md` (raiz `proj_livros`) | Adicionada seção "EXCEÇÃO DE FIDELIDADE DE CONTEÚDO" após o bloco `<!-- rtk-instructions -->` (fora do bloco auto-gerado, para sobreviver a um futuro `rtk init`) |
+| 3 | `../../CLAUDE.md` (raiz `proj_fabrica-de-livros`) | Adicionada seção "EXCEÇÃO DE FIDELIDADE DE CONTEÚDO" após o bloco `<!-- rtk-instructions -->` (fora do bloco auto-gerado, para sobreviver a um futuro `rtk init`) |
 
 Nenhum arquivo de saída de obra (`output/**`) foi alterado — apenas lido para
 diagnóstico.

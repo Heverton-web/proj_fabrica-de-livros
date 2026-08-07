@@ -48,6 +48,13 @@ link ".claude/commands" "agentic/commands"
 link ".claude/mcp-servers" "agentic/mcp-servers"
 
 echo
+echo "== Pastas .agents/ (symlink para .claude/..., harnesses alternativos) =="
+link ".claude/skills" ".agents/skills"
+link ".claude/agents" ".agents/agents"
+link ".claude/commands" ".agents/commands"
+link ".claude/mcp-servers" ".agents/mcp-servers"
+
+echo
 echo "== MCP traduzido para VS Code (schema diferente, gerado por script) =="
 node "$raiz/scripts/sync-vscode-mcp.mjs"
 

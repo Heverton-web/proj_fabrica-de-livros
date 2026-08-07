@@ -288,6 +288,10 @@ pasta no Windows; symlink real em macOS/Linux), não cópias:
 | `agentic/agents` | junction de pasta | `.claude/agents` | Acesso neutro aos subagentes |
 | `agentic/commands` | junction de pasta | `.claude/commands` | Idem, para os comandos |
 | `agentic/mcp-servers` | junction de pasta | `.claude/mcp-servers` | Idem, para a implementação dos MCPs custom |
+| `.agents/skills` | junction de pasta | `.claude/skills` | Harnesses que usam `.agents/` (OpenClaw, Codex, etc.) |
+| `.agents/agents` | junction de pasta | `.claude/agents` | Idem, para subagentes |
+| `.agents/commands` | junction de pasta | `.claude/commands` | Idem, para comandos |
+| `.agents/mcp-servers` | junction de pasta | `.claude/mcp-servers` | Idem, para MCPs custom |
 
 `.vscode/mcp.json` **não** é um link: o schema do VS Code (`servers` + `type: "stdio"`
 por servidor) é diferente do schema `mcpServers` usado por Claude Code/Cursor/Windsurf,
