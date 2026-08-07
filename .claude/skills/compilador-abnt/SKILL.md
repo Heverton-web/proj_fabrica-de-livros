@@ -116,7 +116,7 @@ O template Typst implementa:
 | **Parágrafos** | Justificados, espaçamento 0.75em, recuo 1.25cm |
 | **Cabeçalho** | Título da obra (a partir da página 2) |
 | **Rodapé** | Paginação "X de Y" |
-| **Capa gráfica** | PNG gerado por `scripts/gerar-capa.py --tipo livro` (padrão Editora Agêntica, ver REGRA 5), embutido full-bleed via `capa_imagem`; se a geração falhar, o Typst desenha uma capa tipográfica de fallback, mas já na mesma `cor_acento` da obra/série — nunca uma paleta fixa isolada |
+| **Capa gráfica** | PNG gerado por `scripts/gerar-capa.py --tipo livro` (padrão Editora Agêntica, ver REGRA 5/Capa), embutido full-bleed via `capa_imagem`; badge de nível OBRIGATÓRIO (senioridade_obra). Se a geração falhar, o Typst desenha uma capa tipográfica de fallback, mas já na mesma `cor_acento` da obra/série — nunca uma paleta fixa isolada |
 | **Folha de rosto** | ABNT NBR 6029: autor, título, nota da obra, local e ano |
 | **Ficha catalográfica** | Box 12,5 × 7,5 cm no verso da folha de rosto, com Cutter, imprenta, paginação, ISBN fictício, assuntos e CDD |
 | **Contracapa** | Página colorida com sinopse e assinatura do autor (se `sinopse` disponível) |
@@ -274,6 +274,13 @@ Siga o procedimento abaixo passo a passo:
        de quebra de linha`, encurte o título/subtítulo no `sumario_macro.json`
        (REGRA 4) e repita o passo 2 — no máximo 3 tentativas; esgotadas,
        siga com a melhor versão e registre a não conformidade.
+    4. Rode o gate de nível (INEGOCIÁVEL — REGRA 5/Capa, item p):
+       ```bash
+       python scripts/validar-capa-nivel.py <slug>
+       ```
+       Reprovação (badge ausente/incoerente com `senioridade_obra`) BLOQUEIA
+       a compilação do PDF — corrija o `config_obra.json`/regere a capa
+       (REGRA 4) e só então prossiga. A capa NUNCA entra no PDF fora do padrão.
 7.3 Confira os demais metadados visuais derivados da obra (paleta interna,
     CIP, sinopse — **não afeta a capa gráfica**, que já foi gerada no 7.2):
     ```bash

@@ -23,6 +23,24 @@ produção de literatura técnica. Qualquer sessão do Claude Code aberta neste 
 assume o papel de **Orquestrador Mestre** desta fábrica e deve seguir as diretrizes
 abaixo de forma determinística.
 
+## 0. ⚡ DIRETRIZES DE ECONOMIA SEVERA DE TOKENS (PRIORIDADE MÁXIMA)
+
+1. **Estilo Caveman Ativo:** Pensamento em formato telegráfico (máx. 3-5 linhas). Comunicação sem preâmbulos, saudações ou palavras vazias. Preservar termos técnicos e idioma PT-BR.
+2. **Compressão com Headroom & RTK:** Todo LOG DE TERMINAL, saída de build/teste ou payload de DEBUG efêmero com mais de 7 linhas DEVE ser comprimido via `headroom` (manter 3 primeiras e 4 últimas linhas) e filtrado via `rtk`.
+3. **Seleção Cirúrgica (LeanCTX):** Injetar no contexto APENAS o estritamente necessário. Sempre utilizar `grep_search` antes de ler ARQUIVOS DE CÓDIGO/CONFIGURAÇÃO e limitar a leitura por linha (`StartLine`/`EndLine`) nesses casos.
+4. **Delegação Cavecrew:** Utilizar a skill `cavecrew` para delegar subagentes comprimidos em buscas ou edições extensas de código/infra (nunca para redigir ou revisar prosa de capítulo/seção).
+5. **LIBERAÇÃO E EXECUÇÃO DE PANDOC + TYPST (EXCEÇÃO DE COMPILAÇÃO):** É 100% LIBERADA E OBRIGATÓRIA a execução dos binários e scripts do **Pandoc + Typst** (`compilar-para-pdf.py`, `pandoc.exe`, `typst.exe`) para a compilação nativa de PDFs ABNT (Livros, TCCs, Artigos, E-books). A stack de economia de tokens NÃO DEVE interferir, minificar ou bloquear o pipeline de compilação gráfica Pandoc+Typst.
+6. **FALLBACK DE TERMINAL BLOQUEADO (CUSPIR COMANDOS):** Se a execução do terminal for bloqueada pelo sandbox da IDE (ex: erro de ACL `NUL`), o agente DEVE exibir imediatamente no chat TODOS os comandos PowerShell de compilação e distribuição formatados e prontos para o usuário copiar e rodar no seu terminal local.
+7. **REGRA ABSOLUTA DE SOBERANIA DO USUÁRIO (NADA BARRADO):** NENHUMA ação, comando de terminal, script ou pipeline de execução pode ser barrado, bloqueado, omitido ou cancelado sem a autorização prévia e confirmação explícita do USUÁRIO. Se surgir qualquer falha de ambiente ou dúvida, pergunte/solicite ao usuário antes de alterar o fluxo.
+8. **EXCEÇÃO DE FIDELIDADE DE CONTEÚDO (PRIORIDADE MÁXIMA, sobrepõe os itens 2-4 acima):** as regras 2-4 de economia de tokens NUNCA se aplicam a conteúdo de obra nem a dado estrutural do pipeline. Estão **sempre isentos** de headroom/rtk/lean-ctx/cavecrew:
+   - qualquer arquivo em `output/**` (capítulos `.md`, `livro_final.md`, dossiês, `sumario_macro.json`, `config_obra.json`, `relatorio_auditoria.json`, `relatorio_codigo.json`, `relatorio_diagramas.json` e demais payloads de estado da esteira) — leia sempre por inteiro com `Read`/`cat`, nunca via `rtk grep`/`rtk read` (o modo de excerto compacto do `rtk grep` corta a prosa em janelas de ~40-80 caracteres ao redor do match quando há muitas ocorrências — inútil e enganoso para julgar terminologia, citações ou truncamento real);
+   - qualquer verificação feita por `scripts/auditar-obra.py`, `validar-codigo.py`, `renderizar-diagramas.py` ou pela skill `revisor-tecnico`/`subagente-revisor-tecnico` sobre o conteúdo da obra;
+   - a regra de "manter 3 primeiras + 4 últimas linhas" do item 2 é proibida sobre qualquer JSON que seja **estado/dado da obra** (mesmo que passe de 7 linhas) — só vale para log/saída de terminal efêmera.
+9. **REGRA INVIOLÁVEL DE BUSCA VIA GRAFO:** Antes de executar qualquer TOOL de leitura, busca ou semelhante, utilize obrigatoriamente os GRAFO do projeto (`.code-review-graph`, grafo de dependências ou MCP de grafo) para a busca de elementos.
+10. **REGRA INVIOLÁVEL DE AUTO-COMMIT E AUTO-PUSH:** Sempre realizar auto-commit (`git commit`) e auto-push (`git push`) das alterações realizadas para garantir que o GRAFO do projeto esteja sempre atualizado.
+
+
+
 ## 1. Identidade e Diretrizes Globais (RULES / Código Penal)
 
 - **REGRA 1 (Idioma Estrito):** toda comunicação interna entre agentes, logs de sistema
@@ -32,46 +50,64 @@ abaixo de forma determinística.
   capítulo/manuscrito devem conter apenas Markdown limpo — sem "Aqui está o capítulo...".
 - **REGRA 3 (Autonomia Total Agêntica):** após o operador definir o TEMA na mensagem/pergunta inicial, toda a esteira da fábrica (agentes, subagentes e MCPs) funcionará 100% autônoma, sem paradas ou interações no chat. O squad realiza auto-validações internas de qualidade antes de avançar cada etapa.
 - **REGRA 4 (Auto-Correção Interna):** desvios estruturais ou falhas de formatação detectados por um agente/skill/subagente devem ser corrigidos internamente pelo squad antes da compilação final.
-- **REGRA 5 (Universalidade de Modelo/Harness):** nenhuma skill, subagente ou script
+- **REGRA 5 (Identidade Visual da Editora Agêntica — Padrão 2D Plano):** Aplica-se a
+  Livro e E-book (TCC/Artigo usam capa sóbria ABNT própria, fora desta regra). As
+  capas DEVEM ser geradas exclusivamente como arte gráfica 2D plana retangular da
+  página frontal (flat 2D front cover page), sendo estritamente PROIBIDO a inclusão
+  de mockups 3D, bordas de lombada simuladas, faixas laterais de encadernação,
+  sombras de efeito livro ou estética amadora de "IA 3D neon". O padrão oficial
+  exige:
+  a) **Fundo Matte Sóbrio:** #0d1117 (matte escuro, fixo, independente de obra/série)
+  b) **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra/série
+  c) **Padding Lateral:** 80px mínimo
+  d) **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda; ícone
+     mínimo 72x72px com borda 3px e glifo `>_` mínimo 34px, texto mínimo 24px com
+     letter-spacing 4px — legível, nunca miniatura)
+  e) **Ilustração temática:** gerada pelo `subagente-ilustrador` (Modo Capa), remete
+     ao tema central da obra, área central fixa do layout
+  f) **Título:** branco (#e6edf3), Inter 900 72px, **máx. 2 linhas, nenhuma linha
+     com 1 palavra só** (validado por `scripts/validar-capa-texto.py`), última
+     palavra destacada na cor de accent
+  g) **Subtítulo:** Inter 300 18-24px, cor #8b949e, **máx. 2 linhas, nenhuma linha
+     com 1 palavra só**, objetivo (sem prolixidade)
+  h) **Badge de Nível (OBRIGATÓRIO, INEGOCIÁVEL):** pill com o nível da obra
+     derivado exclusivamente do campo `senioridade_obra` em `config_obra.json`
+     (preenchido pelo `/esbocar` — nunca texto livre). Rótulos fixos:
+     `iniciante` → "PARA INICIANTES", `intermediario`/`intermediário` →
+     "NÍVEL INTERMEDIÁRIO", `avancado`/`avançado` → "NÍVEL AVANÇADO"; cor de
+     accent. Ausência do campo OU do badge na capa REPROVA a geração e a
+     compilação (erro fatal — ver item p)
+  i) **Divider:** faixa fina decorativa, cor de accent
+  j) **Autor:** Heverton Eduardo Peres (fixo, Inter 600 30px, cor #e6edf3 —
+     legível, nunca miniatura)
+  k) **Qualificação:** "Especialista em Marketing e Desenvolvimento de Soluções"
+     (fixo em TODAS as capas, Inter 600 16px, cor do accent — nunca varia por tema)
+  l) **Cor de accent por Série:** obras da mesma série (campo `serie` em
+     `config_obra.json`, ou mãe+derivados via `livro_mae`) compartilham a mesma cor,
+     resolvida e persistida em `output/_series.json` (ver `scripts/series_capa.py`)
+  m) **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
+  n) **Script:** `scripts/gerar-capa.py --tipo livro|ebook` (HTML/CSS + Playwright,
+     único gerador — substitui as variantes anteriores). Exige `senioridade_obra`
+     em `config_obra.json`; sem o campo, aborta com erro fatal (exit 1)
+  o) **Salvar:** `imagens/capa.png` (PNG)
+  p) **Validação INEGOCIÁVEL (gate de compilação):** toda capa é verificada por
+     script determinístico antes de entrar no PDF — `scripts/validar-capa-texto.py`
+     (título/subtítulo: máx. 2 linhas, nenhuma linha com 1 palavra) e
+     `scripts/validar-capa-nivel.py` (badge de nível presente e coerente com
+     `senioridade_obra`). Qualquer reprovação BLOQUEIA a compilação
+     (`compilar-para-pdf.py` aborta); o squad corrige e regera (REGRA 4) e a capa
+     NUNCA entra no PDF fora do padrão
+
+
+
+
+- **REGRA 6 (Universalidade de Modelo/Harness):** nenhuma skill, subagente ou script
   desta fábrica pode fixar um modelo LLM específico (ex.: Opus) como dependência
   obrigatória do fluxo. Todos os `.claude/agents/*.md` declaram `model: inherit` no
   frontmatter — o subagente herda o modelo da sessão do Orquestrador, nunca um
   modelo fixo. Isso garante que a esteira produza o mesmo resultado estrutural
   independentemente do modelo (Sonnet/Opus/Haiku ou outro) ou do harness agêntico
   usado (ver seção 6, portabilidade multi-IDE).
-- **REGRA 6 (Capítulo EITA Obrigatório):** todo livro e ebook produzido pela Fábrica
-  DEVE começar com o capítulo fixo que explica a metodologia EITA e suas 7 seções
-  (`templates/capitulo_eita.md`). Este capítulo é inserido automaticamente pelo
-  compilador na Fase 3, antes do primeiro capítulo da obra. Não é opcional.
-- **REGRA 7 (Capa Padrão Editora Agêntica — Padrão 2D Plano):** Aplica-se a Livro
-  e E-book (TCC/Artigo usam capa sóbria ABNT própria, fora desta regra). As capas
-  DEVEM ser geradas exclusivamente como arte gráfica 2D plana retangular da página
-  frontal (flat 2D front cover page), sendo estritamente PROIBIDO a inclusão de
-  mockups 3D, bordas de lombada simuladas, faixas laterais de encadernação,
-  sombras de efeito livro ou estética amadora de "IA 3D neon". O padrão oficial exige:
-  - **Fundo Matte Sóbrio:** #0d1117 (matte escuro, fixo, independente de obra/série)
-  - **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra/série
-  - **Padding Lateral:** 80px mínimo
-  - **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda)
-  - **Ilustração temática:** gerada pelo `subagente-ilustrador` (Modo Capa), remete
-    ao tema central da obra, área central fixa do layout
-  - **Título:** branco (#e6edf3), Inter 900 72px, **máx. 2 linhas, nenhuma linha
-    com 1 palavra só** (validado por `scripts/validar-capa-texto.py`), última
-    palavra destacada na cor de accent
-  - **Subtítulo:** Inter 300 18-24px, cor #8b949e, **máx. 2 linhas, nenhuma linha
-    com 1 palavra só**, objetivo (sem prolixidade)
-  - **Badge (opcional):** pill de texto com 1 frase de destaque, cor de accent
-  - **Divider:** faixa fina decorativa, cor de accent
-  - **Autor:** Heverton Eduardo Peres (fixo, Inter 600 18-20px, cor #e6edf3)
-  - **Qualificação:** "Especialista em Marketing e Desenvolvimento de Soluções"
-    (fixo em TODAS as capas, Inter 600 11-12px, cor do accent — nunca varia por tema)
-  - **Cor de accent por Série:** obras da mesma série (campo `serie` em
-    `config_obra.json`, ou mãe+derivados via `livro_mae`) compartilham a mesma cor,
-    resolvida e persistida em `output/_series.json` (ver `scripts/series_capa.py`)
-  - **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
-  - **Script:** `scripts/gerar-capa.py --tipo livro|ebook` (HTML/CSS + Playwright,
-    único gerador — substitui `gerar-capa-ebook-padrao.py` e demais variantes)
-  - **Salvar:** `imagens/capa.png` (PNG)
 
 ## 1.5 Módulos por Tipo de Obra (V4)
 
@@ -124,7 +160,6 @@ Implementados em `.claude/agents/`:
 | `subagente-redator-artigo` | Manufatura autônoma de 1 Artigo Científico completo via RAG do dossiê-mãe (nunca pesquisa) |
 | `subagente-adaptador-ebook` | Adaptação de tom + geração de EPUB de 1 e-book derivado (nunca pesquisa nem gera conteúdo novo) |
 | `subagente-revisor-tecnico` | Correção paralela, em lotes, dos capítulos/seções reprovados na auditoria da Fase 2.5 |
-| `subagente-ilustrador` | Gera ilustrações 2D flat para capítulos (HTML/CSS + Playwright, gratuito, sem API) |
 
 ### Motor Determinístico da Esteira (scripts)
 
@@ -136,15 +171,17 @@ Os agentes leem o JSON produzido por eles e agem sobre a evidência.
 | `scripts/indexar-dossie.py` | 6 — RAG local | Indexa o dossiê em blocos (TF-IDF puro) e responde busca por relevância, evitando carregar o dossiê inteiro no contexto |
 | `scripts/pool-capitulos.py` | 4 — Concorrência | Planeja o despacho dos capítulos (ou artigos/ebooks, via `--manifesto`) em lotes, rastreia tentativas e calcula backoff exponencial |
 | `scripts/renderizar-diagramas.py` | 2 — Diagramas | Renderiza blocos ```mermaid em PNG (cache por hash) e valida a sintaxe dos diagramas |
-| `scripts/gerar-ilustracoes.py` | 1 — Ilustrações | Gera ilustrações 2D flat para capítulos via HTML/CSS + Playwright (gratuito, sem API) |
 | `scripts/validar-codigo.py` | 3 — CI de código | Valida a sintaxe de cada bloco de código (python, js, ts, bash, powershell, json, yaml, toml, xml) sem executar nada |
 | `scripts/auditar-obra.py` | 1 — Peer review | Audita os requisitos automatizáveis por tipo de obra (`--tipo livro\|tcc\|artigo\|ebook`), detecta sobreposição entre capítulos, grafia inconsistente e truncamento |
-| `scripts/metadados_livro.py` | 5 — Capa/CIP | Deriva paleta, ficha catalográfica (Cutter, ISBN, CDD, assuntos) e sinopse da contracapa (livro); resumo/abstract (TCC/artigo) |
+| `scripts/metadados_livro.py` | 5 — Capa/CIP | Deriva `cor_acento` (via `series_capa.py`), ficha catalográfica (Cutter, ISBN, CDD, assuntos) e sinopse da contracapa (livro); resumo/abstract (TCC/artigo) |
 | `scripts/parametros_obra.py` | V4 | Lê `esboco/config_obra.json`, tabela de tamanhos P/M/G/GG/XG, regex de citação por tipo (numérica vs. autor-data) |
 | `scripts/validar-abnt-tcc.py` | V4 | Valida elementos pré-textuais do TCC no documento compilado (resumo, abstract, numeração sem saltos) |
 | `scripts/fatiar-obra.py` | V4 | Particiona o `sumario_macro.json` do livro-mãe em N artigos ou N ebooks |
 | `scripts/gerar-epub.py` | V4 | Converte um ebook derivado para EPUB reflowable via Pandoc (com ou sem capa) |
 | `scripts/pdf_typst.py` | V3 | Helper Pandoc→`.typ`→Typst reaproveitado pelos compiladores mega-livro |
+| `scripts/series_capa.py` | 5 — Capa/CIP | Resolve a cor de accent por série (`serie`/`livro_mae`), persiste em `output/_series.json` |
+| `scripts/validar-capa-texto.py` | 5 — Capa/CIP | Valida quebra de linha de título/subtítulo (máx. 2 linhas, sem linha de 1 palavra) — gate de capa |
+| `scripts/validar-capa-nivel.py` | 5 — Capa/CIP | Valida o badge de nível obrigatório na capa contra `senioridade_obra` — gate de capa |
 
 ### Economia Severa de Tokens & Qualidade
 | Skill | Trigger / Função |
@@ -192,7 +229,7 @@ Registrados em `.mcp.json`:
 - `templates/payload_estado.json` — payload de estado inter-agentes.
 - `templates/template_eita.md` — molde pedagógico E-I-T-A (7 seções, diagrama Mermaid
   obrigatório na seção Ilustra, código validável na seção Técnica).
-- `templates/template.typ` — template Typst ABNT: capa gráfica com paleta por obra,
+- `templates/template.typ` — template Typst ABNT: capa gráfica na `cor_acento` da obra/série,
   folha de rosto, ficha catalográfica (CIP), sumário, figuras com legenda e contracapa.
 - `templates/template_tcc.typ` — template Typst NBR 14724: capa sóbria, folha de
   rosto, folha de aprovação, resumo (PT) + abstract (EN), sumário. Sem `--number-sections`.
@@ -212,10 +249,16 @@ da seção 1.5 (ver `SPEC_TCC.md`/`SPEC_ARTIGO.md`/`SPEC_EBOOK.md`).
 1. **Input**: operador informa o tema central do livro (única interação necessária).
 2. **Fase 1**: `pesquisador`/`subagente-pesquisador` varre fontes → `indexar-dossie.py --indexar` monta o índice RAG → `arquiteto` gera a planta baixa do sumário macro.
 3. **Fase 2** (Manufatura Tática Autônoma & Paralela **em lotes**): o Orquestrador consulta `pool-capitulos.py --plano --lote 4` e instancia `subagente-redator-capitulo` lote a lote (estrategista + redator-eita + diagrama Mermaid + CI de código + auto-validação). Falha de subagente é retentada com backoff exponencial (máx. 3 tentativas por capítulo).
-4. **Fase 2.5** (Peer Review): `auditar-obra.py` + `validar-codigo.py` + validação de diagramas produzem evidência; a skill `revisor-tecnico` (e, em lotes, `subagente-revisor-tecnico`) corrige sobreposição entre capítulos, terminologia inconsistente, truncamento, código quebrado e diagramas inválidos. Parecer em `output/<livro>/revisao/parecer_revisao.md`.
-5. **Fase 2.7** (Ilustrações): `gerar-ilustracoes.py <slug>` gera ilustrações 2D flat para os capítulos via HTML/CSS + Playwright (gratuito, sem API). Opcional: `--capitulo N` para capítulo específico.
-6. **Fase 3**: `compilador-abnt` faz o merge final, inclui prefácio, conclusão, sumário dinâmico, referências e normas ABNT em `output/<livro>/livro_final.md`.
-7. **Fase 3, passo final — Exportação em PDF (Nó 10)**: `compilar-para-pdf.py <slug> --paginas-exatas` (ou `scripts/converter-md-pdf.ps1 -Slug <slug>`) renderiza os diagramas Mermaid em PNG, deriva capa gráfica e ficha catalográfica, e compila **Pandoc → `.typ` → Typst** para produzir `output/<livro>/livro_final.pdf` (margens ABNT, Times New Roman 12pt, sumário automático, paginação). CloudConvert fica como fallback opcional se configurado.
+4. **Fase 2.5** (Peer Review): `auditar-obra.py` + `validar-codigo.py` + validação de diagramas produzem evidência; a skill `revisor-tecnico` (e, em lotes, `subagente-revisor-tecnico`) corrige sobreposição entre capítulos, terminologia inconsistente, truncamento, código quebrado e diagramas inválidos. Parecer em `output/livros/<slug>/revisao/parecer_revisao.md`.
+5. **Fase 3**: `compilador-abnt` faz o merge final, inclui prefácio, conclusão, sumário dinâmico, referências e normas ABNT em `output/livros/<slug>/livro_final.md`.
+6. **Fase 3, passo final — Exportação em PDF (Nó 10)**: `compilar-para-pdf.py livros/<slug> --paginas-exatas` (ou `scripts/converter-md-pdf.ps1 -Slug livros/<slug>`) renderiza os diagramas Mermaid em PNG, deriva capa gráfica e ficha catalográfica, e compila **Pandoc → `.typ` → Typst** para produzir `output/livros/<slug>/livro_final.pdf` (margens ABNT, Times New Roman 12pt, sumário automático, paginação). CloudConvert fica como fallback opcional se configurado.
+
+> **Estrutura de `output/` (V4.1):** separada por tipo de obra no topo —
+> `output/livros/<slug>/`, `output/tccs/<slug>/`, `output/artigos/<slug-livro-mae>--art-NN-.../`,
+> `output/ebooks/<slug-livro-mae>--eb-NN-.../`. Artigos e e-books derivados NAO ficam
+> aninhados dentro da pasta do livro-mãe; a referência cruzada é o campo
+> `slug_livro_mae` no `sumario_macro.json` de cada um, e o manifesto
+> `output/livros/<slug>/derivados.json` no livro-mãe lista os que ele gerou.
 
 > **Nota técnica (V3):** não use `pandoc --pdf-engine=typst` em livros com figuras — o Pandoc
 > reescreve os caminhos das imagens em forma absoluta e o Typst os rejeita no Windows

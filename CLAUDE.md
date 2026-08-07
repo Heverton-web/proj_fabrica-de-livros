@@ -60,7 +60,9 @@ abaixo de forma determinística.
   a) **Fundo Matte Sóbrio:** #0d1117 (matte escuro, fixo, independente de obra/série)
   b) **Barras de Accent:** topo (8px) + rodapé (6px) na cor de accent da obra/série
   c) **Padding Lateral:** 80px mínimo
-  d) **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda)
+  d) **Chancela:** `>_ EDITORA AGÊNTICA` (ícone + texto CSS, topo esquerda; ícone
+     mínimo 72x72px com borda 3px e glifo `>_` mínimo 34px, texto mínimo 24px com
+     letter-spacing 4px — legível, nunca miniatura)
   e) **Ilustração temática:** gerada pelo `subagente-ilustrador` (Modo Capa), remete
      ao tema central da obra, área central fixa do layout
   f) **Título:** branco (#e6edf3), Inter 900 72px, **máx. 2 linhas, nenhuma linha
@@ -68,23 +70,38 @@ abaixo de forma determinística.
      palavra destacada na cor de accent
   g) **Subtítulo:** Inter 300 18-24px, cor #8b949e, **máx. 2 linhas, nenhuma linha
      com 1 palavra só**, objetivo (sem prolixidade)
-  h) **Badge (opcional):** pill de texto com 1 frase de destaque, cor de accent
+  h) **Badge de Nível (OBRIGATÓRIO, INEGOCIÁVEL):** pill com o nível da obra
+     derivado exclusivamente do campo `senioridade_obra` em `config_obra.json`
+     (preenchido pelo `/esbocar` — nunca texto livre). Rótulos fixos:
+     `iniciante` → "PARA INICIANTES", `intermediario`/`intermediário` →
+     "NÍVEL INTERMEDIÁRIO", `avancado`/`avançado` → "NÍVEL AVANÇADO"; cor de
+     accent. Ausência do campo OU do badge na capa REPROVA a geração e a
+     compilação (erro fatal — ver item p)
   i) **Divider:** faixa fina decorativa, cor de accent
-  j) **Autor:** Heverton Eduardo Peres (fixo, Inter 600 18-20px, cor #e6edf3)
+  j) **Autor:** Heverton Eduardo Peres (fixo, Inter 600 30px, cor #e6edf3 —
+     legível, nunca miniatura)
   k) **Qualificação:** "Especialista em Marketing e Desenvolvimento de Soluções"
-     (fixo em TODAS as capas, Inter 600 11-12px, cor do accent — nunca varia por tema)
+     (fixo em TODAS as capas, Inter 600 16px, cor do accent — nunca varia por tema)
   l) **Cor de accent por Série:** obras da mesma série (campo `serie` em
      `config_obra.json`, ou mãe+derivados via `livro_mae`) compartilham a mesma cor,
      resolvida e persistida em `output/_series.json` (ver `scripts/series_capa.py`)
   m) **Dimensões:** 1200x1600px (ebooks), 1600x2263px (livros A4)
   n) **Script:** `scripts/gerar-capa.py --tipo livro|ebook` (HTML/CSS + Playwright,
-     único gerador — substitui as variantes anteriores)
+     único gerador — substitui as variantes anteriores). Exige `senioridade_obra`
+     em `config_obra.json`; sem o campo, aborta com erro fatal (exit 1)
   o) **Salvar:** `imagens/capa.png` (PNG)
+  p) **Validação INEGOCIÁVEL (gate de compilação):** toda capa é verificada por
+     script determinístico antes de entrar no PDF — `scripts/validar-capa-texto.py`
+     (título/subtítulo: máx. 2 linhas, nenhuma linha com 1 palavra) e
+     `scripts/validar-capa-nivel.py` (badge de nível presente e coerente com
+     `senioridade_obra`). Qualquer reprovação BLOQUEIA a compilação
+     (`compilar-para-pdf.py` aborta); o squad corrige e regera (REGRA 4) e a capa
+     NUNCA entra no PDF fora do padrão
 
 
 
 
-- **REGRA 5 (Universalidade de Modelo/Harness):** nenhuma skill, subagente ou script
+- **REGRA 6 (Universalidade de Modelo/Harness):** nenhuma skill, subagente ou script
   desta fábrica pode fixar um modelo LLM específico (ex.: Opus) como dependência
   obrigatória do fluxo. Todos os `.claude/agents/*.md` declaram `model: inherit` no
   frontmatter — o subagente herda o modelo da sessão do Orquestrador, nunca um
@@ -162,6 +179,9 @@ Os agentes leem o JSON produzido por eles e agem sobre a evidência.
 | `scripts/fatiar-obra.py` | V4 | Particiona o `sumario_macro.json` do livro-mãe em N artigos ou N ebooks |
 | `scripts/gerar-epub.py` | V4 | Converte um ebook derivado para EPUB reflowable via Pandoc (com ou sem capa) |
 | `scripts/pdf_typst.py` | V3 | Helper Pandoc→`.typ`→Typst reaproveitado pelos compiladores mega-livro |
+| `scripts/series_capa.py` | 5 — Capa/CIP | Resolve a cor de accent por série (`serie`/`livro_mae`), persiste em `output/_series.json` |
+| `scripts/validar-capa-texto.py` | 5 — Capa/CIP | Valida quebra de linha de título/subtítulo (máx. 2 linhas, sem linha de 1 palavra) — gate de capa |
+| `scripts/validar-capa-nivel.py` | 5 — Capa/CIP | Valida o badge de nível obrigatório na capa contra `senioridade_obra` — gate de capa |
 
 ### Economia Severa de Tokens & Qualidade
 | Skill | Trigger / Função |

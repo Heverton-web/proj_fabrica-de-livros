@@ -4,6 +4,9 @@
 # Output (gerado pela fábrica)
 output/
 
+# Junctions de acesso neutro (duplicam .claude/)
+agentic/
+
 # .env (API keys etc)
 .env
 .env.local

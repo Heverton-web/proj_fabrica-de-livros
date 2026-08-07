@@ -81,25 +81,30 @@ def _gerar_html(titulo, subtitulo, cor_acento, autor, qualificacao, badge_texto,
   .top-bar {{ position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: {cor_acento}; }}
   .bottom-bar {{ position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: {cor_acento}; }}
   .content {{
-    position: absolute; top: 50px; bottom: 50px; left: 80px; right: 80px;
+    position: absolute; top: 40px; bottom: 40px; left: 80px; right: 80px;
     display: flex; flex-direction: column;
   }}
-  .header {{ display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-shrink: 0; }}
+  .header {{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; }}
   .editora-icon {{
-    width: 44px; height: 44px; border: 2px solid {cor_acento}; border-radius: 10px;
+    width: 72px; height: 72px; border: 3px solid {cor_acento}; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px; color: {cor_acento}; font-weight: 700; font-family: monospace;
+    font-size: 34px; color: {cor_acento}; font-weight: 700; font-family: monospace;
   }}
-  .editora-text {{ font-size: 14px; font-weight: 600; color: #8b949e; letter-spacing: 3px; text-transform: uppercase; }}
-  .ilustracao {{ flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; margin-bottom: 24px; }}
+  .editora-text {{ font-size: 24px; font-weight: 600; color: #8b949e; letter-spacing: 4px; text-transform: uppercase; }}
+  .center {{
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; min-height: 0;
+  }}
+  .ilustracao {{ display: flex; align-items: center; justify-content: center; min-height: 0; margin-bottom: 24px; }}
   .ilustracao img {{ max-width: 100%; max-height: 100%; object-fit: contain; }}
   .title {{ font-size: 72px; font-weight: 900; color: #e6edf3; line-height: 1.05; letter-spacing: -1px; margin-bottom: 16px; flex-shrink: 0; }}
   .title .highlight {{ color: {cor_acento}; }}
   .subtitle {{ font-size: 22px; font-weight: 300; color: #8b949e; margin-bottom: 20px; flex-shrink: 0; }}
   .badge {{ display: inline-block; background: {cor_acento}; color: #0d1117; padding: 8px 20px; border-radius: 18px; font-weight: 700; font-size: 15px; margin-bottom: 20px; align-self: flex-start; flex-shrink: 0; }}
   .divider {{ width: 80px; height: 4px; background: {cor_acento}; margin-bottom: 16px; flex-shrink: 0; }}
-  .author-name {{ font-size: 20px; font-weight: 600; color: #e6edf3; margin-bottom: 4px; flex-shrink: 0; }}
-  .author-role {{ font-size: 12px; color: {cor_acento}; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; flex-shrink: 0; }}
+  .footer {{ flex-shrink: 0; }}
+  .author-name {{ font-size: 30px; font-weight: 600; color: #e6edf3; margin-bottom: 4px; }}
+  .author-role {{ font-size: 16px; color: {cor_acento}; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }}
 </style>
 </head>
 <body>
@@ -110,13 +115,17 @@ def _gerar_html(titulo, subtitulo, cor_acento, autor, qualificacao, badge_texto,
       <div class="editora-icon">&gt;_</div>
       <div class="editora-text">Editora Agêntica</div>
     </div>
-    {bloco_ilustracao}
-    <div class="title">{titulo_html}</div>
-    {bloco_subtitulo}
-    {bloco_badge}
-    <div class="divider"></div>
-    <div class="author-name">{autor}</div>
-    <div class="author-role">{qualificacao}</div>
+    <div class="center">
+      {bloco_ilustracao}
+      <div class="title">{titulo_html}</div>
+      {bloco_subtitulo}
+      {bloco_badge}
+      <div class="divider"></div>
+    </div>
+    <div class="footer">
+      <div class="author-name">{autor}</div>
+      <div class="author-role">{qualificacao}</div>
+    </div>
   </div>
 </body>
 </html>'''
@@ -183,12 +192,24 @@ def gerar_capa_da_obra(slug, tipo_forcado=None):
 
     ilustracao_relpath = "imagens/capa_ilustracao.png"
 
+    nivel = (config_obra.get("senioridade_obra") or "").strip()
+    if not nivel:
+        print("[ERRO] config_obra.json sem 'senioridade_obra' — badge de nivel "
+              "obrigatorio (REGRA 5/Capa, item h). Preencha (iniciante | "
+              "intermediario | avancado) e rode de novo.")
+        sys.exit(1)
+    rotulos = {"iniciante": "PARA INICIANTES", "intermediario": "NÍVEL INTERMEDIÁRIO",
+               "intermediário": "NÍVEL INTERMEDIÁRIO", "avancado": "NÍVEL AVANÇADO",
+               "avançado": "NÍVEL AVANÇADO"}
+    badge_texto = rotulos.get(nivel.lower(), f"NÍVEL: {nivel.upper()}")
+
     return gerar_capa(
         titulo=titulo,
         subtitulo=subtitulo,
         dir_saida=dir_obra,
         tipo=tipo,
         cor_acento=cor_acento,
+        badge_texto=badge_texto,
         ilustracao_relpath=ilustracao_relpath,
     )
 

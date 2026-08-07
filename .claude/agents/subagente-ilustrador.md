@@ -123,6 +123,10 @@ temática da capa** da obra (livro ou ebook) — invocado pelo `compilador-abnt`
 5. Se não for possível produzir algo relevante ao tema (assunto muito
    abstrato), é aceitável pular este passo — a capa é gerada sem ilustração
    em vez de travar a esteira (REGRA 3).
+6. O **badge de nível** (ex.: "PARA INICIANTES") NÃO é responsabilidade deste
+   subagente — quem o adiciona é `scripts/gerar-capa.py`, obrigatoriamente, a
+   partir de `config_obra.json.senioridade_obra` (REGRA 5/Capa, item h). Nunca
+   desenhe o badge na ilustração.
 
 ## Estilo Visual (Padrão Editora Agêntica)
 - **Fundo:** #0d1117 (matte escuro)

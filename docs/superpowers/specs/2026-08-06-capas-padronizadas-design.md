@@ -36,7 +36,12 @@ Fundo `#0d1117` (matte escuro, fixo, independente de obra/série), topo→base:
 3. Ilustração temática — PNG gerado pelo `subagente-ilustrador`, área central fixa
 4. Título — branco (`#e6edf3`), Inter 900 72px, **máx. 2 linhas, nenhuma linha com 1 palavra só**, última palavra do título destacada na cor de accent (mesmo mecanismo do `.highlight` já usado no exemplo `code-review-graph`)
 5. Subtítulo — Inter 300 18–24px, cinza `#8b949e`, **máx. 2 linhas, nenhuma linha com 1 palavra só**, objetivo (sem prolixidade)
-6. Badge — pill de texto com 1 frase de destaque, cor de accent (opcional por obra)
+6. Badge de Nível — **OBRIGATÓRIO (inegociável)**: pill com o nível da obra,
+   derivado exclusivamente do campo `senioridade_obra` do `config_obra.json`
+   (preenchido pelo `/esbocar` — nunca texto livre). Rótulos fixos:
+   `iniciante` → "PARA INICIANTES", `intermediario`/`intermediário` →
+   "NÍVEL INTERMEDIÁRIO", `avancado`/`avançado` → "NÍVEL AVANÇADO". Cor de
+   accent. Ausência do campo ou do badge reprova a geração e a compilação.
 7. Divider — faixa fina decorativa, cor de accent
 8. Autor — **Heverton Eduardo Peres** (fixo, todas as capas)
 9. Qualificação — **Especialista em Marketing e Desenvolvimento de Soluções** (fixo, todas as capas, substitui cargos variáveis como "Engenheiro de Software & Maker")
@@ -101,13 +106,18 @@ Rodada 2 (condicional) ganha uma 4ª linha, dentro do limite de 4 opções do
 `metadados_livro.py` (paleta/CIP/sinopse):
 1. Invoca `subagente-ilustrador` → gera ilustração temática (PNG)
 2. Invoca `scripts/gerar-capa.py --tipo livro` (resolve cor via
-   `_series.json`, usa título/subtítulo derivados, embute a ilustração)
+   `_series.json`, usa título/subtítulo derivados, embute a ilustração;
+   aborta com erro fatal se `senioridade_obra` estiver ausente)
 3. Invoca `scripts/validar-capa-texto.py` sobre título/subtítulo renderizado
 4. Se reprovar (mais de 2 linhas ou linha de 1 palavra): encurta e tenta de
    novo (REGRA 4, máx. 3 tentativas — mesmo padrão de retry do pool de
    capítulos). Esgotadas as tentativas, segue com a melhor versão e registra
    não conformidade (REGRA 3, não trava a esteira).
-5. Resultado grava `imagens/capa.png`, consumido pelo `template.typ` via
+5. Invoca `scripts/validar-capa-nivel.py` — **gate INEGOCIÁVEL**: reprovação
+   (badge ausente ou incoerente com `senioridade_obra`) BLOQUEIA a compilação
+   do PDF; o squad corrige o `config_obra.json`/regenera a capa (REGRA 4) e só
+   então o PDF sai. A capa NUNCA entra no PDF fora do padrão.
+6. Resultado grava `imagens/capa.png`, consumido pelo `template.typ` via
    o mecanismo `capa_imagem` que já existe.
 
 **Ebook** — mesmo fluxo (passos 1-4), dentro do `subagente-adaptador-ebook`,
@@ -132,6 +142,14 @@ espírito de `validar-codigo.py`/`auditar-obra.py` (script decide, agente não
 - Modo standalone (`--validar --texto "..."`) e função importável, chamada
   automaticamente pelo gerador antes de renderizar a versão final.
 
+**Novo `scripts/validar-capa-nivel.py`** — gate do badge de nível:
+- Lê `senioridade_obra` de `config_obra.json` e o `<div class="badge">` do
+  `capa.html` renderizado.
+- Aprova somente se o badge for exatamente o rótulo fixo do nível (ex.:
+  `senioridade_obra=iniciante` ⇒ badge "PARA INICIANTES").
+- Reprova: obra sem o campo, nível inválido, badge ausente ou divergente.
+- Reprovação bloqueia a compilação do PDF (chamado pela cadeia de capa).
+
 ## 9. Consolidação de arquivos
 
 | Arquivo | Ação |
@@ -142,6 +160,7 @@ espírito de `validar-codigo.py`/`auditar-obra.py` (script decide, agente não
 | `scripts/gerar_capas_demais_ebooks.py` | **Removido** (`CONFIGS_SERIE` migra para `output/_series.json`) |
 | `scripts/sincronizar-capas-distribuicao.py` | Mantido sem mudança |
 | `scripts/validar-capa-texto.py` | **Novo** |
+| `scripts/validar-capa-nivel.py` | **Novo** — gate do badge de nível (REGRA 5/Capa, item h) |
 | `output/_series.json` | **Novo**, semeado com as 3 séries já em uso |
 | `output/livros/code-review-graph/capa.html` e demais bespoke | Regenerados via `scripts/gerar-capa.py --todos` |
 | `CLAUDE.md` REGRA 5 (+ 6 espelhos: `AGENTS.md`, `.clinerules`, `.windsurfrules`, `.windsurf/rules/fabrica-agentica.md`, `.cursor/rules/fabrica-agentica.mdc`, `.github/copilot-instructions.md`) | Reescrita: remove itens de terminal/código, adiciona ilustração temática, badge, qualificação fixa, campo `serie`, registro `_series.json` |
@@ -169,6 +188,10 @@ existentes no padrão novo — incluindo a correção do título de 3 linhas do
 - Logo = ícone+texto CSS atual (`>_ EDITORA AGÊNTICA`), sem arquivo de imagem.
 - Dimensões mantidas: 1600×2263 (livro) / 1200×1600 (ebook) — descarta a
   proporção 1:1,6 do script Pillow removido.
-- Badge com texto mantido como elemento opcional (não é só divider mudo).
+- **Badge de nível OBRIGATÓRIO** (inegociável): derivado exclusivamente de
+  `config_obra.json.senioridade_obra` — rótulos fixos: `iniciante`→
+  "PARA INICIANTES", `intermediario`→"NÍVEL INTERMEDIÁRIO", `avancado`→
+  "NÍVEL AVANÇADO". Ausência do campo = erro fatal na geração e gate de
+  validação (`validar-capa-nivel.py`) que BLOQUEIA a compilação do PDF.
 - Qualificação do autor é fixa em 100% das capas, sem exceção por tema.
 - Escopo restrito a Livro e E-book; TCC/Artigo fora.
