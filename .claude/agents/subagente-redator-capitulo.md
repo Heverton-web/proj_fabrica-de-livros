@@ -24,7 +24,7 @@ de concorrência (`scripts/pool-capitulos.py`), nunca todos de uma vez.
    Leia `output/<slug>/config_obra.json` e identifique o campo `"senioridade_obra"` (`iniciante`, `intermediario`, `avancado` ou `tecnico`). Este campo deve guiar rigorosamente o nível de complexidade e o tom conceitual das skills `estrategista` e `redator-eita`.
 2. **Pesquisa contextual (RAG — não carregue o dossiê inteiro):**
    ```bash
-   python scripts/indexar-dossie.py <slug> --buscar "<termos do título e dos pilares>" --topo 4
+   python scripts/indexar-dossie.py <slug> --buscar "<termos do título e dos pilares>" --topo 2
    ```
    Guarde as URLs da linha `FONTES:` — são as únicas fontes autorizadas para as
    referências deste capítulo.
