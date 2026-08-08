@@ -348,7 +348,11 @@ def extrair_citacoes_autor_data(texto):
 
 
 def extrair_referencias_autor_data(corpo_refs):
-    """Extrai (sobrenome_normalizado, ano) de cada entrada da secao de Referencias."""
+    """Extrai (sobrenome_normalizado, ano) de cada entrada da secao de Referencias.
+
+    Suporta entradas "SOBRENOME, Nome; SOBRENOME2, Nome2" e institucionais
+    "ORG. Titulo": o primeiro nome antes de ',' ou '.' e a chave do rastro.
+    """
     achados = set()
     for linha in corpo_refs.split("\n"):
         linha = linha.strip()
@@ -360,8 +364,11 @@ def extrair_referencias_autor_data(corpo_refs):
         sobrenomes, ano = m.group(1), m.group(2)
         for nome in re.split(r";", sobrenomes):
             nome = nome.strip()
-            if nome:
-                achados.add((_sobrenome_norm(nome), ano))
+            if not nome:
+                continue
+            chave = nome.split(",")[0].strip()
+            if chave:
+                achados.add((_sobrenome_norm(chave), ano))
     return achados
 
 

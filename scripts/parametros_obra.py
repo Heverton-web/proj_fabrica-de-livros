@@ -64,9 +64,11 @@ RE_CITACAO_AUTOR_DATA = re.compile(
 )
 
 # Entrada de referencia ABNT autor-data: linha comecando com SOBRENOME e contendo um ano
+# (suporta "SOBRENOME, Nome; SOBRENOME2, Nome2" e autores institucionais "ORG. Titulo")
 RE_REF_AUTOR_DATA = re.compile(
-    r"^([A-ZÀ-Ý][A-ZÀ-Ýa-zà-ÿ\'\-]+(?:\s*;\s*[A-ZÀ-Ý][A-ZÀ-Ýa-zà-ÿ\'\-]+)*)"
-    r".*?(\d{4})", re.MULTILINE
+    r"^((?:[A-ZÀ-Ý][A-ZÀ-Ýa-zà-ÿ\'\-]+(?:\s*,\s*[^;.,]+)?)"
+    r"(?:\s*;\s*[A-ZÀ-Ý][A-ZÀ-Ýa-zà-ÿ\'\-]+(?:\s*,\s*[^;.,]+)?)*)"
+    r"\.?\s*.*?(\d{4})", re.MULTILINE
 )
 
 # Numeracao progressiva de secao (NBR 6024): "1", "1.1", "2.3.4"...
