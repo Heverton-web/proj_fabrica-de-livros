@@ -15,6 +15,9 @@ Campos do descritor:
   custo_llm              "alto" | "medio" | "baixo" | "zero"  (guia de token economy)
   dimensoes_capa         (largura, altura) em px, ou None se nao tem capa propria
   template_typ           nome do arquivo em templates/, ou None (usa template.typ)
+  template_html          template HTML quando motor_pdf="chromium" (senao None)
+  motor_pdf              "typst" (Pandoc->Typst) | "chromium" (HTML+CSS->Playwright)
+  compilador             script proprio de compilacao, ou None (usa compilar-para-pdf.py)
   validador              script de gate em scripts/, ou None
   extensoes_saida        artefatos finais esperados
   min_refs_padrao        minimo de referencias por capitulo/secao
@@ -172,7 +175,13 @@ TIPOS = {
         "custo_llm": "zero",
         "dimensoes_capa": (2480, 3508),      # A4 @ 300dpi
         "dimensoes_social": (1080, 1350),    # card de anuncio/feed
-        "template_typ": "template_lead_magnet.typ",
+        "template_typ": "template_lead_magnet.typ",   # fallback
+        # Peca de marketing pede controle fino de layout (gradiente, sobreposicao,
+        # tipografia de campanha) — CSS entrega isso melhor que Typst. O HTML e
+        # camada INTERMEDIARIA: o entregavel continua sendo o PDF.
+        "template_html": "template_lead_magnet.html",
+        "motor_pdf": "chromium",
+        "compilador": "gerar-lead-magnet-pdf.py",
         "validador": "validar-lead-magnet.py",
         "extensoes_saida": (".pdf", ".png"),
         "min_refs_padrao": 0,
@@ -193,8 +202,12 @@ TIPOS = {
         "custo_llm": "zero",
         "dimensoes_capa": (1920, 1080),
         "template_typ": "template_deck.typ",
+        # PPTX editavel sai do writer nativo do Pandoc (dependencia zero); o PDF
+        # 16:9 continua saindo do Typst. Sao dois entregaveis, nao alternativas.
+        "reference_pptx": "reference_deck.pptx",
+        "gerador_pptx": "gerar-pptx.py",
         "validador": "validar-deck.py",
-        "extensoes_saida": (".pdf",),
+        "extensoes_saida": (".pdf", ".pptx"),
         "min_refs_padrao": 0,
         "citacao": None,
         "numerar_secoes": False,
@@ -230,6 +243,11 @@ TIPOS = {
 # ── Formatos de LEAD MAGNET ───────────────────────────────────────────────────
 # Cada formato e uma QUERY DE AGREGACAO sobre os campos dos cards do playbook.
 # `campo_card` None = nao vem dos cards (usa sumario_macro).
+#
+# `max_itens` NAO e cosmetico: sem teto, um livro XG gera "As 100 Armadilhas de X"
+# — 16 paginas, acima do teto do formato e longe demais para ser acionavel. O
+# corte e feito por rodizio entre capitulos (nao pelos primeiros N), para a
+# cobertura continuar espalhada pela obra.
 FORMATOS_LM = {
     "checklist": {
         "rotulo": "Checklist Mestre",
@@ -237,6 +255,7 @@ FORMATOS_LM = {
         "titulo_padrao": "Checklist Mestre: {tema}",
         "promessa": "O checklist completo de {n} etapas para {tema}",
         "min_itens": 8,
+        "max_itens": 60,
         "max_paginas": 8,
     },
     "armadilhas": {
@@ -245,6 +264,7 @@ FORMATOS_LM = {
         "titulo_padrao": "As {n} Armadilhas de {tema}",
         "promessa": "Os {n} erros que travam quem está começando em {tema}",
         "min_itens": 6,
+        "max_itens": 25,
         "max_paginas": 10,
     },
     "cheatsheet": {
@@ -253,6 +273,7 @@ FORMATOS_LM = {
         "titulo_padrao": "Cheat Sheet: {tema}",
         "promessa": "Todos os comandos de {tema} em uma folha de bancada",
         "min_itens": 6,
+        "max_itens": 50,
         "max_paginas": 6,
     },
     "mapa": {
@@ -261,6 +282,7 @@ FORMATOS_LM = {
         "titulo_padrao": "O Mapa de {tema}",
         "promessa": "A rota completa de {tema} em uma única folha",
         "min_itens": 3,
+        "max_itens": 40,
         "max_paginas": 4,
     },
     "entregas": {
@@ -269,6 +291,7 @@ FORMATOS_LM = {
         "titulo_padrao": "Mapa de Entregas: {tema}",
         "promessa": "Todos os artefatos que você produz em {tema}",
         "min_itens": 6,
+        "max_itens": 40,
         "max_paginas": 6,
     },
     "mini-guia": {
@@ -277,6 +300,7 @@ FORMATOS_LM = {
         "titulo_padrao": "Mini-guia: {tema}",
         "promessa": "O primeiro passo de {tema}, do início ao fim",
         "min_itens": 1,
+        "max_itens": 1,
         "max_paginas": 12,
     },
 }
@@ -381,6 +405,28 @@ def template_de(tipo):
 def validador_de(tipo):
     nome = campo(tipo, "validador")
     return (DIR_PROJETO / "scripts" / nome) if nome else None
+
+
+def motor_pdf(tipo):
+    """'typst' (Pandoc->Typst, padrao) ou 'chromium' (HTML+CSS->Playwright)."""
+    return campo(tipo, "motor_pdf", "typst")
+
+
+def compilador_de(tipo):
+    """Script proprio de compilacao do tipo, ou None (usa compilar-para-pdf.py)."""
+    nome = campo(tipo, "compilador")
+    return (DIR_PROJETO / "scripts" / nome) if nome else None
+
+
+def template_html_de(tipo):
+    nome = campo(tipo, "template_html")
+    return (DIR_PROJETO / "templates" / nome) if nome else None
+
+
+def referencia_pptx(tipo):
+    """Reference doc do writer pptx do Pandoc (portador da identidade visual)."""
+    nome = campo(tipo, "reference_pptx")
+    return (DIR_PROJETO / "templates" / nome) if nome else None
 
 
 def dimensoes_capa(tipo, variante=None):

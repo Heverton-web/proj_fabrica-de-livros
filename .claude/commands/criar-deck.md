@@ -34,12 +34,17 @@ Reprova mais comum: `R-DK-2` (bullet longo). Corrija encurtando o
 `pilares_previstos` no `sumario_macro.json` do livro-mãe e regere — **não**
 edite o `deck.md` à mão, ele é derivado.
 
-## Passo 4 — Capa + PDF
+## Passo 4 — Capa + os DOIS entregáveis
 
 ```
 python scripts/gerar-capa.py decks/<slug>--deck --tipo deck
 python compilar-para-pdf.py decks/<slug>--deck --tipo deck
+python scripts/gerar-pptx.py decks/<slug>--deck
 ```
+
+O `.pptx` é editável no PowerPoint/Keynote/Google Slides e herda a cor da
+coleção (injetada em `ppt/theme/theme1.xml`). O `.pdf` 16:9 é para projeção e
+distribuição. Entregue os dois.
 
 ## Passo 5 — Coleção
 

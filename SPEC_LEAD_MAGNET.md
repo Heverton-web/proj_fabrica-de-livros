@@ -34,11 +34,12 @@ Derivação permitida: **playbook → lead-magnet** (preferida) ou
 |---|---|
 | **R-LM-1** | CTA final com URL rastreável (UTM) para a obra-mãe. O CTA também aparece no rodapé de toda página. |
 | **R-LM-2** | Promessa explícita no título: número ("As 20 armadilhas"), "como", ou substantivo de formato (checklist, mapa, cheat sheet, guia) |
-| **R-LM-3** | Teto de páginas do formato respeitado (checklist 8, cheatsheet 6, mapa 4, mini-guia 12, armadilhas 10, entregas 6) |
+| **R-LM-3** | Teto de páginas do formato respeitado (checklist 8, cheatsheet 6, mapa 4, mini-guia 12, armadilhas 10, entregas 6). **Medido no PDF compilado**; a estimativa por caracteres só vale antes da compilação |
 | **R-LM-4** | **Zero teoria** — similaridade com §1–§3 do livro-mãe abaixo de 0,15 (mais estrito que R-PBK-0) |
 | **R-LM-5** | Par de saídas: PDF A4 (download) + PNG 1080×1350 (card social/anúncio) |
 | **R-LM-6** | Badge de nível + cor da coleção herdados da obra-mãe |
-| **R-LM-7** | Quantidade mínima de itens do formato atingida (`FORMATOS_LM[x].min_itens`) |
+| **R-LM-7** | Quantidade mínima de itens do formato atingida (`min_itens`); o teto (`max_itens`) é aplicado na geração, por rodízio entre capítulos |
+| **R-LM-8** | Peso do PDF sob 250 KB por página — lead magnet vai por e-mail e download |
 
 ## 4. UTM
 
@@ -66,12 +67,38 @@ output/lead-magnets/<slug-mae>--lm-NN-<formato>/
 
 ```bash
 python scripts/gerar-lead-magnet.py livros/<slug> --todos --cta-url https://exemplo.com/livro
-python scripts/gerar-capa.py lead-magnets/<slug>--lm-01-checklist --tipo lead-magnet --social
+python scripts/gerar-lead-magnet-pdf.py --todos
+python scripts/gerar-capa.py lead-magnets/<slug>--lm-01-armadilhas --tipo lead-magnet --social
 python scripts/validar-lead-magnet.py --todos --estrito
-python compilar-para-pdf.py lead-magnets/<slug>--lm-01-checklist --tipo lead-magnet
 ```
 
-## 7. Nota de escala
+## 7. Motor de renderização
+
+O PDF **não** sai do Typst: sai de **HTML+CSS renderizado pelo Chromium**
+(`templates/template_lead_magnet.html` + Playwright). CSS dá controle fino de
+gradiente, sobreposição e tipografia de campanha — o que uma peça de marketing
+exige e o Typst não entrega bem.
+
+**O HTML é camada intermediária, como o `.typ` dos outros tipos: o entregável é
+o PDF.** Nenhum tipo declara `.html` em `extensoes_saida`.
+
+Não usa Paged.js: o Chromium já implementa `@page`, `break-*` e orphans/widows;
+o rodapé com o CTA vem de `page.pdf(footerTemplate=...)`. Isso evita vendorizar
+~200 KB de JS de terceiros.
+
+Três armadilhas do Chromium que o template já contorna (com teste de regressão):
+
+| Armadilha | Efeito observado | Correção |
+|---|---|---|
+| `filter: brightness()` rasteriza por elemento | PDF de 100 KB → **6,6 MB** com ~100 `h2` | `color-mix()` |
+| `break-before: avoid` é ignorado | 1 página em branco em **todo** lead magnet | exceção no seletor: `h1:not(:first-of-type)` |
+| `break-inside: avoid` na tabela | tabela de 20 linhas empurrada inteira, páginas quase vazias | proteger a **linha** (`tr`), não a tabela |
+
+O parâmetro `margin` de `page.pdf()` **sobrepõe** o `@page { margin }` do CSS,
+inclusive o `:first`. A capa usa `--altura-util: 257mm` (297 − 18 − 22) para não
+transbordar.
+
+## 8. Nota de escala
 
 Um livro G (12 capítulos) rende os 6 formatos por **menos de 8k tokens no total**.
 Não confunda com e-book: e-book reescreve prosa (caro), lead magnet agrega

@@ -28,7 +28,19 @@ do sumário.
 | **R-DK-4** | Ao menos 1 diagrama a cada 5 slides (aviso, não bloqueia) |
 | **R-DK-5** | Badge de nível herdado da obra-mãe |
 
-## 3. Saída
+## 3. Dois entregáveis
+
+| Artefato | Motor | Comando |
+|---|---|---|
+| `.pdf` 16:9 | Pandoc→Typst (`template_deck.typ`) | `compilar-para-pdf.py --tipo deck` |
+| `.pptx` editável | Writer nativo do Pandoc (`--reference-doc`) | `gerar-pptx.py` |
+
+O PPTX não lê o template Typst: a identidade visual vem do `reference_deck.pptx`,
+criado na primeira execução a partir do padrão do Pandoc. `gerar-pptx.py` injeta a
+cor de acento da coleção em `ppt/theme/theme1.xml`, para que os dois artefatos
+saiam com a mesma cor da capa.
+
+## 4. Saída
 
 ```
 output/decks/<slug-mae>--deck/

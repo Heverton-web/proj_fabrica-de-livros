@@ -131,6 +131,95 @@ class TestGeracao:
         assert meta["slug"] == "lead-magnets/obra-teste--lm-04-cheatsheet"
 
 
+class TestIndiceEstavel:
+    """Gerar um formato isolado tem de REESCREVER o material existente, nao criar
+    um diretorio paralelo. Com indice posicional, `--formato mapa` sozinho gerava
+    `--lm-01-mapa` ao lado do `--lm-05-mapa` do lote anterior."""
+
+    def test_indice_deriva_do_formato_nao_da_posicao(self):
+        for i, formato in enumerate(sorted(TO.FORMATOS_LM), 1):
+            assert gerador.indice_do_formato(formato) == i
+
+    def test_geracao_isolada_cai_no_mesmo_slug_do_lote(self, ambiente, cards_ctx):
+        cards, ctx = cards_ctx
+        do_lote = {f: gerador.gerar(ambiente["slug"], f, cta_url=CTA,
+                                    cards=cards, ctx=ctx)["slug"]
+                   for f in sorted(TO.FORMATOS_LM)}
+        for formato, slug_lote in do_lote.items():
+            isolado = gerador.gerar(ambiente["slug"], formato, cta_url=CTA,
+                                    cards=cards, ctx=ctx)
+            assert isolado["slug"] == slug_lote, formato
+
+    def test_lote_completo_nao_deixa_diretorio_orfao(self, ambiente, cards_ctx):
+        cards, ctx = cards_ctx
+        for formato in sorted(TO.FORMATOS_LM):
+            gerador.gerar(ambiente["slug"], formato, cta_url=CTA, cards=cards, ctx=ctx)
+        gerador.gerar(ambiente["slug"], "mapa", cta_url=CTA, cards=cards, ctx=ctx)
+        dirs = list((ambiente["raiz"] / "lead-magnets").iterdir())
+        assert len(dirs) == len(TO.FORMATOS_LM)
+
+
+class TestTetoDeItens:
+    """Sem teto, um livro XG rende "As 100 Armadilhas de X": 16 paginas e longe
+    demais para ser acionavel."""
+
+    def test_todo_formato_declara_teto_coerente(self):
+        for formato, spec in TO.FORMATOS_LM.items():
+            assert spec["max_itens"] >= spec["min_itens"], formato
+
+    def test_rodizio_espalha_entre_os_cards(self):
+        cards = [{"numero": "01", "titulo": "A", "armadilhas": ["a1", "a2", "a3"]},
+                 {"numero": "02", "titulo": "B", "armadilhas": ["b1", "b2"]}]
+        escolhidos = gerador._rodizio(cards, "armadilhas", 3)
+        assert [t[2] for t in escolhidos] == ["a1", "a2", "b1"]
+
+    def test_rodizio_nao_concentra_no_primeiro_card(self):
+        cards = [{"numero": "01", "titulo": "A", "armadilhas": [f"a{i}" for i in range(10)]},
+                 {"numero": "02", "titulo": "B", "armadilhas": ["b1"]}]
+        numeros = {t[0] for t in gerador._rodizio(cards, "armadilhas", 3)}
+        assert numeros == {1, 2}
+
+    def test_rodizio_respeita_o_teto(self):
+        cards = [{"numero": "01", "titulo": "A", "armadilhas": [f"a{i}" for i in range(50)]}]
+        assert len(gerador._rodizio(cards, "armadilhas", 7)) == 7
+
+    def test_rodizio_para_quando_esgota(self):
+        cards = [{"numero": "01", "titulo": "A", "armadilhas": ["a1"]}]
+        assert len(gerador._rodizio(cards, "armadilhas", 99)) == 1
+
+    def test_rodizio_devolve_em_ordem_de_capitulo(self):
+        cards = [{"numero": "02", "titulo": "B", "armadilhas": ["b1"]},
+                 {"numero": "01", "titulo": "A", "armadilhas": ["a1"]}]
+        assert [t[0] for t in gerador._rodizio(cards, "armadilhas", 9)] == [1, 2]
+
+    def test_armadilhas_corta_no_teto_e_avisa_o_total(self):
+        cards = [{"numero": str(i).zfill(2), "titulo": f"C{i}",
+                  "armadilhas": [f"erro {i}.{j}" for j in range(5)]} for i in range(1, 11)]
+        corpo, n = gerador.montar_armadilhas(cards, {}, teto=8)
+        assert n == 8
+        assert any("A obra completa cataloga 50" in l for l in corpo)
+
+    def test_armadilhas_sem_corte_nao_avisa(self):
+        cards = [{"numero": "01", "titulo": "C1", "armadilhas": ["erro um", "erro dois"]}]
+        corpo, n = gerador.montar_armadilhas(cards, {}, teto=25)
+        assert n == 2
+        assert not any("A obra completa cataloga" in l for l in corpo)
+
+    def test_mapa_nao_traz_coluna_objetivo(self, ambiente, cards_ctx):
+        """A coluna Objetivo ocupava 227mm (1 pagina) e estourava o teto."""
+        cards, ctx = cards_ctx
+        corpo, _n = gerador.montar_mapa(cards, ctx)
+        cabecalho = next(l for l in corpo if l.startswith("| # | Etapa"))
+        assert "Objetivo" not in cabecalho
+        assert "Estágio" in cabecalho
+
+    def test_truncar_neutraliza_pipe_da_tabela(self):
+        assert "|" not in gerador._truncar("a | b", 40)
+
+    def test_truncar_corta_na_fronteira_de_palavra(self):
+        assert gerador._truncar("palavra outra terceira", 12) == "palavra…"
+
+
 class TestGate:
     def _gerar(self, ambiente, cards_ctx, formato="checklist", **kw):
         cards, ctx = cards_ctx

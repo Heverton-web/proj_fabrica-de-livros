@@ -419,8 +419,27 @@ def converter_md_direto(slug, dir_livro, md_path, pdf_path):
         return False
 
 
+def compilar_por_motor_proprio(slug, tipo):
+    """Delega aos tipos que NAO usam Pandoc->Typst (V5).
+
+    Hoje so o lead magnet: peca de marketing renderiza melhor por HTML+CSS no
+    Chromium. Devolve None quando o tipo usa o motor padrao."""
+    if tipos_obra is None:
+        return None
+    compilador = tipos_obra.compilador_de(tipo)
+    if compilador is None or not Path(compilador).exists():
+        return None
+    print(f"  motor_pdf={tipos_obra.motor_pdf(tipo)} -> delegando para {Path(compilador).name}")
+    return subprocess.run([sys.executable, str(compilador), slug]).returncode == 0
+
+
 def compilar_livro(slug):
     """Compila livro com capitulos reais e gera PDF profissional via Pandoc+Typst."""
+    tipo = resolver_tipo(slug)
+    resultado_proprio = compilar_por_motor_proprio(slug, tipo)
+    if resultado_proprio is not None:
+        return resultado_proprio
+
     dir_livro = DIR_RAIZ / slug
     dir_caps = dir_livro / "capitulos"
     dir_imagens = dir_livro / "imagens"
@@ -435,7 +454,7 @@ def compilar_livro(slug):
     # V5: derivados de extracao trazem o Markdown pronto com nome proprio
     # (playbook.md / lead_magnet.md / deck.md) — nao passam por merge de capitulos.
     md_precompilado = dir_livro / "livro_final.md"
-    fonte_propria = FONTE_MD_POR_TIPO.get(resolver_tipo(slug))
+    fonte_propria = FONTE_MD_POR_TIPO.get(tipo)
     if fonte_propria and (dir_livro / fonte_propria).exists():
         md_precompilado = dir_livro / fonte_propria
 

@@ -46,6 +46,12 @@ alwaysApply: true
 | Deck | extração | **zero** | `SPEC_DECK.md` | `/criar-deck` | `gerar-deck.py` |
 | E-mails | extração | baixo | `SPEC_EMAILS.md` | `/criar-emails` | `gerar-sequencia-emails.py` |
 
+**Motores de saída:** Pandoc→Typst é o padrão. Duas exceções deliberadas:
+lead magnet usa **HTML+CSS→Chromium** (`gerar-lead-magnet-pdf.py`) porque peça de
+marketing exige controle fino de layout; deck entrega **também** `.pptx` pelo
+writer nativo do Pandoc (`gerar-pptx.py`). Em ambos os casos o HTML/reference é
+camada intermediária — **nenhum tipo entrega `.html`**.
+
 **Adicionar um tipo novo = 1 entrada em `scripts/tipos_obra.py`.** Os 6 pontos de
 dispatch (`parametros_obra`, `fatiar-obra`, `auditar-obra`, `gerar-capa`,
 `metadados_livro`, `compilar-para-pdf`) consultam o registro — não se edita mais
@@ -72,7 +78,7 @@ vocabulário condutor, badge de nível e CTA. Manifesto derivado em
 ### Scripts Determinísticos
 `indexar-dossie.py` (RAG), `pool-capitulos.py` (lotes), `renderizar-diagramas.py`, `validar-codigo.py`, `auditar-obra.py`, `metadados_livro.py`, `parametros_obra.py`, `validar-abnt-tcc.py`, `fatiar-obra.py`, `gerar-epub.py`, `pdf_typst.py`, `series_capa.py`, `validar-capa-texto.py`, `validar-capa-nivel.py`
 
-**V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`
+**V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`, `gerar-lead-magnet-pdf.py`, `gerar-pptx.py`
 
 ### Token Economy Skills
 `lean-ctx`, `headroom`, `caveman`, `rtk-memory`, `pre-flight-check`, `calcular-gastos-sessao`
@@ -89,7 +95,7 @@ vocabulário condutor, badge de nível e CTA. Manifesto derivado em
 
 ## 4. Templates
 
-`templates/template.typ` (Livro ABNT), `template_tcc.typ` (TCC NBR 14724), `template_artigo.typ` (Artigo NBR 6022), `template_eita.md` (molde EITA-V2), `template_playbook.typ` (cards de bancada), `template_lead_magnet.typ` (A4 + CTA no rodapé), `template_deck.typ` (16:9)
+`templates/template.typ` (Livro ABNT), `template_tcc.typ` (TCC NBR 14724), `template_artigo.typ` (Artigo NBR 6022), `template_eita.md` (molde EITA-V2), `template_playbook.typ` (cards de bancada), `template_lead_magnet.html` (A4 + CTA no rodapé, motor Chromium), `template_deck.typ` (16:9)
 
 ## 5. Fluxo Operacional
 

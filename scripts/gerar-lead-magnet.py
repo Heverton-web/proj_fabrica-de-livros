@@ -140,16 +140,25 @@ def _frontmatter(titulo, subtitulo):
 
 
 def montar_checklist(cards, ctx):
-    itens = sum(len(c.get("feito_quando", [])) for c in cards)
+    teto = FORMATOS_LM["checklist"]["max_itens"]
+    selecionados = _rodizio(cards, "feito_quando", teto)
+    por_card = {}
+    for num, _titulo, item in selecionados:
+        por_card.setdefault(num, []).append(item)
+    itens = len(selecionados)
+
     L = ["# O checklist", "",
-         f"São **{itens} verificações** distribuídas em {len(cards)} etapas. "
+         f"São **{itens} verificações** distribuídas em {len(por_card)} etapas. "
          "Marque cada uma antes de avançar — a ordem importa.", ""]
     for c in cards:
+        seus = por_card.get(int(c["numero"]))
+        if not seus:
+            continue
         L.append(f"## Etapa {int(c['numero'])} — {c['titulo']}")
         L.append("")
         if c.get("objetivo"):
             L += [f"*{c['objetivo']}*", ""]
-        for item in c.get("feito_quando", []):
+        for item in seus:
             L.append(f"- [ ] {item}")
         if c.get("gate"):
             L += ["", f"**Verificação automática:** `{c['gate']}`"]
@@ -157,9 +166,42 @@ def montar_checklist(cards, ctx):
     return L, itens
 
 
-def montar_armadilhas(cards, ctx):
-    todas = [(int(c["numero"]), c["titulo"], a)
-             for c in cards for a in c.get("armadilhas", [])]
+def _truncar(texto, limite):
+    """Encurta na fronteira de palavra e neutraliza o pipe (quebraria a tabela MD)."""
+    t = re.sub(r"\s+", " ", (texto or "")).strip().replace("|", "/")
+    if len(t) <= limite:
+        return t
+    return t[:limite].rsplit(" ", 1)[0] + "…"
+
+
+def _rodizio(cards, campo, teto):
+    """Seleciona ate `teto` itens em RODIZIO entre os cards.
+
+    Cortar pelos primeiros N concentraria o material nos primeiros capitulos; o
+    rodizio mantem a cobertura espalhada pela obra inteira. Devolve
+    [(numero_card, titulo_card, item)] na ordem dos capitulos."""
+    listas = [(c, list(c.get(campo, []))) for c in cards]
+    escolhidos, rodada = [], 0
+    while len(escolhidos) < teto:
+        avancou = False
+        for card, itens in listas:
+            if rodada < len(itens):
+                escolhidos.append((int(card["numero"]), card["titulo"], itens[rodada]))
+                avancou = True
+                if len(escolhidos) >= teto:
+                    break
+        if not avancou:
+            break
+        rodada += 1
+    escolhidos.sort(key=lambda t: t[0])
+    return escolhidos
+
+
+def montar_armadilhas(cards, ctx, teto=None):
+    teto = teto or FORMATOS_LM["armadilhas"]["max_itens"]
+    disponiveis = sum(len(c.get("armadilhas", [])) for c in cards)
+    todas = _rodizio(cards, "armadilhas", teto)
+
     L = ["# As armadilhas", "",
          f"São **{len(todas)} erros** que aparecem com mais frequência em quem está "
          "percorrendo este caminho pela primeira vez. Cada um traz a etapa em que costuma "
@@ -167,15 +209,20 @@ def montar_armadilhas(cards, ctx):
     for i, (num, titulo, texto) in enumerate(todas, 1):
         L += [f"## {i}. {texto}", "",
               f"**Onde aparece:** Etapa {num} — {titulo}", ""]
+    if disponiveis > len(todas):
+        L += [f"*Selecionamos as {len(todas)} mais frequentes, distribuídas por todas "
+              f"as etapas. A obra completa cataloga {disponiveis}.*", ""]
     return L, len(todas)
 
 
 def montar_cheatsheet(cards, ctx):
+    teto = FORMATOS_LM["cheatsheet"]["max_itens"]
     total = 0
     L = ["# Folha de bancada", "",
          "Todos os comandos, na ordem de execução. Imprima e deixe ao lado do teclado.", ""]
     for c in cards:
         comandos = c.get("comandos") or ([c["gate"]] if c.get("gate") else [])
+        comandos = comandos[:max(0, teto - total)]
         if not comandos:
             continue
         total += len(comandos)
@@ -184,25 +231,32 @@ def montar_cheatsheet(cards, ctx):
         L += ["```", ""]
         if c.get("gate"):
             L += [f"*Verificação:* `{c['gate']}`", ""]
+        if total >= teto:
+            break
     return L, total
 
 
 def montar_entregas(cards, ctx):
-    total = 0
+    teto = FORMATOS_LM["entregas"]["max_itens"]
+    selecionados = _rodizio(cards, "entregas", teto)
+    gates = {int(c["numero"]): c.get("gate") for c in cards}
+
     L = ["# O que você produz", "",
          "Cada etapa entrega artefatos concretos. Esta é a lista completa — "
          "use como inventário do projeto.", "",
          "| Etapa | Entrega | Verificação |", "|---|---|---|"]
-    for c in cards:
-        gate = f"`{c['gate']}`" if c.get("gate") else "—"
-        for e in c.get("entregas", []):
-            total += 1
-            L.append(f"| {int(c['numero'])} | `{e}` | {gate} |")
+    for num, _titulo, entrega in selecionados:
+        gate = f"`{gates.get(num)}`" if gates.get(num) else "—"
+        L.append(f"| {num} | `{entrega}` | {gate} |")
     L.append("")
-    return L, total
+    return L, len(selecionados)
 
 
 def montar_mapa(cards, ctx):
+    """Uma folha, nao um indice comentado.
+
+    A versao com um `##` + paragrafo por capitulo rendia 7 paginas num livro de
+    20 capitulos — quase o dobro do teto do formato. Tabela compacta cabe em 2-3."""
     estagios = ctx.get("estagios") or []
     L = ["# O mapa", "",
          f"A rota completa, do início ao fim. Você é o **{ctx.get('persona', 'praticante')}**.", ""]
@@ -212,15 +266,17 @@ def montar_mapa(cards, ctx):
             caps = ", ".join(str(int(c)) for c in e["capitulos"]) or "—"
             L.append(f"| {e['indice']} | {e['nome']} | {caps} |")
         L.append("")
-    L += ["# As etapas", ""]
-    for c in cards:
-        L += [f"## {int(c['numero'])}. {c['titulo']}", ""]
-        if c.get("estagio"):
-            L.append(f"**Estágio:** {c['estagio']}  ")
-        L.append(c.get("objetivo") or "_(objetivo a definir)_")
-        if c.get("entregas"):
-            L.append(f"  \n**Entrega:** `{c['entregas'][0]}`")
-        L.append("")
+
+    # Um mapa mostra ONDE as coisas estao, nao o que cada uma faz. A coluna
+    # "Objetivo" ocupava 227mm (uma pagina inteira) e fazia o formato estourar o
+    # proprio teto — o objetivo de cada etapa ja vive no checklist e no mini-guia.
+    # Uma linha por etapa, sem quebra de texto.
+    teto = FORMATOS_LM["mapa"]["max_itens"]
+    L += ["## As etapas", "", "| # | Etapa | Estágio |", "|---|---|---|"]
+    for c in cards[:teto]:
+        L.append(f"| {int(c['numero'])} | {_truncar(c['titulo'], 58)} "
+                 f"| {_truncar(c.get('estagio') or '—', 22)} |")
+    L.append("")
     return L, len(estagios) or len(cards)
 
 
@@ -256,11 +312,21 @@ MONTADORES = {
 }
 
 
-def gerar(slug, formato, indice=1, cta_url=None, cta_texto=None, cards=None, ctx=None):
+def indice_do_formato(formato):
+    """Indice ESTAVEL do formato no slug (`--lm-05-mapa`).
+
+    Precisa derivar do formato, nao da posicao no laco: com indice posicional,
+    `--formato mapa` sozinho gerava `--lm-01-mapa` ao lado do `--lm-05-mapa`
+    ja existente, duplicando o material em vez de reescreve-lo."""
+    return sorted(FORMATOS_LM).index(formato) + 1
+
+
+def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None, ctx=None):
     if formato not in FORMATOS_LM:
         print(f"[ERRO] formato desconhecido: {formato}. "
               f"Validos: {', '.join(FORMATOS_LM)}")
         return None
+    indice = indice_do_formato(formato) if indice is None else indice
 
     if cards is None or ctx is None:
         cards, ctx, _ = resolver_fonte(slug)
@@ -338,8 +404,8 @@ def main():
 
     formatos = sorted(FORMATOS_LM) if args.todos else [args.formato]
     metas = []
-    for i, formato in enumerate(formatos, 1):
-        meta = gerar(args.slug, formato, indice=i, cta_url=args.cta_url,
+    for formato in formatos:
+        meta = gerar(args.slug, formato, cta_url=args.cta_url,
                      cta_texto=args.cta_texto, cards=cards, ctx=ctx)
         if meta:
             metas.append(meta)

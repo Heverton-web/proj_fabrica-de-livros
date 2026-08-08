@@ -26,7 +26,13 @@ DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 DIR_LM = DIR_OUTPUT / "lead-magnets"
 
-CHARS_POR_PAGINA = 2500
+# Calibrado contra os PDFs reais da V5 (750-1400 chars/pagina no layout A4 do
+# template). O valor antigo (2500, densidade de livro) subestimava as paginas em
+# 2-3x e fazia R-LM-3 aprovar material que estourava o teto.
+CHARS_POR_PAGINA = 900
+MAX_KB_POR_PAGINA = 250    # R-LM-8: peso de download
+
+RE_TIPO_PAGINA = re.compile(rb"/Type\s*/Page[^s]")
 LIMIAR_TEORIA = 0.15    # mais estrito que o playbook: lead magnet nao tem prosa nenhuma
 
 # R-LM-2: a promessa tem de estar no titulo (numero, "como", ou substantivo-formato)
@@ -42,7 +48,20 @@ REGRAS = {
     "R-LM-5": "par de saidas: PDF (A4) + PNG (card social)",
     "R-LM-6": "badge de nivel + cor da colecao herdados da obra-mae",
     "R-LM-7": "quantidade minima de itens do formato atingida",
+    "R-LM-8": f"peso do PDF sob {MAX_KB_POR_PAGINA} KB por pagina",
 }
+
+
+def paginas_reais(dir_lm):
+    """Numero de paginas do PDF compilado, ou None se ainda nao ha PDF.
+
+    Medir vale mais que estimar: a estimativa por caracteres nao enxerga a
+    densidade do layout e ja aprovou material com o dobro do teto."""
+    pdfs = sorted(dir_lm.glob("*.pdf"))
+    if not pdfs:
+        return None, None
+    dados = pdfs[0].read_bytes()
+    return len(RE_TIPO_PAGINA.findall(dados)) or None, pdfs[0].stat().st_size // 1024
 
 
 def _ler_json(caminho, padrao=None):
@@ -112,12 +131,16 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
     if not RE_PROMESSA.search(titulo):
         falha("R-LM-2", f"titulo sem promessa mensuravel: {titulo!r}")
 
-    # R-LM-3 — teto de paginas
+    # R-LM-3 — teto de paginas (medido no PDF quando existe; estimado antes disso)
     corpo = re.sub(r"\A---\n.*?\n---\n", "", texto, flags=re.DOTALL)
-    paginas = max(1, round(len(corpo) / CHARS_POR_PAGINA))
+    reais, kb = paginas_reais(dir_lm)
+    estimadas = max(1, round(len(corpo) / CHARS_POR_PAGINA))
+    paginas = reais or estimadas
+    medido = reais is not None
     teto = spec.get("max_paginas", 12)
     if paginas > teto:
-        falha("R-LM-3", f"~{paginas} paginas estimadas, teto do formato {formato} e {teto}")
+        origem = "medidas no PDF" if medido else "estimadas (PDF ainda nao compilado)"
+        falha("R-LM-3", f"{paginas} paginas {origem}, teto do formato {formato} e {teto}")
 
     # R-LM-4 — zero teoria
     mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae") or sumario.get("slug_livro_mae")
@@ -134,12 +157,19 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
         avisos.append("config sem obra_mae — R-LM-4 e R-LM-6 nao verificados")
 
     # R-LM-5 — par de saidas
-    tem_pdf = any(dir_lm.glob("*.pdf"))
     tem_png = (dir_lm / "imagens" / "card_social.png").exists()
-    if not tem_pdf:
-        avisos.append("PDF ainda nao compilado — rode compilar-para-pdf.py --tipo lead-magnet")
+    if not medido:
+        avisos.append("PDF ainda nao compilado — rode scripts/gerar-lead-magnet-pdf.py")
     if not tem_png:
         avisos.append("card social ainda nao gerado — rode gerar-capa.py --tipo lead-magnet --social")
+
+    # R-LM-8 — peso: lead magnet vai por e-mail e download, nao pode ser pesado
+    if medido and kb and paginas:
+        kb_por_pagina = kb // paginas
+        if kb_por_pagina > MAX_KB_POR_PAGINA:
+            falha("R-LM-8", f"{kb} KB em {paginas} paginas ({kb_por_pagina} KB/pagina, "
+                            f"teto {MAX_KB_POR_PAGINA}) — procure CSS que rasteriza "
+                            f"(filter, box-shadow, opacity em texto)")
 
     # R-LM-6 — badge de nivel
     if not (cfg.get("senioridade_obra") or "").strip():
@@ -158,7 +188,8 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
 
     return {
         "slug": slug, "formato": formato, "titulo": titulo,
-        "paginas_estimadas": paginas, "itens": itens,
+        "paginas": paginas, "paginas_medidas": medido,
+        "paginas_estimadas": estimadas, "kb": kb, "itens": itens,
         "conforme": not violacoes, "violacoes": violacoes,
         "avisos": avisos, "regras": REGRAS,
     }
@@ -166,8 +197,10 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
 
 def _imprimir(rel):
     estado = "CONFORME" if rel["conforme"] else "NAO CONFORME"
+    prefixo = "" if rel.get("paginas_medidas") else "~"
+    peso = f", {rel['kb']} KB" if rel.get("kb") else ""
     print(f"[{estado}] {rel['slug']} ({rel.get('formato', '?')}) — "
-          f"~{rel.get('paginas_estimadas', '?')}p, {rel.get('itens', '?')} itens")
+          f"{prefixo}{rel.get('paginas', '?')}p, {rel.get('itens', '?')} itens{peso}")
     for v in rel["violacoes"]:
         print(f"  [{v['regra']}] {v['detalhe']}")
     for a in rel["avisos"]:

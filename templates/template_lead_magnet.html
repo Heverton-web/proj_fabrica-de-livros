@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>$title$</title>
+<style>
+/* ─────────────────────────────────────────────────────────────────────────────
+   Template LEAD MAGNET (V5) — camada INTERMEDIARIA.
+   O entregavel e o PDF; este HTML nunca vai para o lead.
+
+   Renderizado por scripts/gerar-lead-magnet-pdf.py via Playwright/Chromium.
+   Nao usa Paged.js: o Chromium ja implementa @page, break-* e header/footer
+   (estes ultimos vem de page.pdf(headerTemplate/footerTemplate), nao do CSS).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --acento: $if(cor_acento)$$cor_acento$$else$#2ecc9a$endif$;
+  --tinta:  #151a20;
+  --suave:  #616b78;
+  --clara:  #f4f7f9;
+  --altura-util: 257mm;
+}
+
+/* ATENCAO: quem manda nas margens e o parametro `margin` de page.pdf() no
+   Playwright — ele SOBREPOE o `@page { margin }` daqui, inclusive o `:first`.
+   Estes valores existem para espelhar MARGENS em gerar-lead-magnet-pdf.py; se
+   mudar la, mude aqui. A altura util da pagina (--altura-util) e o que a capa
+   pode ocupar sem transbordar para uma segunda pagina. */
+@page {
+  size: A4;
+  margin: 18mm 20mm 22mm 20mm;
+}
+:root {
+  --altura-util: 257mm;   /* 297mm - 18mm (topo) - 22mm (rodape do CTA) */
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--tinta);
+}
+
+/* ── Capa ─────────────────────────────────────────────────────────────────── */
+.capa {
+  page-break-after: always;
+  break-after: page;
+  /* 297mm aqui transbordava para uma 2a pagina EM TODO lead magnet: as margens
+     do Playwright ja consomem 40mm da folha. */
+  height: var(--altura-util);
+  padding: 14mm 8mm 8mm 8mm;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(120% 90% at 100% 0%,
+      color-mix(in srgb, var(--acento) 22%, transparent) 0%, transparent 58%),
+    linear-gradient(180deg, #ffffff 0%, var(--clara) 100%);
+  border-top: 9mm solid var(--acento);
+}
+.capa .marca {
+  font-size: 9pt; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--suave); font-weight: 600; margin-bottom: 22mm;
+}
+.capa h1 {
+  font-size: 40pt; line-height: 1.02; font-weight: 900;
+  letter-spacing: -.02em; margin: 0 0 8mm 0;
+}
+.capa .promessa {
+  font-size: 14pt; color: var(--suave); font-weight: 300;
+  max-width: 78%; margin: 0;
+}
+.capa .badge {
+  display: inline-block; align-self: flex-start; margin-top: 10mm;
+  background: var(--acento); color: #fff; font-weight: 700;
+  font-size: 9pt; letter-spacing: .06em;
+  padding: 3mm 7mm; border-radius: 20mm;
+}
+.capa .rodape { margin-top: auto; }
+.capa .autor { font-size: 12pt; font-weight: 600; }
+.capa .origem { font-size: 9.5pt; color: var(--suave); margin-top: 1.5mm; }
+
+/* ── Corpo ────────────────────────────────────────────────────────────────── */
+.conteudo { padding: 0; }
+
+h1 {
+  font-size: 22pt; font-weight: 900; letter-spacing: -.01em;
+  margin: 0 0 3mm 0;
+}
+/* O Chromium NAO implementa `break-before: avoid` — a excecao tem de estar no
+   seletor, nao numa regra que a sobrescreva. Com `h1:first-of-type { break-before:
+   avoid }` o primeiro titulo tambem quebrava e todo lead magnet desperdicava uma
+   pagina em branco. */
+.conteudo h1:not(:first-of-type) {
+  break-before: page; page-break-before: always; padding-top: 4mm;
+}
+h1::after {
+  content: ""; display: block; width: 22mm; height: 1.4mm;
+  background: var(--acento); margin-top: 2.5mm;
+}
+
+h2 {
+  font-size: 13.5pt; font-weight: 800;
+  /* `filter: brightness()` escureceria a cor, mas cria uma camada RASTERIZADA
+     por elemento: num material com ~100 h2 isso levou o PDF de ~100KB para
+     6.6MB. `color-mix` resolve no mesmo passo de layout, sem raster. */
+  color: color-mix(in srgb, var(--acento) 78%, #000);
+  margin: 8mm 0 2mm 0;
+  break-after: avoid; page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt; font-weight: 700; margin: 5mm 0 1.5mm 0;
+  break-after: avoid; page-break-after: avoid;
+}
+
+p { margin: 0 0 3.2mm 0; orphans: 3; widows: 3; }
+
+ul, ol { margin: 0 0 3.5mm 0; padding-left: 6mm; }
+li { margin-bottom: 1.6mm; break-inside: avoid; page-break-inside: avoid; }
+
+/* Checkbox de checklist: o Pandoc emite "☐" para "- [ ]" */
+li { list-style-type: none; }
+ul li::marker { content: ""; }
+ul > li { position: relative; }
+ul > li::before {
+  content: ""; position: absolute; left: -6mm; top: 1.7mm;
+  width: 3.2mm; height: 3.2mm;
+  border: .5mm solid var(--acento); border-radius: .6mm;
+}
+ol > li { list-style-type: decimal; }
+ol > li::before { content: none; }
+
+code {
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 9.5pt; background: var(--clara);
+  padding: .4mm 1.4mm; border-radius: 1mm;
+}
+pre {
+  background: var(--clara); border-left: 1mm solid var(--acento);
+  padding: 3mm 4mm; border-radius: 1mm; overflow-wrap: anywhere;
+  break-inside: avoid; page-break-inside: avoid; margin: 0 0 4mm 0;
+}
+pre code { background: none; padding: 0; font-size: 9pt; line-height: 1.45; }
+
+blockquote {
+  margin: 5mm 0; padding: 4mm 5mm;
+  background: color-mix(in srgb, var(--acento) 10%, transparent);
+  border-left: 1.4mm solid var(--acento); border-radius: 1mm;
+  font-weight: 600;
+  break-inside: avoid; page-break-inside: avoid;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+table {
+  width: 100%; border-collapse: collapse; font-size: 10pt;
+  margin: 0 0 5mm 0;
+  /* `break-inside: avoid` na TABELA joga a tabela inteira para a proxima pagina
+     quando ela nao cabe — uma tabela de 20 linhas virava 5 paginas quase vazias.
+     O correto e deixar a tabela quebrar e proteger a LINHA. */
+  break-inside: auto; page-break-inside: auto;
+}
+thead { display: table-header-group; }   /* cabecalho repete a cada pagina */
+tr { break-inside: avoid; page-break-inside: avoid; }
+th, td { border: .25mm solid #ccd3da; padding: 2mm 2.6mm; text-align: left; }
+th { background: var(--clara); font-weight: 700; }
+
+a { color: inherit; text-decoration: none; border-bottom: .3mm solid var(--acento); }
+em { color: var(--suave); }
+</style>
+</head>
+<body>
+
+<section class="capa">
+  <div class="marca">Editora Agêntica</div>
+  <h1>$title$</h1>
+  $if(promessa)$<p class="promessa">$promessa$</p>$endif$
+  $if(badge_nivel)$<span class="badge">$badge_nivel$</span>$endif$
+  <div class="rodape">
+    <div class="autor">$author$</div>
+    $if(livro_mae)$<div class="origem">Um recorte de $livro_mae$</div>$endif$
+  </div>
+</section>
+
+<main class="conteudo">
+$body$
+</main>
+
+</body>
+</html>
