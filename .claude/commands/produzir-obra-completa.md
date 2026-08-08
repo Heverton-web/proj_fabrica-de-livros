@@ -27,26 +27,38 @@ dossiê/capítulos já prontos), então podem rodar **ao mesmo tempo** um do out
 cada um internamente em lotes de 4:
 
 ```
-                    [Livro/TCC compilado — Passo 1]
-                              │
-              ┌───────────────┴───────────────┐
-              ▼ (se gerar_artigos)             ▼ (se gerar_ebooks)
-      /criar-artigo <slug>              /criar-ebook <slug>
-      (fatiar-obra --artigos            (fatiar-obra --ebooks
-       → subagente-redator-artigo        → subagente-adaptador-ebook
-       em lotes de 4, RAG do dossie)      em lotes de 4, reescrita de tom)
+                        [Livro/TCC compilado — Passo 1]
+                                    │
+    ┌──────────────┬────────────────┼────────────────┬──────────────┐
+    ▼ COMPRESSÃO   ▼ COMPRESSÃO     ▼ EXTRAÇÃO       ▼ EXTRAÇÃO     ▼ EXTRAÇÃO
+ /criar-artigo  /criar-ebook   /criar-playbook   /criar-deck   /criar-emails
+ (RAG dossiê)  (reescrita tom)  (§4+§5, 0 token)  (0 token)     (esqueleto)
+                                       │
+                                       ▼ EXTRAÇÃO
+                              /criar-lead-magnet --todos
+                              (agrega campos dos cards, 0 token)
 ```
 
 5. Se `gerar_artigos=true`: execute o procedimento de `/criar-artigo <slug>`.
 6. Se `gerar_ebooks=true`: execute o procedimento de `/criar-ebook <slug>`
    (pode ser disparado em paralelo ao Passo 5 — não há dependência entre eles,
    ambos só dependem da obra principal já compilada).
-7. Para acompanhar o progresso de cada lote de artigos/ebooks de forma
-   consolidada, use o pool generalizado por manifesto:
-   ```bash
-   python scripts/pool-capitulos.py <slug> --manifesto artigos/estrutura_artigos.json --status
-   python scripts/pool-capitulos.py <slug> --manifesto ebooks/estrutura_ebooks.json --status
-   ```
+7. **(V5)** Se `gerar_playbook=true`: execute `/criar-playbook <slug>`.
+   Rode-o **antes** dos lead magnets — os cards do playbook são a fonte deles.
+8. **(V5)** Se `gerar_lead_magnets=true`: `/criar-lead-magnet <slug> --todos`.
+   Se `gerar_deck=true`: `/criar-deck <slug>`. Se `gerar_emails=true`:
+   `/criar-emails <slug>`. Os três são independentes entre si → paralelo.
+9. **(V5)** Sincronize a coleção: `python scripts/colecao.py --sincronizar --slug <slug>`.
+10. Para acompanhar o progresso de cada lote de artigos/ebooks de forma
+    consolidada, use o pool generalizado por manifesto:
+    ```bash
+    python scripts/pool-capitulos.py <slug> --manifesto artigos/estrutura_artigos.json --status
+    python scripts/pool-capitulos.py <slug> --manifesto ebooks/estrutura_ebooks.json --status
+    ```
+
+> **Ordem obrigatória:** playbook antes de lead magnets e e-mails. Sem os cards,
+> os dois caem no modo de extração na hora — funciona, mas perde o polimento já
+> aplicado aos cards e refaz trabalho.
 
 ## Passo 3 — Distribuição (última etapa da esteira, sempre)
 

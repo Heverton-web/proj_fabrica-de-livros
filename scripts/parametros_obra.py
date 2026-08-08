@@ -25,10 +25,15 @@ import re
 import sys
 from pathlib import Path
 
+import tipos_obra as TO
+
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
-TIPOS_VALIDOS = ("livro", "tcc", "artigo", "ebook")
+# V5: a lista de tipos deixou de ser literal aqui — vem do registro declarativo
+# scripts/tipos_obra.py. Adicionar um tipo novo NAO exige tocar neste arquivo.
+TIPOS_VALIDOS = TO.tipos_validos()
+TIPOS_PERGUNTAVEIS = tuple(t for t in TIPOS_VALIDOS if TO.campo(t, "perguntavel_na_fase0"))
 SENIORIDADES_VALIDAS = ("iniciante", "intermediario", "avancado", "tecnico")
 
 # Tabela de tamanhos de LIVRO (Fase 0, pergunta Q5). Caracteres ~2.500/pagina ABNT.
@@ -46,11 +51,23 @@ MIN_CAPITULOS_V3 = 16
 MIN_CARACTERES_V3 = 175_000
 MIN_REFS_V3 = 3
 
+# Derivado do registro (V5): {"livro": {"min_refs": 3}, ..., "playbook": {"min_refs": 0}}
 DEFAULTS_POR_TIPO = {
-    "livro": {"min_refs": MIN_REFS_V3},
-    "tcc": {"min_refs": 8},
-    "artigo": {"min_refs": 5},
-    "ebook": {"min_refs": 0},
+    tipo: {"min_refs": TO.campo(tipo, "min_refs_padrao", MIN_REFS_V3)}
+    for tipo in TIPOS_VALIDOS
+}
+
+# Campos de derivacao adicionados pela V5 (retrocompatibilidade por setdefault)
+DERIVADOS_V5 = {
+    "gerar_playbook": False,
+    "gerar_lead_magnets": False,
+    "formatos_lm": [],
+    "gerar_deck": False,
+    "gerar_emails": False,
+    "cta_url": "",
+    "cta_texto": "",
+    "modo_producao": "obra-unica",   # obra-unica | cascata
+    "obra_raiz": None,               # preenchido quando modo_producao=cascata
 }
 
 # Citacao numerica (livro/ebook): [1], [23]...
@@ -76,7 +93,8 @@ RE_NUMERACAO_PROGRESSIVA = re.compile(r"^#{1,6}\s*(\d+(?:\.\d+)*)\.?\s+\S", re.M
 
 
 def usa_citacao_autor_data(tipo_obra):
-    return tipo_obra in ("tcc", "artigo")
+    """V5: o padrao de citacao vem do registro (campo `citacao` do descritor)."""
+    return TO.usa_citacao_autor_data(tipo_obra)
 
 
 def citacao_regex(tipo_obra):
@@ -105,6 +123,9 @@ def carregar_config(slug):
             "qtd_artigos": 0,
             "gerar_ebooks": False,
             "qtd_ebooks": 0,
+            # copia dos mutaveis: dois carregamentos nao podem partilhar a lista
+            **{k: (list(v) if isinstance(v, list) else v)
+               for k, v in DERIVADOS_V5.items()},
             "_origem": "default_v3_sem_esboco",
         }
     dados = json.loads(caminho.read_text(encoding="utf-8"))
@@ -117,6 +138,8 @@ def carregar_config(slug):
     dados.setdefault("qtd_artigos", 0)
     dados.setdefault("gerar_ebooks", False)
     dados.setdefault("qtd_ebooks", 0)
+    for chave, padrao in DERIVADOS_V5.items():
+        dados.setdefault(chave, list(padrao) if isinstance(padrao, list) else padrao)
     dados["_origem"] = "esboco"
     return dados
 
@@ -130,21 +153,40 @@ def gravar_config(slug, config):
 
 
 def validar_config(config):
-    """Valida config_obra.json contra as faixas da Fase 0. Retorna lista de erros (vazia = ok)."""
+    """Valida config_obra.json contra as faixas da Fase 0. Retorna lista de erros (vazia = ok).
+
+    V5: as faixas que dependem do tipo saem do registro (tipos_obra.py). Configs de
+    obras DERIVADAS (artigo, ebook, playbook, lead-magnet, deck, emails) sao gravadas
+    por fatiar-obra/gerar-* e validadas pelas regras do proprio tipo, nao pelas da
+    Fase 0 (que so pergunta livro|tcc)."""
     erros = []
     tipo = config.get("tipo_obra")
-    if tipo not in TIPOS_VALIDOS[:2]:  # Fase 0 so pergunta livro|tcc; artigo/ebook sao derivados
-        erros.append(f"tipo_obra deve ser 'livro' ou 'tcc', recebido: {tipo!r}")
-    refs = config.get("min_referencias_por_capitulo")
-    if not isinstance(refs, int) or not (5 <= refs <= 20):
-        erros.append(f"min_referencias_por_capitulo deve estar entre 5 e 20, recebido: {refs!r}")
+
+    if tipo not in TIPOS_VALIDOS:
+        erros.append(f"tipo_obra invalido: {tipo!r}. Validos: {', '.join(TIPOS_VALIDOS)}")
+        return erros
+
+    derivado = bool(TO.campo(tipo, "derivado_de"))
+    if not derivado and tipo not in TIPOS_PERGUNTAVEIS:
+        erros.append(f"tipo_obra deve ser {' ou '.join(TIPOS_PERGUNTAVEIS)}, recebido: {tipo!r}")
+
+    # Referencias so sao exigidas nos tipos que as usam (playbook/LM/deck usam 0).
+    if TO.exige_referencias(tipo):
+        refs = config.get("min_referencias_por_capitulo")
+        if not isinstance(refs, int) or not (1 <= refs <= 20):
+            erros.append(f"min_referencias_por_capitulo deve estar entre 1 e 20, recebido: {refs!r}")
+        elif not derivado and refs < 5:
+            erros.append(f"min_referencias_por_capitulo da Fase 0 deve estar entre 5 e 20, recebido: {refs!r}")
+
     sen = config.get("senioridade_obra")
     if sen not in SENIORIDADES_VALIDAS:
         erros.append(f"senioridade_obra deve ser 'iniciante', 'intermediario', 'avancado' ou 'tecnico', recebido: {sen!r}")
+
     if tipo == "livro":
         tam = config.get("tamanho_obra")
         if tam not in TAMANHOS:
             erros.append(f"tamanho_obra deve ser P, M, G, GG ou XG quando tipo_obra=livro, recebido: {tam!r}")
+
     if config.get("gerar_artigos"):
         qtd = config.get("qtd_artigos")
         if not isinstance(qtd, int) or not (1 <= qtd <= 5):
@@ -153,6 +195,31 @@ def validar_config(config):
         qtd = config.get("qtd_ebooks")
         if not isinstance(qtd, int) or not (1 <= qtd <= 10):
             erros.append(f"qtd_ebooks deve estar entre 1 e 10, recebido: {qtd!r}")
+
+    # ── V5 ────────────────────────────────────────────────────────────────────
+    if config.get("gerar_lead_magnets"):
+        formatos = config.get("formatos_lm")
+        if not isinstance(formatos, list) or not formatos:
+            erros.append("formatos_lm deve ser lista nao vazia quando gerar_lead_magnets=true")
+        else:
+            invalidos = [f for f in formatos if f not in TO.FORMATOS_LM]
+            if invalidos:
+                erros.append(f"formatos_lm invalido(s): {invalidos}. "
+                             f"Validos: {', '.join(sorted(TO.FORMATOS_LM))}")
+
+    modo = config.get("modo_producao", "obra-unica")
+    if modo not in ("obra-unica", "cascata"):
+        erros.append(f"modo_producao deve ser 'obra-unica' ou 'cascata', recebido: {modo!r}")
+    if modo == "cascata":
+        raiz = config.get("obra_raiz")
+        if raiz not in TIPOS_PERGUNTAVEIS:
+            erros.append(f"obra_raiz deve ser {' ou '.join(TIPOS_PERGUNTAVEIS)} "
+                         f"quando modo_producao=cascata, recebido: {raiz!r}")
+
+    # CTA e obrigatorio nos tipos de conversao (lead magnet, deck, emails)
+    if TO.campo(tipo, "exige_cta") and not (config.get("cta_url") or "").strip():
+        erros.append(f"cta_url obrigatorio para tipo_obra={tipo} (R-LM-1 / R-DK-3 / R-EM-2)")
+
     return erros
 
 

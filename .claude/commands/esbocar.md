@@ -36,6 +36,20 @@ Esta é a **Fase 0** — a única rodada de perguntas de toda a esteira.
 | Qtd. Ebooks | Quantos e-books? | Ebooks = Sim | 1-3 \| 4-6 \| 7-10 |
 | Série | Esta obra faz parte de uma série/coleção? | sempre | Não, standalone (Recommended) \| Other (nome da série) |
 
+**Rodada 3 (V5) — COLEÇÃO: derivados de extração (custo ~0 token):**
+
+| Header | Pergunta | Condição | Opções |
+|---|---|---|---|
+| Derivados | Quais materiais de extração gerar? (múltipla) | Tipo = Livro | Playbook (Recommended) \| Lead magnets \| Slide deck \| Sequência de e-mails |
+| Formatos LM | Quais formatos de lead magnet? (múltipla) | Lead magnets = Sim | Checklist (Recommended) \| Armadilhas \| Cheat sheet \| Mapa |
+| CTA | URL de destino do CTA (rastreável) | Lead magnets, Deck ou E-mails = Sim | Other (URL) |
+
+`multiSelect: true` nas duas primeiras. A pergunta **CTA é obrigatória** quando
+qualquer um dos três tipos de conversão foi escolhido — sem `cta_url` os gates
+R-LM-1 / R-DK-3 / R-EM-2 reprovam. Formatos válidos completos:
+`checklist, armadilhas, cheatsheet, mapa, entregas, mini-guia`
+(`python scripts/tipos_obra.py --formatos-lm`).
+
 O `AskUserQuestion` aceita no máximo 4 opções por pergunta. Para o tier **XG — 5
 Partes, 20 capítulos, ~200 páginas** (o maior da tabela, acima de GG), o operador
 seleciona "Other" na pergunta Tamanho e digita `XG`.
@@ -64,9 +78,25 @@ no schema:
   "gerar_artigos": true,
   "qtd_artigos": 3,
   "gerar_ebooks": true,
-  "qtd_ebooks": 5
+  "qtd_ebooks": 5,
+
+  "gerar_playbook": true,
+  "gerar_lead_magnets": true,
+  "formatos_lm": ["checklist", "armadilhas"],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": "https://exemplo.com/obra",
+  "cta_texto": "Quero a obra completa",
+
+  "modo_producao": "obra-unica",
+  "obra_raiz": null
 }
 ```
+
+> `modo_producao` aceita `obra-unica` (padrão) ou `cascata`. Em `cascata`,
+> preencha `obra_raiz` com `livro` ou `tcc` — a raiz é gerada primeiro e os
+> derivados de **compressão/extração** saem dela. Nunca cascateie uma
+> **expansão** (TCC → livro): ali o custo é de geração, não de reescrita.
 Valide com:
 ```bash
 python scripts/parametros_obra.py <prefixo>/<slug> --validar
@@ -88,6 +118,15 @@ Se inválido, corrija os valores fora de faixa antes de prosseguir (nunca pergun
 7. Se `gerar_ebooks=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --ebooks --qtd <qtd_ebooks>`
    — mesmo princípio, cria cada `output/ebooks/<slug>--eb-NN-<titulo>/` e grava a
    seção `ebooks` do mesmo `derivados.json` (preserva a seção `artigos` já gravada).
+8. Se `gerar_playbook=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --playbook`
+   — cria o esqueleto em `output/playbooks/<slug>--pbk/`. A extração dos cards só
+   roda depois que os capítulos existirem (`/criar-playbook`).
+9. `python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>` — registra a
+   obra e seus derivados no manifesto `output/_colecoes/<serie>.json`.
+
+> Lead magnets, deck e e-mails **não** são fatiados aqui: dependem dos capítulos
+> prontos. Ficam registrados no `config_obra.json` e são disparados na Fase 3
+> por `/criar-lead-magnet`, `/criar-deck` e `/criar-emails`.
 
 ## Passo 4 — Relatório objetivo (REGRA 2, sem metatexto)
 
@@ -100,6 +139,11 @@ solicitados), e a lista de comandos disponíveis para prosseguir:
 /criar-livro <prefixo>/<slug>                — só o livro/TCC
 /criar-artigo <prefixo>/<slug>               — só os artigos (requer livro-mãe com dossiê+sumário)
 /criar-ebook <prefixo>/<slug>                — só os ebooks (requer livro-mãe compilado)
+/criar-playbook <prefixo>/<slug>             — só o playbook (extração, ~0 token)
+/criar-lead-magnet <prefixo>/<slug> --todos  — família de lead magnets (~0 token)
+/criar-deck <prefixo>/<slug>                 — slide deck 16:9 (~0 token)
+/criar-emails <prefixo>/<slug>               — sequência de nutrição
+/colecao --sincronizar                       — manifesto da coleção
 ```
 
 Nenhuma pergunta adicional é feita a partir daqui — a esteira é 100% autônoma

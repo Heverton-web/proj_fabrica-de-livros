@@ -35,12 +35,19 @@ import itertools
 import json
 import re
 import statistics
+import subprocess
 import sys
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 import parametros_obra as PO
+import tipos_obra as TO
+
+# V5 — tipos cujo merito e julgado por um gate proprio (nao pelas regras de livro).
+# auditar-obra delega para o validador declarado no registro.
+TIPOS_DELEGADOS = tuple(t for t in TO.tipos_validos()
+                        if TO.campo(t, "natureza") == "extracao")
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -639,7 +646,7 @@ def montar_alertas_estilo(capitulos, vocabulario):
 def main():
     ap = argparse.ArgumentParser(description="Auditoria contratual da obra (Fase 2.5)")
     ap.add_argument("slug")
-    ap.add_argument("--tipo", choices=("livro", "tcc", "artigo", "ebook"), default=None,
+    ap.add_argument("--tipo", choices=TO.tipos_validos(), default=None,
                     help="por padrao, lido de output/<slug>/config_obra.json")
     ap.add_argument("--min-refs", type=int, default=None,
                     help="override do minimo de referencias (padrao: config_obra.json)")
@@ -653,12 +660,28 @@ def main():
 
     dir_livro = DIR_OUTPUT / args.slug
     dir_caps = dir_livro / "capitulos"
-    if not dir_caps.exists():
-        print(f"[ERRO] Capitulos nao encontrados: {dir_caps}")
-        return 1
 
     config = PO.carregar_config(args.slug)
     tipo = args.tipo or config["tipo_obra"]
+
+    # V5 — playbook, lead magnet e deck nao tem capitulos EITA nem referencias:
+    # o merito e julgado pelo gate declarado no registro (delegacao explicita).
+    if tipo in TIPOS_DELEGADOS:
+        validador = TO.validador_de(tipo)
+        if validador is None or not Path(validador).exists():
+            print(f"[ERRO] tipo {tipo} nao declara validador no registro de tipos")
+            return 1
+        comando = [sys.executable, str(validador), args.slug]
+        if args.estrito:
+            comando.append("--estrito")
+        if args.json:
+            comando.append("--json")
+        print(f"[i] tipo_obra={tipo} — delegando para {Path(validador).name}")
+        return subprocess.run(comando).returncode
+
+    if not dir_caps.exists():
+        print(f"[ERRO] Capitulos nao encontrados: {dir_caps}")
+        return 1
     min_refs = args.min_refs or config["min_referencias_por_capitulo"]
     tamanho = args.tamanho or config.get("tamanho_obra")
     minimos = PO.minimos_livro(tamanho) if tipo == "livro" and config.get("_origem") == "esboco" else None

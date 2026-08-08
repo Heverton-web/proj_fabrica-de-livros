@@ -347,6 +347,132 @@ def variaveis_pandoc_artigo(dados):
     return args
 
 
+# ── V5: derivados de extracao (playbook, lead magnet, deck) ───────────────────
+# Sem ISBN/CIP/CDD: nenhum dos tres e obra catalogada. As chaves alimentam os
+# templates templates/template_{playbook,lead_magnet,deck}.typ.
+CHAVES_PANDOC_PLAYBOOK = ("objetivo_material", "livro_mae", "total_passos",
+                          "persona", "cor_acento", "capa_imagem", "badge_nivel")
+CHAVES_PANDOC_LEAD_MAGNET = ("promessa", "livro_mae", "formato_lm", "cta_url",
+                             "cta_texto", "cor_acento", "capa_imagem", "badge_nivel")
+CHAVES_PANDOC_DECK = ("livro_mae", "total_slides", "cta_url", "cta_texto",
+                      "cor_acento", "capa_imagem", "badge_nivel")
+
+ROTULOS_NIVEL = {"iniciante": "PARA INICIANTES", "intermediario": "NÍVEL INTERMEDIÁRIO",
+                 "intermediário": "NÍVEL INTERMEDIÁRIO", "avancado": "NÍVEL AVANÇADO",
+                 "avançado": "NÍVEL AVANÇADO", "tecnico": "NÍVEL TÉCNICO",
+                 "técnico": "NÍVEL TÉCNICO"}
+
+
+def _contexto_derivado(slug, dir_livro=None):
+    """Bloco comum aos tres derivados: config + sumario + capa + cor da colecao."""
+    dir_livro = Path(dir_livro) if dir_livro else DIR_OUTPUT / slug
+    config = _ler_json_seguro(dir_livro / "config_obra.json")
+    sumario = _ler_json_seguro(dir_livro / "sumario_macro.json")
+
+    capa = ""
+    for nome in ("capa_livro.png", "capa.png"):
+        if (dir_livro / "imagens" / nome).exists():
+            capa = f"imagens/{nome}"
+            break
+
+    try:
+        cor = resolver_cor(resolver_serie_key(config, slug), slug)
+    except Exception:  # noqa: BLE001 — cor e cosmetica, nao bloqueia a compilacao
+        cor = ""
+
+    nivel = (config.get("senioridade_obra") or "").strip().lower()
+    return {
+        "dir": dir_livro,
+        "config": config,
+        "sumario": sumario,
+        "titulo": sumario.get("titulo_obra") or config.get("tema") or slug,
+        "livro_mae": config.get("obra_mae") or config.get("livro_mae")
+        or sumario.get("slug_livro_mae", ""),
+        "capa_imagem": capa,
+        "cor_acento": cor,
+        "badge_nivel": ROTULOS_NIVEL.get(nivel, nivel.upper()),
+    }
+
+
+def _ler_json_seguro(caminho):
+    if caminho.exists():
+        try:
+            return json.loads(caminho.read_text(encoding="utf-8"))
+        except ValueError:
+            return {}
+    return {}
+
+
+def coletar_playbook(slug, autor=AUTOR_PADRAO, dir_livro=None):
+    ctx = _contexto_derivado(slug, dir_livro)
+    passos = len(list((ctx["dir"] / "passos").glob("passo_*.json"))) \
+        if (ctx["dir"] / "passos").exists() else 0
+    motivo = ctx["sumario"].get("motivo_condutor") or {}
+    objetivo = (ctx["sumario"].get("objetivo_material")
+                or motivo.get("descricao")
+                or f"Executar os passos práticos de {ctx['titulo']} do início ao fim.")
+    return {
+        "titulo": ctx["titulo"], "autor": autor,
+        "objetivo_material": objetivo,
+        "livro_mae": ctx["livro_mae"],
+        "total_passos": str(passos),
+        "persona": motivo.get("persona_leitor", ""),
+        "cor_acento": ctx["cor_acento"],
+        "capa_imagem": ctx["capa_imagem"],
+        "badge_nivel": ctx["badge_nivel"],
+    }
+
+
+def coletar_lead_magnet(slug, autor=AUTOR_PADRAO, dir_livro=None):
+    ctx = _contexto_derivado(slug, dir_livro)
+    return {
+        "titulo": ctx["titulo"], "autor": autor,
+        "promessa": ctx["sumario"].get("subtitulo", ""),
+        "livro_mae": ctx["livro_mae"],
+        "formato_lm": ctx["config"].get("formato_lm", ""),
+        "cta_url": ctx["config"].get("cta_url", ""),
+        "cta_texto": ctx["config"].get("cta_texto", ""),
+        "cor_acento": ctx["cor_acento"],
+        "capa_imagem": ctx["capa_imagem"],
+        "badge_nivel": ctx["badge_nivel"],
+    }
+
+
+def coletar_deck(slug, autor=AUTOR_PADRAO, dir_livro=None):
+    ctx = _contexto_derivado(slug, dir_livro)
+    return {
+        "titulo": ctx["titulo"], "autor": autor,
+        "livro_mae": ctx["livro_mae"],
+        "total_slides": str(ctx["sumario"].get("total_slides", "")),
+        "cta_url": ctx["config"].get("cta_url", ""),
+        "cta_texto": ctx["config"].get("cta_texto", ""),
+        "cor_acento": ctx["cor_acento"],
+        "capa_imagem": ctx["capa_imagem"],
+        "badge_nivel": ctx["badge_nivel"],
+    }
+
+
+def _variaveis(dados, chaves):
+    args = []
+    for chave in chaves:
+        valor = (dados.get(chave) or "").strip()
+        if valor:
+            args += ["-V", f"{chave}={valor}"]
+    return args
+
+
+def variaveis_pandoc_playbook(dados):
+    return _variaveis(dados, CHAVES_PANDOC_PLAYBOOK)
+
+
+def variaveis_pandoc_lead_magnet(dados):
+    return _variaveis(dados, CHAVES_PANDOC_LEAD_MAGNET)
+
+
+def variaveis_pandoc_deck(dados):
+    return _variaveis(dados, CHAVES_PANDOC_DECK)
+
+
 def variaveis_pandoc(metadados):
     """Lista achatada de argumentos ['-V', 'chave=valor', ...] para o Pandoc."""
     args = []

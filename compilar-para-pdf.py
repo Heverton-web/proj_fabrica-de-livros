@@ -32,6 +32,10 @@ try:
     import parametros_obra
 except ImportError:  # pragma: no cover
     parametros_obra = None
+try:
+    import tipos_obra
+except ImportError:  # pragma: no cover
+    tipos_obra = None
 
 # ── CARREGAR 50 LIVROS DAS SÉRIES E-N ──────────────────────────
 try:
@@ -101,7 +105,14 @@ RENDERIZADOR = DIR_PROJETO / "scripts" / "renderizar-diagramas.py"
 RENDERIZAR_DIAGRAMAS = True
 CAPA_GRAFICA = True
 PAGINAS_EXATAS = False
-TIPO_OVERRIDE = None  # --tipo livro|tcc|artigo (None = auto-detectar por slug)
+TIPO_OVERRIDE = None  # --tipo livro|tcc|artigo|playbook|lead-magnet|deck (None = auto)
+
+# V5 — derivados de extracao trazem o Markdown final com nome proprio.
+FONTE_MD_POR_TIPO = {
+    "playbook": "playbook.md",
+    "lead-magnet": "lead_magnet.md",
+    "deck": "deck.md",
+}
 
 
 def resolver_tipo(slug):
@@ -114,6 +125,15 @@ def resolver_tipo(slug):
 
 
 def template_para_tipo(tipo):
+    """V5: o template sai do registro (tipos_obra.template_de), com fallback para
+    o template do livro quando o arquivo declarado ainda nao existe."""
+    if tipos_obra is not None:
+        try:
+            caminho = tipos_obra.template_de(tipo)
+            if caminho and Path(caminho).exists():
+                return Path(caminho)
+        except KeyError:
+            pass
     if tipo == "tcc" and TEMPLATE_TCC.exists():
         return TEMPLATE_TCC
     if tipo == "artigo" and TEMPLATE_ARTIGO.exists():
@@ -240,6 +260,23 @@ def variaveis_visuais(slug, dir_livro, paginas=None, tipo=None):
     resumo/abstract/folha de aprovacao (TCC/artigo) — Upgrade 5 + Fase B/C (V4)."""
     tipo = tipo or "livro"
     args = []
+
+    # V5: coletor/variaveis saem do registro. Os tipos que usam o coletor padrao
+    # do livro ("coletar"/"variaveis_pandoc") caem no fluxo classico abaixo, que
+    # tambem resolve a capa grafica.
+    if tipos_obra is not None and metadados_livro is not None:
+        nome_coletor = tipos_obra.campo(tipo, "coletor_metadados")
+        nome_vars = tipos_obra.campo(tipo, "variaveis_pandoc")
+        if nome_coletor and nome_vars and nome_coletor != "coletar":
+            coletor = getattr(metadados_livro, nome_coletor, None)
+            montar = getattr(metadados_livro, nome_vars, None)
+            if coletor and montar:
+                try:
+                    return montar(coletor(slug, dir_livro=dir_livro))
+                except Exception as e:  # noqa: BLE001
+                    print(f"  [AVISO] Metadados de {tipo} indisponiveis: {e}")
+                    return []
+
     if tipo == "tcc" and metadados_livro is not None:
         try:
             dados = metadados_livro.coletar_tcc(slug, dir_livro=dir_livro)
@@ -286,8 +323,11 @@ def comando_pandoc(md_path, saida, dir_livro, titulo, extras, tipo=None):
         "--toc-depth", "3",
     ]
     # TCC/Artigo ja trazem numeracao progressiva manual (NBR 6024) escrita pelo
-    # redator-academico — "--number-sections" duplicaria a numeracao.
-    if tipo == "livro":
+    # redator-academico — "--number-sections" duplicaria a numeracao. Playbook,
+    # lead magnet e deck tambem nao numeram. V5: a decisao vem do registro.
+    numerar = (tipos_obra.campo(tipo, "numerar_secoes", tipo == "livro")
+               if tipos_obra is not None else tipo == "livro")
+    if numerar:
         comando.append("--number-sections")
     comando += [
         "--from", "markdown-citations",
@@ -392,7 +432,12 @@ def compilar_livro(slug):
     print(f"  COMPILANDO: {slug}")
     print(f"{'='*60}")
 
+    # V5: derivados de extracao trazem o Markdown pronto com nome proprio
+    # (playbook.md / lead_magnet.md / deck.md) — nao passam por merge de capitulos.
     md_precompilado = dir_livro / "livro_final.md"
+    fonte_propria = FONTE_MD_POR_TIPO.get(resolver_tipo(slug))
+    if fonte_propria and (dir_livro / fonte_propria).exists():
+        md_precompilado = dir_livro / fonte_propria
 
     if md_precompilado.exists():
         # Preferir o livro_final.md pre-compilado: contem titulo, prefacio, sumario,

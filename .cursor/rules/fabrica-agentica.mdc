@@ -5,7 +5,7 @@ alwaysApply: true
 
 # FÁBRICA AGÊNTICA DE PUBLICAÇÕES — Orquestrador Central
 
-> V4 (multi-formato): Livro, TCC, Artigo Científico, E-book.
+> V5 (coleção): Livro, TCC, Artigo, E-book, Playbook, Lead Magnet, Deck, E-mails.
 > Hardlink de `CLAUDE.md`, `.cursor/rules/fabrica-agentica.mdc`, `.windsurfrules`,
 > `.clinerules`, `.github/copilot-instructions.md`. Edite apenas este arquivo.
 > Junctions: `agentic/` e `.agents/` apontam para `.claude/` (portabilidade multi-IDE).
@@ -33,16 +33,33 @@ alwaysApply: true
 - **R5 (Capa 2D Plano):** Livro/E-book usam padrão 2D plano (detalhes em `docs/referencia-capa-design.md`). TCC/Artigo usam capa ABNT sóbria. Badge de nível OBRIGATÓRIO (validado por `validar-capa-nivel.py`).
 - **R6 (Modelo Livre):** nenhum modelo LLM fixo. `model: inherit` em todos os agents.
 
-### Tipos de Obra (V4)
+### Tipos de Obra (V5) — registro declarativo em `scripts/tipos_obra.py`
 
-| Tipo | Spec | Comando | Redator | Compilador |
-|---|---|---|---|---|
-| Livro | `SPEC.md` | `/criar-livro` | `redator-eita` | `compilador-abnt` |
-| TCC | `SPEC_TCC.md` | `/criar-tcc` | `redator-academico` | `compilador-tcc` |
-| Artigo | `SPEC_ARTIGO.md` | `/criar-artigo` | `redator-academico` | `compilador-artigo` |
-| E-book | `SPEC_EBOOK.md` | `/criar-ebook` | `redator-ebook` | `gerar-epub.py` |
+| Tipo | Natureza | Custo LLM | Spec | Comando | Produtor |
+|---|---|---|---|---|---|
+| Livro | geração | alto | `SPEC.md` | `/criar-livro` | `redator-eita` |
+| TCC | geração | alto | `SPEC_TCC.md` | `/criar-tcc` | `redator-academico` |
+| Artigo | compressão | baixo | `SPEC_ARTIGO.md` | `/criar-artigo` | `redator-academico` |
+| E-book | compressão | baixo | `SPEC_EBOOK.md` | `/criar-ebook` | `redator-ebook` |
+| Playbook | extração | **zero** | `SPEC_PLAYBOOK.md` | `/criar-playbook` | `extrair-passos-praticos.py` |
+| Lead Magnet | extração | **zero** | `SPEC_LEAD_MAGNET.md` | `/criar-lead-magnet` | `gerar-lead-magnet.py` |
+| Deck | extração | **zero** | `SPEC_DECK.md` | `/criar-deck` | `gerar-deck.py` |
+| E-mails | extração | baixo | `SPEC_EMAILS.md` | `/criar-emails` | `gerar-sequencia-emails.py` |
 
-Artigo/E-book reaproveitam dossiê do livro-mãe via `fatiar-obra.py` + `indexar-dossie.py`.
+**Adicionar um tipo novo = 1 entrada em `scripts/tipos_obra.py`.** Os 6 pontos de
+dispatch (`parametros_obra`, `fatiar-obra`, `auditar-obra`, `gerar-capa`,
+`metadados_livro`, `compilar-para-pdf`) consultam o registro — não se edita mais
+6 arquivos por tipo. Matriz: `python scripts/tipos_obra.py --matriz`.
+
+**Regra de derivação:** cascateie onde **comprime**, faça fan-out onde **expande**.
+Compressão/extração são baratas; expansão (ex.: TCC → livro) custa geração.
+
+### COLEÇÃO
+
+Conjunto de todos os artefatos derivados de um mesmo **núcleo canônico**
+(dossiê + `sumario_macro` + `motivo_condutor`), compartilhando identidade visual,
+vocabulário condutor, badge de nível e CTA. Manifesto derivado em
+`output/_colecoes/<nome>.json` (`scripts/colecao.py --sincronizar`, comando `/colecao`).
 
 ## 2. Squad
 
@@ -54,6 +71,8 @@ Artigo/E-book reaproveitam dossiê do livro-mãe via `fatiar-obra.py` + `indexar
 
 ### Scripts Determinísticos
 `indexar-dossie.py` (RAG), `pool-capitulos.py` (lotes), `renderizar-diagramas.py`, `validar-codigo.py`, `auditar-obra.py`, `metadados_livro.py`, `parametros_obra.py`, `validar-abnt-tcc.py`, `fatiar-obra.py`, `gerar-epub.py`, `pdf_typst.py`, `series_capa.py`, `validar-capa-texto.py`, `validar-capa-nivel.py`
+
+**V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`
 
 ### Token Economy Skills
 `lean-ctx`, `headroom`, `caveman`, `rtk-memory`, `pre-flight-check`, `calcular-gastos-sessao`
@@ -70,7 +89,7 @@ Artigo/E-book reaproveitam dossiê do livro-mãe via `fatiar-obra.py` + `indexar
 
 ## 4. Templates
 
-`templates/template.typ` (Livro ABNT), `template_tcc.typ` (TCC NBR 14724), `template_artigo.typ` (Artigo NBR 6022), `template_eita.md` (molde EITA-V2)
+`templates/template.typ` (Livro ABNT), `template_tcc.typ` (TCC NBR 14724), `template_artigo.typ` (Artigo NBR 6022), `template_eita.md` (molde EITA-V2), `template_playbook.typ` (cards de bancada), `template_lead_magnet.typ` (A4 + CTA no rodapé), `template_deck.typ` (16:9)
 
 ## 5. Fluxo Operacional
 
@@ -80,8 +99,13 @@ Artigo/E-book reaproveitam dossiê do livro-mãe via `fatiar-obra.py` + `indexar
 4. **Fase 2.5:** `auditar-obra.py` + `validar-codigo.py` → `revisor-tecnico` corrige
 5. **Fase 3:** `compilador-abnt` merge + pré/pós-textuais + referências ABNT
 6. **PDF:** `compilar-para-pdf.py <slug> --paginas-exatas` → Pandoc→`.typ`→Typst
+7. **Fase 4 (V5) — Coleção:** `/criar-playbook` → `/criar-lead-magnet --todos` +
+   `/criar-deck` + `/criar-emails` (paralelos) → `colecao.py --sincronizar` →
+   `empacotar-distribuicao.py`. Playbook **antes** dos lead magnets/e-mails.
 
-**Output:** `output/livros/<slug>/`, `output/tccs/<slug>/`, `output/artigos/<slug>/`, `output/ebooks/<slug>/`
+**Output:** `output/livros/`, `output/tccs/`, `output/artigos/`, `output/ebooks/`,
+`output/playbooks/`, `output/lead-magnets/`, `output/decks/`, `output/emails/`,
+`output/_colecoes/`
 **Nota:** não usar `pandoc --pdf-engine=typst` com figuras (bug de path absoluto Windows). Gerar `.typ` na pasta do livro e chamar `typst compile --root`.
 
 ## 6. Portabilidade Multi-IDE

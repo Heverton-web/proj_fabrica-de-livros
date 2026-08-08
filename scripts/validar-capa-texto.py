@@ -27,8 +27,19 @@ FONT_DIR_WINDOWS = Path(r"C:\Windows\Fonts")
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_FONTES_PROJETO = DIR_PROJETO / "assets" / "fonts"
 
-# Caixa de texto = largura da capa menos padding lateral (80px de cada lado)
-LARGURA_CAIXA = {"livro": 1600 - 2 * 80, "ebook": 1200 - 2 * 80}
+# Caixa de texto = largura da capa menos padding lateral (80px de cada lado).
+# V5: derivada do registro de tipos, para que um tipo novo com capa propria
+# (playbook, lead-magnet, deck) nao quebre a validacao com KeyError.
+try:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import tipos_obra as _TO
+    LARGURA_CAIXA = {t: _TO.dimensoes_capa(t)[0] - 2 * 80
+                     for t in _TO.tipos_validos() if _TO.dimensoes_capa(t)}
+except Exception:  # noqa: BLE001 — o validador precisa funcionar isolado
+    LARGURA_CAIXA = {}
+LARGURA_CAIXA.setdefault("livro", 1600 - 2 * 80)
+LARGURA_CAIXA.setdefault("ebook", 1200 - 2 * 80)
+LARGURA_CAIXA_PADRAO = LARGURA_CAIXA["livro"]
 
 FONTES_TITULO = ["Inter-Black.ttf", "Inter-ExtraBold.ttf"]
 FONTES_SUBTITULO = ["Inter-Light.ttf"]
@@ -81,7 +92,7 @@ def validar_texto(texto, fonte, largura_caixa, max_linhas=2):
 
 
 def validar_capa(titulo, subtitulo, tipo="livro"):
-    largura = LARGURA_CAIXA[tipo]
+    largura = LARGURA_CAIXA.get(tipo, LARGURA_CAIXA_PADRAO)
     fonte_titulo = _carregar_fonte(FONTES_TITULO, FALLBACK_TITULO, TAMANHO_TITULO)
     fonte_subtitulo = _carregar_fonte(FONTES_SUBTITULO, FALLBACK_SUBTITULO, TAMANHO_SUBTITULO)
 
@@ -99,7 +110,7 @@ def main():
     ap = argparse.ArgumentParser(description="Valida quebra de linha de titulo/subtitulo de capa")
     ap.add_argument("--titulo", default="")
     ap.add_argument("--subtitulo", default="")
-    ap.add_argument("--tipo", choices=["livro", "ebook"], default="livro")
+    ap.add_argument("--tipo", choices=sorted(LARGURA_CAIXA), default="livro")
     args = ap.parse_args()
 
     resultado = validar_capa(args.titulo, args.subtitulo, args.tipo)

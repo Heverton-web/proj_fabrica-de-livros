@@ -35,10 +35,23 @@ import sys
 import unicodedata
 from pathlib import Path
 
+import tipos_obra as TO
+
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
 SECOES_ARTIGO_FIXAS = ["Introdução", "Metodologia", "Resultados e Discussão", "Conclusão"]
+
+
+def _exibir(caminho):
+    """Caminho relativo ao projeto quando possivel; absoluto caso contrario.
+
+    `Path.relative_to` levanta ValueError quando output/ esta fora da arvore do
+    projeto (ex.: pasta temporaria) — exibir nunca pode derrubar a execucao."""
+    try:
+        return caminho.relative_to(DIR_PROJETO)
+    except ValueError:
+        return caminho
 
 
 def sem_acento(t):
@@ -52,11 +65,26 @@ def slugificar(texto, max_len=40):
 
 
 def carregar_derivados(dir_mae):
+    """Manifesto de derivados do livro-mae. V5: a lista de secoes vem do registro,
+    entao um tipo novo nao exige tocar aqui."""
     caminho = dir_mae / "derivados.json"
+    base = {"slug_livro_mae": dir_mae.name}
+    for tipo in TO.tipos_derivados():
+        base[TO.raiz_output(tipo)] = {"total": 0, "itens": []}
     if caminho.exists():
-        return json.loads(caminho.read_text(encoding="utf-8"))
-    return {"slug_livro_mae": dir_mae.name, "artigos": {"total": 0, "itens": []},
-            "ebooks": {"total": 0, "itens": []}}
+        try:
+            base.update(json.loads(caminho.read_text(encoding="utf-8")))
+        except ValueError:
+            pass
+    return base
+
+
+def gravar_derivados(dir_mae, derivados, tipo, itens):
+    """Grava a secao de um tipo preservando as demais (artigos, ebooks, ...)."""
+    derivados["slug_livro_mae"] = dir_mae.name
+    derivados[TO.raiz_output(tipo)] = {"total": len(itens), "itens": itens}
+    (dir_mae / "derivados.json").write_text(
+        json.dumps(derivados, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def carregar_sumario_mae(slug):
@@ -145,13 +173,9 @@ def gerar_artigos(slug, qtd, min_refs):
         (dir_artigo / "sumario_macro.json").write_text(
             json.dumps(sumario_artigo, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        config_artigo = {
-            "tema": titulo, "tipo_obra": "artigo",
-            "livro_mae": slug_mae_simples,
-            "min_referencias_por_capitulo": min_refs,
-            "tamanho_obra": None, "gerar_artigos": False, "qtd_artigos": 0,
-            "gerar_ebooks": False, "qtd_ebooks": 0,
-        }
+        config_artigo = TO.defaults_config(
+            "artigo", slug_mae_simples=slug_mae_simples,
+            extra={"tema": titulo, "min_referencias_por_capitulo": min_refs})
         (dir_artigo / "config_obra.json").write_text(
             json.dumps(config_artigo, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -164,11 +188,8 @@ def gerar_artigos(slug, qtd, min_refs):
         })
         print(f"  [OK] {slug_artigo}: {titulo}")
 
-    derivados["slug_livro_mae"] = slug_mae_simples
-    derivados["artigos"] = {"total": len(itens_artigos), "itens": itens_artigos}
-    (dir_mae / "derivados.json").write_text(
-        json.dumps(derivados, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n[OK] {len(grupos)} artigo(s) planejado(s) em {dir_artigos_topo.relative_to(DIR_PROJETO)}")
+    gravar_derivados(dir_mae, derivados, "artigo", itens_artigos)
+    print(f"\n[OK] {len(grupos)} artigo(s) planejado(s) em {_exibir(dir_artigos_topo)}")
     print("Cada artigo consulta o dossie do livro-mae via RAG:")
     print(f"  python scripts/indexar-dossie.py {slug} --buscar \"<termos>\" --topo 4")
     return 0
@@ -221,13 +242,8 @@ def gerar_ebooks(slug, qtd):
         (dir_ebook / "sumario_macro.json").write_text(
             json.dumps(sumario_ebook, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        config_ebook = {
-            "tema": titulo, "tipo_obra": "ebook",
-            "livro_mae": slug_mae_simples,
-            "min_referencias_por_capitulo": 0,
-            "tamanho_obra": None, "gerar_artigos": False, "qtd_artigos": 0,
-            "gerar_ebooks": False, "qtd_ebooks": 0,
-        }
+        config_ebook = TO.defaults_config(
+            "ebook", slug_mae_simples=slug_mae_simples, extra={"tema": titulo})
         (dir_ebook / "config_obra.json").write_text(
             json.dumps(config_ebook, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -239,27 +255,110 @@ def gerar_ebooks(slug, qtd):
         })
         print(f"  [OK] {slug_ebook}: {titulo} (capitulos-fonte: {capitulos_fonte})")
 
-    derivados["slug_livro_mae"] = slug_mae_simples
-    derivados["ebooks"] = {"total": len(itens_ebooks), "itens": itens_ebooks}
-    (dir_mae / "derivados.json").write_text(
-        json.dumps(derivados, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n[OK] {len(grupos)} e-book(s) planejado(s) em {dir_ebooks_topo.relative_to(DIR_PROJETO)}")
+    gravar_derivados(dir_mae, derivados, "ebook", itens_ebooks)
+    print(f"\n[OK] {len(grupos)} e-book(s) planejado(s) em {_exibir(dir_ebooks_topo)}")
+    return 0
+
+
+def gerar_playbook(slug):
+    """Fase B (V5) — cria o esqueleto do PLAYBOOK derivado do livro-mae.
+
+    Nao extrai os cards: isso e trabalho de extrair-passos-praticos.py. Aqui so
+    nasce a pasta, o config, o sumario com os estagios e o registro em
+    derivados.json. Custo: 0 token."""
+    dir_mae = DIR_OUTPUT / slug
+    slug_mae_simples = dir_mae.name
+    sumario = carregar_sumario_mae(slug)
+    if sumario is None:
+        print(f"[ERRO] sumario_macro.json nao encontrado para {slug}")
+        return 1
+
+    config_mae = {}
+    caminho_cfg = dir_mae / "config_obra.json"
+    if caminho_cfg.exists():
+        try:
+            config_mae = json.loads(caminho_cfg.read_text(encoding="utf-8"))
+        except ValueError:
+            config_mae = {}
+
+    tipo_mae = config_mae.get("tipo_obra", "livro")
+    erros = TO.validar_derivacao("playbook", tipo_mae)
+    if erros:
+        print(f"[ERRO] {erros[0]}")
+        return 1
+
+    motivo = sumario.get("motivo_condutor") or {}
+    vocab = motivo.get("vocabulario") or []
+    estagios = []
+    for i, parte in enumerate(sumario.get("partes", [])):
+        termo = vocab[i] if i < len(vocab) else None
+        estagios.append({
+            "indice": i + 1,
+            "nome": (termo.capitalize() if termo
+                     else parte.get("titulo_parte") or f"Estágio {i + 1}"),
+            "titulo_parte": parte.get("titulo_parte", ""),
+            "capitulos": [str(c.get("capitulo")) for c in parte.get("capitulos", [])],
+        })
+
+    slug_pbk = TO.slug_derivado("playbook", slug_mae_simples)
+    dir_pbk = DIR_OUTPUT / TO.slug_completo("playbook", slug_pbk)
+    for sub in ("passos", "imagens", "revisao"):
+        (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
+
+    titulo = f"Playbook — {sumario.get('titulo_obra', slug_mae_simples)}"
+    (dir_pbk / "sumario_macro.json").write_text(json.dumps({
+        "titulo_obra": titulo,
+        "tipo_obra": "playbook",
+        "slug_livro_mae": slug_mae_simples,
+        "motivo_condutor": motivo,
+        "estagios": estagios,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    config_pbk = TO.defaults_config("playbook", slug_mae_simples=slug_mae_simples, extra={
+        "tema": titulo,
+        "senioridade_obra": config_mae.get("senioridade_obra", "intermediario"),
+    })
+    if config_mae.get("serie"):
+        config_pbk["serie"] = config_mae["serie"]
+    (dir_pbk / "config_obra.json").write_text(
+        json.dumps(config_pbk, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    derivados = carregar_derivados(dir_mae)
+    gravar_derivados(dir_mae, derivados, "playbook", [{
+        "indice": 1, "titulo": titulo, "slug": slug_pbk,
+        "diretorio": TO.slug_completo("playbook", slug_pbk),
+        "estagios": len(estagios),
+    }])
+
+    print(f"  [OK] {slug_pbk}: {titulo} ({len(estagios)} estagio(s))")
+    print(f"\n[OK] Playbook planejado em {_exibir(dir_pbk)}")
+    print(f"Proximo passo (deterministico, 0 token):")
+    print(f"  python scripts/extrair-passos-praticos.py {slug}")
     return 0
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Fatia o livro-mae em N artigos ou N ebooks")
+    ap = argparse.ArgumentParser(
+        description="Fatia a obra-mae em artigos, e-books ou playbook (V5)")
     ap.add_argument("slug")
     grupo = ap.add_mutually_exclusive_group(required=True)
     grupo.add_argument("--artigos", action="store_true")
     grupo.add_argument("--ebooks", action="store_true")
+    grupo.add_argument("--playbook", action="store_true",
+                       help="cria o esqueleto do playbook (extracao vem depois)")
     ap.add_argument("--qtd", type=int, default=None)
     args = ap.parse_args()
 
     config_path = DIR_OUTPUT / args.slug / "config_obra.json"
     config = {}
     if config_path.exists():
-        config = json.loads(config_path.read_text(encoding="utf-8"))
+        try:
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+        except ValueError:
+            config = {}
+
+    if args.playbook:
+        return gerar_playbook(args.slug)
 
     if args.artigos:
         qtd = args.qtd or config.get("qtd_artigos") or 3

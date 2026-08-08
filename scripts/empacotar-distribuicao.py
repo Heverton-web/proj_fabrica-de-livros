@@ -16,6 +16,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import tipos_obra as TO  # noqa: E402
+
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
@@ -48,7 +51,46 @@ def carregar_derivados(slug):
     return json.loads(caminho.read_text(encoding="utf-8"))
 
 
-def montar_readme(slug, tema, tamanho, pdf_bytes, ebooks, artigos, epub_bytes=None):
+def copiar_derivados_v5(derivados, dest):
+    """Copia playbook, lead magnets, deck e sequencia de e-mails (V5).
+
+    Sao artefatos OPCIONAIS: a ausencia nunca invalida o pacote — ao contrario
+    de artigos e e-books, que sao contratados no esboco. Devolve as linhas de
+    README correspondentes ao que foi efetivamente copiado."""
+    linhas = []
+    for tipo in ("playbook", "lead-magnet", "deck", "emails"):
+        raiz = TO.raiz_output(tipo)
+        itens = derivados.get(raiz, {}).get("itens", [])
+        if not itens:
+            continue
+        destino = dest / raiz
+        destino.mkdir(parents=True, exist_ok=True)
+        for item in itens:
+            dir_item = DIR_OUTPUT / item["diretorio"]
+            if not dir_item.exists():
+                print(f"  [AVISO] {raiz}/{item['slug']} ausente (opcional)")
+                continue
+            copiados = 0
+            for ext in TO.campo(tipo, "extensoes_saida", (".pdf",)):
+                for origem in sorted(dir_item.glob(f"*{ext}")):
+                    shutil.copy2(origem, destino / f"{item['slug']}{origem.suffix}")
+                    copiados += 1
+                    break   # 1 artefato por extensao
+            if tipo == "emails" and (dir_item / "emails").exists():
+                sub = destino / item["slug"]
+                sub.mkdir(parents=True, exist_ok=True)
+                for origem in sorted((dir_item / "emails").glob("email_*.md")):
+                    shutil.copy2(origem, sub / origem.name)
+                    copiados += 1
+            if copiados:
+                rotulo = TO.campo(tipo, "rotulo", tipo)
+                linhas.append(f"| `{raiz}/{item['slug']}` | {rotulo}: {item['titulo']} |")
+                print(f"  [OK] {raiz}/{item['slug']} ({copiados} arquivo(s))")
+    return linhas
+
+
+def montar_readme(slug, tema, tamanho, pdf_bytes, ebooks, artigos, epub_bytes=None,
+                  extras=None):
     linhas = []
     linhas.append(f"# {tema}")
     linhas.append("")
@@ -72,6 +114,7 @@ def montar_readme(slug, tema, tamanho, pdf_bytes, ebooks, artigos, epub_bytes=No
         i = e["indice"]
         nome = e["titulo"]
         linhas.append(f"| `ebooks/ebook_{i}.epub` | E-book {i}: {nome} |")
+    linhas += (extras or [])
     linhas.append("")
     linhas.append("## Sobre a obra")
     linhas.append("")
@@ -203,11 +246,14 @@ def empacotar(slug):
         else:
             print(f"  [AVISO] thumbnail do ebook_{i} ausente (nao bloqueia o pacote)")
 
+    # 2.5. Derivados V5 (playbook, lead magnets, deck, e-mails) — opcionais
+    extras_readme = copiar_derivados_v5(derivados, dest)
+
     # 3. README + LICENSE (lista apenas arquivos efetivamente copiados)
     tema = config.get("tema") or derivados.get("slug_livro_mae", slug)
     readme = montar_readme(slug, tema, config.get("tamanho_obra", "G"),
                            pdf_orig.stat().st_size // 1024, ebooks_copiados,
-                           artigos_copiados, epub_bytes)
+                           artigos_copiados, epub_bytes, extras=extras_readme)
     (dest / "README.md").write_text(readme, encoding="utf-8")
     (dest / "LICENSE").write_text(LICENSE, encoding="utf-8")
     print("  [OK] README.md")

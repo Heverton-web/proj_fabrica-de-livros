@@ -33,6 +33,7 @@ except ImportError:
     sys.exit(1)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import tipos_obra as TO  # noqa: E402
 from series_capa import resolver_cor, resolver_serie_key  # noqa: E402
 
 _validar_mod = importlib.import_module("validar-capa-texto")
@@ -44,7 +45,14 @@ DIR_OUTPUT = DIR_PROJETO / "output"
 AUTOR_PADRAO = "Heverton Eduardo Peres"
 QUALIFICACAO_PADRAO = "Especialista em Marketing e Desenvolvimento de Soluções"
 
-DIMENSOES = {"livro": (1600, 2263), "ebook": (1200, 1600)}
+# V5: dimensoes vem do registro declarativo (scripts/tipos_obra.py). Um tipo novo
+# com capa propria nao exige tocar neste arquivo.
+DIMENSOES = {t: TO.dimensoes_capa(t) for t in TO.tipos_validos()
+             if TO.dimensoes_capa(t)}
+TIPOS_COM_CAPA = tuple(sorted(DIMENSOES))
+# Variante "social" (card 1080x1350) — hoje so o lead magnet declara
+DIMENSOES_SOCIAL = {t: TO.dimensoes_capa(t, variante="social") for t in TO.tipos_validos()
+                    if TO.dimensoes_capa(t, variante="social")}
 
 
 def _destacar_ultima_palavra(titulo, cor_acento):
@@ -133,9 +141,12 @@ def _gerar_html(titulo, subtitulo, cor_acento, autor, qualificacao, badge_texto,
 
 def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
                autor=AUTOR_PADRAO, qualificacao=QUALIFICACAO_PADRAO,
-               badge_texto=None, ilustracao_relpath=None):
+               badge_texto=None, ilustracao_relpath=None, variante=None,
+               nome_arquivo=None):
     dir_saida = Path(dir_saida)
-    largura, altura = DIMENSOES[tipo]
+    dimensoes = (TO.dimensoes_capa(tipo, variante=variante)
+                 or DIMENSOES.get(tipo) or DIMENSOES["livro"])
+    largura, altura = dimensoes
 
     resultado = validar_capa(titulo, subtitulo, tipo)
     for campo in ("titulo", "subtitulo"):
@@ -151,10 +162,12 @@ def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
 
     dir_saida.mkdir(parents=True, exist_ok=True)
     (dir_saida / "imagens").mkdir(exist_ok=True)
-    html_file = dir_saida / "capa.html"
+    sufixo_html = "_social" if variante == "social" else ""
+    html_file = dir_saida / f"capa{sufixo_html}.html"
     html_file.write_text(html, encoding="utf-8")
 
-    png_file = dir_saida / "imagens" / "capa.png"
+    png_file = dir_saida / "imagens" / (
+        nome_arquivo or ("card_social.png" if variante == "social" else "capa.png"))
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={"width": largura, "height": altura})
@@ -176,14 +189,20 @@ def _ler_json(caminho):
     return {}
 
 
-def gerar_capa_da_obra(slug, tipo_forcado=None):
+def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
     """Resolve titulo/subtitulo/cor/ilustracao a partir dos arquivos da propria obra."""
     dir_obra = DIR_OUTPUT / slug
     config_obra = _ler_json(dir_obra / "config_obra.json")
     sumario = _ler_json(dir_obra / "sumario_macro.json")
     meta_ebook = _ler_json(dir_obra / "ebook_metadados.json")
 
-    tipo = tipo_forcado or ("ebook" if slug.startswith("ebooks/") else "livro")
+    # V5: o tipo sai do config; o prefixo do slug e o fallback (registro de tipos).
+    tipo = (tipo_forcado or config_obra.get("tipo_obra")
+            or TO.tipo_por_prefixo(slug) or "livro")
+    if tipo not in DIMENSOES:
+        print(f"[ERRO] tipo {tipo!r} nao declara capa propria no registro. "
+              f"Tipos com capa: {', '.join(TIPOS_COM_CAPA)}")
+        sys.exit(1)
     titulo = (meta_ebook.get("titulo") or sumario.get("titulo_obra") or Path(slug).name).upper()
     subtitulo = meta_ebook.get("subtitulo") or sumario.get("subtitulo") or ""
 
@@ -211,27 +230,31 @@ def gerar_capa_da_obra(slug, tipo_forcado=None):
         cor_acento=cor_acento,
         badge_texto=badge_texto,
         ilustracao_relpath=ilustracao_relpath,
+        variante=variante,
     )
 
 
 def main():
     ap = argparse.ArgumentParser(description="Gerador unico de capa (livro/ebook)")
     ap.add_argument("slug", nargs="?", help="ex.: livros/meu-livro ou ebooks/meu-livro--eb-01-titulo")
-    ap.add_argument("--tipo", choices=["livro", "ebook"], default=None)
+    ap.add_argument("--tipo", choices=list(TIPOS_COM_CAPA), default=None)
     ap.add_argument("--titulo")
     ap.add_argument("--subtitulo", default="")
     ap.add_argument("--cor")
     ap.add_argument("--badge")
+    ap.add_argument("--social", action="store_true",
+                     help="gera tambem o card social (imagens/card_social.png)")
     ap.add_argument("--todos", action="store_true",
-                     help="regenera todas as obras em output/livros e output/ebooks")
+                     help="regenera todas as obras dos tipos com capa (registro V5)")
     args = ap.parse_args()
 
     if args.todos:
         alvos = []
-        if (DIR_OUTPUT / "livros").exists():
-            alvos += [f"livros/{d.name}" for d in (DIR_OUTPUT / "livros").iterdir() if d.is_dir()]
-        if (DIR_OUTPUT / "ebooks").exists():
-            alvos += [f"ebooks/{d.name}" for d in (DIR_OUTPUT / "ebooks").iterdir() if d.is_dir()]
+        for tipo in TIPOS_COM_CAPA:
+            raiz = DIR_OUTPUT / TO.raiz_output(tipo)
+            if raiz.exists():
+                alvos += [f"{TO.raiz_output(tipo)}/{d.name}"
+                          for d in raiz.iterdir() if d.is_dir()]
         falhas = []
         for slug in sorted(alvos):
             try:
@@ -254,6 +277,15 @@ def main():
                    tipo=args.tipo or "livro", cor_acento=cor, badge_texto=args.badge)
     else:
         gerar_capa_da_obra(args.slug, tipo_forcado=args.tipo)
+
+    if args.social:
+        tipo_social = args.tipo or _ler_json(
+            DIR_OUTPUT / args.slug / "config_obra.json").get("tipo_obra") \
+            or TO.tipo_por_prefixo(args.slug)
+        if TO.dimensoes_capa(tipo_social, variante="social"):
+            gerar_capa_da_obra(args.slug, tipo_forcado=tipo_social, variante="social")
+        else:
+            print(f"[i] tipo {tipo_social!r} nao declara card social — nada a fazer")
     return 0
 
 
