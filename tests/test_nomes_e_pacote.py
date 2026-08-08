@@ -8,7 +8,8 @@ import pytest
 
 import tipos_obra as TO
 from conftest import carregar_script
-from nomes_curtos import (codigo_obra, codigos_unicos, excede_max_path, nome_curto,
+from nomes_curtos import (codigo_obra, codigos_unicos, excede_max_path,
+                          migrar_prefixo_underscore, nome_curto,
                           nome_material, palavras)
 
 validar_art = carregar_script("validar-artefatos.py")
@@ -87,6 +88,66 @@ class TestNomesCurtos:
     def test_excede_max_path_detecta_caminho_longo(self):
         assert excede_max_path("C:/" + "a" * 250) is True
         assert excede_max_path("C:/curto.pdf") is False
+
+
+class TestSemPrefixoUnderscore:
+    """Nenhum arquivo ou pasta gerado pela fabrica pode comecar com "_": em glob
+    de shell, listagem de nuvem e empacotamento ele e tratado como oculto."""
+
+    CAMINHOS_GERADOS = (
+        "colecoes", "distribuicao", "series.json", "pool-estado.json",
+        "lead-magnet-render.html", "deck-corpo.md", "livro-compilado.md",
+        "livro-compilado.typ", "livro-render.md", "ebook-compilado.typ",
+        "reference-tematizado.pptx",
+    )
+
+    def test_nenhum_caminho_gerado_comeca_com_underscore(self):
+        for nome in self.CAMINHOS_GERADOS:
+            assert not nome.startswith("_"), nome
+
+    def test_codigo_de_obra_nunca_comeca_com_underscore(self):
+        for entrada in ("_oculto", "__dunder__", "_", "_ai-driven"):
+            assert not codigo_obra(entrada).startswith("_"), entrada
+
+    def test_nome_de_material_nunca_comeca_com_underscore(self):
+        assert not nome_material("lm", 1, "_armadilhas").startswith("_")
+
+    def test_slug_curto_nao_produz_segmento_com_underscore(self):
+        s = TO.slug_curto("lead-magnet", "_obra_interna", 1, "_armadilhas")
+        assert not any(seg.startswith("_") for seg in s.split("/")), s
+
+    def test_migracao_renomeia_o_legado(self, tmp_path):
+        (tmp_path / "_series.json").write_text("{}", encoding="utf-8")
+        assert migrar_prefixo_underscore(tmp_path / "series.json") is True
+        assert (tmp_path / "series.json").exists()
+        assert not (tmp_path / "_series.json").exists()
+
+    def test_migracao_aceita_troca_de_separador(self, tmp_path):
+        """_pool_estado.json -> pool-estado.json (prefixo E separador mudaram)."""
+        (tmp_path / "_pool_estado.json").write_text("{}", encoding="utf-8")
+        assert migrar_prefixo_underscore(tmp_path / "pool-estado.json") is True
+        assert (tmp_path / "pool-estado.json").exists()
+
+    def test_migracao_preserva_o_conteudo(self, tmp_path):
+        """Perder series.json faria as capas re-sortearem a cor da colecao."""
+        (tmp_path / "_series.json").write_text('{"cor": "#a855f7"}', encoding="utf-8")
+        migrar_prefixo_underscore(tmp_path / "series.json")
+        assert "#a855f7" in (tmp_path / "series.json").read_text(encoding="utf-8")
+
+    def test_migracao_e_idempotente_e_nao_sobrescreve(self, tmp_path):
+        (tmp_path / "series.json").write_text('{"novo": 1}', encoding="utf-8")
+        (tmp_path / "_series.json").write_text('{"velho": 1}', encoding="utf-8")
+        assert migrar_prefixo_underscore(tmp_path / "series.json") is False
+        assert '"novo"' in (tmp_path / "series.json").read_text(encoding="utf-8")
+
+    def test_migracao_sem_legado_nao_faz_nada(self, tmp_path):
+        assert migrar_prefixo_underscore(tmp_path / "series.json") is False
+
+    def test_migracao_funciona_para_pasta(self, tmp_path):
+        (tmp_path / "_colecoes").mkdir()
+        (tmp_path / "_colecoes" / "x.json").write_text("{}", encoding="utf-8")
+        assert migrar_prefixo_underscore(tmp_path / "colecoes") is True
+        assert (tmp_path / "colecoes" / "x.json").exists()
 
 
 class TestSlugsDoRegistro:
@@ -259,11 +320,11 @@ class TestPacoteDaColecao:
         for mod in (extrator, gerador_lm, gerador_deck, fatiar, colecao,
                     validar_art, empacotar):
             monkeypatch.setattr(mod, "DIR_OUTPUT", raiz, raising=False)
-        monkeypatch.setattr(colecao, "DIR_COLECOES", raiz / "_colecoes")
-        monkeypatch.setattr(empacotar, "DIR_PACOTES", raiz / "_distribuicao")
+        monkeypatch.setattr(colecao, "DIR_COLECOES", raiz / "colecoes")
+        monkeypatch.setattr(empacotar, "DIR_PACOTES", raiz / "distribuicao")
         import series_capa
         monkeypatch.setattr(series_capa, "DIR_OUTPUT", raiz)
-        monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "_series.json")
+        monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "series.json")
 
         cards, ctx, _ = gerador_lm.resolver_fonte(livro_falso["slug"])
         for f in ("checklist", "armadilhas"):
@@ -276,7 +337,7 @@ class TestPacoteDaColecao:
 
     def test_pacote_usa_codigo_curto_na_raiz(self, ambiente):
         meta = empacotar.empacotar("Colecao Teste")
-        assert meta["pacote"].replace("\\", "/") == "_distribuicao/colecao-teste"
+        assert meta["pacote"].replace("\\", "/") == "distribuicao/colecao-teste"
 
     def test_copia_apenas_o_que_abre(self, ambiente):
         # Corrompe um dos lead magnets: ele nao pode entrar no pacote
@@ -292,26 +353,26 @@ class TestPacoteDaColecao:
 
     def test_sequencia_nao_repete_dentro_do_tipo(self, ambiente):
         empacotar.empacotar("Colecao Teste")
-        pasta = ambiente["raiz"] / "_distribuicao" / "colecao-teste" / "lead-magnets"
+        pasta = ambiente["raiz"] / "distribuicao" / "colecao-teste" / "lead-magnets"
         nomes = sorted(p.stem for p in pasta.glob("*.pdf"))
         assert len(nomes) == len(set(nomes))
 
     def test_licenca_e_leia_me_sempre_presentes(self, ambiente):
         empacotar.empacotar("Colecao Teste")
-        base = ambiente["raiz"] / "_distribuicao" / "colecao-teste"
+        base = ambiente["raiz"] / "distribuicao" / "colecao-teste"
         assert (base / "LICENCA.txt").exists()
         assert (base / "LEIA-ME.md").exists()
 
     def test_licenca_declara_direitos_reservados(self, ambiente):
         empacotar.empacotar("Colecao Teste")
-        texto = (ambiente["raiz"] / "_distribuicao" / "colecao-teste" /
+        texto = (ambiente["raiz"] / "distribuicao" / "colecao-teste" /
                  "LICENCA.txt").read_text(encoding="utf-8")
         assert "TODOS OS DIREITOS RESERVADOS" in texto
         assert "Heverton Eduardo Peres" in texto
 
     def test_leia_me_omite_a_secao_quando_nada_ficou_de_fora(self, ambiente):
         empacotar.empacotar("Colecao Teste")
-        texto = (ambiente["raiz"] / "_distribuicao" / "colecao-teste" /
+        texto = (ambiente["raiz"] / "distribuicao" / "colecao-teste" /
                  "LEIA-ME.md").read_text(encoding="utf-8")
         assert "Não incluído nesta versão" not in texto
 
@@ -321,7 +382,7 @@ class TestPacoteDaColecao:
         gerador_deck.gerar(ambiente["slug"], cta_url=CTA)
         colecao.sincronizar()
         meta = empacotar.empacotar("Colecao Teste")
-        texto = (ambiente["raiz"] / "_distribuicao" / "colecao-teste" /
+        texto = (ambiente["raiz"] / "distribuicao" / "colecao-teste" /
                  "LEIA-ME.md").read_text(encoding="utf-8")
         assert "Não incluído nesta versão" in texto
         assert any(e["tipo"] == "deck" for e in meta["excluidos"])
@@ -334,9 +395,18 @@ class TestPacoteDaColecao:
 
     def test_todo_caminho_do_pacote_abre_no_windows(self, ambiente):
         empacotar.empacotar("Colecao Teste")
-        base = ambiente["raiz"] / "_distribuicao" / "colecao-teste"
+        base = ambiente["raiz"] / "distribuicao" / "colecao-teste"
         longos = [p for p in base.rglob("*") if p.is_file() and excede_max_path(p)]
         assert not longos, f"caminhos arriscados no pacote: {longos}"
+
+    def test_pacote_nao_contem_nada_com_prefixo_underscore(self, ambiente):
+        empacotar.empacotar("Colecao Teste")
+        base = ambiente["raiz"] / "distribuicao" / "colecao-teste"
+        ocultos = [p.name for p in base.rglob("*") if p.name.startswith("_")]
+        assert not ocultos, ocultos
+
+    def test_pasta_de_pacotes_nao_tem_prefixo_underscore(self):
+        assert not empacotar.DIR_PACOTES.name.startswith("_")
 
     def test_colecao_inexistente_devolve_none(self, ambiente):
         assert empacotar.empacotar("nao-existe") is None

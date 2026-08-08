@@ -18,7 +18,7 @@ python scripts/colecao.py --sincronizar
 python scripts/colecao.py --sincronizar --slug livros/<slug>
 ```
 
-Varre `output/` inteiro e grava `output/_colecoes/<nome>.json`.
+Varre `output/` inteiro e grava `output/colecoes/<nome>.json`.
 
 ## Inspecionar
 

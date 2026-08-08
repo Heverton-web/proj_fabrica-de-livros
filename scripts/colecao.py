@@ -8,7 +8,7 @@ um mesmo nucleo canonico (dossie + sumario_macro + motivo_condutor),
 compartilhando identidade visual, vocabulario condutor, badge de nivel e CTA.
 
 O manifesto e derivado (nunca editado a mao): varre output/ inteiro, agrupa por
-serie_key e grava output/_colecoes/<colecao>.json.
+serie_key e grava output/colecoes/<colecao>.json.
 
 Uso:
     python scripts/colecao.py --sincronizar            # todas as colecoes
@@ -26,11 +26,12 @@ from datetime import date
 from pathlib import Path
 
 import tipos_obra as TO
+from nomes_curtos import migrar_prefixo_underscore
 from series_capa import resolver_cor, resolver_serie_key
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
-DIR_COLECOES = DIR_OUTPUT / "_colecoes"
+DIR_COLECOES = DIR_OUTPUT / "colecoes"
 
 
 def _ler_json(caminho, padrao=None):
@@ -132,6 +133,7 @@ def montar_manifesto(chave, membros):
 
 
 def sincronizar(slug=None):
+    migrar_prefixo_underscore(DIR_COLECOES)       # _colecoes -> colecoes
     colecoes = varrer()
     if slug:
         alvo = resolver_serie_key(_ler_json(DIR_OUTPUT / slug / "config_obra.json"), slug)
@@ -156,6 +158,7 @@ def sincronizar(slug=None):
 
 def carregar(chave):
     """Manifesto da colecao, ou None se ela ainda nao foi sincronizada."""
+    migrar_prefixo_underscore(DIR_COLECOES)
     caminho = DIR_COLECOES / f"{_slug_arquivo(chave)}.json"
     if not caminho.exists():
         return None

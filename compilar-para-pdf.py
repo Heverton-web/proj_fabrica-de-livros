@@ -235,7 +235,7 @@ def renderizar_diagramas(slug, dir_livro, md_path):
     if "```mermaid" not in conteudo.lower():
         return md_path
 
-    saida = dir_livro / "_livro_render.md"
+    saida = dir_livro / "livro-render.md"
     try:
         resultado = subprocess.run(
             [sys.executable, str(RENDERIZADOR), slug,
@@ -349,7 +349,7 @@ def converter_via_typst(md_path, pdf_path, dir_livro, titulo, extras, timeout=30
     Gerando o .typ intermediario dentro da pasta do livro, os caminhos relativos
     das figuras (imagens/diagramas/*.png) continuam validos.
     """
-    typ_path = dir_livro / "_livro_compilado.typ"
+    typ_path = dir_livro / "livro-compilado.typ"
     resultado = subprocess.run(
         comando_pandoc(md_path, typ_path, dir_livro, titulo, extras, tipo=tipo),
         capture_output=True, text=True, timeout=timeout,
@@ -531,7 +531,7 @@ lang: pt-BR
     md_final = frontmatter + '\n' + todo_conteudo
 
     # Salvar MD compilado
-    md_compilado = dir_livro / "_livro_compilado.md"
+    md_compilado = dir_livro / "livro-compilado.md"
     with open(md_compilado, 'w', encoding='utf-8') as f:
         f.write(md_final)
 

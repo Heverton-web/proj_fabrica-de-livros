@@ -129,7 +129,7 @@ def envolver_no_template(dir_deck, corpo_html, meta):
     if template is None or not template.exists():
         raise FileNotFoundError(f"template HTML ausente: {template}")
 
-    entrada = dir_deck / "_deck_corpo.md"
+    entrada = dir_deck / "deck-corpo.md"
     entrada.write_text(corpo_html, encoding="utf-8")
     saida = dir_deck / f"{TO.nome_arquivo(str(dir_deck))}.html"
     # Remover a saida ANTES: se o pandoc falhar, o arquivo da rodada anterior

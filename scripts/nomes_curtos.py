@@ -122,6 +122,32 @@ def caminho_material(raiz_output, codigo, nome_do_material):
     return f"{raiz_output}/{codigo}/{nome_do_material}"
 
 
+def migrar_prefixo_underscore(caminho_novo):
+    """Renomeia o vizinho legado com prefixo "_" para o nome novo, se existir.
+
+    Nenhum arquivo ou pasta gerado pela fabrica usa prefixo "_": em varios
+    contextos (glob de shell, listagem de nuvem, empacotamento) ele e tratado
+    como oculto ou interno. A migracao e automatica e idempotente — sem ela,
+    perder `_series.json` faria as capas re-sortearem a cor da colecao.
+
+    Devolve True quando migrou de fato."""
+    caminho_novo = Path(caminho_novo)
+    if caminho_novo.exists():
+        return False
+    # Tenta "_<nome>" e tambem a variante com "_" no lugar do "-": alguns nomes
+    # trocaram o separador junto com o prefixo (_pool_estado -> pool-estado).
+    candidatos = [
+        caminho_novo.with_name("_" + caminho_novo.name),
+        caminho_novo.with_name("_" + caminho_novo.name.replace("-", "_")),
+    ]
+    for legado in candidatos:
+        if legado.exists():
+            caminho_novo.parent.mkdir(parents=True, exist_ok=True)
+            legado.rename(caminho_novo)
+            return True
+    return False
+
+
 def excede_max_path(caminho, folga=40):
     """True quando o caminho absoluto se aproxima do MAX_PATH do Windows.
 

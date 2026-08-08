@@ -7,7 +7,7 @@ alta resolucao via mermaid-cli (mmdc) e devolve um Markdown com os blocos
 substituidos por figuras — pronto para o pipeline Pandoc + Typst.
 
 NAO destrutivo: o arquivo de origem nunca e sobrescrito. A versao renderizada
-vai para `_livro_render.md` (ou o caminho passado em --saida).
+vai para `livro_render.md` (ou o caminho passado em --saida).
 
 Idempotente: o nome do PNG deriva do hash do codigo do diagrama, entao rodar de
 novo nao re-renderiza diagramas inalterados.
@@ -290,7 +290,7 @@ def main():
         if not entrada.exists():
             print(f"[ERRO] Markdown nao encontrado: {entrada}")
             return 1
-        saida = Path(args.saida).resolve() if args.saida else dir_livro / "_livro_render.md"
+        saida = Path(args.saida).resolve() if args.saida else dir_livro / "livro-render.md"
         texto = entrada.read_text(encoding="utf-8", errors="replace")
         novo, rel = processar_texto(texto, "livro", dir_imagens, "imagens/diagramas",
                                     base_mmdc, args.formato, args.escala, cfg, tema=args.tema,

@@ -38,6 +38,18 @@ BACKOFF_MAX_S = 240
 SECOES_MINIMAS = 7
 
 
+
+def _migrar_pool_legado(caminho):
+    """Renomeia o `_pool_estado.json` legado. Sem isso o pool perderia o estado
+    dos lotes em andamento ao trocar a convencao de nome."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from nomes_curtos import migrar_prefixo_underscore
+        return migrar_prefixo_underscore(caminho)
+    except Exception:  # noqa: BLE001 — migracao e conveniencia, nao pode quebrar o pool
+        return False
+
+
 def carregar_sumario(slug):
     caminho = DIR_OUTPUT / slug / "sumario_macro.json"
     if not caminho.exists():
@@ -57,7 +69,9 @@ def carregar_sumario(slug):
 
 
 def caminho_estado(slug):
-    return DIR_OUTPUT / slug / "capitulos" / "_pool_estado.json"
+    caminho = DIR_OUTPUT / slug / "capitulos" / "pool-estado.json"
+    _migrar_pool_legado(caminho)
+    return caminho
 
 
 def carregar_estado(slug):

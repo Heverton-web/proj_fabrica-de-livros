@@ -72,7 +72,11 @@ Compressão/extração são baratas; expansão (ex.: TCC → livro) custa geraç
 Conjunto de todos os artefatos derivados de um mesmo **núcleo canônico**
 (dossiê + `sumario_macro` + `motivo_condutor`), compartilhando identidade visual,
 vocabulário condutor, badge de nível e CTA. Manifesto derivado em
-`output/_colecoes/<nome>.json` (`scripts/colecao.py --sincronizar`, comando `/colecao`).
+`output/colecoes/<nome>.json` (`scripts/colecao.py --sincronizar`, comando `/colecao`).
+
+**Nenhum arquivo ou pasta gerado usa prefixo `_`** — em glob de shell, listagem
+de nuvem e empacotamento ele é tratado como oculto. Caminhos legados são migrados
+automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 
 ## 2. Squad
 
@@ -122,7 +126,7 @@ vocabulário condutor, badge de nível e CTA. Manifesto derivado em
 
 **Output:** `output/livros/`, `output/tccs/`, `output/artigos/`, `output/ebooks/`,
 `output/playbooks/`, `output/lead-magnets/`, `output/decks/`, `output/emails/`,
-`output/_colecoes/`
+`output/colecoes/`, `output/distribuicao/`
 **Nota:** não usar `pandoc --pdf-engine=typst` com figuras (bug de path absoluto Windows). Gerar `.typ` na pasta do livro e chamar `typst compile --root`.
 
 ## 6. Portabilidade Multi-IDE

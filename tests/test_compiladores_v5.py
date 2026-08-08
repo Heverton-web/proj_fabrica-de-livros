@@ -68,7 +68,7 @@ def ambiente(livro_falso, monkeypatch):
         monkeypatch.setattr(mod, "DIR_OUTPUT", raiz)
     import series_capa
     monkeypatch.setattr(series_capa, "DIR_OUTPUT", raiz)
-    monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "_series.json")
+    monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "series.json")
     import metadados_livro
     monkeypatch.setattr(metadados_livro, "DIR_OUTPUT", raiz)
     return livro_falso
@@ -214,7 +214,7 @@ class TestCompilacaoPptx:
 
     def test_nao_deixa_reference_tematizado_no_diretorio(self, ambiente, deck_pronto):
         pptx_mod.compilar(deck_pronto)
-        assert not (ambiente["raiz"] / deck_pronto / "_reference_tematizado.pptx").exists()
+        assert not (ambiente["raiz"] / deck_pronto / "reference-tematizado.pptx").exists()
 
     def test_pptx_e_export_opcional_fora_do_pacote(self, ambiente, deck_pronto):
         """O PPTX e gerado sob demanda, mas nao entra em `extensoes_saida`: o
@@ -291,17 +291,17 @@ class TestCompilacaoLeadMagnetPdf:
 
     def test_html_intermediario_e_descartado(self, ambiente, lm_pronto):
         lm_pdf.compilar(lm_pronto)
-        assert not (ambiente["raiz"] / lm_pronto / "_lead_magnet.html").exists()
+        assert not (ambiente["raiz"] / lm_pronto / "lead-magnet-render.html").exists()
 
     def test_manter_html_preserva_o_intermediario(self, ambiente, lm_pronto):
         lm_pdf.compilar(lm_pronto, manter_html=True)
-        html = ambiente["raiz"] / lm_pronto / "_lead_magnet.html"
+        html = ambiente["raiz"] / lm_pronto / "lead-magnet-render.html"
         assert html.exists()
         assert "<section class=\"capa\">" in html.read_text(encoding="utf-8")
 
     def test_html_recebe_a_cor_da_colecao(self, ambiente, lm_pronto):
         meta = lm_pdf.compilar(lm_pronto, manter_html=True)
-        html = (ambiente["raiz"] / lm_pronto / "_lead_magnet.html").read_text(encoding="utf-8")
+        html = (ambiente["raiz"] / lm_pronto / "lead-magnet-render.html").read_text(encoding="utf-8")
         assert meta["cor_acento"] in html
 
     def test_cta_vai_para_o_rodape(self, ambiente, lm_pronto):
@@ -341,7 +341,7 @@ class TestRegressoesDePaginacao:
         meta = gerador_lm.gerar(ambiente["slug"], "mini-guia", cta_url=CTA,
                                 cards=cards, ctx=ctx)
         lm_pdf.compilar(meta["slug"], manter_html=True)
-        html = ambiente["raiz"] / meta["slug"] / "_lead_magnet.html"
+        html = ambiente["raiz"] / meta["slug"] / "lead-magnet-render.html"
 
         from playwright.sync_api import sync_playwright
         with sync_playwright() as p:

@@ -103,7 +103,7 @@ def main():
             alvos.append(alvo_lf)
         else:
             print(f"  [AVISO] livro_final.md nao existe em {dir_obra} — "
-                  f"o compilador usa o caminho legado (_livro_compilado.md)")
+                  f"o compilador usa o caminho legado (livro_compilado.md)")
 
     total_sec = total_alt = 0
     for caminho in alvos:

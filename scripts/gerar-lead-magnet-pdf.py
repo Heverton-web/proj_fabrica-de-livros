@@ -79,12 +79,12 @@ def montar_footer(cta_texto, cta_url, cor):
 
 
 def md_para_html(dir_lm, md, variaveis):
-    """Pandoc: lead_magnet.md -> _lead_magnet.html usando o template do tipo."""
+    """Pandoc: lead_magnet.md -> lead_magnet.html usando o template do tipo."""
     template = TO.template_html_de("lead-magnet")
     if template is None or not template.exists():
         raise FileNotFoundError(f"template HTML ausente: {template}")
 
-    saida = dir_lm / "_lead_magnet.html"
+    saida = dir_lm / "lead-magnet-render.html"
     saida.unlink(missing_ok=True)   # nunca reaproveitar a rodada anterior
     comando = [
         PANDOC, str(md), "-o", str(saida),
@@ -201,7 +201,7 @@ def main():
     ap.add_argument("slug", nargs="?", help="ex.: lead-magnets/obra--lm-01-checklist")
     ap.add_argument("--todos", action="store_true")
     ap.add_argument("--manter-html", action="store_true",
-                    help="preserva _lead_magnet.html para depurar o layout")
+                    help="preserva lead_magnet.html para depurar o layout")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 

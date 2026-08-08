@@ -101,7 +101,7 @@ def gerar(slug, gerar_pdf_tambem=False):
     if gerar_pdf_tambem:
         pdf_path = dir_ebook / f"{nome_arquivo}.pdf"
         # Usar Pandoc -> .typ -> Typst para PDF com template ABNT
-        typ_path = dir_ebook / "_ebook_compilado.typ"
+        typ_path = dir_ebook / "ebook-compilado.typ"
         template_typ = DIR_PROJETO / "templates" / "template.typ"
         
         # Gerar .typ

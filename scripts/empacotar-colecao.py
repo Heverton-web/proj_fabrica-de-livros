@@ -17,7 +17,7 @@ Nomes dentro do pacote seguem a convencao curta (`lm-1-armadilhas.pdf`), de modo
 que o caminho final continue abrindo depois de zipado ou copiado.
 
 Saida:
-    output/_distribuicao/<colecao>/
+    output/distribuicao/<colecao>/
     ├── LEIA-ME.md          inventario do que esta no pacote
     ├── LICENCA.txt         direitos autorais (todos os direitos reservados)
     ├── livro/  tcc/  artigos/  ebooks/
@@ -38,11 +38,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import tipos_obra as TO  # noqa: E402
-from nomes_curtos import codigo_obra, codigos_unicos, nome_curto  # noqa: E402
+from nomes_curtos import (codigo_obra, codigos_unicos,  # noqa: E402
+                          migrar_prefixo_underscore, nome_curto)
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
-DIR_PACOTES = DIR_OUTPUT / "_distribuicao"
+DIR_PACOTES = DIR_OUTPUT / "distribuicao"
 
 AUTOR = "Heverton Eduardo Peres"
 ANO = date.today().year
@@ -182,7 +183,7 @@ def montar_leia_me(colecao, manifesto, incluidos, excluidos):
 
 def pasta_do_pacote(colecao):
     """Nome curto e UNICO da pasta do pacote entre todas as colecoes do disco."""
-    todas = [p.stem for p in DIR_OUTPUT.glob("_colecoes/*.json")]
+    todas = [p.stem for p in DIR_OUTPUT.glob("colecoes/*.json")]
     mod = _importar_colecao()
     nomes = [m["colecao"] for m in (mod.carregar(s) or {"colecao": s} for s in todas)]
     if colecao not in nomes:
@@ -201,6 +202,7 @@ def empacotar(colecao, incluir_parciais=False):
         print(f"[ERRO] colecao nao encontrada: {colecao}")
         return None
 
+    migrar_prefixo_underscore(DIR_PACOTES)        # _distribuicao -> distribuicao
     validador = _importar_validador()
     # Nome curto tambem na RAIZ do pacote: nao adianta encurtar o arquivo se a
     # pasta que o contem devolve os 40 caracteres ao caminho.

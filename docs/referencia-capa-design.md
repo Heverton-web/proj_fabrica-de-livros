@@ -22,7 +22,7 @@ As capas DEVEM ser geradas como arte gráfica 2D plana retangular (flat 2D front
 | **Divider** | Faixa fina decorativa, cor accent |
 | **Autor** | Heverton Eduardo Peres (fixo, Inter 600 30px, #e6edf3) |
 | **Qualificação** | "Especialista em Marketing e Desenvolvimento de Soluções" (fixo, Inter 600 16px, cor accent) |
-| **Cor Accent** | Por série (campo `serie` em `config_obra.json`), persistida em `output/_series.json` |
+| **Cor Accent** | Por série (campo `serie` em `config_obra.json`), persistida em `output/series.json` |
 | **Dimensões** | 1200x1600px (ebooks), 1600x2263px (livros A4) |
 | **Script** | `scripts/gerar-capa.py --tipo livro\|ebook` (HTML/CSS + Playwright) |
 | **Salvar** | `imagens/capa.png` |

@@ -24,10 +24,10 @@ def ambiente(livro_falso, monkeypatch):
     for mod in (extrator, gerador_lm, gerador_deck, gate_deck,
                 gerador_eml, gate_eml, colecao):
         monkeypatch.setattr(mod, "DIR_OUTPUT", raiz)
-    monkeypatch.setattr(colecao, "DIR_COLECOES", raiz / "_colecoes")
+    monkeypatch.setattr(colecao, "DIR_COLECOES", raiz / "colecoes")
     import series_capa
     monkeypatch.setattr(series_capa, "DIR_OUTPUT", raiz)
-    monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "_series.json")
+    monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "series.json")
     return livro_falso
 
 
@@ -232,7 +232,7 @@ class TestColecao:
 
     def test_grava_manifesto_em_arquivo_slugificado(self, ambiente):
         colecao.sincronizar()
-        assert (ambiente["raiz"] / "_colecoes" / "colecao-teste.json").exists()
+        assert (ambiente["raiz"] / "colecoes" / "colecao-teste.json").exists()
 
     def test_carregar_devolve_none_para_colecao_inexistente(self, ambiente):
         assert colecao.carregar("nao-existe") is None

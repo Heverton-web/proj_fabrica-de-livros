@@ -123,7 +123,7 @@ def compilar(slug, recriar_reference=False):
         cor = ""
 
     if referencia is not None and cor:
-        tematizado = dir_deck / "_reference_tematizado.pptx"
+        tematizado = dir_deck / "reference-tematizado.pptx"
         try:
             if aplicar_cor_no_tema(referencia, tematizado, _hex_limpo(cor)):
                 referencia = tematizado
@@ -153,7 +153,7 @@ def compilar(slug, recriar_reference=False):
         return None
 
     # O reference tematizado e intermediario, como o .typ — nao e entregavel.
-    tmp = dir_deck / "_reference_tematizado.pptx"
+    tmp = dir_deck / "reference-tematizado.pptx"
     if tmp.exists():
         tmp.unlink()
 

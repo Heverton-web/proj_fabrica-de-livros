@@ -26,9 +26,12 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nomes_curtos import migrar_prefixo_underscore  # noqa: E402
+
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
-CAMINHO_REGISTRO = DIR_OUTPUT / "_series.json"
+CAMINHO_REGISTRO = DIR_OUTPUT / "series.json"
 
 # Paleta curada — consolida os hex ja em uso hoje nos scripts de capa anteriores
 PALETA_ACCENT = [
@@ -38,6 +41,7 @@ PALETA_ACCENT = [
 
 
 def carregar_registro():
+    migrar_prefixo_underscore(CAMINHO_REGISTRO)   # _series.json -> series.json
     if CAMINHO_REGISTRO.exists():
         try:
             return json.loads(CAMINHO_REGISTRO.read_text(encoding="utf-8"))

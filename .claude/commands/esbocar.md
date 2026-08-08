@@ -122,7 +122,7 @@ Se inválido, corrija os valores fora de faixa antes de prosseguir (nunca pergun
    — cria o esqueleto em `output/playbooks/<slug>--pbk/`. A extração dos cards só
    roda depois que os capítulos existirem (`/criar-playbook`).
 9. `python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>` — registra a
-   obra e seus derivados no manifesto `output/_colecoes/<serie>.json`.
+   obra e seus derivados no manifesto `output/colecoes/<serie>.json`.
 
 > Lead magnets, deck e e-mails **não** são fatiados aqui: dependem dos capítulos
 > prontos. Ficam registrados no `config_obra.json` e são disparados na Fase 3
