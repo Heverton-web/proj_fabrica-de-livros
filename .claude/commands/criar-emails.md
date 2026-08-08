@@ -43,3 +43,16 @@ python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>
 ## Passo 5 — Relatório telegráfico
 
 Total de e-mails, duração da sequência em dias, veredito do gate.
+
+## Verificação de entrega (sempre)
+
+```
+python scripts/validar-artefatos.py --todos --estrito
+```
+
+Gerar o arquivo não prova que ele abre. Este passo confere assinatura, integridade
+e comprimento de caminho (MAX_PATH do Windows). Só depois:
+
+```
+python scripts/empacotar-colecao.py "<coleção>"
+```

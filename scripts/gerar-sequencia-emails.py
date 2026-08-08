@@ -127,8 +127,9 @@ def gerar(slug, cta_url=None, intervalo=INTERVALO_PADRAO):
     if cards is None:
         return None
 
-    slug_eml = TO.slug_derivado("emails", ctx["slug_mae_simples"])
-    dir_eml = DIR_OUTPUT / TO.slug_completo("emails", slug_eml)
+    slug_eml = TO.slug_curto("emails", ctx["slug_mae_simples"],
+                             nome=ctx.get("titulo_obra", ""))
+    dir_eml = DIR_OUTPUT / slug_eml
     (dir_eml / "emails").mkdir(parents=True, exist_ok=True)
     (dir_eml / "revisao").mkdir(parents=True, exist_ok=True)
 
@@ -173,7 +174,7 @@ def gerar(slug, cta_url=None, intervalo=INTERVALO_PADRAO):
     (dir_eml / "config_obra.json").write_text(
         json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    meta = {"slug": TO.slug_completo("emails", slug_eml), "total_emails": total,
+    meta = {"slug": slug_eml, "total_emails": total,
             "intervalo_dias": intervalo, "duracao_dias": (total - 1) * intervalo,
             "cta_configurado": bool(base_url), "plano": plano}
     (dir_eml / "plano.json").write_text(

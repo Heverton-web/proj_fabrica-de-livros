@@ -210,7 +210,8 @@ class TestPontaAPonta:
             "obra_mae": "obra-teste",
         }), encoding="utf-8")
 
-        rel = gate.validar("playbooks/obra-teste--pbk")
+        slug_pbk = str(res["dir"].relative_to(livro_falso["raiz"])).replace("\\", "/")
+        rel = gate.validar(slug_pbk)
         regras = _regras(rel)
         # cap_02 e incompleto de proposito -> R-PBK-1/2/3/4 acusam nele
         assert {v["passo"] for v in rel["violacoes"] if v["passo"]} == {"02"}

@@ -17,6 +17,7 @@ import re
 import sys
 from pathlib import Path
 
+import tipos_obra as TO
 from tipos_obra import FORMATOS_LM
 from secoes_eita import dividir_secoes, normalizar, secao_por_nome, sem_codigo
 
@@ -218,8 +219,7 @@ def main():
     args = ap.parse_args()
 
     if args.todos:
-        alvos = [f"lead-magnets/{d.name}" for d in sorted(DIR_LM.iterdir())
-                 if d.is_dir()] if DIR_LM.exists() else []
+        alvos = TO.listar_materiais("lead-magnet")
     elif args.slug:
         alvos = [args.slug]
     else:

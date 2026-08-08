@@ -8,6 +8,8 @@ UMA entrada de dicionario aqui; os 6 scripts consultam este registro.
 
 Campos do descritor:
   rotulo                 nome humano (PT-BR)
+  prefixo_curto          codigo de 2-3 letras usado no nome curto (lm, pbk, dck)
+  nomes_curtos           True = usa a convencao V5.1 (scripts/nomes_curtos.py)
   raiz_output            pasta de topo em output/ (ex.: "playbooks")
   sufixo_slug            marcador do slug derivado (ex.: "--pbk"); None = obra raiz
   derivado_de            tupla de tipos-mae aceitos; () = obra raiz (nasce da pesquisa)
@@ -64,6 +66,8 @@ TIPOS = {
     # ── OBRAS RAIZ (nascem da pesquisa; custo alto) ────────────────────────────
     "livro": {
         "rotulo": "Livro",
+        "prefixo_curto": "liv",
+        "nomes_curtos": False,   # V4: artefatos ja compilados no disco
         "raiz_output": "livros",
         "sufixo_slug": None,
         "derivado_de": (),
@@ -84,6 +88,8 @@ TIPOS = {
     },
     "tcc": {
         "rotulo": "TCC",
+        "prefixo_curto": "tcc",
+        "nomes_curtos": False,   # V4: artefatos ja compilados no disco
         "raiz_output": "tccs",
         "sufixo_slug": None,
         "derivado_de": (),
@@ -106,6 +112,8 @@ TIPOS = {
     # ── DERIVADOS POR COMPRESSAO (custo baixo) ────────────────────────────────
     "artigo": {
         "rotulo": "Artigo Científico",
+        "prefixo_curto": "art",
+        "nomes_curtos": False,   # V4: artefatos ja compilados no disco
         "raiz_output": "artigos",
         "sufixo_slug": "--art",
         "derivado_de": ("livro", "tcc"),
@@ -126,6 +134,8 @@ TIPOS = {
     },
     "ebook": {
         "rotulo": "E-book",
+        "prefixo_curto": "ebk",
+        "nomes_curtos": False,   # V4: artefatos ja compilados no disco
         "raiz_output": "ebooks",
         "sufixo_slug": "--eb",
         "derivado_de": ("livro",),
@@ -148,6 +158,8 @@ TIPOS = {
     # ── DERIVADOS POR EXTRACAO DETERMINISTICA (custo ~zero) ────────────────────
     "playbook": {
         "rotulo": "Playbook",
+        "prefixo_curto": "pbk",
+        "nomes_curtos": True,
         "raiz_output": "playbooks",
         "sufixo_slug": "--pbk",
         "derivado_de": ("livro",),
@@ -168,6 +180,8 @@ TIPOS = {
     },
     "lead-magnet": {
         "rotulo": "Lead Magnet",
+        "prefixo_curto": "lm",
+        "nomes_curtos": True,
         "raiz_output": "lead-magnets",
         "sufixo_slug": "--lm",
         "derivado_de": ("playbook", "livro"),
@@ -195,19 +209,29 @@ TIPOS = {
     },
     "deck": {
         "rotulo": "Slide Deck",
+        "prefixo_curto": "dck",
+        "nomes_curtos": True,
         "raiz_output": "decks",
         "sufixo_slug": "--deck",
         "derivado_de": ("livro", "tcc"),
         "natureza": "extracao",
         "custo_llm": "zero",
         "dimensoes_capa": (1920, 1080),
-        "template_typ": "template_deck.typ",
-        # PPTX editavel sai do writer nativo do Pandoc (dependencia zero); o PDF
-        # 16:9 continua saindo do Typst. Sao dois entregaveis, nao alternativas.
+        "template_typ": "template_deck.typ",   # fallback historico
+        # V5.1: o design vem de CSS, nao de Typst nem de reference doc do Office.
+        # Aqui — ao contrario do lead magnet — o .html E ENTREGAVEL: apresenta no
+        # navegador, offline. O PDF 16:9 sai do MESMO HTML, entao apresentacao e
+        # distribuicao ficam identicas.
+        "template_html": "template_deck.html",
+        "motor_pdf": "chromium",
+        "compilador": "gerar-deck-html.py",
+        # PPTX continua disponivel via scripts/gerar-pptx.py para quem precisa
+        # editar no PowerPoint, mas NAO entra no pacote: o writer do Pandoc
+        # entrega estrutura, nao design.
         "reference_pptx": "reference_deck.pptx",
         "gerador_pptx": "gerar-pptx.py",
         "validador": "validar-deck.py",
-        "extensoes_saida": (".pdf", ".pptx"),
+        "extensoes_saida": (".html", ".pdf"),
         "min_refs_padrao": 0,
         "citacao": None,
         "numerar_secoes": False,
@@ -219,6 +243,8 @@ TIPOS = {
     },
     "emails": {
         "rotulo": "Sequência de E-mails",
+        "prefixo_curto": "eml",
+        "nomes_curtos": True,
         "raiz_output": "emails",
         "sufixo_slug": "--eml",
         "derivado_de": ("playbook", "livro"),
@@ -374,6 +400,44 @@ def slug_derivado(tipo, slug_mae_simples, indice=None, sufixo_titulo=None):
     if sufixo_titulo:
         partes.append(sufixo_titulo)
     return "-".join(partes)
+
+
+def usa_nomes_curtos(tipo):
+    return bool(campo(tipo, "nomes_curtos"))
+
+
+def prefixo_curto(tipo):
+    return campo(tipo, "prefixo_curto", tipo[:3])
+
+
+def slug_curto(tipo, slug_mae_simples, sequencia=1, nome=None):
+    """Slug V5.1 relativo a output/: '<raiz>/<codigo-obra>/<pfx>-<seq>-<nome>'.
+
+    Substitui o slug longo da V5, que repetia o nome da obra-mae na pasta e no
+    arquivo e produzia caminhos de ~197 chars (MAX_PATH do Windows e 260)."""
+    from nomes_curtos import caminho_material, codigo_obra, nome_material
+    material = nome_material(prefixo_curto(tipo), sequencia, nome or tipo)
+    return caminho_material(raiz_output(tipo), codigo_obra(slug_mae_simples), material)
+
+
+def listar_materiais(tipo):
+    """Slugs de todos os materiais de um tipo no disco, relativos a output/.
+
+    Fonte unica da varredura: os tipos V5.1 vivem em <raiz>/<codigo>/<material>
+    (2 niveis) e os V4 em <raiz>/<slug> (1 nivel). Quem varrer com `iterdir()`
+    direto encontra as pastas de CODIGO no lugar dos materiais."""
+    raiz = DIR_OUTPUT / raiz_output(tipo)
+    if not raiz.exists():
+        return []
+    padrao = "*/*" if usa_nomes_curtos(tipo) else "*"
+    return [str(d.relative_to(DIR_OUTPUT)).replace("\\", "/")
+            for d in sorted(raiz.glob(padrao))
+            if d.is_dir() and (d / "config_obra.json").exists()]
+
+
+def nome_arquivo(slug_curto_do_material):
+    """Nome-base do artefato: o ultimo segmento do slug ('lm-1-armadilhas')."""
+    return Path(slug_curto_do_material).name
 
 
 def tipo_por_prefixo(slug):

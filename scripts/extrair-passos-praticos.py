@@ -289,8 +289,9 @@ def extrair(slug, montar=True):
         return None
 
     contexto = contexto_da_obra(slug)
-    slug_pbk = TO.slug_derivado("playbook", contexto["slug_mae_simples"])
-    dir_pbk = DIR_OUTPUT / TO.slug_completo("playbook", slug_pbk)
+    slug_pbk = TO.slug_curto("playbook", contexto["slug_mae_simples"],
+                             nome=contexto["titulo_obra"])
+    dir_pbk = DIR_OUTPUT / slug_pbk
     for sub in ("passos", "revisao", "imagens"):
         (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
 
@@ -304,7 +305,7 @@ def extrair(slug, montar=True):
 
     relatorio = {
         "slug_mae": slug,
-        "slug_playbook": TO.slug_completo("playbook", slug_pbk),
+        "slug_playbook": slug_pbk,
         "total_passos": len(cards),
         "passos_com_lacuna": [
             {"passo": c["numero"], "titulo": c["titulo"], "lacunas": c["lacunas"]}

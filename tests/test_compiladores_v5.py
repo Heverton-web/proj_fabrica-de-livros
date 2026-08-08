@@ -77,16 +77,20 @@ def ambiente(livro_falso, monkeypatch):
 # ── Registro ─────────────────────────────────────────────────────────────────
 
 class TestRegistroDeSaidas:
-    def test_deck_declara_pdf_e_pptx(self):
-        assert set(TO.campo("deck", "extensoes_saida")) == {".pdf", ".pptx"}
+    def test_deck_entrega_html_e_pdf(self):
+        """V5.1: o design do deck vem de CSS. O .html E entregavel (apresenta no
+        navegador) e o PDF sai do MESMO HTML. O PPTX virou export opcional."""
+        assert set(TO.campo("deck", "extensoes_saida")) == {".html", ".pdf"}
+        assert ".pptx" not in TO.campo("deck", "extensoes_saida")
 
     def test_lead_magnet_usa_motor_chromium(self):
         assert TO.motor_pdf("lead-magnet") == "chromium"
 
-    def test_demais_tipos_usam_typst(self):
-        for tipo in TO.tipos_validos():
-            if tipo != "lead-magnet":
-                assert TO.motor_pdf(tipo) == "typst", tipo
+    def test_motor_chromium_apenas_onde_o_design_vem_de_css(self):
+        chromium = {t for t in TO.tipos_validos() if TO.motor_pdf(t) == "chromium"}
+        assert chromium == {"lead-magnet", "deck"}
+        for tipo in set(TO.tipos_validos()) - chromium:
+            assert TO.motor_pdf(tipo) == "typst", tipo
 
     def test_lead_magnet_declara_compilador_proprio_existente(self):
         caminho = TO.compilador_de("lead-magnet")
@@ -100,10 +104,13 @@ class TestRegistroDeSaidas:
         caminho = TO.template_html_de("lead-magnet")
         assert caminho is not None and caminho.exists()
 
-    def test_html_nunca_e_extensao_de_entrega(self):
-        """O HTML e camada intermediaria — o entregavel e o PDF."""
-        for tipo in TO.tipos_validos():
-            assert ".html" not in TO.campo(tipo, "extensoes_saida", ())
+    def test_html_so_e_entregavel_no_deck(self):
+        """No lead magnet o HTML e camada INTERMEDIARIA (o entregavel e o PDF).
+        No deck ele e entregavel: e o proprio arquivo de apresentacao."""
+        com_html = {t for t in TO.tipos_validos()
+                    if ".html" in TO.campo(t, "extensoes_saida", ())}
+        assert com_html == {"deck"}
+        assert ".html" not in TO.campo("lead-magnet", "extensoes_saida")
 
 
 # ── PPTX: logica pura ────────────────────────────────────────────────────────
@@ -166,8 +173,7 @@ class TestTemaPptx:
 class TestCompilacaoPptx:
     @pytest.fixture
     def deck_pronto(self, ambiente):
-        gerador_deck.gerar(ambiente["slug"], cta_url=CTA)
-        return "decks/obra-teste--deck"
+        return gerador_deck.gerar(ambiente["slug"], cta_url=CTA)["slug"]
 
     def test_reference_padrao_e_um_pptx_valido(self, tmp_path):
         destino = pptx_mod.criar_reference(tmp_path / "ref.pptx")
@@ -210,12 +216,14 @@ class TestCompilacaoPptx:
         pptx_mod.compilar(deck_pronto)
         assert not (ambiente["raiz"] / deck_pronto / "_reference_tematizado.pptx").exists()
 
-    def test_pptx_conta_como_artefato_do_tipo_deck(self, ambiente, deck_pronto):
-        pptx_mod.compilar(deck_pronto)
+    def test_pptx_e_export_opcional_fora_do_pacote(self, ambiente, deck_pronto):
+        """O PPTX e gerado sob demanda, mas nao entra em `extensoes_saida`: o
+        writer do Pandoc entrega estrutura, nao o design da colecao."""
+        meta = pptx_mod.compilar(deck_pronto)
+        assert (ambiente["raiz"] / meta["pptx"]).exists()
         colecao = carregar_script("colecao.py")
-        assert ".pptx" in TO.campo("deck", "extensoes_saida")
         artefatos = colecao._artefatos(ambiente["raiz"] / deck_pronto, "deck")
-        assert any(a.endswith(".pptx") for a in artefatos)
+        assert not any(a.endswith(".pptx") for a in artefatos)
 
     def test_deck_inexistente_devolve_none(self, ambiente):
         assert pptx_mod.compilar("decks/nao-existe") is None

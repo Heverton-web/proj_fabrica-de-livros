@@ -11,6 +11,7 @@ import pytest
 import parametros_obra as PO
 import tipos_obra as TO
 from conftest import carregar_script
+from nomes_curtos import excede_max_path
 
 fatiar = carregar_script("fatiar-obra.py")
 
@@ -140,15 +141,36 @@ class TestFatiarObraPlaybook:
         monkeypatch.setattr(fatiar, "DIR_OUTPUT", livro_falso["raiz"])
         return livro_falso
 
+    def _dir_playbook(self, ambiente):
+        """Caminho V5.1 do playbook: playbooks/<codigo-obra>/pbk-1-<nome>."""
+        slug = TO.slug_curto("playbook", "obra-teste", nome="A Obra em Construção")
+        return ambiente["raiz"] / slug
+
     def test_cria_esqueleto_do_playbook(self, ambiente):
         assert fatiar.gerar_playbook(ambiente["slug"]) == 0
-        dir_pbk = ambiente["raiz"] / "playbooks" / "obra-teste--pbk"
+        dir_pbk = self._dir_playbook(ambiente)
         assert (dir_pbk / "config_obra.json").exists()
         assert (dir_pbk / "passos").is_dir()
 
+    def test_caminho_gerado_cabe_no_max_path(self, ambiente):
+        fatiar.gerar_playbook(ambiente["slug"])
+        assert not excede_max_path(self._dir_playbook(ambiente))
+
+    def test_encurta_de_verdade_quando_a_obra_tem_nome_longo(self):
+        """A convencao V5.1 existe para o caso REAL. Com um slug ja curto o ganho
+        e nulo (ate negativo); o que ela resolve e o nome de obra de 42 chars
+        repetido na pasta E no arquivo, que gerava caminhos de ~197."""
+        mae = "ai-driven-development-do-zero-ao-deploy-v2"
+        antigo = f"playbooks/{mae}--pbk/{mae}--pbk.pdf"      # 109 chars
+        slug = TO.slug_curto("playbook", mae, nome="AI Driven Development")
+        novo = f"{slug}/{TO.nome_arquivo(slug)}.pdf"          # 79 chars
+        assert len(novo) <= len(antigo) * 0.75, f"{len(novo)} vs {len(antigo)}"
+        # Nenhum segmento pode carregar o slug inteiro da obra-mae
+        assert max(len(s) for s in novo.split("/")) <= 32, novo
+
     def test_herda_senioridade_serie_e_motivo_condutor(self, ambiente):
         fatiar.gerar_playbook(ambiente["slug"])
-        dir_pbk = ambiente["raiz"] / "playbooks" / "obra-teste--pbk"
+        dir_pbk = self._dir_playbook(ambiente)
         cfg = json.loads((dir_pbk / "config_obra.json").read_text(encoding="utf-8"))
         sumario = json.loads((dir_pbk / "sumario_macro.json").read_text(encoding="utf-8"))
         assert cfg["senioridade_obra"] == "intermediario"
@@ -157,8 +179,8 @@ class TestFatiarObraPlaybook:
 
     def test_estagios_usam_o_vocabulario_condutor(self, ambiente):
         fatiar.gerar_playbook(ambiente["slug"])
-        sumario = json.loads((ambiente["raiz"] / "playbooks" / "obra-teste--pbk" /
-                              "sumario_macro.json").read_text(encoding="utf-8"))
+        sumario = json.loads((self._dir_playbook(ambiente) / "sumario_macro.json")
+                             .read_text(encoding="utf-8"))
         assert sumario["estagios"][0]["nome"] == "Fundação"
 
     def test_registra_em_derivados_json(self, ambiente):
@@ -166,7 +188,9 @@ class TestFatiarObraPlaybook:
         derivados = json.loads((ambiente["dir_livro"] / "derivados.json")
                                .read_text(encoding="utf-8"))
         assert derivados["playbooks"]["total"] == 1
-        assert derivados["playbooks"]["itens"][0]["slug"] == "obra-teste--pbk"
+        item = derivados["playbooks"]["itens"][0]
+        assert item["slug"] == "pbk-1-obra-construcao"
+        assert (ambiente["raiz"] / item["diretorio"]).is_dir()
 
     def test_preserva_secoes_de_outros_derivados(self, ambiente):
         (ambiente["dir_livro"] / "derivados.json").write_text(json.dumps({

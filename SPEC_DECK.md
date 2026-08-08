@@ -32,13 +32,24 @@ do sumário.
 
 | Artefato | Motor | Comando |
 |---|---|---|
-| `.pdf` 16:9 | Pandoc→Typst (`template_deck.typ`) | `compilar-para-pdf.py --tipo deck` |
-| `.pptx` editável | Writer nativo do Pandoc (`--reference-doc`) | `gerar-pptx.py` |
+| `.html` autocontido | HTML+CSS (`template_deck.html`) | `gerar-deck-html.py` |
+| `.pdf` 16:9 | O **mesmo** HTML, via Chromium | `gerar-deck-html.py` |
+| `.pptx` (opcional) | Writer nativo do Pandoc | `gerar-pptx.py` |
 
-O PPTX não lê o template Typst: a identidade visual vem do `reference_deck.pptx`,
-criado na primeira execução a partir do padrão do Pandoc. `gerar-pptx.py` injeta a
-cor de acento da coleção em `ppt/theme/theme1.xml`, para que os dois artefatos
-saiam com a mesma cor da capa.
+**O `.html` é entregável** — e aqui está a diferença para o lead magnet, onde o
+HTML é camada intermediária. Um deck HTML abre no navegador, apresenta em tela
+cheia (`F`), navega pelo teclado e funciona offline, sem biblioteca externa. O
+PDF sai do **mesmo** arquivo, então apresentação e distribuição são idênticas.
+
+O PPTX continua disponível para quem precisa editar no PowerPoint, mas **não
+entra em `extensoes_saida` nem no pacote**: o writer do Pandoc entrega estrutura
+correta e design genérico — não carrega a identidade da coleção.
+
+### Armadilha do Pandoc no template
+
+O template HTML passa pelo Pandoc, que trata `cifrão-chave` como variável dele.
+Um template literal de JS com interpolação — **inclusive dentro de comentário** —
+faz o Pandoc abortar a compilação. Use concatenação de strings.
 
 ## 4. Saída
 

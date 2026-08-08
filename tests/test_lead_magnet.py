@@ -36,8 +36,9 @@ class TestResolverFonte:
         assert ctx["titulo_obra"] == "A Obra em Construção"
 
     def test_reaproveita_playbook_existente(self, ambiente, monkeypatch):
-        extrator.extrair(ambiente["slug"], montar=False)
-        cards, _ctx, _ = gerador.resolver_fonte("playbooks/obra-teste--pbk")
+        res = extrator.extrair(ambiente["slug"], montar=False)
+        slug_pbk = str(res["dir"].relative_to(ambiente["raiz"])).replace("\\", "/")
+        cards, _ctx, _ = gerador.resolver_fonte(slug_pbk)
         assert [c["numero"] for c in cards] == ["01", "02"]
 
     def test_livro_inexistente_devolve_none(self, ambiente):
@@ -128,7 +129,8 @@ class TestGeracao:
         cards, ctx = cards_ctx
         meta = gerador.gerar(ambiente["slug"], "cheatsheet", indice=4, cta_url=CTA,
                              cards=cards, ctx=ctx)
-        assert meta["slug"] == "lead-magnets/obra-teste--lm-04-cheatsheet"
+        assert meta["slug"] == TO.slug_curto("lead-magnet", "obra-teste", 4, "cheatsheet")
+        assert meta["slug"].endswith("/lm-4-cheatsheet")
 
 
 class TestIndiceEstavel:
@@ -155,7 +157,7 @@ class TestIndiceEstavel:
         for formato in sorted(TO.FORMATOS_LM):
             gerador.gerar(ambiente["slug"], formato, cta_url=CTA, cards=cards, ctx=ctx)
         gerador.gerar(ambiente["slug"], "mapa", cta_url=CTA, cards=cards, ctx=ctx)
-        dirs = list((ambiente["raiz"] / "lead-magnets").iterdir())
+        dirs = [d for d in (ambiente["raiz"] / "lead-magnets").glob("*/*") if d.is_dir()]
         assert len(dirs) == len(TO.FORMATOS_LM)
 
 

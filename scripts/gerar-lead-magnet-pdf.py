@@ -85,6 +85,7 @@ def md_para_html(dir_lm, md, variaveis):
         raise FileNotFoundError(f"template HTML ausente: {template}")
 
     saida = dir_lm / "_lead_magnet.html"
+    saida.unlink(missing_ok=True)   # nunca reaproveitar a rodada anterior
     comando = [
         PANDOC, str(md), "-o", str(saida),
         "--from", "markdown-citations",
@@ -99,9 +100,11 @@ def md_para_html(dir_lm, md, variaveis):
             comando += ["-V", f"{chave}={valor}"]
 
     resultado = subprocess.run(comando, capture_output=True, text=True, timeout=TIMEOUT)
+    if resultado.returncode != 0:
+        raise RuntimeError(f"pandoc falhou ({resultado.returncode}): "
+                           f"{(resultado.stderr or resultado.stdout or '').strip()[-400:]}")
     if not saida.exists() or saida.stat().st_size == 0:
-        erro = (resultado.stderr or resultado.stdout or "").strip()[-400:]
-        raise RuntimeError(f"pandoc nao gerou o HTML: {erro}")
+        raise RuntimeError("pandoc terminou sem erro mas nao gerou o HTML")
     return saida
 
 
@@ -207,9 +210,7 @@ def main():
         return 1
 
     if args.todos:
-        raiz = DIR_OUTPUT / TO.raiz_output("lead-magnet")
-        alvos = [f"lead-magnets/{d.name}" for d in sorted(raiz.iterdir()) if d.is_dir()] \
-            if raiz.exists() else []
+        alvos = TO.listar_materiais("lead-magnet")
     elif args.slug:
         alvos = [args.slug]
     else:

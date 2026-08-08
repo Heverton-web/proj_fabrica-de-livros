@@ -215,13 +215,13 @@ class TestColecao:
         assert "deck" not in m["derivados_ausentes"]
 
     def test_membro_sem_cta_e_sinalizado(self, ambiente):
-        gerador_deck.gerar(ambiente["slug"])       # sem CTA
+        meta = gerador_deck.gerar(ambiente["slug"])       # sem CTA
         m = next(x for x in colecao.sincronizar() if x["colecao"] == "Colecao Teste")
-        assert m["membros_sem_cta"] == ["decks/obra-teste--deck"]
+        assert m["membros_sem_cta"] == [meta["slug"]]
 
     def test_estado_do_membro_reflete_o_disco(self, ambiente):
-        extrator.extrair(ambiente["slug"], montar=False)
-        (ambiente["raiz"] / "playbooks" / "obra-teste--pbk" / "config_obra.json").write_text(
+        res = extrator.extrair(ambiente["slug"], montar=False)
+        (res["dir"] / "config_obra.json").write_text(
             json.dumps(TO.defaults_config("playbook", slug_mae_simples="obra-teste",
                                           extra={"serie": "Colecao Teste"}),
                        ensure_ascii=False), encoding="utf-8")

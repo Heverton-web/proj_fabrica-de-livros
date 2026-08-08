@@ -37,14 +37,19 @@ edite o `deck.md` à mão, ele é derivado.
 ## Passo 4 — Capa + os DOIS entregáveis
 
 ```
-python scripts/gerar-capa.py decks/<slug>--deck --tipo deck
-python compilar-para-pdf.py decks/<slug>--deck --tipo deck
-python scripts/gerar-pptx.py decks/<slug>--deck
+python scripts/gerar-deck-html.py decks/<codigo>/dck-1-<nome>
 ```
 
-O `.pptx` é editável no PowerPoint/Keynote/Google Slides e herda a cor da
-coleção (injetada em `ppt/theme/theme1.xml`). O `.pdf` 16:9 é para projeção e
-distribuição. Entregue os dois.
+Um comando, dois entregáveis do **mesmo** HTML:
+
+- `.html` — apresenta no navegador (`F` = tela cheia, setas navegam), offline
+- `.pdf` 16:9 — projeção e distribuição, visualmente idêntico ao HTML
+
+PPTX editável, se alguém pedir (fora do pacote, design genérico):
+
+```
+python scripts/gerar-pptx.py decks/<codigo>/dck-1-<nome>
+```
 
 ## Passo 5 — Coleção
 
@@ -55,3 +60,16 @@ python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>
 ## Passo 6 — Relatório telegráfico
 
 Slides, diagramas embutidos, veredito do gate, caminho do PDF.
+
+## Verificação de entrega (sempre)
+
+```
+python scripts/validar-artefatos.py --todos --estrito
+```
+
+Gerar o arquivo não prova que ele abre. Este passo confere assinatura, integridade
+e comprimento de caminho (MAX_PATH do Windows). Só depois:
+
+```
+python scripts/empacotar-colecao.py "<coleção>"
+```

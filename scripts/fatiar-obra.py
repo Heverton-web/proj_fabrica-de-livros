@@ -300,8 +300,9 @@ def gerar_playbook(slug):
             "capitulos": [str(c.get("capitulo")) for c in parte.get("capitulos", [])],
         })
 
-    slug_pbk = TO.slug_derivado("playbook", slug_mae_simples)
-    dir_pbk = DIR_OUTPUT / TO.slug_completo("playbook", slug_pbk)
+    titulo_obra = sumario.get("titulo_obra", slug_mae_simples)
+    slug_pbk = TO.slug_curto("playbook", slug_mae_simples, nome=titulo_obra)
+    dir_pbk = DIR_OUTPUT / slug_pbk
     for sub in ("passos", "imagens", "revisao"):
         (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
 
@@ -325,8 +326,8 @@ def gerar_playbook(slug):
 
     derivados = carregar_derivados(dir_mae)
     gravar_derivados(dir_mae, derivados, "playbook", [{
-        "indice": 1, "titulo": titulo, "slug": slug_pbk,
-        "diretorio": TO.slug_completo("playbook", slug_pbk),
+        "indice": 1, "titulo": titulo, "slug": TO.nome_arquivo(slug_pbk),
+        "diretorio": slug_pbk,
         "estagios": len(estagios),
     }])
 

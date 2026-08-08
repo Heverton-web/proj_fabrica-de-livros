@@ -133,6 +133,7 @@ def compilar(slug, recriar_reference=False):
             print(f"[AVISO] nao foi possivel tematizar o reference ({exc})")
 
     pptx = dir_deck / f"{Path(slug).name}.pptx"
+    pptx.unlink(missing_ok=True)   # nunca reaproveitar a rodada anterior
     comando = [
         PANDOC, str(md), "-o", str(pptx),
         "--slide-level", str(SLIDE_LEVEL),
@@ -143,9 +144,12 @@ def compilar(slug, recriar_reference=False):
         comando += ["--reference-doc", str(referencia)]
 
     resultado = subprocess.run(comando, capture_output=True, text=True, timeout=TIMEOUT)
+    if resultado.returncode != 0:
+        print(f"[ERRO] pandoc falhou ({resultado.returncode}): "
+              f"{(resultado.stderr or resultado.stdout or '').strip()[-400:]}")
+        return None
     if not pptx.exists() or pptx.stat().st_size == 0:
-        erro = (resultado.stderr or resultado.stdout or "").strip()[-400:]
-        print(f"[ERRO] pandoc nao gerou o PPTX: {erro}")
+        print("[ERRO] pandoc terminou sem erro mas nao gerou o PPTX")
         return None
 
     # O reference tematizado e intermediario, como o .typ — nao e entregavel.
@@ -177,9 +181,7 @@ def main():
         return 1
 
     if args.todos:
-        raiz = DIR_OUTPUT / TO.raiz_output("deck")
-        alvos = [f"decks/{d.name}" for d in sorted(raiz.iterdir()) if d.is_dir()] \
-            if raiz.exists() else []
+        alvos = TO.listar_materiais("deck")
     elif args.slug:
         alvos = [args.slug]
     else:

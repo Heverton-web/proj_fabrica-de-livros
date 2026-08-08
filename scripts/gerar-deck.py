@@ -84,18 +84,19 @@ def gerar(slug, max_bullets=MAX_BULLETS, cta_url=None, cta_texto=None):
     ctx = extrator.contexto_da_obra(slug)
 
     # Cards do playbook, se existirem (nao obrigatorios)
-    slug_pbk = TO.slug_completo("playbook", TO.slug_derivado("playbook", ctx["slug_mae_simples"]))
+    slug_pbk = TO.slug_curto("playbook", ctx["slug_mae_simples"],
+                             nome=ctx.get("titulo_obra", ""))
     dir_passos = DIR_OUTPUT / slug_pbk / "passos"
     cards = {c.get("numero"): c for c in
              (_ler_json(p) for p in sorted(dir_passos.glob("passo_*.json")))} \
         if dir_passos.exists() else {}
 
-    slug_deck = TO.slug_derivado("deck", ctx["slug_mae_simples"])
-    dir_deck = DIR_OUTPUT / TO.slug_completo("deck", slug_deck)
+    titulo = sumario.get("titulo_obra", ctx["slug_mae_simples"])
+    slug_deck = TO.slug_curto("deck", ctx["slug_mae_simples"], nome=titulo)
+    dir_deck = DIR_OUTPUT / slug_deck
     (dir_deck / "imagens" / "diagramas").mkdir(parents=True, exist_ok=True)
     (dir_deck / "revisao").mkdir(parents=True, exist_ok=True)
 
-    titulo = sumario.get("titulo_obra", ctx["slug_mae_simples"])
     L = ["---", f'title: "{titulo}"',
          f'subtitle: "Apresentação · {ctx.get("persona", "")}"'.replace(' · "', '"'),
          'author: "Heverton Eduardo Peres"', "lang: pt-BR", "---", ""]
@@ -186,7 +187,7 @@ def gerar(slug, max_bullets=MAX_BULLETS, cta_url=None, cta_texto=None):
         "total_slides": total_slides,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    meta = {"slug": TO.slug_completo("deck", slug_deck), "total_slides": total_slides,
+    meta = {"slug": slug_deck, "total_slides": total_slides,
             "diagramas": diagramas_copiados, "cta_configurado": bool(url)}
     (dir_deck / "revisao" / "relatorio_deck.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")

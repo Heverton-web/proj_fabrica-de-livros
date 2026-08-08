@@ -100,7 +100,8 @@ def resolver_fonte(slug):
 
     # Slug de livro/TCC: usa o playbook se ja existir, senao extrai na hora.
     contexto = extrator.contexto_da_obra(slug)
-    slug_pbk = TO.slug_completo("playbook", TO.slug_derivado("playbook", contexto["slug_mae_simples"]))
+    slug_pbk = TO.slug_curto("playbook", contexto["slug_mae_simples"],
+                             nome=contexto.get("titulo_obra", ""))
     dir_pbk = DIR_OUTPUT / slug_pbk
     cards = [_ler_json(p) for p in sorted((dir_pbk / "passos").glob("passo_*.json"))] \
         if (dir_pbk / "passos").exists() else []
@@ -341,9 +342,8 @@ def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None, 
     promessa = spec["promessa"].format(tema=tema, n=n_itens)
 
     mae_simples = ctx["slug_mae_simples"]
-    slug_lm = TO.slug_derivado("lead-magnet", mae_simples, indice=indice,
-                               sufixo_titulo=_slugificar(formato))
-    dir_lm = DIR_OUTPUT / TO.slug_completo("lead-magnet", slug_lm)
+    slug_lm = TO.slug_curto("lead-magnet", mae_simples, sequencia=indice, nome=formato)
+    dir_lm = DIR_OUTPUT / slug_lm
     for sub in ("imagens", "revisao"):
         (dir_lm / sub).mkdir(parents=True, exist_ok=True)
 
@@ -372,7 +372,7 @@ def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None, 
     md.append(_bloco_cta(url, texto_cta, tema))
     (dir_lm / "lead_magnet.md").write_text("\n".join(md), encoding="utf-8")
 
-    meta = {"slug": TO.slug_completo("lead-magnet", slug_lm), "formato": formato,
+    meta = {"slug": slug_lm, "formato": formato,
             "titulo": titulo, "promessa": promessa, "itens": n_itens,
             "abaixo_do_minimo": n_itens < spec["min_itens"],
             "cta_configurado": bool(url)}

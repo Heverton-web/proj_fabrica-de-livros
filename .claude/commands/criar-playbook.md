@@ -72,3 +72,16 @@ python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>
 
 Número de passos, lacunas restantes, veredito do gate, caminho do PDF.
 Sem preâmbulo.
+
+## Verificação de entrega (sempre)
+
+```
+python scripts/validar-artefatos.py --todos --estrito
+```
+
+Gerar o arquivo não prova que ele abre. Este passo confere assinatura, integridade
+e comprimento de caminho (MAX_PATH do Windows). Só depois:
+
+```
+python scripts/empacotar-colecao.py "<coleção>"
+```

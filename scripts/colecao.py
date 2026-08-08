@@ -70,15 +70,16 @@ def varrer():
     """Percorre output/ e devolve {serie_key: [membro, ...]}."""
     colecoes = {}
     for tipo in TO.tipos_validos():
-        raiz = DIR_OUTPUT / TO.raiz_output(tipo)
-        if not raiz.exists():
-            continue
-        for dir_obra in sorted(p for p in raiz.iterdir() if p.is_dir()):
+        # `listar_materiais` conhece os dois layouts: V4 raso (<raiz>/<slug>) e
+        # V5.1 aninhado (<raiz>/<codigo>/<material>). Varrer com `iterdir()` direto
+        # encontrava a pasta de CODIGO no lugar do material e, como ela nao tem
+        # config_obra.json, inventava uma colecao com o nome do codigo.
+        for slug in TO.listar_materiais(tipo):
+            dir_obra = DIR_OUTPUT / slug
             config = _ler_json(dir_obra / "config_obra.json")
             sumario = _ler_json(dir_obra / "sumario_macro.json")
             # O tipo declarado no config manda; o prefixo e so o fallback.
             tipo_real = config.get("tipo_obra") or tipo
-            slug = f"{TO.raiz_output(tipo)}/{dir_obra.name}"
             chave = resolver_serie_key(config, slug)
             artefatos = _artefatos(dir_obra, tipo_real)
             colecoes.setdefault(chave, []).append({
@@ -136,6 +137,14 @@ def sincronizar(slug=None):
         alvo = resolver_serie_key(_ler_json(DIR_OUTPUT / slug / "config_obra.json"), slug)
         colecoes = {k: v for k, v in colecoes.items() if k == alvo}
     DIR_COLECOES.mkdir(parents=True, exist_ok=True)
+    # Sem limpar, um manifesto de uma chave que deixou de existir (renomeacao de
+    # pasta, mudanca de `serie`) sobrevive no disco e reaparece em `--listar`
+    # como se a colecao ainda existisse.
+    if slug is None:
+        vivos = {f"{_slug_arquivo(k)}.json" for k in colecoes}
+        for antigo in DIR_COLECOES.glob("*.json"):
+            if antigo.name not in vivos:
+                antigo.unlink()
     manifestos = []
     for chave, membros in sorted(colecoes.items()):
         manifesto = montar_manifesto(chave, membros)
