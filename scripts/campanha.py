@@ -187,6 +187,85 @@ def horario_utilizar(formato):
     return HORARIO_FORMATO.get(formato, "9h")
 
 
+# ── Tags das artes de divulgacao ────────────────────────────────────────────
+# As artes (post/story/whatsapp) usam termos TECNICOS do dominio do material
+# (derivados dos pilares/capitulos/tema), NUNCA o vocabulario condutor
+# metaforico (ex.: arnes, mosquetao — bom no livro, estranho na arte).
+TAGS_TECNICAS = {
+    # IA agêntica / engenharia de software
+    "agente", "agentes", "agêntica", "modelo", "llm", "prompt", "harness",
+    "guardrail", "guardrails", "sandbox", "sandboxes", "contexto", "react",
+    "loop", "loops", "ferramenta", "ferramentas", "memória", "estado",
+    "evals", "observabilidade", "trace", "traces", "log", "logs", "métrica",
+    "métricas", "automação", "workflow", "pipeline", "deploy", "produção",
+    "gates", "teste", "testes", "erro", "retry", "permissão",
+    "permissões", "token", "tokens", "docker", "auditoria", "isolamento",
+    "api", "apis", "dados", "avaliação", "sistema", "sistemas", "software",
+    "código", "segurança", "qualidade", "confiabilidade", "arquitetura",
+    "design", "produto", "escalabilidade", "performance", "integração",
+    "devops", "cloud", "autônomo", "autônomos", "inteligência", "raciocínio",
+    "governança", "inteligência artificial", "sistema autônomo", "aprendizado",
+    "contrato", "schema", "índice", "backend", "frontend", "interface",
+    "banco de dados", "testes automatizados", "versionamento", "repositório",
+    "documentação", "metodologia", "entregas", "requisitos",
+    # finanças / negócios / saúde
+    "finanças", "financeiro", "gestão", "clínica", "odontologia", "receita",
+    "custo", "custos", "lucro", "investimento", "orçamento", "planejamento",
+    "marketing", "vendas", "estratégia", "indicadores", "fluxo de caixa",
+    "precificação", "cobrança", "paciente", "pacientes", "agenda", "escala",
+}
+
+
+def _normalizar_texto(texto):
+    return re.sub(r"[^a-zà-ú0-9 ]", " ", (texto or "").lower())
+
+
+def derivar_tags_arte(sumario, config):
+    """Termos tecnicos do dominio (ate 4) presentes no material, para as artes.
+
+    Prioriza titulo_obra/tema/projeto_pratico; completa com pilares e titulos
+    de capitulos. Nunca devolve a metafora condutora. Fallback: lista vazia
+    (o gerador usa o vocabulario condutor)."""
+    sumario = sumario or {}
+    config = config or {}
+    prioritarias = [
+        sumario.get("titulo_obra", ""), config.get("tema", ""),
+        config.get("projeto_pratico", ""), sumario.get("introducao", ""),
+    ]
+    complementares = []
+    for parte in sumario.get("partes", []):
+        complementares.append(parte.get("titulo_parte", ""))
+        for cap in parte.get("capitulos", []):
+            complementares.append(cap.get("titulo", ""))
+            complementares.extend(cap.get("pilares_previstos", []))
+    complementares.append(sumario.get("conclusao", ""))
+
+    def _coletar(fontes):
+        texto = _normalizar_texto(" ".join(fontes))
+        achadas = []
+        # multi-palavra e termos mais especificos primeiro (comprimento desc);
+        # pula termos que sao substring de outro ja aceito (evita
+        # 'sistema autônomo' + 'sistema' + 'autônomo' e 'agentes' + 'agente')
+        for termo in sorted(TAGS_TECNICAS, key=len, reverse=True):
+            if any(t in termo or termo in t for t in achadas):
+                continue
+            # borda de palavra: evita falso positivo ('ci' dentro de 'tecnicas')
+            if re.search(r"\b" + re.escape(termo) + r"\b", texto):
+                achadas.append(termo)
+            if len(achadas) >= 4:
+                break
+        return [t.title() for t in achadas]
+
+    tags = _coletar(prioritarias)
+    if len(tags) < 4:
+        for t in _coletar(complementares):
+            if t.lower() not in {x.lower() for x in tags}:
+                tags.append(t)
+            if len(tags) >= 4:
+                break
+    return tags[:4]
+
+
 # Frases de CTA padrao por tipo de material (usadas quando o manifesto nao tem cta_url)
 CTA_PADRAO = {
     "livro": "Garanta o livro completo",
@@ -233,8 +312,15 @@ def dir_campanhas(slug_material, base=None):
 
 
 def dir_campanha_material(slug_material, base=None):
-    """Pasta da campanha de UM material: <hub>/campanhas/<nome-material>."""
-    return dir_campanhas(slug_material, base) / nome_material(slug_material)
+    """Pasta da campanha de UM material: <hub>/campanhas/<nome-material>.
+
+    V5.1: valida MAX_PATH antes de retornar."""
+    import nomes_curtos as NC
+    caminho = dir_campanhas(slug_material, base) / nome_material(slug_material)
+    if NC.excede_max_path(caminho):
+        print(f"[AVISO] Caminho excede MAX_PATH: {len(str(caminho.resolve()))} chars")
+        print(f"  {caminho}")
+    return caminho
 
 
 def carregar_manifesto_colecao(chave, base=None):
@@ -275,6 +361,7 @@ def contexto_material(slug_material, base=None):
         "senioridade": (config.get("senioridade_obra")
                         or nucleo.get("senioridade") or ""),
         "vocabulario": vocabulario,
+        "tags_arte": derivar_tags_arte(sumario, config),
         "cor_accent": resolver_cor(chave, slug_material),
         "cta_url": next((m.get("cta_url") for m in manifesto.get("membros", [])
                          if m.get("slug") == slug_material), None),
