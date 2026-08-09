@@ -8,7 +8,7 @@
 
 ## 1. Contexto
 
-Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 caps) + 2 artigos IMRaD + 4 e-books + playbook (8 cards) + 6 lead magnets + deck (14 slides) + sequência de 10 e-mails. Núcleo canônico: `output/livros/harness-engineering`. Entrega final versionada em `LOTE 01/harness-engineering/`.
+Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 caps) + 2 artigos IMRaD + 4 e-books + playbook (8 cards) + 6 lead magnets + deck (14 slides) + sequência de 10 e-mails + campanhas (V5.3) + máquina de vendas (V5.3, 1 por coleção). Núcleo canônico: `output/harness-engineering/` (HUB POR COLEÇÃO). Entrega final versionada em `LOTE 01/harness-engineering/`.
 
 ## 2. Bugs Descobertos e Corrigidos
 
@@ -20,6 +20,7 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 4. **Caminhos perto do MAX_PATH (235-237 chars)** — arquivos de saída `.epub`/`.pdf` duplicavam o slug longo como nome de arquivo. Fix: renomeados para `eb-01.epub`/`art-01.pdf` → 0 caminhos arriscados.
 5. **10 marcadores POLIMENTO-LLM nos e-mails** — Fix: copy final em segunda pessoa (≤90 palavras) conectando armadilha→passo prático; `sequencia.md` regenerado (0 marcadores).
 6. **Docstrings com 4 aspas (`""""`) nos cards do playbook** — heredoc com aspas aninhadas. Fix: códigos dos passos 03/04/06 reescritos com docstring correto; gate 100%.
+7. **Produto default do checkout desalinhado do config** — a rota `/api/checkout` nascia com `default("livros/harness-engineering")` mas o 1º produto do `config/produtos.json` é `livro-harness-engineering`. Fix: alinhado ao config (aprendizado RTK 2026-08-09 — produto default deve casar com `produtos.json`); leads de teste vivem em `backend/data/vendas.db`.
 
 ## 3. Arquivos Alterados
 
@@ -32,7 +33,8 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 - `output/emails/harness/eml-1-harness-engineering-modelo/` — 10 e-mails polidos + sequencia.md
 - `output/colecoes/harness-engineering.json` — manifesto sincronizado (16 membros)
 - `output/distribuicao/harness/` — pacote de distribuição (18 arquivos, 4.1 MB, LEIA-ME + LICENCA)
-- `LOTE 01/harness-engineering/` — entrega versionada (artigos, ebooks, playbooks, lead-magnets, decks, emails, livros, colecoes)
+- `LOTE 01/harness-engineering/` — entrega versionada (artigos, ebooks, playbooks, lead-magnets, decks, emails, livros, colecoes, campanhas, maquina)
+- `output/harness-engineering/maquina/` — máquina de vendas 1:1 da coleção (frontend Next.js + backend FastAPI, 46 MB)
 - `relatorios/2026-08-09-producao-completa-colecao-harness-engineering.md/.pdf`
 
 ## 4. Validações
@@ -47,6 +49,9 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 - `validar-artefatos.py --todos --estrito` → **16/16 abrem · 0 falhas · 0 caminhos arriscados**
 - `colecao.py --sincronizar` → 16 membros · `empacotar-colecao.py harness-engineering` → 18 arquivos, 4048 KB
 - Inspeção visual no browser das 13 capas → todas APROVADAS (sem texto cortado, hierarquia clara, quebra de título correta, badges consistentes)
+- `criar-maquina-vendas.py` → máquina criada (1036 arquivos + snapshot 16 campanhas + banco SQLite)
+- Gate personalização por nicho: `grep 'Autor Digital|centenas de pessoas'` → **0 ocorrências** (copy de harness engineering em 8 pontos: configs, frontend, e-mails, README)
+- Checkout alinhado: rota `/api/checkout` (zod + fetch JSON → `/api/leads/`) + `produto` default `livro-harness-engineering` == `config/produtos.json`; backend com `/api/leads`, `/api/emails`, `/api/funil`, `/api/webhooks`, `/health`
 
 ## 5. Commits
 
@@ -65,6 +70,7 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 | E-mails | 10 (18 dias) | `sequencia.md` |
 | Campanhas | 16 materiais (929 arquivos) | R-CP-C1 CONFORME + 80 artes PNG + 416 moldes com copy final |
 | Pacote | — | `distribuicao/harness/` (18 arquivos) |
+| Máquina de vendas | 1 (1:1 por coleção) | `maquina/` — Next.js + FastAPI, copy por nicho, snapshot campanhas |
 
 ## 7. Camada CAMPANHA (V5.3) — complemento
 
@@ -79,5 +85,27 @@ proteção, alavancagem, rota, parede, cume —, badge e CTA), 80 artes PNG
 (R-CP-C1 + R-CP-1..5 + R-CP-4 vocabulário). Inspeção visual no browser das
 artes (IG post/story, LinkedIn, WhatsApp, playbook, lead magnets, deck) →
 todas APROVADAS (hierarquia clara, badge visível, sem cortes).
+
+## 8. Máquina de Vendas (V5.3) — complemento
+
+`criar-maquina-vendas.py 'livros/harness-engineering'` (1 máquina por COLEÇÃO,
+regra 1:1): frontend Next.js + backend FastAPI em
+`output/harness-engineering/maquina/`, com snapshot das 16 campanhas da
+coleção em `maquina/campanhas/` (`snapshot.json`), manifesto da máquina com
+`colecao`/`maquina_em`/`campanhas` e registro `maquina` no manifesto da coleção
+via `colecao.py --sincronizar`.
+
+Personalização por nicho (engenharia de software / IA agêntica) em 8 pontos:
+configs (`produtos.json` com `livro-harness-engineering` como produto 1,
+`personas.json`, `funis.json`, `canais.json`, `email.json`), copy do frontend
+(Hero, PricingCard, captura, layout/admin), e-mails (`templates/emails/`),
+README e conteúdo (`conteudo/` com livro, artigos, ebooks, lead magnets,
+playbook e deck da coleção). Gate da regra 12: `grep 'Autor Digital|centenas
+de pessoas'` → **0 ocorrências**.
+
+Checkout: rota `/api/checkout` com zod + `POST /api/leads/` + `BACKEND_URL`;
+produto default `livro-harness-engineering` alinhado ao `config/produtos.json`;
+backend com routers `/api/leads` (CRUD + mover), `/api/emails`, `/api/funil`,
+`/api/webhooks` e `/health`. 590 testes pytest passando.
 
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*

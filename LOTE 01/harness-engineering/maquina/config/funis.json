@@ -1,0 +1,103 @@
+{
+  "funis": {
+    "nutricao-livro": {
+      "nome": "Nutrição → Livro Harness Engineering",
+      "descricao": "Funil de nutrição de leads para venda do livro",
+      "produto": "livro-harness-engineering",
+      "produto_link": "https://pay.hotmart.com/XXXXX",
+      "produto_preco": "R$ 47,00",
+      "empresa": "Harness Engineering",
+      "desconto_codigo": "HARNESS30",
+      "desconto_porcento": "30",
+      "publico": "leads_novos",
+      "steps": [
+        {
+          "template": "boas_vindas.html",
+          "subject": "Bem-vindo! Seu guia de harness está aqui ⚙️",
+          "delay_hours": 0,
+          "condicao": null
+        },
+        {
+          "template": "nutricao_01.html",
+          "subject": "O erro #1 de quem coloca agente em produção",
+          "delay_hours": 24,
+          "condicao": "nao_abriu_anterior"
+        },
+        {
+          "template": "venda_01.html",
+          "subject": "Oferta: 30% OFF no livro Harness Engineering (24h)",
+          "delay_hours": 48,
+          "condicao": "clicou_anterior"
+        },
+        {
+          "template": "reativacao_01.html",
+          "subject": "Seu agente erra em silêncio? Isso tem nome",
+          "delay_hours": 72,
+          "condicao": "nao_abriu_nenhum"
+        }
+      ],
+      "metricas": {
+        "meta_abertura": 35,
+        "meta_clique": 8,
+        "meta_conversao": 2
+      }
+    },
+    "reativacao": {
+      "nome": "Reativação de Leads Frios",
+      "descricao": "Reengaja leads inativos há mais de 7 dias",
+      "produto": "livro-harness-engineering",
+      "produto_link": "https://pay.hotmart.com/XXXXX",
+      "produto_preco": "R$ 47,00",
+      "empresa": "Harness Engineering",
+      "desconto_codigo": "VOLTEI20",
+      "desconto_porcento": "20",
+      "publico": "leads_frios",
+      "steps": [
+        {
+          "template": "reativacao_01.html",
+          "subject": "Sentimos sua falta... e o teste do seu agente também",
+          "delay_hours": 0,
+          "condicao": null
+        },
+        {
+          "template": "venda_01.html",
+          "subject": "Última chance: oferta exclusiva de harness",
+          "delay_hours": 48,
+          "condicao": "abriu_anterior"
+        }
+      ],
+      "metricas": {
+        "meta_abertura": 20,
+        "meta_clique": 5,
+        "meta_conversao": 1
+      }
+    },
+    "upsell-curso": {
+      "nome": "Upsell Curso Harness em Produção",
+      "descricao": "Oferece o curso para quem comprou o livro",
+      "produto": "curso-harness-producao",
+      "produto_link": "https://pay.hotmart.com/ZZZZZ",
+      "produto_preco": "R$ 197,00",
+      "empresa": "Harness Engineering",
+      "publico": "compradores_livro",
+      "steps": [
+        {
+          "template": "venda_01.html",
+          "subject": "Parabéns pela compra! O projeto prático te espera",
+          "delay_hours": 48,
+          "condicao": null
+        }
+      ],
+      "metricas": {
+        "meta_abertura": 50,
+        "meta_clique": 15,
+        "meta_conversao": 5
+      }
+    }
+  },
+  "webhook_alertas": "",
+  "thresholds": {
+    "min_leads_semana": 10,
+    "min_taxa_conversao": 1.0
+  }
+}

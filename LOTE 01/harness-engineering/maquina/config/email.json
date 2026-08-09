@@ -1,0 +1,38 @@
+{
+  "smtp_host": "smtp.gmail.com",
+  "smtp_port": 587,
+  "smtp_user": "{{SMTP_USER}}",
+  "smtp_password": "{{SMTP_PASSWORD}}",
+  "from_name": "Harness Engineering",
+  "from_email": "{{FROM_EMAIL}}",
+  "use_tls": true,
+  "unsubscribe_url": "{{SITE_URL}}/unsubscribe",
+  "tracking_domain": "{{TRACKING_DOMAIN}}",
+  "utm_source": "email",
+  "utm_medium": "sequence",
+  "rate_limit": {
+    "max_per_hour": 30,
+    "max_per_day": 200,
+    "delay_seconds": 2
+  },
+  "assinatura": {
+    "nome": "Equipe Harness Engineering",
+    "cargo": "Engenharia de Agentes de IA",
+    "site": "{{SITE_URL}}",
+    "telefone": "{{TELEFONE}}"
+  },
+  "listas": {
+    "leads_geral": {
+      "nome": "Leads Geral",
+      "descricao": "Todos os leads capturados"
+    },
+    "leads_qualificados": {
+      "nome": "Leads Qualificados",
+      "descricao": "Leads com score > 50"
+    },
+    "compradores": {
+      "nome": "Compradores",
+      "descricao": "Leads que realizaram compra"
+    }
+  }
+}

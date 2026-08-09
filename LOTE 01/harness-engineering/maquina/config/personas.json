@@ -1,0 +1,153 @@
+{
+  "personas": [
+    {
+      "slug": "engenheiro-software",
+      "nome": "Engenheiro de Software Sênior",
+      "descricao": "Desenvolvedor que já usa LLMs e quer colocar agentes em produção sem incidentes.",
+      "faixa_etaria": "25-45",
+      "genero": "todos",
+      "renda": "8000-30000",
+      "dor_principal": "Agente erra em silêncio, sem teste nem rastreabilidade",
+      "desejo_principal": "Colocar agentes em produção com confiança e evidência",
+      "objecoes": [
+        "Acredita que prompt bem escrito resolve",
+        "Não conhece a camada de harness",
+        "Acha que é modismo sem base prática"
+      ],
+      "gatilhos": [
+        "Incidente com agente em produção",
+        "Case de alucinação com custo real",
+        "Comparativo com test harness clássico"
+      ],
+      "criterios": {
+        "min_seguidores": 100,
+        "max_seguidores": 100000,
+        "bio_keywords": [
+          "engenheiro",
+          "developer",
+          "software",
+          "agente",
+          "llm",
+          "ia",
+          "devops",
+          "backend",
+          "engineer",
+          "ml",
+          "ai"
+        ],
+        "min_posts": 5,
+        "localizacoes": [
+          "brasil",
+          "BR",
+          "São Paulo",
+          "Rio",
+          "Minas",
+          "Porto Alegre",
+          "Curitiba",
+          "Recife",
+          "Florianópolis"
+        ]
+      },
+      "canais_preferidos": [
+        "linkedin",
+        "email"
+      ],
+      "tom_comunicacao": "técnico, direto, com evidência",
+      "ativo": true
+    },
+    {
+      "slug": "lider-tecnico",
+      "nome": "Líder Técnico / Tech Lead",
+      "descricao": "Lidera times que adotam agentes e responde por confiabilidade e custo.",
+      "faixa_etaria": "30-50",
+      "genero": "todos",
+      "renda": "15000-50000",
+      "dor_principal": "Time entrega agente que 'funciona' e quebra em produção",
+      "desejo_principal": "Padronizar a engenharia de agentes no time",
+      "objecoes": [
+        "Não tem orçamento para nova camada",
+        "Time já está sobrecarregado",
+        "Difícil medir retorno do harness"
+      ],
+      "gatilhos": [
+        "DORA/relatórios de estabilidade",
+        "Custo de incidente com agente",
+        "Padrões de agent-first engineering"
+      ],
+      "criterios": {
+        "min_seguidores": 500,
+        "max_seguidores": 200000,
+        "bio_keywords": [
+          "tech lead",
+          "cto",
+          "engenharia",
+          "líder",
+          "software",
+          "agente",
+          "ia",
+          "arquiteto",
+          "platform",
+          "head"
+        ],
+        "min_posts": 10,
+        "localizacoes": [
+          "brasil",
+          "BR"
+        ]
+      },
+      "canais_preferidos": [
+        "linkedin",
+        "email"
+      ],
+      "tom_comunicacao": "estratégico, dados, processo",
+      "ativo": true
+    },
+    {
+      "slug": "fundador-indie",
+      "nome": "Fundador / Indie Hacker",
+      "descricao": "Empreendedor que usa agentes para operar o negócio com pouca gente.",
+      "faixa_etaria": "22-40",
+      "genero": "todos",
+      "renda": "5000-30000",
+      "dor_principal": "Depende de agentes sem saber quando podem falhar",
+      "desejo_principal": "Automatizar operação sem susto",
+      "objecoes": [
+        "Não tem tempo para testar tudo",
+        "Ferramentas parecem caras",
+        "Já queimou o dedo com automação"
+      ],
+      "gatilhos": [
+        "Custo de agente mal configurado",
+        "Guardrail que evitou prejuízo",
+        "Automação que escala time enxuto"
+      ],
+      "criterios": {
+        "min_seguidores": 100,
+        "max_seguidores": 100000,
+        "bio_keywords": [
+          "fundador",
+          "indie",
+          "solo",
+          "startup",
+          "agente",
+          "ia",
+          "automação",
+          "saas",
+          "founder"
+        ],
+        "min_posts": 10,
+        "localizacoes": [
+          "brasil",
+          "BR"
+        ]
+      },
+      "canais_preferidos": [
+        "instagram",
+        "linkedin",
+        "email"
+      ],
+      "tom_comunicacao": "prático, direto, sem enrolação",
+      "ativo": true
+    }
+  ]
+}

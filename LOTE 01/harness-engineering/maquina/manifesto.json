@@ -1,0 +1,47 @@
+{
+  "id": "mv-20260809-livros/harness-engineering",
+  "slug": "livros/harness-engineering",
+  "titulo": "Livros/Harness Engineering",
+  "obra_origem": "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\output\\harness-engineering\\livros\\harness-engineering",
+  "tipo_obra": "livros",
+  "tipo_maquina": "completo",
+  "criada_em": "2026-08-09T18:45:53.005460",
+  "status": "criada",
+  "colecao": "harness-engineering",
+  "maquina_em": "output/harness-engineering/maquina",
+  "campanhas": {
+    "snapshot": true,
+    "atualizado_em": "2026-08-09",
+    "material_ancora": "harness-engineering"
+  },
+  "stack": {
+    "frontend": "nextjs-14",
+    "backend": "fastapi",
+    "database": "sqlite",
+    "deploy": "docker-vercel"
+  },
+  "escada_valor": {
+    "nivel_0": {
+      "tipo": "lead_magnet",
+      "preco": 0
+    },
+    "nivel_1": {
+      "tipo": "tripwire",
+      "preco": 37
+    },
+    "nivel_2": {
+      "tipo": "core",
+      "preco": 97
+    },
+    "nivel_3": {
+      "tipo": "obra_completa",
+      "preco": 297
+    }
+  },
+  "metricas": {
+    "leads": 0,
+    "vendas": 0,
+    "receita": 0.0,
+    "taxa_conversao": 0.0
+  }
+}
