@@ -49,7 +49,7 @@ preâmbulos nem saudações. A **REGRA 1** exige PT-BR estrito.
 | E-mails | `output/<obra>/emails/` | Esqueleto + polimento de copy |
 | Coleção | `output/<obra>/colecoes/<nome>.json` | Manifesto derivado (`colecao.py`) |
 | Pacote distribuível | `output/<obra>/distribuicao/` | `empacotar-colecao.py` |
-| Máquina de vendas | `marketing/maquinas/<slug>/` | `criar-maquina-vendas.py` |
+| Máquina de vendas | `output/<slug-colecao>/maquina/` (1 por coleção) | `criar-maquina-vendas.py` |
 
 ## 2. Conceitos fundamentais
 
@@ -444,7 +444,7 @@ Tudo em `scripts/` (lista completa em `ls scripts/`). Os principais:
 | `compilar-para-pdf.py` | Compilador principal (rota por tipo via registro) |
 | `gerar-lead-magnet-pdf.py` | PDF do lead magnet (motor Chromium) |
 | `revisar-e-polir-capitulos.py` | Revisão/polimento em lote |
-| `criar-maquina-vendas.py` | Gera a máquina de vendas (6 passos) |
+| `criar-maquina-vendas.py` | Gera a máquina de vendas (7 passos, 1:1 por coleção) |
 
 ### 7.3 Validação (gates)
 
@@ -615,7 +615,10 @@ de leads no Instagram, nutrição por e-mail, página de vendas com checkout Hot
 monitoramento de funil e auto-correção de campanhas — tudo em um projeto full-stack
 deployável gerado a partir de uma obra da Fábrica.
 
-Ela é gerada pelo `/criar-maquina` e materializada em `marketing/maquinas/<slug>/`:
+Ela é gerada pelo `/criar-maquina` e materializada em `output/<slug-colecao>/maquina/`
+(**regra 1:1 — 1 máquina por COLEÇÃO**; o hub é o 1º segmento do slug que não
+seja raiz de tipo). A máquina carrega o **snapshot das campanhas da coleção**
+em `maquina/campanhas/` (textos, artes e cronogramas de divulgação):
 
 | Camada | Tecnologia | O que faz |
 |---|---|---|
@@ -654,27 +657,32 @@ Funnel Monitor lê o banco, grava `metrics.json` e alimenta o dashboard e webhoo
 
 1. **Pré-condição:** a obra existe em `output/` (layout série-aware). O script usa
    `tipos_obra.dir_obra()` para localizar.
-2. **6 passos internos** (`scripts/criar-maquina-vendas.py`):
-   1. **Copiar o template** `templates/maquina/` para `marketing/maquinas/<slug>/`
-   2. Criar o manifesto da máquina (`manifesto.json`)
+2. **7 passos internos** (`scripts/criar-maquina-vendas.py`):
+   1. **Copiar o template** `templates/maquina/` para `output/<slug-colecao>/maquina/`
+      (regra 1:1 — outra obra do mesmo hub recusa sem sobrescrever)
+   2. Criar o manifesto da máquina (`manifesto.json` com `colecao`, `maquina_em`,
+      `campanhas.snapshot`)
    3. Copiar conteúdo da obra (via manifesto da coleção)
-   4. Aplicar replacements `{{SLUG}}`, `{{TITULO}}`, `{{PRECO}}` (R$ 97),
+   4. **Snapshot das campanhas** — `output/<slug-colecao>/campanhas/` →
+      `maquina/campanhas/` com `snapshot.json` (origem, atualizado_em, materiais)
+   5. Aplicar replacements `{{SLUG}}`, `{{TITULO}}`, `{{PRECO}}` (R$ 97),
       `{{PRECO_CORE}}` (97), `{{PRECO_TRIPWIRE}}` (37), `{{PRECO_OBRA_COMPLETA}}`
       (297), `{{AUTOR}}`, `{{EMAIL_CONTATO}}`, `{{DATA}}`, `{{ANO}}`
-   5. Inicializar o banco (executa `database/schema.sql` + `seed.sql`)
-   6. Copiar `config/`, `.env.example` e gerar `.mcp.json` (db_state + file_writer)
+   6. Inicializar o banco (executa `database/schema.sql` + `seed.sql`); copiar
+      `config/`, `.env.example` e gerar `.mcp.json` (db_state + file_writer)
    7. Resumo da máquina + instruções de deploy
 3. **Personalização por nicho OBRIGATÓRIA** (Regra 12): o gate abaixo deve retornar vazio:
 
 ```bash
-grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
+grep -rn 'Autor Digital\|centenas de pessoas' output/<slug-colecao>/maquina/ \
+  --exclude-dir=node_modules --exclude-dir=.next --exclude='*.db'
 ```
 
 4. **Teste o checkout** (rota `/api/checkout` nasce no template — confira que o lead
    chega em `/api/leads/`):
 
 ```bash
-cd marketing/maquinas/<slug>/frontend && npm run dev
+cd output/<slug-colecao>/maquina/frontend && npm run dev
 # POST http://localhost:3000/api/checkout  {"nome": "...", "email": "..."}
 ```
 
@@ -683,7 +691,7 @@ cd marketing/maquinas/<slug>/frontend && npm run dev
 ## 20. Estrutura gerada
 
 ```text
-marketing/maquinas/<slug>/
+output/<slug-colecao>/maquina/
 ├── manifesto.json             # manifesto (ID, slug, obra-fonte, escada de valor)
 ├── README.md                  # arquitetura + deploy + operação
 ├── AGENTS.md                  # regras p/ agentes de IA
@@ -833,7 +841,8 @@ exige personalizar **8 pontos**:
 Gate de saída (deve retornar **vazio**):
 
 ```bash
-grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
+grep -rn 'Autor Digital\|centenas de pessoas' output/<slug-colecao>/maquina/ \
+  --exclude-dir=node_modules --exclude-dir=.next --exclude='*.db'
 ```
 
 ## 27. Checkout e pagamentos
@@ -843,7 +852,7 @@ grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
 - **Confirmação:** webhook do Hotmart (`/api/webhook`) marca o lead como `pago`.
 - **Rota nasce no template** — máquinas antigas (geradas antes do fix) devem ser
   sincronizadas com a skill `sincronizar-maquina-vendas` (rota + page client +
-  produto default + `BACKEND_URL` no `.env.example`).
+  produto default + `BACKEND_URL` no `.env.example` + re-snapshot de campanhas).
 - **Rastreio:** CTA/links usam UTM (`TRACKING_DOMAIN`).
 
 ## 28. Deploy em produção
@@ -851,7 +860,7 @@ grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
 ### Opção A — Docker VPS (recomendada)
 
 ```bash
-cd marketing/maquinas/<slug>
+cd output/<slug-colecao>/maquina
 ./scripts/deploy.sh full          # build + up
 ./scripts/deploy.sh status        # saúde
 ./scripts/deploy.sh rollback      # volta versão anterior

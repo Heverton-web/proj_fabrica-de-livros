@@ -140,7 +140,7 @@ def avaliar_membro(membro, validador, incluir_parciais=False):
             "verificados": verificados}
 
 
-def montar_leia_me(colecao, manifesto, incluidos, excluidos):
+def montar_leia_me(colecao, manifesto, incluidos, excluidos, tem_maquina=False):
     nucleo = manifesto.get("nucleo", {})
     L = [f"# {nucleo.get('titulo') or colecao}", "",
          f"**Autor:** {AUTOR}  ·  **Coleção:** {colecao}  ·  "
@@ -174,6 +174,13 @@ def montar_leia_me(colecao, manifesto, incluidos, excluidos):
             L.append(f"- **{TO.campo(tipo, 'rotulo', tipo)}**: "
                      f"{membro['titulo'][:52]} — {motivo_ex}")
         L.append("")
+
+    if tem_maquina:
+        L += ["## Máquina de vendas", "",
+              "- **`maquina/`** — projeto full-stack (Next.js + FastAPI + SQLite) "
+              "da coleção, com snapshot das campanhas em `maquina/campanhas/`. "
+              "Personalize por nicho (config/, copy do frontend, e-mails) e "
+              "deploye — consulte o README dentro da pasta.", ""]
 
     L += ["## Licença", "",
           f"© {ANO} {AUTOR}. Todos os direitos reservados. "
@@ -264,9 +271,30 @@ def empacotar(colecao, incluir_parciais=False):
         print(f"  [OK] {tipo:<12} {membro['titulo'][:40]:<42} "
               f"{len(copiados)} arquivo(s)")
 
+    # Máquina de vendas (regra 1:1 — 1 por coleção, output/<hub>/maquina): o
+    # pacote carrega a máquina inteira com o snapshot de campanhas. Artefatos
+    # de runtime (node_modules, build, bancos) ficam fora.
+    tem_maquina = False
+    hub = colecao_mod._hub_da_colecao(manifesto["membros"])
+    if hub:
+        dir_maquina = DIR_OUTPUT / hub / "maquina"
+        if dir_maquina.is_dir() and (dir_maquina / "manifesto.json").is_file():
+            destino_maquina = destino / "maquina"
+            if destino_maquina.exists():
+                shutil.rmtree(destino_maquina)
+            shutil.copytree(
+                dir_maquina, destino_maquina,
+                ignore=shutil.ignore_patterns("node_modules", ".next", "*.db"))
+            total_kb += sum(p.stat().st_size for p in destino_maquina.rglob("*")
+                            if p.is_file()) // 1024
+            tem_maquina = True
+            print(f"  [OK] maquina      ... copiada com snapshot de campanhas")
+
     (destino / "LICENCA.txt").write_text(LICENCA, encoding="utf-8")
     (destino / "LEIA-ME.md").write_text(
-        montar_leia_me(colecao, manifesto, incluidos, excluidos), encoding="utf-8")
+        montar_leia_me(colecao, manifesto, incluidos, excluidos,
+                       tem_maquina=tem_maquina),
+        encoding="utf-8")
 
     return {
         "colecao": colecao,

@@ -24,7 +24,7 @@ alwaysApply: true
 9. **Busca via Grafo:** usar `.code-review-graph` antes de tools de leitura/busca.
 10. **Auto-commit/push:** alterações devem ser commitadas e pushadas para manter grafo atualizado.
 11. **UTF-8 no Windows:** todo script Python com `print`/emojis DEVE ter `console_utf8()` (padrão `scripts/tipos_obra.py`) ou `sys.stdout.reconfigure(encoding="utf-8")` — sem isso quebra em cp1252 (ex.: `criar-maquina-vendas.py`).
-12. **Personalizar, não só gerar:** a máquina de vendas nasce com copy genérica ("Autor Digital", "centenas de pessoas") — o fluxo `/criar-maquina` exige personalização por nicho (configs + frontend + e-mails + README) com gate `grep 'Autor Digital|centenas de pessoas'` retornando vazio.
+12. **Personalizar, não só gerar:** a máquina de vendas nasce com copy genérica ("Autor Digital", "centenas de pessoas") — o fluxo `/criar-maquina` exige personalização por nicho (configs + frontend + e-mails + campanhas + README) com gate `grep 'Autor Digital|centenas de pessoas'` (incluindo `campanhas/` do snapshot) retornando vazio.
 
 ## 1. Regras Globais
 
@@ -130,9 +130,13 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
    ABRE) → `empacotar-colecao.py <coleção>`. O pacote leva **só o que está
    finalizado e abre**, com `LICENCA.txt` e `LEIA-ME.md` que declara o que ficou
    de fora e por quê.
-9. **Máquina de vendas:** `/criar-maquina <slug>` → gerar + **personalizar por
-   nicho** (configs, frontend, e-mails, README) + testar `POST /api/checkout`
-   (rota nasce no template — verificar que o lead chega em `/api/leads/`) + deploy.
+9. **Máquina de vendas (V5.3):** `/criar-maquina <slug>` → gera em
+   `output/<slug-colecao>/maquina/` (**1 máquina por COLEÇÃO**, regra 1:1; o hub
+   é derivado do slug) com **snapshot das campanhas** em `maquina/campanhas/` +
+   personalizar por nicho (configs, frontend, e-mails, campanhas, README) +
+   testar `POST /api/checkout` (rota nasce no template — verificar que o lead
+   chega em `/api/leads/`) + deploy. Legadas em `output/<hub>/marketing/` são
+   sinalizadas como `maquinas_legadas` no manifesto da coleção.
 10. **Campanha (V5.3):** `/campanha <slug>` (1 material) ou `/campanha-completa
     [colecao]` (todos os membros do manifesto) → `criar-campanha.py` (estrutura +
     moldes de copy + artes HTML→Chromium + cronogramas; custo zero) → agente
@@ -157,7 +161,8 @@ output/<slug-colecao>/
 ├── livros/  tccs/  artigos/  ebooks/  playbooks/  lead-magnets/  decks/  emails/
 ├── campanhas/<material-slug>/  # Campanhas (V5.3): redes-sociais + canais-comunicacao
 ├── distribuicao/            # PDFs compilados para distribuição
-├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+├── maquina/                 # 1 máquina de vendas por coleção (Next.js+FastAPI)
+├── campanhas/               # artefatos de campanha (textos, artes, cronogramas)
 └── colecoes/<nome>.json     # Manifestos sincronizados (colecao.py --sincronizar)
 ```
 Suportado por `tipos_obra.py` (`_sereis`, `dir_obra`, `listar_materiais`,
@@ -294,3 +299,22 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `scripts/validar-campanha.py`, `templates/campanha/*.html`,
   `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
   `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.
+- **2026-08-09 Máquina de vendas 1:1 (V5.3):** causa: máquinas nasciam em
+  `marketing/maquinas/` (caminho morto) ou `output/<hub>/marketing/` (várias por
+  coleção, sem vínculo com campanhas). Fix: 1 máquina por COLEÇÃO em
+  `output/<hub>/maquina/` (hub = 1º segmento do slug que não seja raiz de tipo);
+  `criar-maquina-vendas.py` recusa 2ª obra do mesmo hub (sem input, retorna
+  None) e copia `output/<hub>/campanhas/` → `maquina/campanhas/` com
+  `snapshot.json` (origem/atualizado_em/materiais/copiado_em — normalizar
+  separador com `replace("\\","/")` no Windows); manifesto da máquina ganha
+  `colecao`/`maquina_em`/`campanhas`; `colecao.py --sincronizar` registra
+  `maquina` + `maquinas_legadas` (não destrutivo — legadas em
+  `output/<hub>/marketing/` ficam para o operador decidir); `empacotar-colecao.py`
+  copia a máquina no pacote (ignora node_modules/.next/*.db). Prevenção:
+  fallback de derivados usa TIPOS válidos (`playbook`, `ebook`, `deck`,
+  `lead-magnet`) — nomes de raiz plural (`playbooks`) quebram
+  `TO.listar_materiais` (KeyError); nos testes, `monkeypatch.setattr(TO,
+  "DIR_OUTPUT", ...)` — `gerador.OUTPUT_BASE`/`OBRA_BASE` não existem mais.
+  Arquivos: `scripts/criar-maquina-vendas.py`, `scripts/colecao.py`,
+  `scripts/empacotar-colecao.py`, `tests/test_maquina_colecao.py`,
+  spec em `melhorias/09-08-2026-maquina-1por-colecao-usa-campanhas.md`.

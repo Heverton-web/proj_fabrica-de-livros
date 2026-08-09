@@ -1,10 +1,11 @@
 ---
 name: sincronizar-maquina-vendas
 description: >
-  Sincroniza uma máquina de vendas já existente (marketing/maquinas/<slug>) com
-  o template corrigido (templates/maquina/), propagando o fix da rota
-  /api/checkout, o checkout com nome/e-mail via fetch, o produto default
-  alinhado ao config/produtos.json e o BACKEND_URL no .env.example.
+  Sincroniza uma máquina de vendas já existente (output/<hub>/maquina, 1 por
+  coleção) com o template corrigido (templates/maquina/), propagando o fix da
+  rota /api/checkout, o checkout com nome/e-mail via fetch, o produto default
+  alinhado ao config/produtos.json, o BACKEND_URL no .env.example e o
+  re-snapshot das campanhas da coleção (maquina/campanhas/).
   Use quando uma máquina for gerada ANTES da correção do checkout — sintomas:
   rota /api/checkout inexistente (404 no botão PAGAR), checkout page com
   <form action method="POST"> sem campos, ou copy genérica de nicho.
@@ -31,22 +32,24 @@ perder a personalização por nicho já feita.
 > **Diretório de trabalho:** os passos 2–3 rodam da **raiz do projeto**; os
 > passos 4–7 rodam de dentro da máquina. Execute os `cd` indicados.
 
-1. **Identificar o slug**: `marketing/maquinas/<slug>/`
+1. **Identificar a máquina**: `output/<slug-colecao>/maquina/` (o hub é o
+   primeiro segmento do slug da obra — ex.: `livros/ia-agentica-desbloqueada`
+   → `output/ia-agentica-desbloqueada/maquina/`).
 2. **Sincronizar a rota** (da raiz do projeto, se ausente ou antiga):
    ```bash
    cd <raiz-do-projeto>
-   cp templates/maquina/frontend/app/api/checkout/route.ts marketing/maquinas/<slug>/frontend/app/api/checkout/
+   cp templates/maquina/frontend/app/api/checkout/route.ts output/<slug-colecao>/maquina/frontend/app/api/checkout/
    ```
    Substituir o `produto` default pelo slug real do produto core (passo 4).
 3. **Sincronizar a página de checkout** (da raiz do projeto):
    ```bash
-   cp templates/maquina/frontend/app/checkout/page.tsx marketing/maquinas/<slug>/frontend/app/checkout/
+   cp templates/maquina/frontend/app/checkout/page.tsx output/<slug-colecao>/maquina/frontend/app/checkout/
    ```
    **Manter a copy personalizada do nicho** (título, benefícios, preço) — o
    template é genérico.
 4. **Alinhar o produto default** (dentro da máquina):
    ```bash
-   cd marketing/maquinas/<slug>
+   cd output/<slug-colecao>/maquina
    python -c "import json; d=json.load(open('config/produtos.json',encoding='utf-8')); \
    [print(p['slug'], '|', p['tipo'], '|', p['preco']) for p in d['produtos']]"
    ```
@@ -54,9 +57,20 @@ perder a personalização por nicho já feita.
    `produto` deve ser o slug do produto core (ex.: `dentista-gestor-livro`).
 5. **Garantir BACKEND_URL no .env.example** (se ausente): adicionar
    `BACKEND_URL=http://127.0.0.1:8000` e `NEXT_PUBLIC_BACKEND_URL=...`.
-6. **Documentar a rota no README.md** da máquina (tabela de rotas + aviso para
+6. **Re-snapshot das campanhas** (campanhas mudaram desde a geração?):
+   ```bash
+   python scripts/criar-maquina-vendas.py <slug-da-obra> --tipo completo
+   # resposta "s" para sobrescrever a MESMA obra — recria com campanhas atuais
+   ```
+   Alternativa manual (só o snapshot):
+   ```bash
+   rm -rf output/<slug-colecao>/maquina/campanhas
+   cp -r output/<slug-colecao>/campanhas output/<slug-colecao>/maquina/campanhas
+   ```
+   Depois conferir `campanhas/snapshot.json` (atualizado_em da campanha).
+7. **Documentar a rota no README.md** da máquina (tabela de rotas + aviso para
    não remover `/api/checkout`).
-7. **Verificar** (com frontend e backend no ar):
+8. **Verificar** (com frontend e backend no ar):
    ```bash
    curl -s -X POST http://localhost:3000/api/checkout \
      -H "Content-Type: application/json" \

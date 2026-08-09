@@ -41,13 +41,23 @@ finalizada pela Fábrica Agêntica de Publicações.
 
 1. Verifica se obra existe em `output/`
 2. Pergunta confirmação ao operador
-3. Copia template de `templates/maquina/` para `marketing/maquinas/{slug}/`
+3. Copia template de `templates/maquina/` para `output/<slug-colecao>/maquina/`
+   (**regra 1:1 — 1 máquina por COLEÇÃO**; hub = 1º segmento do slug que não
+   seja raiz de tipo. Se já existir máquina de OUTRA obra no mesmo hub, recusa
+   sem sobrescrever)
 4. Substitui placeholders ({{SLUG}}, {{TITULO}}, {{PRECO}}, etc.)
-5. Gera `manifesto.json` com metadados
-6. Copia conteúdo da obra (markdown, PDF, EPUB, artes, capa)
-7. Inicializa banco SQLite com schema + seed
-8. Gera `.mcp.json` com MCPS necessários
-9. Reporta resumo e próximos passos
+5. Copia as campanhas da coleção para `maquina/campanhas/` (snapshot com
+   `snapshot.json`: origem, atualizado_em, materiais, copiado_em)
+6. Gera `manifesto.json` com metadados (inclui `colecao`, `maquina_em` e
+   `campanhas.snapshot`)
+7. Copia conteúdo da obra (markdown, PDF, EPUB, artes, capa)
+8. Inicializa banco SQLite com schema + seed
+9. Gera `.mcp.json` com MCPS necessários
+10. Reporta resumo e próximos passos
+
+**Cardinalidade:** ao rodar `/criar-maquina` para uma 2ª obra da MESMA coleção,
+o script recusa (retorna sem ação) — o manifesto existente é preservado. A
+mesma obra pode regenerar com confirmação.
 
 ## 5. Personalização por nicho (pós-geração, obrigatória)
 
@@ -58,10 +68,10 @@ personalizar obrigatoriamente:
 |------|----------|-------------|
 | Configs | `config/produtos.json`, `personas.json`, `funis.json`, `canais.json`, `email.json` | Escada de valor, persona, funis, hashtags e remetente do nicho |
 | Frontend | `app/page.tsx`, `components/Hero.tsx`, `PricingCard.tsx`, `app/layout.tsx`, `admin/layout.tsx`, `captura/page.tsx` | Headline, dor/solução, CTA, metadata |
-| E-mails | `templates/emails/*.html` | Copy de boas-vindas, nutrição, venda, reativação |
+| E-mails | `campanhas/*/canais-comunicacao/emails/*` (snapshot da coleção) → `templates/emails/*.html` | Copy de boas-vindas, nutrição, venda, reativação |
 | Docs | `README.md` | Apresentação no nicho |
 
-**Gate de verificação:** `grep -rn 'Autor Digital\|centenas de pessoas' frontend/ templates/ README.md`
+**Gate de verificação:** `grep -rn 'Autor Digital\|centenas de pessoas' frontend/ templates/ campanhas/ README.md`
 retorna vazio (R12).
 
 ## 6. Endpoints do frontend

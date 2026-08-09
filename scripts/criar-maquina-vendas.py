@@ -18,14 +18,48 @@ import tipos_obra as TO
 
 BASE_DIR = Path(__file__).parent.parent
 TEMPLATE_DIR = BASE_DIR / "templates" / "maquina"
-OUTPUT_BASE = BASE_DIR / "marketing" / "maquinas"
-OBRA_BASE = BASE_DIR / "output"
+
+# Regra 1:1 — 1 máquina por COLEÇÃO, em output/<slug-colecao>/maquina (V5.3).
+# Caminhos de output resolvem via tipos_obra.DIR_OUTPUT (redirecionável nos
+# testes); nada vive mais em marketing/maquinas (raiz, caminho morto).
+_RAIZES_ESTRUTURAIS = frozenset(
+    {TO.raiz_output(t) for t in TO.tipos_validos()}
+    | {"marketing", "distribuicao", "colecoes", "campanhas"}
+)
+
+
+def _hub_da_obra(slug):
+    """Hub da coleção da obra = 1º segmento do slug que não seja raiz estrutural.
+
+    'livros/ia-agentica-desbloqueada' -> 'ia-agentica-desbloqueada';
+    'obra-teste' (layout plano)       -> 'obra-teste' (obra é sua própria coleção).
+    """
+    for parte in str(slug).replace("\\", "/").split("/"):
+        if parte and parte not in _RAIZES_ESTRUTURAIS:
+            return parte
+    return Path(str(slug).replace("\\", "/")).name
+
+
+def dir_maquina(slug, base=None):
+    """Destino canônico da máquina: output/<slug-colecao>/maquina."""
+    base = Path(base) if base is not None else TO.DIR_OUTPUT
+    return base / _hub_da_obra(slug) / "maquina"
 
 _TIPOS_FLAT = ("livros", "tccs", "ebooks", "artigos", "playbooks", "lead-magnets", "decks")
 
 
 def slug_para_titulo(slug: str) -> str:
     return slug.replace("-", " ").replace("_", " ").title()
+
+
+def _ler_json(caminho, padrao=None):
+    """Lê JSON com tolerância: arquivo ausente ou inválido vira `padrao`."""
+    if caminho.exists():
+        try:
+            return json.loads(caminho.read_text(encoding="utf-8"))
+        except ValueError:
+            return padrao if padrao is not None else {}
+    return padrao if padrao is not None else {}
 
 
 def verificar_obra_existe(slug: str) -> dict:
@@ -37,14 +71,14 @@ def verificar_obra_existe(slug: str) -> dict:
     """
     # 1) Resolução série-aware (layout canônico desde V5.1)
     try:
-        d = TO.dir_obra(slug, OBRA_BASE)
+        d = TO.dir_obra(slug, TO.DIR_OUTPUT)
     except Exception:
         d = None
     if d is not None and d.exists():
         return _montar_obra_info(d, slug)
     # 2) Fallback flat legado
     slug_limpo = Path(str(slug).replace("\\", "/")).name
-    for d in [OBRA_BASE / t / slug_limpo for t in _TIPOS_FLAT]:
+    for d in [TO.DIR_OUTPUT / t / slug_limpo for t in _TIPOS_FLAT]:
         if d.exists():
             return _montar_obra_info(d, slug)
     return {}
@@ -87,8 +121,9 @@ def copiar_template(src: Path, dst: Path, replacements: dict):
         dst.write_text(content, encoding="utf-8")
 
 
-def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str) -> dict:
-    """Gera manifesto da máquina de vendas."""
+def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str,
+                    snapshot=None) -> dict:
+    """Gera manifesto da máquina de vendas (regra 1:1 por coleção)."""
     return {
         "id": f"mv-{datetime.now().strftime('%Y%m%d')}-{slug}",
         "slug": slug,
@@ -98,6 +133,13 @@ def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str) -> dict:
         "tipo_maquina": tipo,
         "criada_em": datetime.now().isoformat(),
         "status": "criada",
+        "colecao": _hub_da_obra(slug),
+        "maquina_em": f"output/{_hub_da_obra(slug)}/maquina",
+        "campanhas": {
+            "snapshot": bool(snapshot),
+            "atualizado_em": (snapshot or {}).get("atualizado_em", ""),
+            "material_ancora": Path(str(slug).replace("\\", "/")).name,
+        },
         "stack": {
             "frontend": "nextjs-14",
             "backend": "fastapi",
@@ -119,6 +161,38 @@ def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str) -> dict:
     }
 
 
+def vincular_campanhas(destino: Path, slug: str, base=None):
+    """Snapshot de output/<hub>/campanhas -> maquina/campanhas + snapshot.json.
+
+    A máquina deplora fora do repo da fábrica (VPS/Vercel), então recebe cópia
+    integral — campanha é fonte, máquina é consumidora. Sem campanhas no hub
+    retorna None (máquina funciona; o snapshot entra quando a campanha existir).
+    """
+    base = Path(base) if base is not None else TO.DIR_OUTPUT
+    hub = _hub_da_obra(slug)
+    origem = base / hub / "campanhas"
+    if not origem.is_dir():
+        print("    (sem campanhas no hub — máquina sem snapshot de campanhas)")
+        return None
+    snap_dest = destino / "campanhas"
+    if snap_dest.exists():
+        shutil.rmtree(snap_dest)
+    shutil.copytree(origem, snap_dest)
+    estado = _ler_json(origem / "campanha.json")
+    snapshot = {
+        "origem": str(origem.relative_to(base)).replace("\\", "/"),
+        "atualizado_em": estado.get("atualizado_em", ""),
+        "materiais": len([p for p in origem.iterdir() if p.is_dir()]),
+        "copiado_em": datetime.now().isoformat(),
+    }
+    (snap_dest / "snapshot.json").write_text(
+        json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"    ✅ Snapshot de campanhas: maquina/campanhas/ "
+          f"({snapshot['materiais']} material(is), campanha de "
+          f"{snapshot['atualizado_em'] or 'data desconhecida'})")
+    return snapshot
+
+
 def criar_maquina(slug: str, tipo: str = "completo"):
     """Função principal: cria a máquina de vendas."""
     # UTF-8 no Windows (cp1252 quebra emojis do banner) — não depender só do main()
@@ -128,19 +202,33 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         pass
     titulo = slug_para_titulo(slug)
     obra_info = verificar_obra_existe(slug)
-    destino = OUTPUT_BASE / slug
+    destino = dir_maquina(slug)
+    hub = _hub_da_obra(slug)
 
     print(f"\n{'='*60}")
     print(f"  CRIANDO MÁQUINA DE VENDAS: {titulo}")
     print(f"  Tipo: {tipo}")
+    print(f"  Coleção (hub): {hub}")
     print(f"  Destino: {destino}")
     print(f"{'='*60}\n")
 
     if destino.exists():
+        # Regra 1:1 — a máquina do hub pertence a UMA obra. Outra obra da mesma
+        # coleção NÃO pode sobrescrever; mesma obra segue com confirmação.
+        man_existente = _ler_json(destino / "manifesto.json")
+        obra_anterior = man_existente.get("obra_origem", "")
+        obra_atual = obra_info.get("path", "")
+        if obra_anterior and obra_atual and obra_anterior != obra_atual:
+            print(f"  ⛔ Regra 1:1 — a coleção '{hub}' já tem máquina de outra obra:")
+            print(f"     existente: {obra_anterior}")
+            print(f"     solicitada: {obra_atual}")
+            print(f"  (1 máquina por coleção em output/<slug-colecao>/maquina — "
+                  f"use outra coleção ou remova a existente)")
+            return None
         resp = input(f"  ⚠️  Diretório {destino} já existe. Sobrescrever? (s/N): ")
         if resp.lower() != "s":
             print("  Cancelado.")
-            return
+            return None
         shutil.rmtree(destino)
 
     # Placeholders para substituição nos templates
@@ -161,19 +249,12 @@ def criar_maquina(slug: str, tipo: str = "completo"):
     }
 
     # 1. Copiar template completo
-    print("  [1/6] Copiando estrutura de templates...")
+    print("  [1/7] Copiando estrutura de templates...")
     copiar_template(TEMPLATE_DIR, destino, replacements)
 
-    # 2. Gerar manifesto
-    print("  [2/6] Gerando manifesto...")
-    manifesto = gerar_manifesto(slug, titulo, obra_info, tipo)
-    manifesto_path = destino / "manifesto.json"
-    with open(manifesto_path, "w", encoding="utf-8") as f:
-        json.dump(manifesto, f, indent=2, ensure_ascii=False)
-
-    # 3. Copiar conteúdo da obra (se existir)
+    # 2. Copiar conteúdo da obra (se existir)
     if obra_info.get("path"):
-        print("  [3/6] Copiando conteúdo da obra...")
+        print("  [2/7] Copiando conteúdo da obra...")
         obra_dest = destino / "conteudo"
         obra_dest.mkdir(exist_ok=True)
         obra_src = Path(obra_info["path"])
@@ -185,9 +266,9 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         # Fonte confiável: manifesto da coleção (output/<obra>/colecoes/<nome>.json)
         # — lista membros reais com slug relativo a output/ (nomenclatura curta V5.1).
         obra_curta = Path(str(slug).replace("\\", "/")).name
-        colecao_manifesto = OBRA_BASE / obra_curta / "colecoes" / f"{obra_curta}.json"
+        colecao_manifesto = TO.DIR_OUTPUT / obra_curta / "colecoes" / f"{obra_curta}.json"
         if not colecao_manifesto.exists():
-            colecao_manifesto = OBRA_BASE / "colecoes" / f"{slug}.json"  # fallback flat
+            colecao_manifesto = TO.DIR_OUTPUT / "colecoes" / f"{slug}.json"  # fallback flat
         membros_copiados = set()
         if colecao_manifesto.exists():
             try:
@@ -196,9 +277,9 @@ def criar_maquina(slug: str, tipo: str = "completo"):
                     slug_membro = membro.get("slug", "") if isinstance(membro, dict) else str(membro)
                     if not slug_membro:
                         continue
-                    m_dir = OBRA_BASE / slug_membro
+                    m_dir = TO.DIR_OUTPUT / slug_membro
                     if not m_dir.exists():
-                        m_dir = TO.dir_obra(slug_membro, OBRA_BASE)
+                        m_dir = TO.dir_obra(slug_membro, TO.DIR_OUTPUT)
                     if not m_dir.exists():
                         continue
                     artefatos = membro.get("artefatos", []) if isinstance(membro, dict) else []
@@ -217,11 +298,11 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         elif not membros_copiados:
             # Fallback: materiais derivados cujo caminho contém a 1ª palavra do slug
             primeira_palavra = obra_curta.split("-")[0]
-            for tipo in ("playbooks", "ebooks", "decks", "lead-magnets"):
-                for slug_material in TO.listar_materiais(tipo, OBRA_BASE):
+            for tipo in ("playbook", "ebook", "deck", "lead-magnet"):
+                for slug_material in TO.listar_materiais(tipo, TO.DIR_OUTPUT):
                     if primeira_palavra not in slug_material:
                         continue
-                    m_dir = TO.dir_obra(slug_material, OBRA_BASE)
+                    m_dir = TO.dir_obra(slug_material, TO.DIR_OUTPUT)
                     if not m_dir.exists():
                         continue
                     for item in m_dir.rglob("*"):
@@ -248,10 +329,21 @@ def criar_maquina(slug: str, tipo: str = "completo"):
                 shutil.copy2(f, capa_dest / f.name)
                 break
     else:
-        print("  [3/6] Obra não encontrada localmente (pode ter sido gerada em outro diretório)")
+        print("  [2/7] Obra não encontrada localmente (pode ter sido gerada em outro diretório)")
 
-    # 4. Inicializar banco de dados
-    print("  [4/6] Inicializando banco de dados...")
+    # 3. Vincular campanhas da coleção (snapshot) — regra: máquina usa campanhas
+    print("  [3/7] Vinculando campanhas da coleção...")
+    snapshot = vincular_campanhas(destino, slug)
+
+    # 4. Gerar manifesto (com vínculo de campanhas)
+    print("  [4/7] Gerando manifesto...")
+    manifesto = gerar_manifesto(slug, titulo, obra_info, tipo, snapshot)
+    manifesto_path = destino / "manifesto.json"
+    with open(manifesto_path, "w", encoding="utf-8") as f:
+        json.dump(manifesto, f, indent=2, ensure_ascii=False)
+
+    # 5. Inicializar banco de dados
+    print("  [5/7] Inicializando banco de dados...")
     db_dir = destino / "database"
     schema_file = db_dir / "schema.sql"
     db_file = db_dir / "maquina.db"
@@ -268,8 +360,8 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         except Exception as e:
             print(f"    ⚠️  Erro ao criar banco: {e}")
 
-    # 5. Gerar .mcp.json
-    print("  [5/6] Gerando .mcp.json...")
+    # 6. Gerar .mcp.json
+    print("  [6/7] Gerando .mcp.json...")
     mcp_config = {
         "mcpServers": {
             "db_state": {
@@ -292,18 +384,22 @@ def criar_maquina(slug: str, tipo: str = "completo"):
     with open(mcp_path, "w", encoding="utf-8") as f:
         json.dump(mcp_config, f, indent=2, ensure_ascii=False)
 
-    # 6. Resumo
-    print("  [6/6] Gerando resumo...")
+    # 7. Resumo
+    print("  [7/7] Gerando resumo...")
     total_files = sum(1 for _ in destino.rglob("*") if _.is_file())
+    tem_campanhas = (destino / "campanhas" / "snapshot.json").exists()
     print(f"\n{'='*60}")
     print(f"  ✅ MÁQUINA CRIADA COM SUCESSO!")
     print(f"  📁 {destino}")
     print(f"  📄 {total_files} arquivos gerados")
+    if tem_campanhas:
+        print(f"  📣 Snapshot de campanhas em maquina/campanhas/ (fonte da copy de divulgação)")
     print(f"\n  PRÓXIMOS PASSOS:")
     print(f"  1. cd {destino}")
     print(f"  2. PERSONALIZAR por nicho: config/*.json (produtos, funis, personas, canais, email)")
     print(f"     + copy do frontend (app/page.tsx, Hero, PricingCard, layout, admin)")
     print(f"     + e-mails (templates/emails/*.html) + README.md")
+    print(f"     + campanhas/ (textos, artes e cronogramas da coleção — use o material âncora)")
     print(f"     (o template nasce com copy genérica — substitua pelos termos do nicho)")
     print(f"  3. Configurar .env (copiar de .env.example — inclui BACKEND_URL)")
     print(f"  4. cd frontend && npm install && npm run dev")

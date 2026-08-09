@@ -78,6 +78,43 @@ def _dir_colecoes_da(chave, membros):
     return DIR_COLECOES
 
 
+def _info_maquina(hub):
+    """(maquina, legadas) da colecao do hub — regra 1:1 (V5.3).
+
+    A maquina canonica vive em output/<hub>/maquina (manifesto.json +
+    campanhas/snapshot.json). `legadas` lista pastas de marketing/ do hub
+    (máquinas antigas por obra) — aviso nao destrutivo para o operador decidir.
+    """
+    if not hub:
+        return None, []
+    base_hub = DIR_OUTPUT / hub
+    info = None
+    man = _ler_json(base_hub / "maquina" / "manifesto.json")
+    if man:
+        snap = _ler_json(base_hub / "maquina" / "campanhas" / "snapshot.json")
+        campanha = _ler_json(base_hub / "campanhas" / "campanha.json")
+        desatualizada = bool(
+            campanha.get("atualizado_em") and snap
+            and snap.get("atualizado_em") != campanha.get("atualizado_em"))
+        info = {
+            "slug": man.get("slug", ""),
+            "titulo": man.get("titulo", ""),
+            "status": man.get("status", ""),
+            "criada_em": man.get("criada_em", ""),
+            "obra_origem": man.get("obra_origem", ""),
+            "campanhas": {
+                "snapshot": bool(snap),
+                "atualizado_em": (snap or {}).get("atualizado_em", ""),
+                "desatualizada": desatualizada,
+            },
+        }
+    legadas = []
+    mkt = base_hub / "marketing"
+    if mkt.is_dir():
+        legadas = sorted(p.name for p in mkt.iterdir() if p.is_dir())
+    return info, legadas
+
+
 def _todos_dirs_manifestos():
     """Todos os dirs que podem conter manifestos: fallback plano + hubs.
 
@@ -189,6 +226,7 @@ def montar_manifesto(chave, membros, metadados=None):
                  if t not in {m["tipo"] for m in membros}]
     sem_cta = [m["slug"] for m in membros
                if TO.campo(m["tipo"], "exige_cta") and not m["cta_url"]]
+    maquina, maquinas_legadas = _info_maquina(_hub_da_colecao(membros))
 
     manifesto = {
         "colecao": chave,
@@ -207,6 +245,8 @@ def montar_manifesto(chave, membros, metadados=None):
         "membros": sorted(membros, key=lambda m: (m["tipo"], m["slug"])),
         "derivados_ausentes": faltantes,
         "membros_sem_cta": sem_cta,
+        "maquina": maquina,
+        "maquinas_legadas": maquinas_legadas,
     }
     if metadados:
         manifesto["metadados"] = metadados
@@ -274,6 +314,15 @@ def _imprimir(manifesto):
         print(f"  [i] Derivados ausentes: {', '.join(manifesto['derivados_ausentes'])}")
     if manifesto["membros_sem_cta"]:
         print(f"  [!] Sem CTA: {', '.join(manifesto['membros_sem_cta'])}")
+    maquina = manifesto.get("maquina")
+    if maquina:
+        camp = maquina.get("campanhas") or {}
+        flag = " [campanha desatualizada]" if camp.get("desatualizada") else ""
+        print(f"  [OK] Maquina: {maquina.get('slug', '?')} ({maquina.get('status', '?')})"
+              f"{flag}")
+    legadas = manifesto.get("maquinas_legadas") or []
+    if legadas:
+        print(f"  [!] Maquinas legadas em marketing/: {', '.join(legadas)}")
 
 
 def main():

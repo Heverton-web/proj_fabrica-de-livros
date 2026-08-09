@@ -90,17 +90,22 @@ Exemplo real:
 /criar-maquina livros/ia-agentica-desbloqueada --tipo completo
 ```
 
-O que acontece nos 6 passos internos:
+O que acontece nos 7 passos internos:
 
-1. **Copiar template** — `templates/maquina/` → `marketing/maquinas/<slug>/`
-2. **Manifesto** — `maquina.json` com slug, tipo, data, obra-fonte
+1. **Copiar template** — `templates/maquina/` → `output/<slug-colecao>/maquina/`
+   (**regra 1:1 — 1 máquina por COLEÇÃO**; hub = 1º segmento do slug que não
+   seja raiz de tipo. Outra obra do mesmo hub → recusa sem sobrescrever)
+2. **Manifesto** — `manifesto.json` com slug, tipo, data, obra-fonte,
+   `colecao`, `maquina_em` e `campanhas.snapshot`
 3. **Conteúdo da obra** — copia materiais do manifesto da coleção
    (`output/<obra>/colecoes/<nome>.json`)
-4. **Replacements** — `{{SLUG}}`, `{{TITULO}}`, `{{PRECO}}` (R$ 97),
+4. **Campanhas** — snapshot de `output/<slug-colecao>/campanhas/` →
+   `maquina/campanhas/` com `snapshot.json` (origem, atualizado_em, materiais)
+5. **Replacements** — `{{SLUG}}`, `{{TITULO}}`, `{{PRECO}}` (R$ 97),
    `{{PRECO_CORE}}` (97), `{{PRECO_TRIPWIRE}}` (37), `{{PRECO_OBRA_COMPLETA}}`
    (297), `{{AUTOR}}`, `{{EMAIL_CONTATO}}`, `{{DATA}}`, `{{ANO}}`
-5. **Configs + env** — copia `config/` e `.env.example`
-6. **Resumo** — instruções de deploy e próximos passos
+6. **Configs + env** — copia `config/` e `.env.example`
+7. **Resumo** — instruções de deploy e próximos passos
 
 > **Layout série-aware:** a obra é localizada via `tipos_obra.dir_obra()` —
 > funciona com `output/<obra>/<tipo>/...` (single-book ou série multi-book). Se a
@@ -109,7 +114,8 @@ O que acontece nos 6 passos internos:
 **Validação de saída do gerador** (antes de tocar em qualquer arquivo):
 
 ```bash
-grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
+grep -rn 'Autor Digital\|centenas de pessoas' output/<slug-colecao>/maquina/ \
+  --exclude-dir=node_modules --exclude-dir=.next --exclude='*.db'
 ```
 
 Deve retornar **vazio**. Se retornar, a personalização (§7) ainda não foi feita.
@@ -117,7 +123,7 @@ Deve retornar **vazio**. Se retornar, a personalização (§7) ainda não foi fe
 ## 5. Passo 2 — Conhecer a estrutura gerada
 
 ```text
-marketing/maquinas/<slug>/
+output/<slug-colecao>/maquina/
 ├── manifesto.json            # manifesto da máquina
 ├── README.md                 # arquitetura, deploy, operação (leia!)
 ├── AGENTS.md                 # regras para agentes de IA que operarem a máquina
@@ -131,6 +137,7 @@ marketing/maquinas/<slug>/
 ├── backend/app/              # FastAPI: routers/, services/, models/, database/
 ├── frontend/                 # Next.js 14 (App Router)
 ├── scripts/                  # 4 automações + deploy.sh
+├── campanhas/                # snapshot das campanhas da coleção (V5.3)
 ├── conteudo/                 # cópia da obra (md/pdf/epub)
 └── frontend/public/artes/    # capas e artes da obra
 ```
@@ -138,7 +145,7 @@ marketing/maquinas/<slug>/
 ## 6. Passo 3 — Preencher o ambiente (.env)
 
 ```bash
-cd marketing/maquinas/<slug>
+cd output/<slug-colecao>/maquina
 cp .env.example .env
 # edite com valores REAIS
 ```
@@ -273,7 +280,8 @@ Preencha com valores reais (§6).
 **Gate final de personalização (antes do deploy):**
 
 ```bash
-grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
+grep -rn 'Autor Digital\|centenas de pessoas' output/<slug-colecao>/maquina/ \
+  --exclude-dir=node_modules --exclude-dir=.next --exclude='*.db'
 # → vazio = pronto
 ```
 
@@ -387,7 +395,7 @@ grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
 ### 12.1 Frontend
 
 ```bash
-cd marketing/maquinas/<slug>/frontend
+cd output/<slug-colecao>/maquina/frontend
 npm install
 npm run dev
 # http://localhost:3000
@@ -399,7 +407,7 @@ o dashboard.
 ### 12.2 Backend
 
 ```bash
-cd marketing/maquinas/<slug>/backend
+cd output/<slug-colecao>/maquina/backend
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 # http://localhost:8000/api/health → {"status": "ok"}
@@ -442,7 +450,7 @@ python scripts/auto_correct.py --dry-run    # propõe A/B sem aplicar
 ### Opção A — Docker VPS (recomendada)
 
 ```bash
-cd marketing/maquinas/<slug>
+cd output/<slug-colecao>/maquina
 ./scripts/deploy.sh full        # build das imagens + sobe tudo
 ./scripts/deploy.sh status      # saúde dos serviços
 ./scripts/deploy.sh backup      # backup do banco
@@ -455,7 +463,7 @@ frontend (Next.js standalone), backend (uvicorn) e automações (cron).
 ### Opção B — Vercel + Railway
 
 ```bash
-cd marketing/maquinas/<slug>/frontend
+cd output/<slug-colecao>/maquina/frontend
 npx vercel deploy --prod        # frontend na Vercel (vercel.json já configurado)
 ```
 
@@ -562,7 +570,7 @@ Antes de declarar a máquina **em produção**:
 |---|---|
 | `/criar-maquina <slug> --tipo completo` | gera a máquina |
 | `cp .env.example .env` | prepara o ambiente |
-| `grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/` | gate de personalização |
+| `grep -rn 'Autor Digital\|centenas de pessoas' output/<slug-colecao>/maquina/ --exclude-dir=node_modules --exclude-dir=.next --exclude='*.db'` | gate de personalização |
 | `npm run dev` (frontend) | testa local |
 | `uvicorn main:app --reload --port 8000` (backend) | testa API |
 | `./scripts/deploy.sh full \| status \| backup \| rollback` | opera no VPS |

@@ -13,9 +13,11 @@ Gera uma máquina de vendas deployável a partir de uma obra finalizada.
 1. Verifica se a obra existe em `output/`
 2. Exibe resumo da obra e pergunta confirmação
 3. Executa `python scripts/criar-maquina-vendas.py <slug> --tipo <tipo>`
-4. Gera projeto full-stack em `marketing/maquinas/{slug}/`
-5. **Personaliza por nicho** (ver seção abaixo)
-6. Reporta estrutura gerada e próximos passos
+4. Gera projeto full-stack em `output/<slug-colecao>/maquina/`
+   (**regra 1:1 — 1 máquina por COLEÇÃO**; o hub é derivado do slug da obra)
+5. Copia as campanhas da coleção para `maquina/campanhas/` (snapshot)
+6. **Personaliza por nicho** (ver seção abaixo)
+7. Reporta estrutura gerada e próximos passos
 
 ## Personalização por nicho (OBRIGATÓRIA após gerar)
 
@@ -42,7 +44,7 @@ Antes de publicar, substitua em todos os pontos abaixo pelos termos do nicho da 
 - `README.md` — apresentação da máquina no nicho
 
 ### 4. Verificação obrigatória
-- `grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ README.md` deve retornar **vazio**
+- `grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ campanhas/ README.md` deve retornar **vazio**
 - Testar `POST /api/checkout` (rota já nasce no template — não remover)
 
 ## Exemplos
@@ -55,21 +57,23 @@ Antes de publicar, substitua em todos os pontos abaixo pelos termos do nicho da 
 
 ## Saída
 
-Projeto completo em `marketing/maquinas/{slug}/` com:
+Projeto completo em `output/<slug-colecao>/maquina/` com:
 - Frontend Next.js (páginas de venda, captura, checkout, admin + API routes `/api/lead` e `/api/checkout`)
 - Backend FastAPI (APIs de leads, e-mails, métricas)
 - Database SQLite (schema + dados de exemplo)
 - Scripts de automação (lead hunter, e-mail sender, monitor)
 - Configs (produtos, funis, personas, roteamento LLM)
+- **`campanhas/`** — snapshot dos artefatos de campanha da coleção (textos, artes, cronogramas)
 - Deploy (docker-compose.yml, vercel.json)
 - Docs (AGENTS.md, CLAUDE.md, SPEC.md, README.md)
 
 ## Após criação
 
 ```
-cd marketing/maquinas/{slug}
+cd output/<slug-colecao>/maquina
 cat README.md           # Ler manual de deploy
 cat config/produtos.json # Revisar escada de valor
+cat campanhas/snapshot.json  # Vínculo com as campanhas da coleção
 # Personalizar copy (seção acima) antes de publicar
 bash scripts/deploy.sh  # Fazer deploy
 ```

@@ -148,13 +148,14 @@ def test_gerador_tem_reconfigure_utf8():
 def test_gerador_cria_rota_com_placeholders_resolvidos(tmp_path, monkeypatch):
     """Gera uma máquina real em diretório temporário e valida a rota final."""
     gerador = carregar_script("criar-maquina-vendas.py")
+    import tipos_obra
 
-    # Redirecionar a saída para tmp_path (não tocar marketing/maquinas real)
-    monkeypatch.setattr(gerador, "OUTPUT_BASE", tmp_path)
-    monkeypatch.setattr(gerador, "OBRA_BASE", tmp_path / "obras")
+    # Redirecionar o output para tmp_path (não tocar output/ real) — a máquina
+    # agora vive em output/<hub>/maquina (regra 1:1 por coleção).
+    monkeypatch.setattr(tipos_obra, "DIR_OUTPUT", tmp_path)
 
     slug = "obra-checkout-teste"
-    destino = tmp_path / slug
+    destino = tmp_path / "obra-checkout-teste" / "maquina"
     gerador.criar_maquina(slug, tipo="completo")
 
     rota_gerada = destino / "frontend" / "app" / "api" / "checkout" / "route.ts"
