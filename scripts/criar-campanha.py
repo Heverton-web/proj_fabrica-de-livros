@@ -139,26 +139,43 @@ def _rascunho(ctx, formato):
             f"{vocabulario.lower()} — feito para aplicar hoje mesmo. {cta}.")
 
 
+def _pdf_atualizado(arquivo):
+    """PDF ao lado do .md se ausente ou mais antigo que o .md (copy final)."""
+    pdf = arquivo.with_suffix(".pdf")
+    if not arquivo.exists():
+        return None
+    if not pdf.exists() or pdf.stat().st_mtime <= arquivo.stat().st_mtime:
+        return compilar_markdown_pdf(arquivo)
+    return pdf
+
+
 def escrever_moldes(ctx, base):
-    """Moldes de texto para redes sociais e canais (nao sobrescreve edits)."""
+    """Moldes de texto para redes sociais e canais (nao sobrescreve edits).
+
+    Cada molde .md ganha um .pdf ao lado (mesmo nome) quando escrito ou
+    quando o .md foi editado depois do PDF (reflete a copy final)."""
     escritos = []
     for rede, dados in CP.REDES_SOCIAIS.items():
         raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
         for pasta, quantidade in dados.get("textos", {}).items():
             for i in range(1, quantidade + 1):
                 arquivo = raiz / CP.pasta_de_texto(pasta, None) / CP.texto_nome(pasta, i)
-                if arquivo.exists() and not ctx.get("__regenerar__"):
-                    continue
-                formato = "feed-story" if pasta == "feed-story" else pasta
-                corpo = ("# Post {i} — {titulo}\n\n" if pasta == "post"
-                         else "# Story {i} — {titulo}\n\n" if pasta == "feed-story"
-                         else "# Resposta Direct\n\n")
-                arquivo.parent.mkdir(parents=True, exist_ok=True)
-                arquivo.write_text(
-                    _molde_cabecalho(ctx, f"{rede}/{pasta}") + corpo.format(
-                        i=i, titulo=ctx["titulo"]) + _rascunho(ctx, formato) + "\n",
-                    encoding="utf-8")
-                escritos.append(arquivo)
+                escreveu = False
+                if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    formato = "feed-story" if pasta == "feed-story" else pasta
+                    corpo = ("# Post {i} — {titulo}\n\n" if pasta == "post"
+                             else "# Story {i} — {titulo}\n\n" if pasta == "feed-story"
+                             else "# Resposta Direct\n\n")
+                    arquivo.parent.mkdir(parents=True, exist_ok=True)
+                    arquivo.write_text(
+                        _molde_cabecalho(ctx, f"{rede}/{pasta}") + corpo.format(
+                            i=i, titulo=ctx["titulo"]) + _rascunho(ctx, formato) + "\n",
+                        encoding="utf-8")
+                    escreveu = True
+                if arquivo.exists():
+                    _pdf_atualizado(arquivo)
+                if escreveu:
+                    escritos.append(arquivo)
     for canal, dados in CP.CANAIS_COMUNICACAO.items():
         for sequencia, conf in dados.get("sequencias", {}).items():
             prefixo = "email" if canal == "emails" else "msg"
@@ -167,15 +184,19 @@ def escrever_moldes(ctx, base):
                     / f"canais-comunicacao/{canal}/{sequencia}/textos")
             for i in range(1, quantidade + 1):
                 arquivo = raiz / CP.texto_nome(prefixo, i, sequencia)
-                if arquivo.exists() and not ctx.get("__regenerar__"):
-                    continue
-                arquivo.parent.mkdir(parents=True, exist_ok=True)
-                arquivo.write_text(
-                    _molde_cabecalho(ctx, f"{canal}/{sequencia}") +
-                    f"# {prefixo.title()} {i} — {sequencia.replace('-', ' ')}\n\n"
-                    + _rascunho(ctx, f"{prefixo}-{i}") + "\n",
-                    encoding="utf-8")
-                escritos.append(arquivo)
+                escreveu = False
+                if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    arquivo.parent.mkdir(parents=True, exist_ok=True)
+                    arquivo.write_text(
+                        _molde_cabecalho(ctx, f"{canal}/{sequencia}") +
+                        f"# {prefixo.title()} {i} — {sequencia.replace('-', ' ')}\n\n"
+                        + _rascunho(ctx, f"{prefixo}-{i}") + "\n",
+                        encoding="utf-8")
+                    escreveu = True
+                if arquivo.exists():
+                    _pdf_atualizado(arquivo)
+                if escreveu:
+                    escritos.append(arquivo)
     return escritos
 
 
@@ -271,13 +292,15 @@ def _binarios_pdf():
     return pandoc, typst
 
 
-def compilar_cronograma_pdf(md_path):
-    """Gera o PDF ao lado do cronograma .md (Pandoc -> .typ -> Typst).
+def compilar_markdown_pdf(md_path):
+    """Gera o PDF ao lado de um .md de campanha (Pandoc -> .typ -> Typst).
 
-    Tolerante a falha: se pandoc/typst nao existirem ou a compilacao falhar,
-    imprime aviso e devolve None (o gate R-CP-5 reprova ate o PDF existir).
-    Usa o fluxo .typ intermediario do pdf_typst para evitar o bug de caminho
-    absoluto do `pandoc --pdf-engine=typst` no Windows.
+    Usado para cronogramas e moldes de texto: cada fonte .md ganha um .pdf de
+    mesmo nome para impressao/divulgacao direta. Tolerante a falha: se
+    pandoc/typst nao existirem ou a compilacao falhar, imprime aviso e devolve
+    None (os gates R-CP reprovam ate o PDF existir). Usa o fluxo .typ
+    intermediario do pdf_typst para evitar o bug de caminho absoluto do
+    `pandoc --pdf-engine=typst` no Windows.
     """
     md_path = Path(md_path)
     pandoc, typst = _binarios_pdf()
@@ -295,13 +318,17 @@ def compilar_cronograma_pdf(md_path):
     try:
         resultado = executar(comando, pdf_path, md_path.parent, typst, timeout=120)
     except Exception as exc:  # noqa: BLE001
-        print(f"[AVISO] compilacao do cronograma falhou ({md_path.name}): {exc}")
+        print(f"[AVISO] compilacao do .md falhou ({md_path.name}): {exc}")
         return None
     if pdf_path.exists() and pdf_path.stat().st_size > 0:
         return pdf_path
     print(f"[AVISO] PDF nao gerado para {md_path.name}: "
           f"{(resultado.stderr or '').strip()[-200:]}")
     return None
+
+
+# Retrocompatibilidade: nome antigo usado por scripts/operador e testes.
+compilar_cronograma_pdf = compilar_markdown_pdf
 
 
 def _datas(hoje, dias):
@@ -350,7 +377,7 @@ def gerar_cronogramas(ctx, base):
         destino.parent.mkdir(parents=True, exist_ok=True)
         destino.write_text(texto, encoding="utf-8")
         gerados.append(destino)
-        pdf = compilar_cronograma_pdf(destino)
+        pdf = compilar_markdown_pdf(destino)
         if pdf:
             gerados.append(pdf)
     for canal, dados in CP.CANAIS_COMUNICACAO.items():
@@ -375,7 +402,7 @@ def gerar_cronogramas(ctx, base):
             destino.parent.mkdir(parents=True, exist_ok=True)
             destino.write_text(texto, encoding="utf-8")
             gerados.append(destino)
-            pdf = compilar_cronograma_pdf(destino)
+            pdf = compilar_markdown_pdf(destino)
             if pdf:
                 gerados.append(pdf)
     return gerados
@@ -492,10 +519,14 @@ def gerar_material(slug, base=None, regenerar=False, com_artes=True):
     artes = gerar_artes(ctx, base, com_artes=com_artes)
     n_cronos_md = len([c for c in cronogramas if c.suffix == ".md"])
     n_cronos_pdf = len(cronogramas) - n_cronos_md
-    print(f"[campanha] {raiz} — {len(criadas)} pastas, {len(moldes)} moldes, "
-          f"{n_cronos_md} cronogramas (+{n_cronos_pdf} PDF), "
+    n_moldes_pdf = len([p for p in raiz.rglob("*.md")
+                        if not p.name.startswith("cronograma-")
+                        and p.with_suffix(".pdf").exists()])
+    print(f"[campanha] {raiz} — {len(criadas)} pastas, {len(moldes)} moldes "
+          f"(+{n_moldes_pdf} PDF), {n_cronos_md} cronogramas (+{n_cronos_pdf} PDF), "
           f"{len(templates)} templates, {len(artes)} artes")
     return {"raiz": raiz, "pastas": len(criadas), "moldes": len(moldes),
+            "moldes_pdf": n_moldes_pdf,
             "cronogramas": n_cronos_md, "cronogramas_pdf": n_cronos_pdf,
             "artes": len(artes)}
 

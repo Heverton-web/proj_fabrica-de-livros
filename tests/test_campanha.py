@@ -56,12 +56,13 @@ def ambiente(livro_falso, monkeypatch):
     monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "series.json")
 
     # Compilacao PDF deterministica nos testes: placeholder %PDF ao lado do .md
-    # (o gate R-CP-5 so exige a existencia do arquivo).
+    # (os gates R-CP so exigem a existencia do arquivo).
     def _pdf_placeholder(md_path):
         pdf = md_path.with_suffix(".pdf")
         pdf.write_bytes(b"%PDF-1.4\nplaceholder\n%%EOF")
         return pdf
 
+    monkeypatch.setattr(criador, "compilar_markdown_pdf", _pdf_placeholder)
     monkeypatch.setattr(criador, "compilar_cronograma_pdf", _pdf_placeholder)
 
     colecao.sincronizar()
@@ -191,6 +192,24 @@ class TestGerador:
                 / "cronograma-divulgacao"
                 / "cronograma-30d-emails-sequencia-nutricao.pdf").exists()
 
+    def test_textos_geram_pdf_ao_lado(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        raiz = _raiz(ambiente["slug"])
+        for texto in raiz.rglob("*.md"):
+            if texto.name.startswith("cronograma-"):
+                continue
+            pdf = texto.with_suffix(".pdf")
+            assert pdf.exists(), pdf
+            assert pdf.read_bytes().startswith(b"%PDF")
+        assert (raiz / "redes-sociais/instagram/textos/post/post-01.pdf").exists()
+        assert (raiz / "redes-sociais/instagram/textos/feed-story/story-01.pdf").exists()
+        assert (raiz / "redes-sociais/linkedin/textos/post/post-02.pdf").exists()
+        assert (raiz / "redes-sociais/instagram/textos/resposta-direct/resposta-direct.pdf").exists()
+        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao/textos"
+                / "email-01-sequencia-nutricao.pdf").exists()
+        assert (raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/textos"
+                / "msg-06-sequencia-divulgacao.pdf").exists()
+
     @precisa_pandoc_typst
     def test_cronograma_pdf_real_compila(self, tmp_path):
         """Com pandoc/typst instalados, a funcao real gera um PDF valido."""
@@ -288,6 +307,15 @@ class TestGate:
         pdf.unlink()
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
+        assert any("sem PDF" in v["detalhe"] for v in rel["violacoes"])
+
+    def test_reprova_texto_sem_pdf(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        pdf = (_raiz(ambiente["slug"])
+               / "redes-sociais/instagram/textos/post/post-01.pdf")
+        pdf.unlink()
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-2" in {v["regra"] for v in rel["violacoes"]}
         assert any("sem PDF" in v["detalhe"] for v in rel["violacoes"])
 
 

@@ -299,18 +299,22 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `scripts/validar-campanha.py`, `templates/campanha/*.html`,
   `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
   `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.
-- **2026-08-09 Cronogramas em PDF (V5.3):** causa: cronogramas da campanha
-  nasciam só em `.md`; quem quisesse imprimir/compartilhar tinha que compilar
-  à mão. Fix: `criar-campanha.py` ganhou `compilar_cronograma_pdf` — Pandoc→Typst
+- **2026-08-09 PDFs em .md de campanha (V5.3) — cronogramas e textos:** causa:
+  cronogramas e moldes de texto nasciam só em `.md`; imprimir/compartilhar
+  exigia compilar à mão. Fix: `criar-campanha.py` ganhou
+  `compilar_markdown_pdf` (alias retro `compilar_cronograma_pdf`) — Pandoc→Typst
   via `pdf_typst.executar` (fluxo `.typ` intermediário, nunca
-  `--pdf-engine=typst`), binários resolvidos por `shutil.which` com fallback
-  WinGet cacheado (`functools.lru_cache`); `gerar_cronogramas` emite `.md` +
-  `.pdf` (mesmo nome) e o log separa contagem `X cronogramas (+Y PDF)`. Gate
-  R-CP-5 agora exige o `.pdf` ao lado de cada `cronograma-*.md` (reprova vazio
-  também). Prevenção: campanhas criadas ANTES desse fix reprovam no R-CP-5 —
-  rodar `criar-campanha.py --completo <colecao>` (ou o helper temp) para gerar
-  os PDFs retroativos; nos testes, a fixture `ambiente` mocka a compilação com
-  placeholder `%PDF` (gate só verifica existência) e há teste real com skip
+  `--pdf-engine=typst`), binários por `shutil.which` com fallback WinGet
+  cacheado (`functools.lru_cache`); `gerar_cronogramas` e `escrever_moldes`
+  emitem `.md` + `.pdf` (mesmo nome); `_pdf_atualizado` regenera o PDF quando o
+  `.md` foi editado depois (copy final do agente mais nova que o PDF). Log
+  separa `X moldes (+Y PDF), Z cronogramas (+W PDF)`. Gates: R-CP-5 exige
+  `.pdf` ao lado de cada `cronograma-*.md`; R-CP-2 exige `.pdf` ao lado de cada
+  texto (exclui cronogramas, cobertos pelo R-CP-5); ambos reprovam PDF vazio.
+  Prevenção: campanhas criadas ANTES do fix reprovam — rodar
+  `criar-campanha.py --completo <colecao>` (ou helper temp) para gerar PDFs
+  retroativos; nos testes, a fixture `ambiente` mocka a compilação com
+  placeholder `%PDF` (gates só verificam existência) e há teste real com skip
   `precisa_pandoc_typst`. Arquivos: `scripts/criar-campanha.py`,
   `scripts/validar-campanha.py`, `tests/test_campanha.py`.
 - **2026-08-09 Máquina de vendas 1:1 (V5.3):** causa: máquinas nasciam em

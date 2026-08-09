@@ -66,6 +66,7 @@ def validar_material(slug, estrito=False, base=None):
     if raiz.exists():
         # R-CP-2 — conteudo
         for arquivo in _textos_da_pasta(raiz):
+            eh_cronograma = arquivo.name.startswith("cronograma-")
             try:
                 texto = arquivo.read_text(encoding="utf-8")
             except OSError as exc:
@@ -82,6 +83,12 @@ def validar_material(slug, estrito=False, base=None):
                 violacoes.append({"regra": "R-CP-2",
                                   "detalhe": f"molde RASCUNHO pendente: "
                                              f"{arquivo.relative_to(raiz)}"})
+            if not eh_cronograma:
+                pdf = arquivo.with_suffix(".pdf")
+                if not pdf.exists() or pdf.stat().st_size == 0:
+                    violacoes.append({"regra": "R-CP-2",
+                                      "detalhe": f"sem PDF ao lado de "
+                                                 f"{arquivo.relative_to(raiz)}"})
 
         # R-CP-3 — artes
         for png in sorted(raiz.rglob("*.png")):
