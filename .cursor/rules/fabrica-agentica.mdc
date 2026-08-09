@@ -238,3 +238,17 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `git commit -F` (acentos/quebras de linha quebram `-m`); `_commit_msg*.txt`
   vaza no `git add -A` — apagar ANTES do add ou `git rm --cached` + `--amend`.
   Arquivo: `.claude/skills/gerar-relatorio-sessao/SKILL.md`.
+- **2026-08-09 Padronização HUB POR COLEÇÃO:** causa: `output/` misturava layout
+  plano (`output/livros/`, `output/tccs/` vazios) com hubs; `output/series.json`
+  tinha 120/125 `membros` órfãos (destinos `livros/<slug>` de layout antigo);
+  docs/AGENTS.md ainda descreviam organização por "série" (regra morta
+  `output/series/`). Fix: coleção = hub único (`output/<obra>/<tipo>/...` com
+  manifesto em `<obra>/colecoes/<nome>.json`); "série" virou termo obsoleto —
+  preservado APENAS como nome interno de `output/series.json` (cores persistidas
+  + migração `_series.json` dependem — NÃO renomear); `series_capa.py --reindexar`
+  reconstrói `membros` com slugs reais (via `tipos_obra.listar_materiais` +
+  `resolver_serie_key`), preserva cores, órfãos saem, chaves sem material ficam
+  com `membros: []` (cor reservada). Prevenção: ao criar material novo, usar
+  sempre `dir_obra`/`listar_materiais` (resolvem plano, por-obra e single-book);
+  rodar `series_capa.py --reindexar` após reorganizações de `output/`.
+  Arquivo: `scripts/series_capa.py`, `scripts/tipos_obra.py`, `AGENTS.md` §COLEÇÃO.
