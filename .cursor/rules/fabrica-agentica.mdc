@@ -133,6 +133,13 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 9. **Máquina de vendas:** `/criar-maquina <slug>` → gerar + **personalizar por
    nicho** (configs, frontend, e-mails, README) + testar `POST /api/checkout`
    (rota nasce no template — verificar que o lead chega em `/api/leads/`) + deploy.
+10. **Campanha (V5.3):** `/campanha <slug>` (1 material) ou `/campanha-completa
+    [colecao]` (todos os membros do manifesto) → `criar-campanha.py` (estrutura +
+    moldes de copy + artes HTML→Chromium + cronogramas; custo zero) → agente
+    escreve a copy final nos moldes (LLM baixo) → `validar-campanha.py --estrito`
+    (gates R-CP-1..5) → `--marcar-completa`. Vive em
+    `output/<colecao>/campanhas/<material>/` + `campanha.json` (hub). Não é tipo
+    de obra: camada própria (registro declarativo em `scripts/campanha.py`).
 
 **Output (HUB POR COLEÇÃO):** cada coleção vive em `output/<slug-colecao>/` com
 as raízes de tipos **dentro do hub** — `livros/`, `tccs/`, `artigos/`, `ebooks/`,
@@ -148,6 +155,7 @@ coleção (núcleo canônico: dossiê + `sumario_macro` + `motivo_condutor`):
 ```
 output/<slug-colecao>/
 ├── livros/  tccs/  artigos/  ebooks/  playbooks/  lead-magnets/  decks/  emails/
+├── campanhas/<material-slug>/  # Campanhas (V5.3): redes-sociais + canais-comunicacao
 ├── distribuicao/            # PDFs compilados para distribuição
 ├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
 └── colecoes/<nome>.json     # Manifestos sincronizados (colecao.py --sincronizar)
@@ -265,3 +273,24 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   monkeypatch). Prevenção: limpeza global de manifestos órfãos deve varrer
   fallback + hubs; `_slug_arquivo` vira `ç` em `-` (minha-cole-o.json).
   Arquivo: `scripts/colecao.py`, `tests/test_colecao_hub.py`.
+- **2026-08-09 Camada CAMPANHA (V5.3):** causa: a coleção entregava materiais,
+  mas nenhuma camada de divulgação (posts, artes, sequências, cronogramas).
+  Fix: `output/<colecao>/campanhas/<material>/` (HUB por coleção, subpasta por
+  material: redes-sociais/instagram+linkedin e canais-comunicacao/emails+whatsapp);
+  registro declarativo em `scripts/campanha.py` (artefato novo = 1 linha);
+  `criar-campanha.py --material/--completo/--marcar-completa` (estrutura +
+  moldes com rascunho determinístico do config_obra/sumário/manifesto + artes
+  HTML+CSS→Chromium PNG + cronogramas com datas reais; custo zero) →
+  agente reescreve copy (LLM baixo) → `validar-campanha.py` (R-CP-1..5 +
+  R-CP-C1 no --completo; copy genérica regra 12 reprova; molde `Status: RASCUNHO`
+  pendente reprova até a reescrita). Prevenção: campanha NÃO é tipo de obra
+  (não toca tipos_obra.py); identidade vem do manifesto (`cor_accent`,
+  `motivo_condutor.vocabulario`, `nucleo.senioridade`, `cta_url`); arquivo do
+  manifesto usa slug normalizado (`_slug_arquivo` — `Colecao Teste` →
+  `colecao-teste.json`); nos testes, monkeypatch de TODOS os `DIR_OUTPUT`
+  (colecao.py incluído — esquecer `colecao.DIR_OUTPUT` faz o `varrer()` ler o
+  output real e o teste falha de forma confusa).
+  Arquivos: `scripts/campanha.py`, `scripts/criar-campanha.py`,
+  `scripts/validar-campanha.py`, `templates/campanha/*.html`,
+  `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
+  `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.
