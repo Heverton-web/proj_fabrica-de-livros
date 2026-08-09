@@ -1,6 +1,7 @@
 """Testes da camada CAMPANHA (V5.3): registro, gerador, gates R-CP e --completo."""
 
 import json
+import shutil
 
 import pytest
 
@@ -31,6 +32,10 @@ TEM_CHROMIUM = _tem_chromium()
 precisa_chromium = pytest.mark.skipif(
     not TEM_CHROMIUM, reason="Chromium do Playwright indisponivel")
 
+TEM_PANDOC_TYPST = bool(shutil.which("pandoc") and shutil.which("typst"))
+precisa_pandoc_typst = pytest.mark.skipif(
+    not TEM_PANDOC_TYPST, reason="pandoc/typst indisponiveis")
+
 
 @pytest.fixture
 def ambiente(livro_falso, monkeypatch):
@@ -49,6 +54,16 @@ def ambiente(livro_falso, monkeypatch):
     import series_capa
     monkeypatch.setattr(series_capa, "DIR_OUTPUT", raiz, raising=False)
     monkeypatch.setattr(series_capa, "CAMINHO_REGISTRO", raiz / "series.json")
+
+    # Compilacao PDF deterministica nos testes: placeholder %PDF ao lado do .md
+    # (o gate R-CP-5 so exige a existencia do arquivo).
+    def _pdf_placeholder(md_path):
+        pdf = md_path.with_suffix(".pdf")
+        pdf.write_bytes(b"%PDF-1.4\nplaceholder\n%%EOF")
+        return pdf
+
+    monkeypatch.setattr(criador, "compilar_cronograma_pdf", _pdf_placeholder)
+
     colecao.sincronizar()
     return livro_falso
 
@@ -164,6 +179,29 @@ class TestGerador:
         assert len(datas) >= 14
         assert all(d >= date.today() for d in datas)
 
+    def test_cronograma_gera_pdf_ao_lado(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        raiz = _raiz(ambiente["slug"])
+        for crono in raiz.rglob("cronograma-*.md"):
+            pdf = crono.with_suffix(".pdf")
+            assert pdf.exists(), pdf
+            assert pdf.read_bytes().startswith(b"%PDF")
+        assert (raiz / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.pdf").exists()
+        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao"
+                / "cronograma-divulgacao"
+                / "cronograma-30d-emails-sequencia-nutricao.pdf").exists()
+
+    @precisa_pandoc_typst
+    def test_cronograma_pdf_real_compila(self, tmp_path):
+        """Com pandoc/typst instalados, a funcao real gera um PDF valido."""
+        crono = tmp_path / "cronograma-ig.md"
+        crono.write_text("# Cronograma\n\n- D+1 (2026-08-10, segunda-feira): Post\n",
+                         encoding="utf-8")
+        pdf = criador.compilar_cronograma_pdf(crono)
+        assert pdf is not None
+        assert pdf.exists() and pdf.stat().st_size > 100
+        assert pdf.read_bytes().startswith(b"%PDF")
+
     @precisa_chromium
     def test_artes_renderizam_png_reais(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=True)
@@ -242,6 +280,15 @@ class TestGate:
         crono.write_text("sem data aqui", encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
+
+    def test_reprova_cronograma_sem_pdf(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        pdf = (_raiz(ambiente["slug"])
+               / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.pdf")
+        pdf.unlink()
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
+        assert any("sem PDF" in v["detalhe"] for v in rel["violacoes"])
 
 
 # ── Completo (colecao inteira) ───────────────────────────────────────────────

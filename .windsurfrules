@@ -299,6 +299,20 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `scripts/validar-campanha.py`, `templates/campanha/*.html`,
   `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
   `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.
+- **2026-08-09 Cronogramas em PDF (V5.3):** causa: cronogramas da campanha
+  nasciam só em `.md`; quem quisesse imprimir/compartilhar tinha que compilar
+  à mão. Fix: `criar-campanha.py` ganhou `compilar_cronograma_pdf` — Pandoc→Typst
+  via `pdf_typst.executar` (fluxo `.typ` intermediário, nunca
+  `--pdf-engine=typst`), binários resolvidos por `shutil.which` com fallback
+  WinGet cacheado (`functools.lru_cache`); `gerar_cronogramas` emite `.md` +
+  `.pdf` (mesmo nome) e o log separa contagem `X cronogramas (+Y PDF)`. Gate
+  R-CP-5 agora exige o `.pdf` ao lado de cada `cronograma-*.md` (reprova vazio
+  também). Prevenção: campanhas criadas ANTES desse fix reprovam no R-CP-5 —
+  rodar `criar-campanha.py --completo <colecao>` (ou o helper temp) para gerar
+  os PDFs retroativos; nos testes, a fixture `ambiente` mocka a compilação com
+  placeholder `%PDF` (gate só verifica existência) e há teste real com skip
+  `precisa_pandoc_typst`. Arquivos: `scripts/criar-campanha.py`,
+  `scripts/validar-campanha.py`, `tests/test_campanha.py`.
 - **2026-08-09 Máquina de vendas 1:1 (V5.3):** causa: máquinas nasciam em
   `marketing/maquinas/` (caminho morto) ou `output/<hub>/marketing/` (várias por
   coleção, sem vínculo com campanhas). Fix: 1 máquina por COLEÇÃO em

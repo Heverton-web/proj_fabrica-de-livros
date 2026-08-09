@@ -108,4 +108,17 @@ produto default `livro-harness-engineering` alinhado ao `config/produtos.json`;
 backend com routers `/api/leads` (CRUD + mover), `/api/emails`, `/api/funil`,
 `/api/webhooks` e `/health`. 590 testes pytest passando.
 
+## 9. Cronogramas em PDF — complemento
+
+Os cronogramas da campanha agora saem em `.md` + `.pdf` (Pandoc→Typst via
+`pdf_typst.executar`, fluxo `.typ` intermediário). `compilar_cronograma_pdf`
+em `criar-campanha.py` resolve pandoc/typst por `shutil.which` com fallback
+WinGet cacheado; `gerar_cronogramas` emite ambos os formatos e o log separa
+`X cronogramas (+Y PDF)`. Gate R-CP-5 exige o `.pdf` ao lado de cada
+`cronograma-*.md`. **96/96 PDFs gerados** retroativamente na coleção
+harness-engineering (20 KB cada); `validar-campanha.py --completo --estrito`
+CONFORME. 3 testes novos (placeholder determinístico na fixture + gate sem PDF
++ compilação real com skip `precisa_pandoc_typst`): **593 testes pytest
+passando**. RTK registrado no AGENTS.md.
+
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*

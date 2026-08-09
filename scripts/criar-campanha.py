@@ -15,6 +15,7 @@ Uso:
 """
 
 import argparse
+import functools
 import json
 import re
 import string
@@ -255,6 +256,54 @@ def gerar_artes(ctx, base, com_artes=True):
 
 # ── Cronogramas ──────────────────────────────────────────────────────────────
 
+@functools.lru_cache(maxsize=1)
+def _binarios_pdf():
+    """Pandoc/Typst: PATH primeiro; fallback WinGet (mesmos do compilar-para-pdf.py)."""
+    import shutil
+    pandoc = shutil.which("pandoc") or (
+        r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages"
+        r"\JohnMacFarlane.Pandoc_Microsoft.Winget.Source_8wekyb3d8bbwe"
+        r"\pandoc-3.10\pandoc.exe")
+    typst = shutil.which("typst") or (
+        r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages"
+        r"\Typst.Typst_Microsoft.Winget.Source_8wekyb3d8bbwe"
+        r"\typst-x86_64-pc-windows-msvc\typst.exe")
+    return pandoc, typst
+
+
+def compilar_cronograma_pdf(md_path):
+    """Gera o PDF ao lado do cronograma .md (Pandoc -> .typ -> Typst).
+
+    Tolerante a falha: se pandoc/typst nao existirem ou a compilacao falhar,
+    imprime aviso e devolve None (o gate R-CP-5 reprova ate o PDF existir).
+    Usa o fluxo .typ intermediario do pdf_typst para evitar o bug de caminho
+    absoluto do `pandoc --pdf-engine=typst` no Windows.
+    """
+    md_path = Path(md_path)
+    pandoc, typst = _binarios_pdf()
+    if not Path(pandoc).exists() or not Path(typst).exists():
+        print(f"[AVISO] pandoc/typst indisponiveis — PDF de {md_path.name} nao gerado")
+        return None
+    try:
+        from pdf_typst import executar
+    except ImportError:
+        print(f"[AVISO] pdf_typst nao importavel — PDF de {md_path.name} nao gerado")
+        return None
+    pdf_path = md_path.with_suffix(".pdf")
+    comando = [pandoc, str(md_path), "-o", str(pdf_path),
+               "--from", "markdown", "--to", "typst", "--standalone"]
+    try:
+        resultado = executar(comando, pdf_path, md_path.parent, typst, timeout=120)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[AVISO] compilacao do cronograma falhou ({md_path.name}): {exc}")
+        return None
+    if pdf_path.exists() and pdf_path.stat().st_size > 0:
+        return pdf_path
+    print(f"[AVISO] PDF nao gerado para {md_path.name}: "
+          f"{(resultado.stderr or '').strip()[-200:]}")
+    return None
+
+
 def _datas(hoje, dias):
     """[(dia, data_iso, dia_semana)] a partir de amanha."""
     return [(i + 1, (hoje + timedelta(days=i + 1)).isoformat(),
@@ -273,7 +322,10 @@ def _itens_distribuidos(quantidade, dias):
 
 
 def gerar_cronogramas(ctx, base):
-    """Cronogramas de divulgacao com datas reais (janela do registro)."""
+    """Cronogramas de divulgacao com datas reais (janela do registro).
+
+    Cada cronograma sai em .md (fonte editavel) e .pdf (Pandoc->Typst, mesmo
+    nome) para impressao/divulgacao direta."""
     gerados = []
     hoje = date.today()
     for rede, dados in CP.REDES_SOCIAIS.items():
@@ -298,6 +350,9 @@ def gerar_cronogramas(ctx, base):
         destino.parent.mkdir(parents=True, exist_ok=True)
         destino.write_text(texto, encoding="utf-8")
         gerados.append(destino)
+        pdf = compilar_cronograma_pdf(destino)
+        if pdf:
+            gerados.append(pdf)
     for canal, dados in CP.CANAIS_COMUNICACAO.items():
         for sequencia, conf in dados.get("sequencias", {}).items():
             dias = conf.get("cronograma_dias", 14)
@@ -320,6 +375,9 @@ def gerar_cronogramas(ctx, base):
             destino.parent.mkdir(parents=True, exist_ok=True)
             destino.write_text(texto, encoding="utf-8")
             gerados.append(destino)
+            pdf = compilar_cronograma_pdf(destino)
+            if pdf:
+                gerados.append(pdf)
     return gerados
 
 
@@ -432,11 +490,14 @@ def gerar_material(slug, base=None, regenerar=False, com_artes=True):
     cronogramas = gerar_cronogramas(ctx, base)
     templates = copiar_templates_artes(ctx, base)
     artes = gerar_artes(ctx, base, com_artes=com_artes)
+    n_cronos_md = len([c for c in cronogramas if c.suffix == ".md"])
+    n_cronos_pdf = len(cronogramas) - n_cronos_md
     print(f"[campanha] {raiz} — {len(criadas)} pastas, {len(moldes)} moldes, "
-          f"{len(cronogramas)} cronogramas, {len(templates)} templates, "
-          f"{len(artes)} artes")
+          f"{n_cronos_md} cronogramas (+{n_cronos_pdf} PDF), "
+          f"{len(templates)} templates, {len(artes)} artes")
     return {"raiz": raiz, "pastas": len(criadas), "moldes": len(moldes),
-            "cronogramas": len(cronogramas), "artes": len(artes)}
+            "cronogramas": n_cronos_md, "cronogramas_pdf": n_cronos_pdf,
+            "artes": len(artes)}
 
 
 def marcar_completa(slug, base=None):

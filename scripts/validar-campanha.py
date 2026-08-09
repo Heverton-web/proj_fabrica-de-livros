@@ -7,7 +7,7 @@ R-CP-2 conteudo: textos nao vazios, sem copy generica (regra 12) e sem molde
     RASCUNHO pendente.
 R-CP-3 artes: PNG valido (assinatura + tamanho minimo); HTML fonte ao lado.
 R-CP-4 merito (--estrito): vocabulario condutor da colecao presente na copy.
-R-CP-5 cronogramas: presentes e com datas futuras.
+R-CP-5 cronogramas: presentes, com datas futuras e PDF ao lado.
 R-CP-C1 (--completo): todo material da colecao tem campanha com status completa.
 
 Uso:
@@ -104,6 +104,10 @@ def validar_material(slug, estrito=False, base=None):
             elif primeira < date.today():
                 violacoes.append({"regra": "R-CP-5",
                                   "detalhe": f"data passada em {crono.relative_to(raiz)}"})
+            pdf = crono.with_suffix(".pdf")
+            if not pdf.exists() or pdf.stat().st_size == 0:
+                violacoes.append({"regra": "R-CP-5",
+                                  "detalhe": f"sem PDF ao lado de {crono.relative_to(raiz)}"})
 
         # R-CP-4 — merito (vocabulario da colecao na copy)
         if estrito and ctx.get("vocabulario"):
