@@ -571,6 +571,9 @@ def dir_obra(slug, base=None):
       - raiz single:  output/<obra>/<tipo>               (obra == nome do slug)
     Quando nada existe, devolve o caminho plano (fallback de escrita).
     `base` permite resolver contra um output-raiz alternativo (testes).
+
+    V5.1: procura em todos os hubs de colecao e subpastas de tipo.
+    Prioriza pastas de tipo (ebooks, artigos) sobre campanhas.
     """
     base = Path(base) if base is not None else DIR_OUTPUT
     slug = str(slug).replace("\\", "/")
@@ -579,6 +582,29 @@ def dir_obra(slug, base=None):
         return direto
     tipo, sep, resto = slug.partition("/")
     if not sep or not resto:
+        # Procurar em todos os hubs de colecao (para slugs sem /)
+        # Priorizar pastas de tipo (ebooks, artigos) sobre campanhas
+        TIPOS_PRIORIDADE = ["ebooks", "artigos", "playbooks", "lead-magnets", "decks", "emails"]
+        for hub in base.iterdir():
+            if hub.is_dir() and hub.name not in _raizes_tipo():
+                # Primeiro: procurar em pastas de tipo (prioridade)
+                for tipo_dir in TIPOS_PRIORIDADE:
+                    subdir = hub / tipo_dir
+                    if subdir.exists():
+                        # Procurar na raiz do tipo
+                        cand = subdir / slug
+                        if cand.exists():
+                            return cand
+                        # Procurar em subpastas do tipo
+                        for subsubdir in subdir.iterdir():
+                            if subsubdir.is_dir() and subsubdir.name == slug:
+                                return subsubdir
+                # Segundo: procurar em outras pastas (campanhas, etc.)
+                for subdir in hub.iterdir():
+                    if subdir.is_dir() and subdir.name not in TIPOS_PRIORIDADE:
+                        cand = subdir / slug
+                        if cand.exists():
+                            return cand
         return direto
     for obra in _sereis(base):                       # multi-book raiz
         cand = obra / tipo / resto
