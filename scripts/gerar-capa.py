@@ -207,8 +207,10 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
         print(f"[ERRO] tipo {tipo!r} nao declara capa propria no registro. "
               f"Tipos com capa: {', '.join(TIPOS_COM_CAPA)}")
         sys.exit(1)
-    titulo = (meta_ebook.get("titulo") or sumario.get("titulo_obra") or Path(slug).name).upper()
-    subtitulo = meta_ebook.get("subtitulo") or sumario.get("subtitulo") or ""
+    titulo = (meta_ebook.get("titulo") or sumario.get("titulo_obra")
+              or config_obra.get("titulo_obra") or Path(slug).name).upper()
+    subtitulo = (meta_ebook.get("subtitulo") or sumario.get("subtitulo")
+                 or config_obra.get("subtitulo") or "")
 
     serie_key = resolver_serie_key(config_obra, slug)
     cor_acento = resolver_cor(serie_key, slug)
