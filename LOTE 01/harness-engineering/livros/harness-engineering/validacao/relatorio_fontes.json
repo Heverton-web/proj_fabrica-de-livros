@@ -1,0 +1,32 @@
+{
+  "dossies": [
+    "dossie_harness-engineering.md"
+  ],
+  "por_dossie": [
+    {
+      "arquivo": "dossie_harness-engineering.md",
+      "classes": {
+        "A": 19,
+        "B": 19,
+        "C": 7
+      },
+      "linhas_fonte": 25
+    }
+  ],
+  "classes": {
+    "A": 19,
+    "B": 19,
+    "C": 7
+  },
+  "linhas_fonte_total": 25,
+  "classificadas": 45,
+  "proporcao_ab": 0.844,
+  "status": "conforme",
+  "violacoes": [],
+  "regras": {
+    "R-FT-1": ">= 70% das fontes com classificação explícita são A ou B",
+    "R-FT-2": "dossiê sem classificação explícita => nao_verificado (não reprova)",
+    "R-FT-3": "fontes não classificadas não contam na proporção"
+  },
+  "slug": "livros/harness-engineering"
+}

@@ -5,56 +5,283 @@
   "nucleo": {
     "slug": "harness-engineering/livros/harness-engineering",
     "tipo": "livro",
-    "titulo": "Harness Engineering — Alavancagem com Proteção: Do EPI ao Framework de Software",
+    "titulo": "Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
     "senioridade": "iniciante",
     "motivo_condutor": {
-      "nome": "A Oficina do Engenheiro",
-      "descricao": "A oficina é o espaço onde ferramentas amplificam capacidade humana — mas só funcionam se houver proteção embutida. Cada harness (safety ou test) é uma alavanca que permite fazer mais com menos risco. O Engenheiro de Harness projeta, instala e mantém esses dispositivos de alavancagem em qualquer domínio.",
+      "nome": "A Escalada do Arnês",
+      "descricao": "O leitor é um escalador que começa no chão da parede do mundo agêntico. Cada harness é um equipamento de escalada — corda, cinto, mosquetão, capacete — que dá alavancagem (fazer mais com o modelo) e proteção (não cair quando algo falha). A cada capítulo ele sobe um trecho da rota, e só alcança o cume quando todos os equipamentos estão instalados e testados.",
       "vocabulario": [
-        "alavanca",
-        "ancora",
+        "arnês",
+        "corda",
+        "ancoragem",
+        "mosquetão",
+        "queda",
         "proteção",
-        "estrutura",
-        "teste",
-        "validação",
-        "escalabilidade",
-        "resiliência",
-        "fail-safe",
-        "redundância"
+        "alavancagem",
+        "rota",
+        "parede",
+        "cume"
       ],
-      "persona_leitor": "Engenheiro de Harness"
+      "persona_leitor": "Escalador de Harnesses"
     }
   },
-  "total_membros": 1,
+  "total_membros": 16,
   "por_tipo": {
-    "livro": 1
+    "artigo": 2,
+    "deck": 1,
+    "ebook": 4,
+    "emails": 1,
+    "lead-magnet": 6,
+    "livro": 1,
+    "playbook": 1
   },
   "membros": [
+    {
+      "slug": "harness-engineering/artigos/harness-engineering--art-01-a-revolucao-dos-agentes-por-que-o-modelo",
+      "tipo": "artigo",
+      "rotulo": "Artigo Científico",
+      "titulo": "A Revolução dos Agentes: Por Que o Modelo Não Basta & Anatomia de um Harness: O Corpo Que Carrega o Cérebro — Um Recorte de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "art-01.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/artigos/harness-engineering--art-02-o-ciclo-react-e-os-loops-de-execucao-san",
+      "tipo": "artigo",
+      "rotulo": "Artigo Científico",
+      "titulo": "O Ciclo ReAct e os Loops de Execução & Sandboxes, Permissões e o Controle de Execução — Um Recorte de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "art-02.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/decks/dck-1-harness-engineering-modelo",
+      "tipo": "deck",
+      "rotulo": "Slide Deck",
+      "titulo": "Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "capa.html",
+        "dck-1-harness-engineering-modelo.html",
+        "dck-1-harness-engineering-modelo.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-01-a-revolucao-dos-agentes-por-que-o-modelo",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "A Revolução dos Agentes e a Anatomia do Harness",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "eb-01.epub"
+      ]
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-02-test-harness-a-heranca-da-engenharia-de",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Test Harness e Safety Harness na Prática",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "eb-02.epub"
+      ]
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-03-o-ciclo-react-e-os-loops-de-execucao-san",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Ciclo ReAct: Loops de Execução e Sandboxes",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "eb-03.epub"
+      ]
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-04-gestao-de-contexto-combatendo-o-context",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Gestão de Contexto e o Harness em Produção",
+      "obra_mae": "harness-engineering",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "eb-04.epub"
+      ]
+    },
+    {
+      "slug": "harness-engineering/emails/eml-1-harness-engineering-modelo",
+      "tipo": "emails",
+      "rotulo": "Sequência de E-mails",
+      "titulo": "Sequência — Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "baixo",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "sequencia.md"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-1-armadilhas",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "As 25 Armadilhas de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-1-armadilhas.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-2-cheatsheet",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Cheat Sheet: Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-2-cheatsheet.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-3-checklist",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Checklist Mestre: Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-3-checklist.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-4-entregas",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Mapa de Entregas: Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-4-entregas.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-5-mapa",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "O Mapa de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-5-mapa.pdf"
+      ]
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-6-mini-guia",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Mini-guia: Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "https://exemplo.com/obra",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-6-mini-guia.pdf"
+      ]
+    },
     {
       "slug": "harness-engineering/livros/harness-engineering",
       "tipo": "livro",
       "rotulo": "Livro",
-      "titulo": "Harness Engineering — Alavancagem com Proteção: Do EPI ao Framework de Software",
+      "titulo": "Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
       "obra_mae": null,
       "natureza": "geracao",
       "custo_llm": "alto",
       "senioridade": "iniciante",
-      "cta_url": "",
+      "cta_url": "https://exemplo.com/obra",
       "estado": "compilado",
       "artefatos": [
         "harness-engineering.pdf",
         "livro_final.pdf"
       ]
+    },
+    {
+      "slug": "harness-engineering/playbooks/pbk-1-harness-engineering-modelo",
+      "tipo": "playbook",
+      "rotulo": "Playbook",
+      "titulo": "Playbook — Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+      "obra_mae": "harness-engineering",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "livro_final.pdf",
+        "pbk-1-harness-engineering-modelo.pdf"
+      ]
     }
   ],
-  "derivados_ausentes": [
-    "artigo",
-    "ebook",
-    "playbook",
-    "lead-magnet",
-    "deck",
-    "emails"
-  ],
+  "derivados_ausentes": [],
   "membros_sem_cta": [],
   "maquina": null,
   "maquinas_legadas": []

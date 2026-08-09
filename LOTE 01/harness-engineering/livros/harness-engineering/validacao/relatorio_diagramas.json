@@ -2,10 +2,10 @@
   "slug": "livros/harness-engineering",
   "modo": "livro",
   "arquivos": [
-    "output\\livros\\harness-engineering\\_livro_render.md"
+    "output\\livros\\harness-engineering\\livro-render.md"
   ],
-  "total": 16,
-  "renderizados": 16,
+  "total": 8,
+  "renderizados": 8,
   "cache": 0,
   "falhas": [],
   "ignorados": [],

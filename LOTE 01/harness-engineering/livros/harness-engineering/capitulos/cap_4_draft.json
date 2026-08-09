@@ -1,0 +1,38 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "4" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 3: o test harness como âncora — agora a camada que impede a ação destrutiva antes que o teste precise rodar",
+  "metricas_obrigatorias": [
+    { "metrica": "segurança como principal preocupação (grandes empresas)", "valor": "~25%" },
+    { "metrica": "projetos de agentes cancelados até 2027", "valor": ">40%" }
+  ],
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "O que os guardrails interceptam e por quê",
+        "escopo": "Ações destrutivas, vazamento de dados, alucinação crítica; o conceito de blast radius controlado; OWASP Top 10 como catálogo.",
+        "ancora_visual": "flowchart das ações interceptadas pelo guardrail",
+        "entrega_tecnica": "python: política de bloqueio de ações (allowlist/denylist)",
+        "evolucao_leitor": "de 'agente faz o que quiser' para 'agente faz o que pode'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Approval gates e a fadiga de consentimento",
+        "escopo": "Aprovação humana para ações sensíveis; o problema do consent fatigue e ataques de engenharia ao prompt de aprovação (SymJack).",
+        "ancora_visual": "flowchart do approval gate com decisão humana",
+        "entrega_tecnica": "python: approval gate com whitelist de ações automáticas",
+        "evolucao_leitor": "de 'aprovar tudo' para 'aprovar só o que importa'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Menor privilégio, sandboxes e o blast radius controlado",
+        "escopo": "Princípio do menor privilégio, tokens escopados, sandboxing de execução, trilhas de auditoria.",
+        "ancora_visual": "flowchart do menor privilégio e da sandbox",
+        "entrega_tecnica": "python: executor que valida escopo de arquivos antes de agir",
+        "evolucao_leitor": "de 'token global' para 'escopo mínimo por tarefa'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

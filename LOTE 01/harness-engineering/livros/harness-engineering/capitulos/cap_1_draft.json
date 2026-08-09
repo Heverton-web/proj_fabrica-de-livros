@@ -1,0 +1,38 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "metricas_obrigatorias": [
+    { "metrica": "percentual de apps corporativos com agentes", "valor": "40% até 2026" },
+    { "metrica": "produtividade da equipe agêntica OpenAI", "valor": "3,5 PRs por engenheiro por dia" }
+  ],
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "O que um agente realmente é (modelo + arcabouço)",
+        "escopo": "Definir agente = modelo + harness, distinguindo LLM puro de sistema autônomo; não entrar em detalhes de implementação.",
+        "ancora_visual": "flowchart LR mostrando modelo + harness -> agente confiável, com os componentes do harness listados",
+        "entrega_tecnica": "python: script que compara execução de LLM puro vs agente com harness (mock simples)",
+        "evolucao_leitor": "de 'agente é um modelo' para 'agente é um sistema'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Onde os sistemas sem harness quebram em produção",
+        "escopo": "Falhas reais: alucinação, contexto degradado, ações destrutivas, custo; dados DORA/Gartner como evidência.",
+        "ancora_visual": "flowchart de um agente sem harness caindo (quebra em produção)",
+        "entrega_tecnica": "python: função que simula falha sem guardrail e com guardrail",
+        "evolucao_leitor": "de 'a IA erra' para 'o sistema foi mal construído'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "O retorno medido: adoção e o risco do agente solto",
+        "escopo": "Dados de adoção (Gartner, LangChain) e o paradoxo DORA; por que a disciplina importa agora.",
+        "ancora_visual": "flowchart dos números de adoção e do risco crescente",
+        "entrega_tecnica": "python: mini-relatório que imprime os números do capítulo (fonte: dossiê)",
+        "evolucao_leitor": "de 'é hype' para 'há dados e há risco mensurável'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

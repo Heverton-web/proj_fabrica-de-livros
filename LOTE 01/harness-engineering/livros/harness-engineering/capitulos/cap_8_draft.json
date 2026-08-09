@@ -1,0 +1,38 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "8" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 7: gestão de contexto — agora o fechamento: operar o harness em produção com observabilidade, evals e o novo papel do engenheiro",
+  "metricas_obrigatorias": [
+    { "metrica": "equipes com observabilidade", "valor": "89%" },
+    { "metrica": "equipes com evals formais", "valor": "52%" }
+  ],
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Observabilidade do agente: traces, logs e métricas da execução",
+        "escopo": "O que observar: traces de decisão, logs de ferramenta, métricas de custo/latência; a trilha do Capítulo 6 vira telemetria.",
+        "ancora_visual": "flowchart da telemetria do agente alimentando painel",
+        "entrega_tecnica": "python: emissor de métricas estruturadas por passo",
+        "evolucao_leitor": "de 'agente caixa preta' para 'agente com instrumentação visível'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Evals e LLM-as-a-judge: o teste de regressão do comportamento",
+        "escopo": "Evals como testes de regressão do agente; datasets, golden tests, julgamento automático; o gate do Capítulo 3 em escala.",
+        "ancora_visual": "flowchart do pipeline de eval com datasets e julgamento",
+        "entrega_tecnica": "python: eval que pontua um lote de casos e reporta regressão",
+        "evolucao_leitor": "de 'mudou e orou' para 'mudou e mediu'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "O engenheiro agêntico: desenhar ambientes e especificar intenção",
+        "escopo": "O novo papel do engenheiro: especificar intenção, desenhar ambientes, construir loops de feedback; o arco transformacional completo.",
+        "ancora_visual": "flowchart do loop humano-agente em produção",
+        "entrega_tecnica": "python: manifesto do harness com configuração declarativa",
+        "evolucao_leitor": "de 'engenheiro que escreve código' para 'engenheiro que desenha sistemas'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}
