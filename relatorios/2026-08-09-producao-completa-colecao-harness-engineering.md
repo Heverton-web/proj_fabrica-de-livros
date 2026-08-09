@@ -209,4 +209,28 @@ existiram. Agora usa contador sequencial (email-01..04), batendo com
 (dimensões por dia, envio+pausa nos canais, gate sem dimensões):
 **601 testes pytest passando**. RTK atualizado no AGENTS.md.
 
+## 13. Nota — sessão paralela e migração de nomenclatura V5.1
+
+Após o commit `7f3522d` (cronogramas ricos), outra sessão trabalhou no
+mesmo repositório em paralelo e pushou:
+
+- `8de9cb3` — `scripts/migrar-slug.py` + `scripts/corrigir-nomenclatura.py`
+  (nomes curtos V5.1, MAX_PATH 260)
+- `4d948b4` — `campanha.nome_material` limitado a 20 chars via
+  `nomes_curtos.nome_curto`
+
+**Estado observado (sem intervenção, conforme decisão do operador):** a
+mudança de `nome_material` quebrou temporariamente o gate de campanha
+(R-CP-1: pastas ausentes em todos os materiais) porque as pastas reais de
+campanha ainda têm nomes longos (`campanhas/harness-engineering--art-01-…`,
+`pbk-1-harness-engineering-modelo` etc.) enquanto o código agora resolve
+para `harness-engineering`, `pbk-1`, `lm-6`. O teste
+`test_nome_material_pega_ultimo_segmento` também falha com essa mudança.
+
+**Ação:** registrar aqui para a sessão de migração completar o serviço:
+renomear as pastas de `output/<colecao>/campanhas/` para os nomes curtos
+(resolver `NC.nome_curto(nome, max_palavras=2, maximo=20)`), atualizar
+`campanha.json` (materiais) e o `LOTE 01`, e validar o gate R-CP-C1 voltar a
+CONFORME. Ficou pendente também revalidar `601` testes.
+
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*
