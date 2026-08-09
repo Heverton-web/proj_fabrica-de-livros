@@ -60,6 +60,12 @@ MANUAIS = {
         "cor_acento": "#a855f7",
         "badge": "NÍVEL INTERMEDIÁRIO",
     },
+    "manual-context-usage": {
+        "titulo": "MANUAL COMPLETO",
+        "subtitulo": "CONTEXT USAGE — ENTENDENDO O CONTEXTO DE LLMs PARA INICiantes",
+        "cor_acento": "#06b6d4",
+        "badge": "NÍVEL BÁSICO",
+    },
 }
 
 
