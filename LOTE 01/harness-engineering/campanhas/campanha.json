@@ -1,0 +1,119 @@
+{
+  "colecao": "harness-engineering",
+  "atualizado_em": "2026-08-09",
+  "identidade": {
+    "cor_accent": "#e05d5d",
+    "nivel": "iniciante",
+    "vocabulario": [
+      "arnês",
+      "corda",
+      "ancoragem",
+      "mosquetão",
+      "queda",
+      "proteção",
+      "alavancagem",
+      "rota",
+      "parede",
+      "cume"
+    ]
+  },
+  "materiais": [
+    {
+      "slug": "harness-engineering/artigos/harness-engineering--art-01-a-revolucao-dos-agentes-por-que-o-modelo",
+      "tipo": "artigo",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/artigos/harness-engineering--art-02-o-ciclo-react-e-os-loops-de-execucao-san",
+      "tipo": "artigo",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/decks/dck-1-harness-engineering-modelo",
+      "tipo": "deck",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-01-a-revolucao-dos-agentes-por-que-o-modelo",
+      "tipo": "ebook",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-02-test-harness-a-heranca-da-engenharia-de",
+      "tipo": "ebook",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-03-o-ciclo-react-e-os-loops-de-execucao-san",
+      "tipo": "ebook",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/ebooks/harness-engineering--eb-04-gestao-de-contexto-combatendo-o-context",
+      "tipo": "ebook",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/emails/eml-1-harness-engineering-modelo",
+      "tipo": "emails",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-1-armadilhas",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-2-cheatsheet",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-3-checklist",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-4-entregas",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-5-mapa",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/lead-magnets/lm-6-mini-guia",
+      "tipo": "lead-magnet",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/livros/harness-engineering",
+      "tipo": "livro",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    },
+    {
+      "slug": "harness-engineering/playbooks/pbk-1-harness-engineering-modelo",
+      "tipo": "playbook",
+      "status": "completa",
+      "atualizado_em": "2026-08-09"
+    }
+  ],
+  "total_materiais": 16
+}

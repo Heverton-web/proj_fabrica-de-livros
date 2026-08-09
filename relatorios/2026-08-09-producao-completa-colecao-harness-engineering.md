@@ -63,7 +63,21 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 | Lead magnets | 6 | PDFs + cards sociais |
 | Deck | 1 (14 slides) | HTML + PDF |
 | E-mails | 10 (18 dias) | `sequencia.md` |
+| Campanhas | 16 materiais (929 arquivos) | R-CP-C1 CONFORME + 80 artes PNG + 416 moldes com copy final |
 | Pacote | — | `distribuicao/harness/` (18 arquivos) |
 
----
+## 7. Camada CAMPANHA (V5.3) — complemento
+
+`criar-campanha.py --completo harness-engineering`: 16 materiais do manifesto
+com estrutura (24 pastas cada), 416 moldes de texto reescritos com copy final
+(Status FINAL, vocabulário condutor — arnês, corda, ancoragem, mosquetão, queda,
+proteção, alavancagem, rota, parede, cume —, badge e CTA), 80 artes PNG
+(Chromium; IG post/story, LinkedIn, WhatsApp) e cronogramas com datas reais.
+`campanha.json` no hub registra os 16 materiais como `completa`.
+
+`validar-campanha.py --completo harness-engineering --estrito` → **CONFORME**
+(R-CP-C1 + R-CP-1..5 + R-CP-4 vocabulário). Inspeção visual no browser das
+artes (IG post/story, LinkedIn, WhatsApp, playbook, lead magnets, deck) →
+todas APROVADAS (hierarquia clara, badge visível, sem cortes).
+
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*
