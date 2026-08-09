@@ -252,3 +252,16 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   sempre `dir_obra`/`listar_materiais` (resolvem plano, por-obra e single-book);
   rodar `series_capa.py --reindexar` após reorganizações de `output/`.
   Arquivo: `scripts/series_capa.py`, `scripts/tipos_obra.py`, `AGENTS.md` §COLEÇÃO.
+- **2026-08-09 Reestruturação HUB POR COLEÇÃO (manifestos por hub):** causa:
+  `_dir_colecoes` gravava os 7 manifestos no 1º hub com `colecoes/` (analista)
+  e single-books viviam na raiz de `livros/`/`tccs/` (fora do padrão `*/*`);
+  `<hub>/series.json` (metadados ricos) duplicava o conceito do manifesto.
+  Fix: `_dir_colecoes_da` resolve o dir pelo hub da coleção (1º segmento comum
+  dos membros que não seja raiz de tipo; fallback plano `output/colecoes/`);
+  `_metadados_ricos` funde `<hub>/series.json` no manifesto e apaga o legado
+  (idempotente: reusa `metadados` do manifesto anterior); single-books migrados
+  para `<tipo>/<slug>/`; `_todos_dirs_manifestos` varre `DIR_OUTPUT/*/colecoes`
+  (NÃO `tipos_obra._sereis()` — usa `TO.DIR_OUTPUT` real, quebra teste com
+  monkeypatch). Prevenção: limpeza global de manifestos órfãos deve varrer
+  fallback + hubs; `_slug_arquivo` vira `ç` em `-` (minha-cole-o.json).
+  Arquivo: `scripts/colecao.py`, `tests/test_colecao_hub.py`.
