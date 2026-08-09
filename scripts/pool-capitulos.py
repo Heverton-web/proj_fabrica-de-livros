@@ -24,8 +24,12 @@ Uso:
 import argparse
 import json
 import re
+import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
+
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -50,8 +54,16 @@ def _migrar_pool_legado(caminho):
         return False
 
 
+def _exibir(caminho):
+    """Caminho relativo ao projeto quando possivel (para mensagens de saida)."""
+    try:
+        return caminho.relative_to(DIR_PROJETO)
+    except ValueError:
+        return caminho
+
+
 def carregar_sumario(slug):
-    caminho = DIR_OUTPUT / slug / "sumario_macro.json"
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / "sumario_macro.json"
     if not caminho.exists():
         print(f"[ERRO] sumario_macro.json nao encontrado em {caminho.parent}")
         return None
@@ -69,7 +81,7 @@ def carregar_sumario(slug):
 
 
 def caminho_estado(slug):
-    caminho = DIR_OUTPUT / slug / "capitulos" / "pool-estado.json"
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / "capitulos" / "pool-estado.json"
     _migrar_pool_legado(caminho)
     return caminho
 
@@ -88,7 +100,7 @@ def gravar_estado(slug, estado):
 
 
 def arquivo_capitulo(slug, numero):
-    dir_caps = DIR_OUTPUT / slug / "capitulos"
+    dir_caps = TO.dir_obra(slug, DIR_OUTPUT) / "capitulos"
     for padrao in (f"cap_{int(numero):02d}.md", f"cap_{numero}.md"):
         p = dir_caps / padrao
         if p.exists():
@@ -121,7 +133,7 @@ def carregar_manifesto(slug, manifesto_rel):
     """Generalizacao (Fase E/V4): unidades de trabalho vindas de um manifesto
     (estrutura_artigos.json / estrutura_ebooks.json) em vez de sumario_macro.json.
     Cada unidade e 1 artigo/ebook inteiro, nao 1 capitulo dentro de uma obra."""
-    caminho = DIR_OUTPUT / slug / manifesto_rel
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / manifesto_rel
     if not caminho.exists():
         print(f"[ERRO] Manifesto nao encontrado: {caminho}")
         return None
@@ -139,7 +151,7 @@ def carregar_manifesto(slug, manifesto_rel):
 
 def unidade_entregue(slug, diretorio):
     """Para manifesto: entregue = existe PDF ou EPUB no diretorio da unidade."""
-    base = DIR_OUTPUT / slug / diretorio
+    base = TO.dir_obra(slug, DIR_OUTPUT) / diretorio
     if (base / "livro_final.pdf").exists():
         return True, "ok"
     if list(base.glob("*.epub")):
@@ -158,7 +170,14 @@ def montar_visao(slug, tamanho_lote, manifesto_rel=None):
         reg = estado["capitulos"].setdefault(
             num, {"tentativas": 0, "ultimo_erro": "", "estado": "pendente"})
         if manifesto_rel:
-            ok, motivo = unidade_entregue(slug, cap["_diretorio"])
+            if reg.get("reescrever"):
+                ok, motivo = False, "reescrita solicitada"
+            else:
+                ok, motivo = unidade_entregue(slug, cap["_diretorio"])
+        elif reg.get("reescrever"):
+            # Reescrita solicitada: o arquivo pode existir, mas o conteudo e
+            # considerado obsoleto ate `--registrar --sucesso` limpar a flag.
+            ok, motivo = False, "reescrita solicitada"
         else:
             ok, motivo = capitulo_entregue(slug, num)
         cap["tentativas"] = reg["tentativas"]
@@ -204,6 +223,10 @@ def main():
     ap.add_argument("--registrar", metavar="CAP", help="registra o resultado de um capitulo")
     ap.add_argument("--sucesso", action="store_true")
     ap.add_argument("--falha", nargs="?", const="falha nao especificada", metavar="MOTIVO")
+    ap.add_argument("--reescrever", metavar="CAP",
+                    help="marca um capitulo para REEscrita: backup do atual em "
+                         "revisao/backups/<ts>/ e volta a pendente (ate "
+                         "--registrar --sucesso limpar a flag)")
     ap.add_argument("--reset", action="store_true", help="zera o contador de tentativas")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--manifesto", metavar="CAMINHO", default=None,
@@ -214,8 +237,8 @@ def main():
                     help="com --pendentes: exit 1 se houver capitulo nao concluido")
     args = ap.parse_args()
 
-    if not (DIR_OUTPUT / args.slug).exists():
-        print(f"[ERRO] Livro nao encontrado: {DIR_OUTPUT / args.slug}")
+    if not (TO.dir_obra(args.slug, DIR_OUTPUT)).exists():
+        print(f"[ERRO] Livro nao encontrado: {TO.dir_obra(args.slug, DIR_OUTPUT)}")
         return 1
 
     if args.registrar:
@@ -226,6 +249,7 @@ def main():
         if args.sucesso:
             reg["estado"] = "concluido_autonomo"
             reg["ultimo_erro"] = ""
+            reg.pop("reescrever", None)   # reescrita entregue; volta ao fluxo normal
             print(f"[OK] cap {args.registrar}: sucesso registrado "
                   f"(tentativa {reg['tentativas']})")
         else:
@@ -240,6 +264,29 @@ def main():
             else:
                 print(f"  -> retentar apos {espera}s (backoff exponencial)")
         gravar_estado(args.slug, estado)
+        return 0
+
+    if args.reescrever:
+        numero = int(args.reescrever)
+        estado = carregar_estado(args.slug)
+        reg = estado["capitulos"].setdefault(
+            str(numero), {"tentativas": 0, "ultimo_erro": "", "estado": "pendente"})
+        reg["tentativas"] = 0
+        reg["ultimo_erro"] = ""
+        reg["estado"] = "pendente"
+        reg["reescrever"] = True
+        arq = arquivo_capitulo(args.slug, numero)
+        if arq:
+            ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+            dir_backup = TO.dir_obra(args.slug, DIR_OUTPUT) / "revisao" / "backups" / ts
+            dir_backup.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(arq, dir_backup / arq.name)
+            print(f"[BACKUP] {arq.name} -> {_exibir(dir_backup / arq.name)}")
+        else:
+            print(f"[AVISO] cap {numero} sem arquivo em disco — reescrita sem backup")
+        gravar_estado(args.slug, estado)
+        print(f"[OK] cap {numero} marcado para reescrita (pendente). "
+              f"Despache o subagente com o backup como base.")
         return 0
 
     if args.reset:

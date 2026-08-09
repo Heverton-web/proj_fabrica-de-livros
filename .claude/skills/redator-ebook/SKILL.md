@@ -91,3 +91,17 @@ de autoridade — só a fricção de leitura diminui, o valor entregue não.
 - Nunca invente fato novo — se o capítulo-fonte não cobre algo, o ebook também não cobre.
 - Não gere a capa gráfica (imagem) nem o EPUB final — isso é do
   `subagente-adaptador-ebook` + `scripts/gerar-epub.py`.
+
+## Modo Transmutação (V5.2 — `/reescrever-como`)
+
+Quando o ebook é produto de transmutação (config tem `modo_producao:
+"transmutacao"` e `slug_origem` — típico: livro → ebook ou TCC → ebook):
+
+1. **Base = origem**: releia a unidade correspondente da origem (slug em
+   `config_obra.json.slug_origem`).
+2. **Reescreva o tom**: origem técnica/acadêmica → tom comercial-leve (parágrafos
+   curtos, mais subtítulos, sem exigência de citação `[N]` no corpo — vire a
+   citação em "segundo <fonte>", citando a fonte pelo nome quando relevante).
+3. Preserve dados factuais e exemplos — nunca invente (Limite acima vale
+   também na transmutação).
+4. Rode os gates do ebook (EBOOK-LEN/estrutura) antes de encerrar (REGRA 4).

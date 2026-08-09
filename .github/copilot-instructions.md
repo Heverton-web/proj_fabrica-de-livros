@@ -34,6 +34,7 @@ alwaysApply: true
 - **R4 (Auto-correção):** desvios são corrigidos internamente antes da compilação.
 - **R5 (Capa 2D Plano):** Livro/E-book usam padrão 2D plano (detalhes em `docs/referencia-capa-design.md`). TCC/Artigo usam capa ABNT sóbria. Badge de nível OBRIGATÓRIO (validado por `validar-capa-nivel.py`).
 - **R6 (Modelo Livre):** nenhum modelo LLM fixo. `model: inherit` em todos os agents.
+- **R16 (Pós-implementação — nunca commitar vermelho):** APÓS TODA nova implementação: (1) rodar a suíte de testes necessária (`python -m pytest -q`, ou a suíte específica + a completa); (2) **100%** → commit + push; (3) **<100%** → analisar a falha, corrigir o código, re-testar até 100% (nunca commitar suíte vermelha; nunca contornar o teste para fazê-lo passar — corrigir a causa). Vale para qualquer agente/sessão da fábrica, incluindo reescrita de materiais.
 
 ### Tipos de Obra (V5) — registro declarativo em `scripts/tipos_obra.py`
 
@@ -179,6 +180,23 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
+- **2026-08-09 Reescrita e transmutação de materiais:** causa: a esteira só
+  criava novo (-v2) ou retomava; não dava para regravar capítulo/obra nem mudar
+  de tipo sem orfanar série/coleção. Fix: `pool-capitulos.py --reescrever <n>`
+  (backup em `revisao/backups/<ts>/` + flag `reescrever` no estado que o
+  `montar_visao` respeita até `--registrar --sucesso`); campo `reescrever_de`
+  no registro de tipos (transmutação: livro←ebook/playbook/artigo/tcc,
+  tcc←livro/ebook, ebook←livro/tcc/playbook, artigo←livro/tcc/ebook);
+  `scripts/transmutar-obra.py` (recorte origem→destino, slug destino com
+  sufixo `--liv/--tcc/--ebk/--art` no layout plano, `slug_origem` no config,
+  registro em `derivados.json` da origem); comandos `/reescrever-capitulo`,
+  `/reescrever`, `/refinar`, `/reescrever-como`; skills com Modo
+  reescrita/transmutação (preservar refs [N] e diagramas; gates do DESTINO
+  obrigatórios). Prevenção: R16 — após toda implementação, suíte 100% → commit
+  e push; <100% → analisar, corrigir, testar (nunca commitar vermelho).
+  Arquivos: `scripts/pool-capitulos.py`, `scripts/tipos_obra.py`,
+  `scripts/transmutar-obra.py`, `.claude/commands/reescrever*.md`,
+  `.claude/commands/refinar.md`.
 - **2026-08-09 Gates de conteúdo F1/F2 (mérito além da estrutura):** causa:
   validar estrutura (R1-R15) não pegava referência inventada, código que não
   roda, capítulo sem métrica nem limite de escala, dado factual sem citação.

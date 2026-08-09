@@ -34,6 +34,7 @@ alwaysApply: true
 - **R4 (Auto-correção):** desvios são corrigidos internamente antes da compilação.
 - **R5 (Capa 2D Plano):** Livro/E-book usam padrão 2D plano (detalhes em `docs/referencia-capa-design.md`). TCC/Artigo usam capa ABNT sóbria. Badge de nível OBRIGATÓRIO (validado por `validar-capa-nivel.py`).
 - **R6 (Modelo Livre):** nenhum modelo LLM fixo. `model: inherit` em todos os agents.
+- **R16 (Pós-implementação — nunca commitar vermelho):** APÓS TODA nova implementação: (1) rodar a suíte de testes necessária (`python -m pytest -q`, ou a suíte específica + a completa); (2) **100%** → commit + push; (3) **<100%** → analisar a falha, corrigir o código, re-testar até 100% (nunca commitar suíte vermelha; nunca contornar o teste para fazê-lo passar — corrigir a causa). Vale para qualquer agente/sessão da fábrica, incluindo reescrita de materiais.
 
 ### Tipos de Obra (V5) — registro declarativo em `scripts/tipos_obra.py`
 
@@ -93,6 +94,8 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 
 **V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`, `gerar-lead-magnet-pdf.py`, `gerar-pptx.py`, `gerar-deck-html.py`, `nomes_curtos.py`, `validar-artefatos.py`, `empacotar-colecao.py`
 
+**Gates de conteúdo (F1/F2 — mérito, além da estrutura R1-R15):** `validar-referencias.py` (R-RF: URL/DOI reais, 4xx/DNS reprova, cache + `--sem-rede`), `validar-metricas.py` (R-MT: ≥1 métrica com valor+unidade+citação por capítulo; `metricas_obrigatorias` no sumário), `validar-escala.py` (R-ES: limites/contorno na seção Aplica), `validar-afirmacoes.py` (R-AF: dado factual sem `[N]` no parágrafo reprova), `validar-fontes.py` (R-FT: hierarquia A/B/C do dossiê ≥70% A+B). `validar-codigo.py --executar` (smoke test real de python/js/bash) e `--playbook` (gate dos cards vira comando executado). Registrados em `tipos_obra.py` → campo `gates_conteudo` do tipo `livro`; `auditar-obra.py --estrito` os encadeia (referências offline).
+
 ### Token Economy Skills
 `lean-ctx`, `headroom`, `caveman`, `rtk-memory`, `pre-flight-check`, `calcular-gastos-sessao`
 
@@ -115,7 +118,7 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 1. **Input:** operador define tema → `/esbocar <tema>`
 2. **Fase 1:** pesquisador varre → `indexar-dossie.py --indexar` → arquiteto gera sumário macro
 3. **Fase 2:** `pool-capitulos.py --plano --lote 4` → subagentes-redator em lotes (estratégia + redação + diagrama + CI + auto-validação). Retentativa com backoff (máx. 3)
-4. **Fase 2.5:** `auditar-obra.py` + `validar-codigo.py` → `revisor-tecnico` corrige
+4. **Fase 2.5:** `auditar-obra.py` (encadeia os gates de conteúdo F1/F2 via `gates_conteudo` no `--estrito`) + `validar-codigo.py --executar` + `renderizar-diagramas.py --validar` → `revisor-tecnico` corrige (inclui conferência por amostra: reabrir 1 fonte por capítulo e conferir o dado citado)
 5. **Fase 3:** `compilador-abnt` merge + pré/pós-textuais + referências ABNT
 6. **PDF:** `compilar-para-pdf.py <slug> --paginas-exatas` → Pandoc→`.typ`→Typst
 7. **Fase 4 (V5) — Coleção:** `/criar-playbook` → `/criar-lead-magnet --todos` +
@@ -177,6 +180,39 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
+- **2026-08-09 Reescrita e transmutação de materiais:** causa: a esteira só
+  criava novo (-v2) ou retomava; não dava para regravar capítulo/obra nem mudar
+  de tipo sem orfanar série/coleção. Fix: `pool-capitulos.py --reescrever <n>`
+  (backup em `revisao/backups/<ts>/` + flag `reescrever` no estado que o
+  `montar_visao` respeita até `--registrar --sucesso`); campo `reescrever_de`
+  no registro de tipos (transmutação: livro←ebook/playbook/artigo/tcc,
+  tcc←livro/ebook, ebook←livro/tcc/playbook, artigo←livro/tcc/ebook);
+  `scripts/transmutar-obra.py` (recorte origem→destino, slug destino com
+  sufixo `--liv/--tcc/--ebk/--art` no layout plano, `slug_origem` no config,
+  registro em `derivados.json` da origem); comandos `/reescrever-capitulo`,
+  `/reescrever`, `/refinar`, `/reescrever-como`; skills com Modo
+  reescrita/transmutação (preservar refs [N] e diagramas; gates do DESTINO
+  obrigatórios). Prevenção: R16 — após toda implementação, suíte 100% → commit
+  e push; <100% → analisar, corrigir, testar (nunca commitar vermelho).
+  Arquivos: `scripts/pool-capitulos.py`, `scripts/tipos_obra.py`,
+  `scripts/transmutar-obra.py`, `.claude/commands/reescrever*.md`,
+  `.claude/commands/refinar.md`.
+- **2026-08-09 Gates de conteúdo F1/F2 (mérito além da estrutura):** causa:
+  validar estrutura (R1-R15) não pegava referência inventada, código que não
+  roda, capítulo sem métrica nem limite de escala, dado factual sem citação.
+  Fix: 5 gates novos + `validar-codigo --executar/--playbook`; registro via
+  campo `gates_conteudo` no tipo `livro` (tipos_obra.py) e encadeamento em
+  `auditar-obra --estrito` (referências rodam offline `--sem-rede`; o
+  revisor-tecnico roda com rede). Prevenção: estrategista declara
+  `metricas_obrigatorias` no draft; redator-eita cita no mesmo parágrafo,
+  inclui métrica e limites de escala; pesquisador classifica fontes `(A)/(B)/(C)`
+  no dossiê (gate R-FT-1 ≥70% A+B). Ajustes calibrados: superlativos de ênfase
+  ("o mais importante") e garantias técnicas ("nunca confie") NÃO são
+  disparadores factuais (ruído); `**Desafio` (exercício do autor) é excluído;
+  cache de referências só é conclusivo para ok/falha — `nao_verificado` não
+  bloqueia checagem futura. Achado real do gate: `fin.ai/blog/ai-agent-roi-customer-support`
+  404 no cap_1; playbook pbk-1 tem 13 blocos truncados sem elipse (código
+  cortado no meio). Arquivo: `scripts/validar-*.py` + `tests/test_validar_*`.
 - **2026-08-09 Máquina de vendas — checkout:** causa: rota `/api/checkout`
   faltava no template (checkout page postava nela → 404 em toda máquina nova) e
   page antiga usava form urlencoded vazio → 500 no `request.json()`. Fix: rota

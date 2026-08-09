@@ -95,6 +95,10 @@ TIPOS = {
             "validar-afirmacoes.py",    # R-AF: dado factual sem [N] no paragrafo
             "validar-fontes.py",        # R-FT: hierarquia A/B/C do dossier >= 70%
         ),
+        # Transmutacao (reescrita entre tipos) — origens aceitas para nascer
+        # como livro a partir de um material existente (expansao com custo).
+        # `validar_reescrita()` confere; `transmutar-obra.py` recorta e registra.
+        "reescrever_de": ("ebook", "playbook", "artigo", "tcc"),
     },
     "tcc": {
         "rotulo": "TCC",
@@ -117,6 +121,8 @@ TIPOS = {
         "exige_cta": False,
         "membro_colecao": True,
         "perguntavel_na_fase0": True,
+        # Transmutacao: TCC nasce por reframing academico de livro/ebook.
+        "reescrever_de": ("livro", "ebook"),
     },
 
     # ── DERIVADOS POR COMPRESSAO (custo baixo) ────────────────────────────────
@@ -141,6 +147,7 @@ TIPOS = {
         "exige_cta": False,
         "membro_colecao": True,
         "perguntavel_na_fase0": False,
+        "reescrever_de": ("livro", "tcc", "ebook"),
     },
     "ebook": {
         "rotulo": "E-book",
@@ -163,6 +170,8 @@ TIPOS = {
         "exige_cta": False,
         "membro_colecao": True,
         "perguntavel_na_fase0": False,
+        # Transmutacao: reescrita de tom a partir de livro, TCC ou playbook.
+        "reescrever_de": ("livro", "tcc", "playbook"),
     },
 
     # ── DERIVADOS POR EXTRACAO DETERMINISTICA (custo ~zero) ────────────────────
@@ -383,6 +392,27 @@ def derivaveis_de(tipo_mae):
     return tuple(t for t, d in TIPOS.items() if tipo_mae in d["derivado_de"])
 
 
+def reescreviveis_de(tipo_origem):
+    """Tipos-destino aceitos na TRANSMUTACAO (reescrita entre tipos).
+
+    Diferente de `derivaveis_de` (cascata raiz->derivado), aqui o material
+    ORIGEM ja existe e vira um material de outro tipo por reescrita."""
+    return tuple(t for t, d in TIPOS.items()
+                 if tipo_origem in d.get("reescrever_de", ()))
+
+
+def validar_reescrita(tipo_destino, tipo_origem):
+    """Erros (vazia = transmutacao permitida). Usa `reescrever_de`."""
+    d = descritor(tipo_destino)
+    permitidos = d.get("reescrever_de", ())
+    if not permitidos:
+        return [f"{tipo_destino} nao aceita reescrita/transmutacao"]
+    if tipo_origem not in permitidos:
+        return [f"{tipo_destino} reescreve-se a partir de "
+                f"{' ou '.join(permitidos)}, nao de {tipo_origem}"]
+    return []
+
+
 def validar_derivacao(tipo_filho, tipo_mae):
     """Retorna lista de erros (vazia = derivacao permitida)."""
     d = descritor(tipo_filho)
@@ -420,29 +450,58 @@ def prefixo_curto(tipo):
     return campo(tipo, "prefixo_curto", tipo[:3])
 
 
-def slug_curto(tipo, slug_mae_simples, sequencia=1, nome=None):
+def slug_curto(tipo, slug_mae_simples, sequencia=1, nome=None, base=None):
     """Slug V5.1 relativo a output/: '<raiz>/<codigo-obra>/<pfx>-<seq>-<nome>'.
 
     Substitui o slug longo da V5, que repetia o nome da obra-mae na pasta e no
-    arquivo e produzia caminhos de ~197 chars (MAX_PATH do Windows e 260)."""
+    arquivo e produzia caminhos de ~197 chars (MAX_PATH do Windows e 260).
+
+    Quando a obra-mae vive no layout POR OBRA (output/<obra>/...), o derivado
+    nasce nessa obra: '<obra>/<raiz>/<pfx>-<seq>-<nome>' (sem o nivel <codigo>,
+    que a reorg por obra nao repete).
+    `base` e o output-raiz (por padrao tipos_obra.DIR_OUTPUT)."""
     from nomes_curtos import caminho_material, codigo_obra, nome_material
     material = nome_material(prefixo_curto(tipo), sequencia, nome or tipo)
+    obra = _obra_raiz(slug_mae_simples, base)
+    if obra is not None:
+        return f"{obra.name}/{raiz_output(tipo)}/{material}"
     return caminho_material(raiz_output(tipo), codigo_obra(slug_mae_simples), material)
 
 
-def listar_materiais(tipo):
+def listar_materiais(tipo, base=None):
     """Slugs de todos os materiais de um tipo no disco, relativos a output/.
 
     Fonte unica da varredura: os tipos V5.1 vivem em <raiz>/<codigo>/<material>
     (2 niveis) e os V4 em <raiz>/<slug> (1 nivel). Quem varrer com `iterdir()`
-    direto encontra as pastas de CODIGO no lugar dos materiais."""
-    raiz = DIR_OUTPUT / raiz_output(tipo)
-    if not raiz.exists():
-        return []
+    direto encontra as pastas de CODIGO no lugar dos materiais.
+
+    A partir da reorg por obra, os materiais tambem vivem em
+    output/<obra>/<raiz>/<material> (1 nivel sob <raiz>, sem o <codigo>). A
+    varredura cobre os dois layouts e devolve slugs que `dir_obra` resolve.
+    `base` e o output-raiz (por padrao tipos_obra.DIR_OUTPUT); os scripts passam
+    o proprio DIR_OUTPUT para honrar redirecionamento nos testes."""
+    base = Path(base) if base is not None else DIR_OUTPUT
+    raiz_nome = raiz_output(tipo)
     padrao = "*/*" if usa_nomes_curtos(tipo) else "*"
-    return [str(d.relative_to(DIR_OUTPUT)).replace("\\", "/")
-            for d in sorted(raiz.glob(padrao))
-            if d.is_dir() and (d / "config_obra.json").exists()]
+    alvos = []
+    # layout plano: output/<raiz>/...
+    dir_flat = base / raiz_nome
+    if dir_flat.exists():
+        for d in dir_flat.glob(padrao):
+            if d.is_dir() and (d / "config_obra.json").exists():
+                alvos.append(str(d.relative_to(base)).replace("\\", "/"))
+    # layout por obra: output/<obra>/<raiz>/... (material a 1 nivel sob <raiz>)
+    for obra in _sereis(base):
+        dir_serie = obra / raiz_nome
+        if not dir_serie.exists():
+            continue
+        for d in dir_serie.glob("*"):
+            if d.is_dir() and (d / "config_obra.json").exists():
+                alvos.append(str(d.relative_to(base)).replace("\\", "/"))
+        # obra RAIZ single-book: config direto em <obra>/<raiz>/ -> slug <raiz>/<obra>
+        if tipo in tipos_raiz() and (dir_serie / "config_obra.json").exists():
+            alvos.append(f"{raiz_nome}/{obra.name}")
+    return sorted(set(alvos))
 
 
 def nome_arquivo(slug_curto_do_material):
@@ -461,8 +520,75 @@ def tipo_por_prefixo(slug):
     return None
 
 
-def dir_obra(slug):
-    return DIR_OUTPUT / slug
+def _sereis(base=None):
+    """Diretorios-raiz de OBRA em output/ (cada um e um nucleo/projeto).
+
+    Exclui arquivos e dirs estruturais de topo que nao sao obra (distribuicao).
+    `base` permite resolver contra um output-raiz alternativo (usado nos testes,
+    que monkeypatcham o DIR_OUTPUT do script chamador).
+    """
+    base = Path(base) if base is not None else DIR_OUTPUT
+    if not base.exists():
+        return []
+    try:
+        return [p for p in sorted(base.iterdir())
+                if p.is_dir() and p.name not in _TOPO_NAO_OBRA]
+    except OSError:
+        return []
+
+
+_TOPO_NAO_OBRA = {"distribuicao"}
+
+
+def _raizes_tipo():
+    """Conjunto de raizes_output dos tipos que sao OBRA RAIZ (livros, tccs)."""
+    return {raiz_output(t) for t in tipos_raiz()}
+
+
+def _obra_raiz(slug_mae_simples, base=None):
+    """Dir-raiz da obra (output/<obra>) para um livro/tcc-mae; None se layout plano.
+
+    - single-book por obra: output/<obra>/<raiz>  (obra == nome do mae)
+    - multi-book por obra:  output/<obra>/<raiz>/<mae>
+    """
+    base = Path(base) if base is not None else DIR_OUTPUT
+    mae = str(slug_mae_simples).replace("\\", "/").split("/")[-1]
+    for raiz in _raizes_tipo():
+        if (base / mae / raiz).exists():            # single-book
+            return base / mae
+        for obra in _sereis(base):                  # multi-book
+            if (obra / raiz / mae).exists():
+                return obra
+    return None
+
+
+def dir_obra(slug, base=None):
+    """Resolve um slug (obra raiz ou derivado) para o diretorio real em output/.
+
+    Layouts suportados:
+      - plano:        output/<tipo>/<slug>
+      - por obra:     output/<obra>/<tipo>/<slug>        (derivado)
+      - raiz single:  output/<obra>/<tipo>               (obra == nome do slug)
+    Quando nada existe, devolve o caminho plano (fallback de escrita).
+    `base` permite resolver contra um output-raiz alternativo (testes).
+    """
+    base = Path(base) if base is not None else DIR_OUTPUT
+    slug = str(slug).replace("\\", "/")
+    direto = base / slug
+    if direto.exists():
+        return direto
+    tipo, sep, resto = slug.partition("/")
+    if not sep or not resto:
+        return direto
+    for obra in _sereis(base):                       # multi-book raiz
+        cand = obra / tipo / resto
+        if cand.exists():
+            return cand
+    if tipo in _raizes_tipo():                       # single-book raiz
+        cand = base / resto / tipo
+        if cand.exists():
+            return cand
+    return direto
 
 
 def template_de(tipo):
@@ -548,6 +674,18 @@ def matriz_derivacao():
     return linhas
 
 
+def matriz_reescrita():
+    """Lista [(origem, destino, natureza, custo)] da TRANSMUTACAO (V5.2).
+
+    Leitura inversa de `derivado_de`: cada par `reescrever_de` vira uma linha
+    origem -> destino. Natureza/custo sao do DESTINO (quanto custa produzir)."""
+    linhas = []
+    for destino, d in TIPOS.items():
+        for origem in d.get("reescrever_de", ()) or ():
+            linhas.append((origem, destino, d["natureza"], d["custo_llm"]))
+    return linhas
+
+
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 def main():
@@ -562,12 +700,22 @@ def main():
 
     if args.matriz:
         if args.json:
-            print(json.dumps(matriz_derivacao(), ensure_ascii=False, indent=2))
+            print(json.dumps({
+                "cascata": matriz_derivacao(),
+                "transmutacao": matriz_reescrita(),
+            }, ensure_ascii=False, indent=2))
             return 0
+        print("CASCATA (raiz -> derivado, por extracao/compressao):")
         print(f"{'MAE':<12} {'FILHO':<14} {'NATUREZA':<12} CUSTO LLM")
         print("-" * 52)
         for mae, filho, natureza, custo in matriz_derivacao():
             print(f"{mae:<12} {filho:<14} {natureza:<12} {custo}")
+        print()
+        print("TRANSMUTACAO (reescrita entre tipos, V5.2):")
+        print(f"{'ORIGEM':<12} {'DESTINO':<14} {'NATUREZA':<12} CUSTO LLM")
+        print("-" * 52)
+        for origem, destino, natureza, custo in matriz_reescrita():
+            print(f"{origem:<12} {destino:<14} {natureza:<12} {custo}")
         return 0
 
     if args.formatos_lm:

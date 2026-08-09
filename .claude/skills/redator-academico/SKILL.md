@@ -90,3 +90,22 @@ seção — nunca invente autor ou ano.
    Corrija (REGRA 4) qualquer requisito `TCC-*`/`ARTIGO-*` reprovado antes de encerrar.
 7. Atualize `output/<livro>/capitulos/cap_<n>_estado.json` para
    `"estado_execucao": "concluido"`.
+
+## Modo Transmutação (V5.2 — `/reescrever-como`)
+
+Quando o TCC/artigo é produto de transmutação (config tem `modo_producao:
+"transmutacao"` e `slug_origem` — tipicamente a partir de um LIVRO):
+
+1. **Base = origem**: releia a unidade correspondente da origem (slug em
+   `config_obra.json.slug_origem`; dossiê copiado em `pesquisa/`).
+2. **Converta o formato de citação**: a origem usa citação numerada `[N]`;
+   o destino usa **autor-data NBR 10520** (`(SOBRENOME, ano)`) e referências
+   NBR 6023 no bloco `# Referências` (ordem alfabética). Reconstrua cada
+   referência a partir do dossiê — não carregue `[N]` do corpo original.
+3. **Reframe a estrutura**: capítulos de livro viram seções ACAD
+   (Contextualização, Referencial Teórico, Análise, Síntese Parcial) — corte
+   tom editorial, mantenha rigor e impessoalidade.
+4. Preserve dados factuais com fonte (são a base do Referencial Teórico);
+   complementos vêm APENAS do dossiê copiado.
+5. Rode os gates do destino (`auditar-obra.py --tipo tcc|artigo` +
+   `validar-abnt-tcc.py` quando aplicável) e corrija até passar (REGRA 4).

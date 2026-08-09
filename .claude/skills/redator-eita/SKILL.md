@@ -252,3 +252,40 @@ afirmações técnicas a fontes do dossiê de pesquisa.
    Corrija tudo que falhar (REGRA 4) antes de encerrar.
 6. Atualize o estado do payload para `"estado_execucao": "concluido"` e grave em
    `output/<livro>/capitulos/cap_<capitulo>_estado.json`.
+
+## Modo Reescrita (V5.2 — `/reescrever-capitulo` e `/reescrever`)
+
+Quando o Orquestrador pedir reescrita (comando `/reescrever-capitulo <slug> <n>`
+ou `/reescrever <slug>`), o capítulo JÁ EXISTE e há um backup em
+`revisao/backups/<ts>/cap_<n>.md`:
+
+1. **Base = backup**: leia o backup e reescreva A PARTIR dele — não recrie do
+   zero nem reescreva o que já está bom.
+2. **Preserve o contrato de referências**: mantenha a numeração `[N]` válida e
+   a seção 7 coerente com o corpo. Só renumere se remover/inserir fontes — e
+   confira a seção 7 inteira após renumeração (R14).
+3. **Preserve diagramas**: reutilize o(s) bloco(s) Mermaid do backup (seção 3);
+   não regenere diagramas sem necessidade (custo e risco de sintaxe).
+4. **Preserve dados já citados**: fatos, métricas e exemplos com fonte válida
+   continuam válidos — não os troque por invento.
+5. Aplique o MOTIVO informado (tom, profundidade, precisão) como critério
+   dominante; o resto do capítulo permanece conforme o backup.
+6. Após gravar, rode os gates do capítulo (`validar-codigo.py --capitulo <n>
+   --estrito --executar` + gates F1/F2) e corrija até passar (REGRA 4).
+
+## Modo Transmutação (V5.2 — `/reescrever-como`)
+
+Quando a obra é produto de transmutação (config tem `modo_producao:
+"transmutacao"` e `slug_origem`), cada unidade do sumário corresponde a uma
+seção/capítulo da ORIGEM:
+
+1. **Base = origem**: releia a unidade correspondente da origem (o slug está em
+   `config_obra.json.slug_origem`; o dossiê foi copiado para `pesquisa/`).
+2. **Expansão (origem compacta → livro)**: cada unidade vira um capítulo EITA
+   completo (7 seções). O que faltar (técnica, aplicação) é complementado
+   APENAS com o dossiê copiado — nunca com fonte inventada (gates F1/F2).
+3. **Reframing (livro → TCC/artigo)**: reescreva na forma acadêmica do destino
+   (framework ACAD, citação autor-data NBR 10520), convertendo `[N]` numerada
+   em autor-data.
+4. Preserve motivo_condutor, vocabulário e diagramas reutilizáveis.
+5. Rode os gates do DESTINO antes de encerrar (ver comando `/reescrever-como`).
