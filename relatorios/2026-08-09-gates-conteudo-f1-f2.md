@@ -63,7 +63,7 @@ _Não informado._
 
 ## 5. Commits
 
-- `(este commit — ver `git log -1`; hash definido no ato do commit)`
+- `1b03708 feat(v5.2): gates de conteúdo sine qua non (F1/F2) + encadeamento --estrito` (pushado em `main`)
 
 ---
 
