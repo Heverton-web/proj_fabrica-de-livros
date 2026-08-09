@@ -71,15 +71,26 @@ ruído e conteúdo superficial, e entregar um dossiê estruturado que alimentar�
 **Formato obrigatório das Fontes brutas (ABNT):**
 Cada linha DEVE seguir exatamente este padrão:
 ```
-- SOBRENOME, Nome. *Título*. Disponível em: https://exemplo.com/caminho. Acesso em: 28 jul. 2026.
+- SOBRENOME, Nome. *Título*. Disponível em: https://exemplo.com/caminho. Acesso em: 28 jul. 2026. (A)
 ```
 
 Exemplos corretos:
 ```
-- ANTHROPIC. *Introducing the Model Context Protocol*. Disponível em: https://www.anthropic.com/news/model-context-protocol. Acesso em: 28 jul. 2026.
-- PRINCETON UNIVERSITY. *SWE-bench Verified & Pro*. Disponível em: https://www.swebench.com. Acesso em: 28 jul. 2026.
-- DORA / GOOGLE CLOUD. *2024 State of DevOps Report*. Disponível em: https://dora.dev. Acesso em: 28 jul. 2026.
+- ANTHROPIC. *Introducing the Model Context Protocol*. Disponível em: https://www.anthropic.com/news/model-context-protocol. Acesso em: 28 jul. 2026. (B)
+- PRINCETON UNIVERSITY. *SWE-bench Verified & Pro*. Disponível em: https://www.swebench.com. Acesso em: 28 jul. 2026. (A)
+- DORA / GOOGLE CLOUD. *2024 State of DevOps Report*. Disponível em: https://dora.dev. Acesso em: 28 jul. 2026. (A)
 ```
+
+**Hierarquia de fontes (obrigatória — contrato com `validar-fontes.py`, gate R-FT-1):**
+Cada fonte termina com o marcador de classe `(A)`, `(B)` ou `(C)`:
+- **(A) — fonte primária/peer-reviewed:** papers arXiv/ACM/IEEE/Springer/SciELO,
+  benchmarks, surveys, relatórios institucionais auditados (DORA, Gartner
+  Research, McKinsey Global Institute).
+- **(B) — documentação oficial:** docs de fornecedores, repositórios de
+  referência, normas (RFC, ISO), spec de protocolos.
+- **(C) — conteúdo superficial:** blog, marketing, post de opinião sem dado.
+  USE COM MODERAÇÃO: o gate reprova quando menos de 70% das fontes classificadas
+  são A ou B (R-FT-1). Alvo: >= 80% A+B; nunca mais que 20% de C.
 
 **Regra crítica:** Toda fonte citada em qualquer seção do dossiê DEVE aparecer na seção "Fontes brutas". Não cite algo no corpo sem incluir a fonte completa abaixo. O `Skill_Compilador_ABNT` no Nó 7 consome esta seção integralmente — se faltar uma fonte, ela não aparecerá nas referências finais do livro.
 

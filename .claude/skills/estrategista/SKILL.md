@@ -59,6 +59,29 @@ O estrategista DEVE identificar a senioridade principal em `config_obra.json` pa
 - **Avançado**: Pilares que focam em trade-offs de engenharia, concorrência, performance e resiliência. A `entrega_tecnica` projeta códigos robustos, otimizados e com tratamento completo de erros. A `ancora_visual` projeta diagramas de arquitetura detalhados ou diagramas de sequência complexos.
 - **Técnico** (Acadêmico): Pilares focados no estado da arte e rigor conceitual. A `entrega_tecnica` planeja algoritmos formais ou pseudocódigos. A `ancora_visual` projeta diagramas metodológicos formais ou de rigor conceitual.
 
+## Métricas Obrigatórias (contrato com os gates F1 — R-MT-2/R-MT-3)
+
+Todo capítulo precisa de **ao menos 1 métrica concreta** (número + unidade) no
+texto final — o gate `validar-metricas.py` reprova capítulo sem dado (R-MT-1).
+Para tornar a exigência EXPLÍCITA, o estrategista DEVE registrar no payload do
+draft estratégico (e o subagente de manufatura propaga para o
+`sumario_macro.json`):
+
+```json
+"metricas_obrigatorias": [
+  { "metrica": "latencia p95", "valor": "200 ms" },
+  { "metrica": "custo por token", "valor": "R$ 0,002" }
+]
+```
+
+Regras de escolha:
+- A métrica deve vir do **dossiê de pesquisa** (Fase 1) — nunca inventar o número.
+- O valor deve aparecer VERBATIM no capítulo com citação `[N]` no mesmo parágrafo
+  (R-MT-3) — o redator é instruído a cumprir isso.
+- Prefira métrica que quantifique o tema do pilar 2 (núcleo); a seção Aplica deve
+  declarar **até onde** a solução escala e onde quebra (gate `validar-escala.py`,
+  R-ES-1/R-ES-2) — deixe no payload a sugestão de limite/contorno.
+
 ## Procedimento
 1. Carregue as coordenadas do capítulo (`parte`, `capitulo`), seu `objetivo`,
    `pilares_previstos` e o `motivo_condutor` (se presente) em `sumario_macro.json`.

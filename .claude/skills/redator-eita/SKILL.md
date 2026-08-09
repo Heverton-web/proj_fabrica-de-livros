@@ -135,6 +135,29 @@ Aplica) ultrapassar ~800 palavras, quebre-a em blocos com sub-títulos `###`
 Correção Estrutural`. Isso varia o ritmo de leitura em blocos técnicos densos
 e pode reaproveitar o vocabulário do motivo condutor nos próprios sub-títulos.
 
+## Métricas, Escala e Fundamentação (gates F1/F2 — obrigatório)
+
+Além da estrutura EITA (R1-R15), o capítulo final é auditado por gates de
+MÉRITO de conteúdo. Cumprir na redação:
+
+1. **Toda afirmação factual tem citação `[N]` no MESMO parágrafo** (R-AF-1):
+   dado com % ou unidade ("reduz 40% do custo", "200 ms de latência"), valor
+   monetário, superlativo de mercado ("a maior plataforma", "líder de mercado").
+   Sem `[N]` no parágrafo o gate reprova. Se o dado é opinião sua, diga
+   explicitamente ("na avaliação deste livro") — e prefira sempre citar o dossiê.
+2. **Todo capítulo carrega ao menos 1 métrica** (R-MT-1): número + unidade
+   quantificando o tema (ex.: "p95 de 200 ms", "custou R$ 0,002/token").
+   Se o draft estratégico trouxer `metricas_obrigatorias`, reproduza o VALOR
+   verbatim com `[N]` no mesmo parágrafo (R-MT-2/R-MT-3).
+3. **A seção Aplica declara os limites de escala** (R-ES-1/R-ES-2): até onde a
+   solução escala e onde quebra — "escala até 50 agentes por nó; acima disso o
+   gargalo passa a ser o banco de estados". Prosa do tipo "escala para qualquer
+   tamanho" sem contorno reprova.
+4. **Referências vêm do dossiê de pesquisa** (Fase 1) — nunca invente URL/DOI.
+   O gate `validar-referencias.py` confere cada link (4xx/DNS reprova). Código
+   da seção Técnica deve EXECUTAR de verdade: o gate `validar-codigo.py
+   --executar` roda cada bloco python/javascript/bash.
+
 ## Cena de Contraste na seção Aplica (Erro Comum vs. Prática Correta)
 
 A seção "Aplica" DEVE abrir com uma cena narrativa em 2ª pessoa, não com uma

@@ -3,8 +3,11 @@
 Upgrade 3 — CI de Codigo dos Capitulos (Fabrica Agentica de Livros).
 
 Extrai todos os blocos de codigo dos capitulos e valida a sintaxe de cada um em
-processo isolado, SEM executar o codigo do livro (analise estatica apenas — nada
-de rede, arquivos ou side effects).
+processo isolado. Por padrao e analise estatica apenas (nada de rede, arquivos
+ou side effects). Com --executar, os blocos executaveis (python/javascript/
+bash) sao tambem EXECUTADOS em sandbox leve (cwd temporaria, env minimo,
+timeout) — o modo que transforma "aplicavel" em "aplicado de verdade" e o gate
+do playbook em smoke test.
 
 Validadores por linguagem:
   python        -> ast.parse (compilador do proprio CPython)
@@ -23,7 +26,10 @@ Uso:
     python scripts/validar-codigo.py <slug> --capitulo 7
     python scripts/validar-codigo.py <slug> --md output/<slug>/livro_final.md
     python scripts/validar-codigo.py <slug> --estrito     # exit 1 se houver falha
+    python scripts/validar-codigo.py <slug> --executar    # roda python/js/bash
     python scripts/validar-codigo.py <slug> --json
+    python scripts/validar-codigo.py <slug-do-playbook> --playbook --executar
+        # smoke test dos cards do playbook (execucao[].codigo + gate)
 
 Relatorio: output/<slug>/validacao/relatorio_codigo.json
 """
@@ -36,6 +42,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tipos_obra as TO
 from pathlib import Path
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
@@ -213,12 +220,74 @@ VALIDADORES = {
     "xml": validar_xml,
 }
 
+# Linguagens cujo bloco pode ser EXECUTADO de fato (--executar / --playbook).
+EXECUTAVEIS = ("python", "javascript", "bash")
+
+EXEC_TIMEOUT = 20  # segundos por bloco executado
+
+
+def detectar_linguagem(codigo):
+    """Fallback heurístico para blocos sem tag de linguagem (cards do playbook)."""
+    cabeca = codigo.lstrip()[:400]
+    if re.search(r"^\s*(import |from |def |class |@dataclass|print\()", cabeca, re.MULTILINE):
+        return "python"
+    if re.search(r"(console\.(log|error)|const |let |function |=>\s*\{|require\()", cabeca):
+        return "javascript"
+    if re.search(r"^(#!|set -|echo |curl |mkdir |cd |python |npm |git )", cabeca, re.MULTILINE):
+        return "bash"
+    return "python"
+
+
+def executar_bloco(codigo, linguagem, timeout=EXEC_TIMEOUT):
+    """Executa o bloco em sandbox leve: cwd temporaria, env minimo, timeout.
+
+    Retorna (True, "") em sucesso, (False, detalhe) em falha de execucao e
+    (None, detalhe) quando a ferramenta de execucao nao existe.
+    """
+    import os
+    env = {
+        "PATH": os.environ.get("PATH", ""),
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SYSTEMROOT": os.environ.get("SYSTEMROOT", ""),
+    }
+    if linguagem == "python":
+        comando = [sys.executable, "-c", codigo]
+    elif linguagem == "javascript":
+        node = shutil.which("node")
+        if not node:
+            return None, "node ausente (nao executado)"
+        comando = [node, "-e", codigo]
+    elif linguagem == "bash":
+        bash = shutil.which("bash")
+        if not bash:
+            return None, "bash ausente (nao executado)"
+        comando = [bash, "-c", codigo]
+    else:
+        return None, f"linguagem '{linguagem}' sem executor"
+    try:
+        with tempfile.TemporaryDirectory(prefix="fabrica_exec_") as td:
+            r = subprocess.run(comando, capture_output=True, text=True,
+                               timeout=timeout, cwd=td, env=env)
+    except subprocess.TimeoutExpired:
+        return False, f"timeout de {timeout}s na execucao"
+    except Exception as exc:  # noqa: BLE001
+        return False, str(exc)[:240]
+    if r.returncode == 0:
+        return True, ""
+    saida = (r.stderr or r.stdout or "").strip()
+    if not saida:
+        return False, f"exit {r.returncode}"
+    # Para tracebacks Python, a última linha carrega a mensagem real do erro.
+    linhas = [l for l in saida.splitlines() if l.strip()]
+    return False, linhas[-1][:240]
+
 
 def linha_do_offset(texto, offset):
     return texto.count("\n", 0, offset) + 1
 
 
-def validar_arquivo(caminho, rotulo, ignorar_fragmentos):
+def validar_arquivo(caminho, rotulo, ignorar_fragmentos, executar=False):
     texto = caminho.read_text(encoding="utf-8", errors="replace")
     resultados = []
     for m in RE_BLOCO.finditer(texto):
@@ -248,14 +317,130 @@ def validar_arquivo(caminho, rotulo, ignorar_fragmentos):
             registro.update(status="nao_verificado", detalhe=detalhe)
         elif ok:
             registro.update(status="ok", detalhe="")
+            if executar and lang in EXECUTAVEIS:
+                ex_ok, ex_detalhe = executar_bloco(codigo, lang)
+                if ex_ok:
+                    registro["execucao"] = "ok"
+                elif ex_ok is None:
+                    registro["execucao"] = "nao_executado"
+                    registro["detalhe_execucao"] = ex_detalhe
+                else:
+                    registro["execucao"] = "falha"
+                    registro["detalhe_execucao"] = ex_detalhe
+                    registro.update(status="falha_execucao",
+                                    detalhe=f"execucao: {ex_detalhe}")
         else:
             registro.update(status="falha", detalhe=detalhe)
         resultados.append(registro)
     return resultados
 
 
+def validar_playbook(dir_pbk, ignorar_fragmentos, executar=False):
+    """Smoke test dos cards do playbook: execucao[].codigo + gate por card.
+
+    Cada bloco de codigo de execucao passa pelo validador de sintaxe e, com
+    --executar, roda de verdade. O 'gate' do card (comando de verificacao,
+    R-PBK-3) e executado como smoke test quando nao vazio.
+    """
+    import os
+    dir_passos = dir_pbk / "passos"
+    resultados = []
+    if not dir_passos.exists():
+        return resultados
+    for p in sorted(dir_passos.glob("passo_*.json"),
+                    key=lambda p: int(re.search(r"passo_(\d+)", p.stem).group(1))):
+        try:
+            card = json.loads(p.read_text(encoding="utf-8"))
+        except ValueError:
+            resultados.append({"origem": p.stem, "linha": 1, "linguagem": "json",
+                               "linhas_codigo": 0, "status": "falha",
+                               "detalhe": "card com JSON invalido"})
+            continue
+        rotulo = f"{p.stem} ({card.get('titulo', '')[:40]})"
+        for item in card.get("execucao") or []:
+            codigo = item.get("codigo") or ""
+            if not codigo.strip():
+                continue
+            lang = norm_lang(item.get("linguagem") or "") or detectar_linguagem(codigo)
+            registro = {"origem": rotulo, "linha": 1, "linguagem": lang,
+                        "linhas_codigo": codigo.count("\n") + 1}
+            if lang in NAO_APLICAVEL:
+                registro.update(status="nao_aplicavel", detalhe="linguagem sem validador")
+                resultados.append(registro)
+                continue
+            if ignorar_fragmentos and RE_FRAGMENTO.search(codigo):
+                registro.update(status="fragmento", detalhe="trecho com placeholder/elipse")
+                resultados.append(registro)
+                continue
+            validador = VALIDADORES.get(lang)
+            if validador is None:
+                registro.update(status="nao_verificado",
+                                detalhe=f"sem validador para '{lang}'")
+                resultados.append(registro)
+                continue
+            ok, detalhe = validador(codigo)
+            if ok is None:
+                registro.update(status="nao_verificado", detalhe=detalhe)
+            elif ok:
+                registro.update(status="ok", detalhe="")
+                if executar and lang in EXECUTAVEIS:
+                    ex_ok, ex_detalhe = executar_bloco(codigo, lang)
+                    if ex_ok:
+                        registro["execucao"] = "ok"
+                    elif ex_ok is None:
+                        registro["execucao"] = "nao_executado"
+                        registro["detalhe_execucao"] = ex_detalhe
+                    else:
+                        registro["execucao"] = "falha"
+                        registro["detalhe_execucao"] = ex_detalhe
+                        registro.update(status="falha_execucao",
+                                        detalhe=f"execucao: {ex_detalhe}")
+            else:
+                registro.update(status="falha", detalhe=detalhe)
+            resultados.append(registro)
+        # Gate do card (R-PBK-3): comando de verificacao executavel.
+        gate = (card.get("gate") or "").strip()
+        if gate:
+            registro = {"origem": f"{rotulo} (gate)", "linha": 1, "linguagem": "bash",
+                        "linhas_codigo": gate.count("\n") + 1}
+            if not executar:
+                registro.update(status="ok", detalhe="gate presente (nao executado)")
+            else:
+                bash = shutil.which("bash")
+                if not bash:
+                    registro.update(status="nao_verificado", detalhe="bash ausente")
+                else:
+                    env = {"PATH": os.environ.get("PATH", ""),
+                           "PYTHONNOUSERSITE": "1",
+                           "PYTHONDONTWRITEBYTECODE": "1",
+                           "SYSTEMROOT": os.environ.get("SYSTEMROOT", "")}
+                    try:
+                        with tempfile.TemporaryDirectory(prefix="fabrica_gate_") as td:
+                            r = subprocess.run([bash, "-c", gate], capture_output=True,
+                                               text=True, timeout=EXEC_TIMEOUT,
+                                               cwd=td, env=env)
+                        if r.returncode == 0:
+                            registro.update(status="ok", execucao="ok",
+                                            detalhe="")
+                        else:
+                            saida = (r.stderr or r.stdout or "").strip()
+                            registro.update(
+                                status="falha_execucao", execucao="falha",
+                                detalhe=(saida.split("\n")[0][:240]
+                                         if saida else f"exit {r.returncode}"))
+                    except subprocess.TimeoutExpired:
+                        registro.update(status="falha_execucao", execucao="falha",
+                                        detalhe=f"timeout de {EXEC_TIMEOUT}s no gate")
+                    except Exception as exc:  # noqa: BLE001
+                        registro.update(status="falha_execucao", execucao="falha",
+                                        detalhe=str(exc)[:240])
+            resultados.append(registro)
+    return resultados
+
+
 def main():
-    ap = argparse.ArgumentParser(description="Valida a sintaxe dos blocos de codigo do livro")
+    ap = argparse.ArgumentParser(
+        description="Valida a sintaxe (e opcionalmente executa) os blocos de codigo")
     ap.add_argument("slug")
     ap.add_argument("--capitulo", help="valida apenas o capitulo N")
     ap.add_argument("--md", help="valida um markdown especifico em vez dos capitulos")
@@ -263,35 +448,45 @@ def main():
                     help="classifica trechos com placeholders como 'fragmento' em vez de validar")
     ap.add_argument("--estrito", action="store_true", help="exit 1 se houver qualquer falha")
     ap.add_argument("--json", action="store_true", help="imprime relatorio JSON completo")
+    ap.add_argument("--executar", action="store_true",
+                    help="executa blocos python/javascript/bash em sandbox leve "
+                         "(transforma sintaxe em smoke test)")
+    ap.add_argument("--playbook", action="store_true",
+                    help="valida os cards do playbook (passos/*.json) em vez dos capitulos: "
+                         "sintaxe + execucao + gate como smoke test")
     args = ap.parse_args()
 
-    dir_livro = DIR_OUTPUT / args.slug
+    dir_livro = TO.dir_obra(args.slug, DIR_OUTPUT)
     if not dir_livro.exists():
-        print(f"[ERRO] Livro nao encontrado: {dir_livro}")
+        print(f"[ERRO] Obra nao encontrada: {dir_livro}")
         return 1
 
-    alvos = []
-    if args.md:
-        p = Path(args.md)
-        if not p.exists():
-            print(f"[ERRO] Arquivo nao encontrado: {p}")
-            return 1
-        alvos.append((p, p.name))
+    if args.playbook:
+        todos = validar_playbook(dir_livro, args.ignorar_fragmentos, args.executar)
     else:
-        caps = sorted((dir_livro / "capitulos").glob("cap_*.md"),
-                      key=lambda p: int(re.search(r"cap_(\d+)", p.stem).group(1)))
-        if args.capitulo:
-            caps = [c for c in caps
-                    if re.search(r"cap_(\d+)", c.stem).group(1).lstrip("0")
-                    == str(args.capitulo).lstrip("0")]
-        if not caps:
-            print(f"[ERRO] Nenhum capitulo encontrado em {dir_livro / 'capitulos'}")
-            return 1
-        alvos = [(c, c.stem) for c in caps]
+        alvos = []
+        if args.md:
+            p = Path(args.md)
+            if not p.exists():
+                print(f"[ERRO] Arquivo nao encontrado: {p}")
+                return 1
+            alvos.append((p, p.name))
+        else:
+            caps = sorted((dir_livro / "capitulos").glob("cap_*.md"),
+                          key=lambda p: int(re.search(r"cap_(\d+)", p.stem).group(1)))
+            if args.capitulo:
+                caps = [c for c in caps
+                        if re.search(r"cap_(\d+)", c.stem).group(1).lstrip("0")
+                        == str(args.capitulo).lstrip("0")]
+            if not caps:
+                print(f"[ERRO] Nenhum capitulo encontrado em {dir_livro / 'capitulos'}")
+                return 1
+            alvos = [(c, c.stem) for c in caps]
 
-    todos = []
-    for caminho, rotulo in alvos:
-        todos.extend(validar_arquivo(caminho, rotulo, args.ignorar_fragmentos))
+        todos = []
+        for caminho, rotulo in alvos:
+            todos.extend(validar_arquivo(caminho, rotulo, args.ignorar_fragmentos,
+                                         executar=args.executar))
 
     resumo = {}
     for r in todos:
@@ -303,15 +498,17 @@ def main():
         por_linguagem[chave]["total"] += 1
         if r["status"] == "ok":
             por_linguagem[chave]["ok"] += 1
-        elif r["status"] == "falha":
+        elif r["status"] in ("falha", "falha_execucao"):
             por_linguagem[chave]["falha"] += 1
 
-    falhas = [r for r in todos if r["status"] == "falha"]
+    falhas = [r for r in todos if r["status"] in ("falha", "falha_execucao")]
     verificados = resumo.get("ok", 0) + len(falhas)
     taxa = (resumo.get("ok", 0) / verificados * 100) if verificados else 100.0
 
     relatorio = {
         "slug": args.slug,
+        "modo": "playbook" if args.playbook else "capitulos",
+        "executado": args.executar,
         "total_blocos": len(todos),
         "resumo": resumo,
         "por_linguagem": por_linguagem,
@@ -324,21 +521,23 @@ def main():
     (dir_val / "relatorio_codigo.json").write_text(
         json.dumps(relatorio, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"CI de Codigo - {args.slug}")
+    print(f"CI de Codigo - {args.slug} ({relatorio['modo']}"
+          f"{', executando' if args.executar else ''})")
     print(f"  blocos analisados : {len(todos)}")
-    for status in ("ok", "falha", "nao_verificado", "nao_aplicavel", "fragmento"):
+    for status in ("ok", "falha", "falha_execucao", "nao_verificado",
+                   "nao_aplicavel", "fragmento"):
         if status in resumo:
             print(f"  {status:<17}: {resumo[status]}")
     print(f"  taxa de aprovacao : {taxa:.1f}% (sobre {verificados} blocos verificaveis)")
 
     if falhas:
-        print(f"\n[FALHA] {len(falhas)} bloco(s) com erro de sintaxe:")
+        print(f"\n[FALHA] {len(falhas)} bloco(s) reprovado(s):")
         for f in falhas[:20]:
             print(f"  - {f['origem']}:{f['linha']} [{f['linguagem']}] {f['detalhe']}")
         if len(falhas) > 20:
             print(f"  ... e mais {len(falhas) - 20}")
     else:
-        print("\n[OK] Nenhum erro de sintaxe nos blocos verificaveis")
+        print("\n[OK] Nenhum erro de sintaxe/execucao nos blocos verificaveis")
 
     print(f"\nRelatorio: {(dir_val / 'relatorio_codigo.json').relative_to(DIR_PROJETO)}")
 

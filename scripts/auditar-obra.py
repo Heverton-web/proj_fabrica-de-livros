@@ -658,7 +658,7 @@ def main():
     ap.add_argument("--json", action="store_true", help="imprime relatorio JSON completo")
     args = ap.parse_args()
 
-    dir_livro = DIR_OUTPUT / args.slug
+    dir_livro = TO.dir_obra(args.slug, DIR_OUTPUT)
     dir_caps = dir_livro / "capitulos"
 
     config = PO.carregar_config(args.slug)
@@ -728,6 +728,31 @@ def main():
 
     alertas_estilo = montar_alertas_estilo(capitulos, vocabulario_motivo_condutor) if tipo == "livro" else None
 
+    # ── F1/F2 — gates de MERITO de conteudo encadeados (tipo livro) ───────
+    # Rodam offline (referencias com --sem-rede: usa cache, sem rede nada
+    # reprova — R-RF-3). O revisor-tecnico roda o fluxo completo com rede e
+    # --executar no Passo 1.1 da skill.
+    relatorio_gates = {}
+    gates_falharam = []
+    if tipo == "livro":
+        for nome in TO.campo(tipo, "gates_conteudo") or ():
+            gate = DIR_PROJETO / "scripts" / nome
+            if not gate.exists():
+                relatorio_gates[nome] = {"exit": None, "erro": "script ausente"}
+                gates_falharam.append(nome)
+                continue
+            comando = [sys.executable, str(gate), args.slug]
+            if nome == "validar-referencias.py":
+                comando.append("--sem-rede")
+            if args.estrito:
+                comando.append("--estrito")
+            if args.json:
+                comando.append("--json")
+            r = subprocess.run(comando, capture_output=True, text=True)
+            relatorio_gates[nome] = {"exit": r.returncode}
+            if r.returncode != 0:
+                gates_falharam.append(nome)
+
     relatorio = {
         "slug": args.slug,
         "tipo_obra": tipo,
@@ -739,6 +764,7 @@ def main():
         "sobreposicao_entre_capitulos": sobreposicao,
         "inconsistencia_terminologica": terminologia,
         "alertas_estilo": alertas_estilo,
+        "gates_conteudo": relatorio_gates,
         "capitulos": [{k: v for k, v in c.items() if k != "_texto"} for c in capitulos],
     }
 
@@ -806,13 +832,21 @@ def main():
         else:
             print("  [OK] Ritmo de frase variado em todos os capitulos avaliados")
 
-    print(f"\n  VEREDITO: {veredito}")
+    if relatorio_gates:
+        print("\n  GATES DE CONTEUDO (F1/F2):")
+        for nome, info in relatorio_gates.items():
+            marca = "OK  " if info.get("exit") == 0 else ("FALHA" if info.get("exit") else "ERRO")
+            print(f"  [{marca}] {nome:<28} exit={info.get('exit')}")
+
+    print(f"\n  VEREDITO: {veredito}"
+          + (f" + {len(gates_falharam)} gate(s) de conteudo reprovado(s)"
+             if gates_falharam else ""))
     print(f"  Relatorio: {destino.relative_to(DIR_PROJETO)}")
 
     if args.json:
         print(json.dumps(relatorio, ensure_ascii=False, indent=2))
 
-    if args.estrito and nao_conformes:
+    if args.estrito and (nao_conformes or gates_falharam):
         return 1
     return 0
 

@@ -85,6 +85,16 @@ TIPOS = {
         "exige_cta": False,
         "membro_colecao": True,
         "perguntavel_na_fase0": True,
+        # F1/F2 — gates de MERITO de conteudo (alem da estrutura R1-R15).
+        # auditar-obra.py --estrito os encadeia ao final; o revisor-tecnico os
+        # roda individualmente (referencias com rede, codigo com --executar).
+        "gates_conteudo": (
+            "validar-referencias.py",   # R-RF: fontes reais (4xx/DNS reprova)
+            "validar-metricas.py",      # R-MT: metrica com valor+unidade+citacao
+            "validar-escala.py",        # R-ES: limites/contorno na secao Aplica
+            "validar-afirmacoes.py",    # R-AF: dado factual sem [N] no paragrafo
+            "validar-fontes.py",        # R-FT: hierarquia A/B/C do dossier >= 70%
+        ),
     },
     "tcc": {
         "rotulo": "TCC",
