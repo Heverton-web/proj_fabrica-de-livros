@@ -211,8 +211,12 @@ def _ler_json(caminho, padrao=None):
 
 
 def nome_material(slug):
-    """'livros/obra-teste' ou 'output/.../livros/obra-teste' -> 'obra-teste'."""
-    return Path(str(slug).replace("\\", "/")).name
+    """'livros/obra-teste' ou 'output/.../livros/obra-teste' -> 'obra-teste'.
+
+    V5.1: limita a 20 chars para evitar caminhos que excedem MAX_PATH (260)."""
+    import nomes_curtos as NC
+    nome_completo = Path(str(slug).replace("\\", "/")).name
+    return NC.nome_curto(nome_completo, max_palavras=2, maximo=20)
 
 
 def chave_colecao(slug_material, base=None):
