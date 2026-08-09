@@ -14,10 +14,14 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import tipos_obra as TO
+
 BASE_DIR = Path(__file__).parent.parent
 TEMPLATE_DIR = BASE_DIR / "templates" / "maquina"
 OUTPUT_BASE = BASE_DIR / "marketing" / "maquinas"
 OBRA_BASE = BASE_DIR / "output"
+
+_TIPOS_FLAT = ("livros", "tccs", "ebooks", "artigos", "playbooks", "lead-magnets", "decks")
 
 
 def slug_para_titulo(slug: str) -> str:
@@ -25,25 +29,48 @@ def slug_para_titulo(slug: str) -> str:
 
 
 def verificar_obra_existe(slug: str) -> dict:
-    """Verifica se a obra existe e retorna seus metadados."""
-    possible_dirs = [
-        OBRA_BASE / "livros" / slug,
-        OBRA_BASE / "tccs" / slug,
-        OBRA_BASE / "ebooks" / slug,
-        OBRA_BASE / "artigos" / slug,
-        OBRA_BASE / "playbooks" / slug,
-        OBRA_BASE / "lead-magnets" / slug,
-        OBRA_BASE / "decks" / slug,
-    ]
-    for d in possible_dirs:
+    """Verifica se a obra existe e retorna seus metadados (série-aware).
+
+    Aceita slug no formato atual (`livros/<obra>`) e no flat legado (`<obra>`).
+    Resolve via tipos_obra.dir_obra (output/<obra>/<tipo>/...) com fallback
+    para o layout plano antigo (output/<tipo>/<slug>).
+    """
+    # 1) Resolução série-aware (layout canônico desde V5.1)
+    try:
+        d = TO.dir_obra(slug, OBRA_BASE)
+    except Exception:
+        d = None
+    if d is not None and d.exists():
+        return _montar_obra_info(d, slug)
+    # 2) Fallback flat legado
+    slug_limpo = Path(str(slug).replace("\\", "/")).name
+    for d in [OBRA_BASE / t / slug_limpo for t in _TIPOS_FLAT]:
         if d.exists():
-            meta_file = d / "config_obra.json"
-            meta = {}
-            if meta_file.exists():
-                with open(meta_file, encoding="utf-8") as f:
-                    meta = json.load(f)
-            return {"path": str(d), "tipo": d.parent.name, "meta": meta}
+            return _montar_obra_info(d, slug)
     return {}
+
+
+def _montar_obra_info(d: Path, slug: str) -> dict:
+    """Lê config_obra.json do dir da obra (single-book: sobe para <obra>/livros)."""
+    if not (d / "config_obra.json").exists() and (d / "livros").exists():
+        d = d / "livros"
+    meta = {}
+    meta_file = d / "config_obra.json"
+    if meta_file.exists():
+        with open(meta_file, encoding="utf-8") as f:
+            meta = json.load(f)
+    return {"path": str(d), "tipo": _tipo_da_obra(d, slug), "meta": meta}
+
+
+def _tipo_da_obra(d: Path, slug: str) -> str:
+    """Deriva o tipo da obra do slug (ex.: 'livros/...' -> 'livros') ou do dir."""
+    partes = str(slug).replace("\\", "/").split("/")
+    if partes and partes[0] in _TIPOS_FLAT:
+        return partes[0]
+    for cand in (d.name, d.parent.name):
+        if cand in _TIPOS_FLAT:
+            return cand
+    return "livros"
 
 
 def copiar_template(src: Path, dst: Path, replacements: dict):
@@ -155,21 +182,29 @@ def criar_maquina(slug: str, tipo: str = "completo"):
             for item in obra_src.glob(pattern):
                 shutil.copy2(item, obra_dest / item.name)
         # Derivados da mesma coleção também alimentam a máquina.
-        # Fonte confiável: manifesto da coleção (output/colecoes/<slug>.json)
-        # — lista membros reais com slug/caminho (nomenclatura curta V5).
-        colecao_manifesto = BASE_DIR / "output" / "colecoes" / f"{slug}.json"
+        # Fonte confiável: manifesto da coleção (output/<obra>/colecoes/<nome>.json)
+        # — lista membros reais com slug relativo a output/ (nomenclatura curta V5.1).
+        obra_curta = Path(str(slug).replace("\\", "/")).name
+        colecao_manifesto = OBRA_BASE / obra_curta / "colecoes" / f"{obra_curta}.json"
+        if not colecao_manifesto.exists():
+            colecao_manifesto = OBRA_BASE / "colecoes" / f"{slug}.json"  # fallback flat
         membros_copiados = set()
         if colecao_manifesto.exists():
             try:
                 dados_colecao = json.loads(colecao_manifesto.read_text(encoding="utf-8"))
                 for membro in dados_colecao.get("membros", []):
                     slug_membro = membro.get("slug", "") if isinstance(membro, dict) else str(membro)
-                    if not slug_membro or slug_membro == slug:
+                    if not slug_membro:
                         continue
                     m_dir = OBRA_BASE / slug_membro
                     if not m_dir.exists():
+                        m_dir = TO.dir_obra(slug_membro, OBRA_BASE)
+                    if not m_dir.exists():
                         continue
-                    for item in m_dir.rglob("*"):
+                    artefatos = membro.get("artefatos", []) if isinstance(membro, dict) else []
+                    fontes = ([m_dir / a for a in artefatos] if artefatos
+                              else list(m_dir.rglob("*")))
+                    for item in fontes:
                         if not item.is_file() or item.suffix.lower() not in (".md", ".pdf", ".epub"):
                             continue
                         # Evitar duplicar nomes comuns (ex.: livro_final.md de outro membro)
@@ -180,20 +215,22 @@ def criar_maquina(slug: str, tipo: str = "completo"):
             except (KeyError, TypeError, OSError) as e:
                 print(f"    ⚠️  Coleção lida com erro ({e}) — derivados não copiados")
         elif not membros_copiados:
-            # Fallback: primeira palavra do slug nos caminhos dos tipos derivados
-            primeira_palavra = slug.split("-")[0]
+            # Fallback: materiais derivados cujo caminho contém a 1ª palavra do slug
+            primeira_palavra = obra_curta.split("-")[0]
             for tipo in ("playbooks", "ebooks", "decks", "lead-magnets"):
-                base = OBRA_BASE / tipo
-                if not base.exists():
-                    continue
-                for d in base.rglob("*"):
-                    if not d.is_file() or d.suffix.lower() not in (".md", ".pdf", ".epub"):
+                for slug_material in TO.listar_materiais(tipo, OBRA_BASE):
+                    if primeira_palavra not in slug_material:
                         continue
-                    if primeira_palavra in d.as_posix().split("/"):
-                        if d.name in membros_copiados:
+                    m_dir = TO.dir_obra(slug_material, OBRA_BASE)
+                    if not m_dir.exists():
+                        continue
+                    for item in m_dir.rglob("*"):
+                        if not item.is_file() or item.suffix.lower() not in (".md", ".pdf", ".epub"):
                             continue
-                        membros_copiados.add(d.name)
-                        shutil.copy2(d, obra_dest / d.name)
+                        if item.name in membros_copiados:
+                            continue
+                        membros_copiados.add(item.name)
+                        shutil.copy2(item, obra_dest / item.name)
         # Copiar artes se existirem
         artes_src = obra_src / "artes"
         if artes_src.exists():

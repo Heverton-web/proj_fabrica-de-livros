@@ -1,1102 +1,575 @@
-# GUIA DE EXECUÇÃO — Máquina de Vendas do Zero ao Deploy
+# GUIA DE EXECUÇÃO — MÁQUINA DE VENDAS
 
-> Passo a passo completo: do clone do repositório até a máquina rodando em produção.
-> Tempo estimado total: 2-4 horas (primeira vez), 30 minutos (a partir da segunda).
+**Passo a passo completo: criar, personalizar, testar, publicar e operar**
+**a sua máquina de vendas gerada pela Fábrica Agêntica.**
 
----
-
-## ÍNDICE
-
-1. Pré-requisitos
-2. Clone e Configuração do Ambiente
-3. Criar uma Obra (ou usar existente)
-4. Gerar a Máquina de Vendas
-5. Configurar o Frontend
-6. Configurar o Backend
-7. Configurar o Banco de Dados
-8. Configurar as Automações
-9. Configurar Integrações Externas
-10. Testes Locais
-11. Deploy em Produção
-12. Pós-Deploy: Operação 24/7
-13. Monitoramento e Manutenção
-14. Escalando a Máquina
+> **Autor:** Heverton Eduardo Peres — Especialista em Marketing e Desenvolvimento de Soluções
+> **Versão do projeto:** V5 (coleção) / V5.2 (relatório de sessão)
+> **Atualizado em:** 2026-08-09
 
 ---
 
-## 1. PRÉ-REQUISITOS
+## 1. Visão geral
 
-### 1.1 Software Obrigatório
+A **Máquina de Vendas** transforma uma obra da Fábrica (livro, e-book, curso) em um
+**sistema de venda digital autônoma**:
 
-| Software | Versão | Como instalar | Verificar |
-|---|---|---|---|
-| Python | 3.10+ | python.org | `python --version` |
-| Node.js | 18+ | nodejs.org | `node --version` |
-| npm | 9+ | vem com Node | `npm --version` |
-| Git | 2.30+ | git-scm.com | `git --version` |
-| Pandoc | 2.17+ | pandoc.org | `pandoc --version` |
-| Typst | 0.8+ | `cargo install typst` ou download | `typst --version` |
+```
+Instagram (leads) → Captura (frontend) → Checkout (Hotmart) → Pós-venda (e-mails)
+        ↑                                                    ↓
+   Lead Hunter ←────── SQLite ──────→ Email Sender ←────── leads pagos
+```
 
-### 1.2 Software Opcional (para deploy)
+O que ela entrega de fábrica:
 
-| Software | Para que | Como instalar |
+- **Landing page** de captura com formulário de e-mail
+- **Página de checkout** integrada ao Hotmart (link de pagamento)
+- **Página de obrigado** pós-compra
+- **Dashboard /admin** com métricas do funil
+- **Backend FastAPI** com SQLite (leads, health, webhook)
+- **4 automações**: captura de leads, envio de e-mails, monitoramento, auto-correção
+- **3 caminhos de deploy** documentados
+
+O que ela **não** faz sozinha: publicar anúncios, criar o produto no Hotmart e enviar
+e-mails em escala (os limites de rate são propositalmente conservadores).
+
+## 2. Pré-requisitos
+
+| Recurso | Necessário para | Onde obter |
 |---|---|---|
-| Docker | Deploy containerizado | docker.com |
-| Docker Compose | Orquestração | vem com Docker Desktop |
-| Vercel CLI | Deploy frontend | `npm i -g vercel` |
-| Railway CLI | Deploy backend | `npm i -g @railway/cli` |
+| Obra publicada | gerar a máquina com conteúdo real | Fábrica (`output/<obra>/...`) |
+| Conta Hotmart (produto criado) | checkout | hotmart.com |
+| App do Instagram (Meta) | captura de leads | developers.facebook.com |
+| SMTP (Gmail/outro) | envio de e-mails | conta de e-mail + app password |
+| Node.js 18+ | frontend | nodejs.org |
+| Python 3.10+ | backend/automações | python.org |
+| Docker (opcional) | deploy VPS | docker.com |
+| Conta Vercel (opcional) | deploy frontend | vercel.com |
+| Slack/Discord (opcional) | alertas do funil | slack.com / discord.com |
 
-### 1.3 Contas e API Keys
+> **Sem a obra publicada?** O `/criar-maquina` ainda gera o projeto, mas o conteúdo
+> fica genérico — a personalização por nicho (§7) vira obrigação total.
 
-| Serviço | Para que | Onde obter | Custo |
-|---|---|---|---|
-| **LLM (obrigatório)** | Geração de conteúdo | MiMoCode / Claude Code / Gemini CLI | Varia |
-| **E-mail SMTP** | Envio de e-mails | Gmail (App Password) ou SendGrid | Grátis~$15/mês |
-| **Stripe** | Pagamentos | dashboard.stripe.com | 2.9% + R$0.30/transação |
-| **Instagram Graph API** | Busca de leads | developers.facebook.com | Grátis |
-| **ElevenLabs** | Áudio narrado (opcional) | elevenlabs.io | $5/mês (starter) |
-| **DALL-E 3** | Imagens (opcional) | platform.openai.com | $0.04/imagem |
-| **Vercel** | Deploy frontend | vercel.com | Grátis (Hobby) |
-| **Railway** | Deploy backend | railway.app | $5/mês |
+## 3. Arquitetura
 
-### 1.4 Hardware
+```mermaid
+flowchart LR
+    IG[Instagram Graph API] --> LH[Lead Hunter<br/>cron 8h/14h/20h]
+    LH --> SQL[(SQLite<br/>vendas.db)]
+    ES[Email Sender<br/>cron 9h] --> SQL
+    SQL --> FM[Funnel Monitor<br/>1x/hora]
+    FM --> MET[metrics.json]
+    MET --> DB[Dashboard /admin]
+    MET --> WH[Webhooks<br/>Slack / Discord]
+    FM --> AC[auto_correct<br/>A/B automático]
+    FE[Frontend Next.js] --> BE[Backend FastAPI]
+    BE --> SQL
+    FE --> HM[Hotmart<br/>checkout]
+    HM --> WH
+```
 
-| Configuração | Mínimo | Recomendado |
-|---|---|---|
-| RAM | 4 GB | 8 GB |
-| Disco | 2 GB livre | 10 GB livre |
-| CPU | 2 cores | 4 cores |
-| OS | Windows 10+, macOS 12+, Ubuntu 20+ | Qualquer |
+**Caminho do lead:**
 
----
+1. **Lead Hunter** encontra perfis no Instagram por hashtags/localizações e registra
+   o lead no SQLite (status `novo`).
+2. **Email Sender** nutre o lead pela sequência do funil (status `nutrido`).
+3. O lead acessa a landing, entra no **checkout** e compra no Hotmart.
+4. O **webhook** do Hotmart confirma o pagamento → status `pago`.
+5. **Funnel Monitor** agrega tudo em `metrics.json` → dashboard e alertas.
+6. **auto_correct** sugere A/B com base nas métricas.
 
-## 2. CLONE E CONFIGURAÇÃO DO AMBIENTE
-
-### 2.1 Clonar o repositório
+## 4. Passo 1 — Gerar a máquina
 
 ```bash
-git clone https://github.com/Heverton-web/proj_fabrica-de-livros.git
-cd proj_fabrica-de-livros/vendas
+/criar-maquina <slug> [--tipo completo|parcial|landing|backend]
 ```
 
-### 2.2 Instalar dependências Python
+Exemplo real:
 
 ```bash
-pip install -r requirements.txt
+/criar-maquina livros/ia-agentica-desbloqueada --tipo completo
 ```
 
-Saída esperada:
-```
-Successfully installed Pillow-10.x.x playwright-1.x.x
-```
+O que acontece nos 6 passos internos:
 
-### 2.3 Instalar dependências do Playwright (para capas/ilustrações)
+1. **Copiar template** — `templates/maquina/` → `marketing/maquinas/<slug>/`
+2. **Manifesto** — `maquina.json` com slug, tipo, data, obra-fonte
+3. **Conteúdo da obra** — copia materiais do manifesto da coleção
+   (`output/<obra>/colecoes/<nome>.json`)
+4. **Replacements** — `{{SLUG}}`, `{{TITULO}}`, `{{PRECO}}` (R$ 97),
+   `{{PRECO_CORE}}` (97), `{{PRECO_TRIPWIRE}}` (37), `{{PRECO_OBRA_COMPLETA}}`
+   (297), `{{AUTOR}}`, `{{EMAIL_CONTATO}}`, `{{DATA}}`, `{{ANO}}`
+5. **Configs + env** — copia `config/` e `.env.example`
+6. **Resumo** — instruções de deploy e próximos passos
+
+> **Layout série-aware:** a obra é localizada via `tipos_obra.dir_obra()` —
+> funciona com `output/<obra>/<tipo>/...` (single-book ou série multi-book). Se a
+> obra não for encontrada, o script aborta com a lista de obras disponíveis.
+
+**Validação de saída do gerador** (antes de tocar em qualquer arquivo):
 
 ```bash
-playwright install chromium
+grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
 ```
 
-### 2.4 Verificar configuração
+Deve retornar **vazio**. Se retornar, a personalização (§7) ainda não foi feita.
+
+## 5. Passo 2 — Conhecer a estrutura gerada
+
+```text
+marketing/maquinas/<slug>/
+├── manifesto.json            # manifesto da máquina
+├── README.md                 # arquitetura, deploy, operação (leia!)
+├── AGENTS.md                 # regras para agentes de IA que operarem a máquina
+├── SPEC.md                   # contrato da máquina
+├── docker-compose.yml        # frontend + backend + automações
+├── vercel.json               # config de deploy na Vercel
+├── .env.example              # modelo de variáveis (copie para .env)
+├── .mcp.json                 # MCPs: db_state + file_writer (gerado)
+├── config/                   # 8 JSONs de configuração (§8)
+├── database/                 # schema.sql, seed.sql, maquina.db
+├── backend/app/              # FastAPI: routers/, services/, models/, database/
+├── frontend/                 # Next.js 14 (App Router)
+├── scripts/                  # 4 automações + deploy.sh
+├── conteudo/                 # cópia da obra (md/pdf/epub)
+└── frontend/public/artes/    # capas e artes da obra
+```
+
+## 6. Passo 3 — Preencher o ambiente (.env)
 
 ```bash
-python scripts/descobrir_modelos.py
-```
-
-Saída esperada:
-```
-============================================================
-  DESCOBERTA DE LLMs — Diagnóstico do Harness
-============================================================
-
-🔍 Harness detectado: mimocode, claude_code
-🐳 Runtime Orca/MiMoCode detectado
-   Modelo da sessão: mimo-v2.5-pro
-
-📦 Modelos disponíveis:
-   ORCA_RUNTIME (4 modelos):
-      lite: mimo-v2.5-lite
-      standard: mimo-v2.5, mimo-v2.5-standard
-      pro: mimo-v2.5-pro
-
-============================================================
-  RESUMO: 4 modelos | 21/24 tarefas roteáveis
-============================================================
-```
-
-### 2.5 Criar arquivo .env
-
-```bash
+cd marketing/maquinas/<slug>
 cp .env.example .env
+# edite com valores REAIS
 ```
 
-Editar `.env` com suas credenciais:
-```bash
-# OBRIGATÓRIO para e-mails
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=seu@email.com
-SMTP_PASS=sua-app-password
+Variáveis críticas:
 
-# OBRIGATÓRIO para pagamentos
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-
-# OBRIGATÓRIO para busca de leads
-INSTAGRAM_ACCESS_TOKEN=EAAx...
-
-# OPCIONAL para áudio narrado
-ELEVENLABS_API_KEY=...
-
-# OPCIONAL para geração de imagens
-DALL_E_API_KEY=...
-
-# FRONTEND
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_STRIPE_KEY=pk_test_...
-```
-
----
-
-## 3. CRIAR UMA OBRA (ou usar existente)
-
-### 3.1 Verificar obras existentes
-
-```bash
-ls output/livros/
-ls output/tccs/
-ls output/ebooks/
-```
-
-Se já tem uma obra criada, pule para o passo 4.
-
-### 3.2 Criar nova obra
-
-```bash
-# Via comando slash (no MiMoCode/Claude Code)
-/criar-livro Inteligência Artificial para Empreendedores
-
-# Ou via script direto
-python scripts/parametros_obra.py "Inteligência Artificial para Empreendedores"
-```
-
-### 3.3 Acompanhar criação
-
-A obra será criada em `output/livros/inteligencia-artificial-empreendedores/`:
-```
-output/livros/inteligencia-artificial-empreendedores/
-├── capitulos/          # Capítulos em Markdown
-├── pesquisa/           # Dossiê técnico
-├── artes/              # Ilustrações
-├── config_obra.json    # Configurações
-├── sumario_macro.json  # Sumário
-├── inteligencia-artificial-empreendedores.pdf
-└── inteligencia-artificial-empreendedores.epub
-```
-
-Tempo: 30-60 minutos (autônomo).
-
-### 3.4 Validar obra
-
-```bash
-python scripts/auditar-obra.py inteligencia-artificial-empreendedores --estrito
-```
-
-Saída esperada:
-```
-✅ Obra CONFORME — todos os 14 requisitos atendidos
-```
-
----
-
-## 4. GERAR A MÁQUINA DE VENDAS
-
-### 4.1 Executar comando
-
-```bash
-# Via comando slash
-/criar-maquina inteligencia-artificial-empreendedores
-
-# Ou via script direto
-python scripts/criar-maquina-vendas.py inteligencia-artificial-empreendedores --tipo completo
-```
-
-### 4.2 Acompanhar geração
-
-```
-============================================================
-  CRIANDO MÁQUINA DE VENDAS: Inteligência Artificial Para Empreendedores
-  Tipo: completo
-  Destino: marketing/maquinas/inteligencia-artificial-empreendedores
-============================================================
-
-  [1/6] Copiando estrutura de templates...
-  [2/6] Gerando manifesto...
-  [3/6] Copiando conteúdo da obra...
-  [4/6] Inicializando banco de dados...
-    ✅ Banco criado: marketing/maquinas/.../database/maquina.db
-  [5/6] Gerando .mcp.json...
-  [6/6] Gerando resumo...
-
-============================================================
-  ✅ MÁQUINA CRIADA COM SUCESSO!
-  📁 marketing/maquinas/inteligencia-artificial-empreendedores
-  📄 83 arquivos gerados
-
-  PRÓXIMOS PASSOS:
-  1. cd marketing/maquinas/inteligencia-artificial-empreendedores
-  2. Revisar config/*.json
-  3. Configurar .env
-  4. cd frontend && npm install && npm run dev
-  5. cd backend && pip install -r requirements.txt && uvicorn app.main:app
-  6. Deploy: bash scripts/deploy.sh
-============================================================
-```
-
-### 4.3 Verificar estrutura gerada
-
-```bash
-cd marketing/maquinas/inteligencia-artificial-empreendedores
-dir  # Windows
-ls   # Mac/Linux
-```
-
-```
-.env.example
-AGENTS.md
-CLAUDE.md
-README.md
-SPEC.md
-config/
-database/
-docker-compose.yml
-frontend/
-backend/
-manifesto.json
-scripts/
-templates/
-vercel.json
-```
-
----
-
-## 5. CONFIGURAR O FRONTEND
-
-### 5.1 Entrar no diretório
-
-```bash
-cd frontend
-```
-
-### 5.2 Instalar dependências
-
-```bash
-npm install
-```
-
-Saída esperada:
-```
-added 342 packages in 28s
-```
-
-### 5.3 Configurar variáveis de ambiente
-
-```bash
-cp .env.example .env.local
-```
-
-Editar `.env.local`:
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_STRIPE_KEY=pk_test_sua_chave
-```
-
-### 5.4 Personalizar conteúdo
-
-Editar `app/page.tsx` — substituir placeholders:
-
-```tsx
-// Trocar {{TITULO}} pelo título real
-<h1>Inteligência Artificial para Empreendedores</h1>
-
-// Trocar {{PRECO}} pelo preço real
-<span>R$ 97</span>
-
-// Trocar {{DESCRICAO}} pela descrição real
-<p>Domine IA aplicada a negócios e saia na frente da concorrência</p>
-```
-
-### 5.5 PERSONALIZAR POR NICHO (obrigatório)
-
-O template nasce com copy genérica de demonstração ("Autor Digital",
-"centenas de pessoas"). Substituir em **todos** os pontos abaixo pelos
-termos do nicho da obra de origem:
-
-1. **Configs** (`config/`): `produtos.json` (escada de valor real),
-   `personas.json`, `funis.json`, `canais.json` (hashtags do nicho),
-   `email.json` (remetente real).
-2. **Frontend**: `app/page.tsx`, `components/Hero.tsx`, `PricingCard.tsx`,
-   `app/layout.tsx` (metadata), `app/admin/layout.tsx`, `app/captura/page.tsx`.
-3. **E-mails**: `templates/emails/*.html` (boas-vindas, nutrição, venda, reativação).
-4. **Docs**: `README.md`.
-
-Gate de verificação:
-```bash
-grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ README.md
-# deve retornar VAZIO
-```
-
-### 5.5.1 Alinhar o produto default do checkout
-
-A rota `/api/checkout` tem `produto` com default (`z.string().optional().default(...)`).
-**Alinhar esse default ao slug real do produto core em `config/produtos.json`** —
-senão o funil/analytics agrupa por um produto que não existe no catálogo:
-
-```bash
-# 1. Descobrir o slug real do produto core (R$ 97 no exemplo):
-python -c "import json; d=json.load(open('config/produtos.json',encoding='utf-8')); \
-[print(p['slug'], '|', p['tipo'], '|', p['preco']) for p in d['produtos']]"
-
-# 2. Editar frontend/app/api/checkout/route.ts e trocar o default:
-#    produto: z.string().optional().default("dentista-gestor-livro")
-```
-
-### 5.5.2 Sincronizar máquina criada antes do fix do checkout
-
-Máquinas geradas antes da correção do template não têm o checkout funcional:
-- a rota `/api/checkout` pode nem existir (404 no botão PAGAR), e
-- o `checkout/page.tsx` antigo posta `<form method="POST">` urlencoded vazio,
-  que quebra no `request.json()` da rota (retorna 500).
-
-Para sincronizar manualmente, copiar do template (`templates/maquina/`):
-```bash
-cd marketing/maquinas/{slug}
-cp ../../templates/maquina/frontend/app/api/checkout/route.ts frontend/app/api/checkout/
-cp ../../templates/maquina/frontend/app/checkout/page.tsx frontend/app/checkout/
-# Substituir {{SLUG}}/{{PRECO_CORE}}/{{TITULO}} pelos valores reais,
-# manter a copy personalizada do nicho e alinhar o produto default (5.5.1).
-```
-
-Verificar depois: a página renderiza com campos nome/e-mail e
-`POST /api/checkout` responde `{"success":true,...}` registrando o lead em
-`/api/leads/` do backend.
-
-### 5.6 Iniciar servidor de desenvolvimento
-
-```bash
-npm run dev
-```
-
-Saída esperada:
-```
-  ▲ Next.js 14.x.x
-  - Local: http://localhost:3000
-
-✓ Ready in 2.3s
-```
-
-> Se a porta 3000 estiver ocupada, o Next sobe em 3001 — ajuste os testes abaixo.
-
-### 5.7 Testar páginas e rotas de API
-
-Abrir no navegador:
-
-| URL | Página | O que verificar |
+| Variável | Exemplo | Para quê |
 |---|---|---|
-| http://localhost:3000 | Venda | Hero, preço, CTA visíveis |
-| http://localhost:3000/captura | Captura | Formulário funcional |
-| http://localhost:3000/obrigado | Agradecimento | Mensagem visível |
-| http://localhost:3000/checkout | Checkout | Preço correto |
-| http://localhost:3000/admin | Dashboard | Cards de métricas |
-| http://localhost:3000/api/health | Health | `{"status":"ok"}` |
+| `APP_ENV` | `production` | modo de operação |
+| `APP_SECRET_KEY` | `openssl rand -hex 32` | assinatura de sessões/tokens |
+| `SITE_URL` | `https://seudominio.com` | links canônicos |
+| `BACKEND_URL` | `http://localhost:8000` | frontend → backend |
+| `NEXT_PUBLIC_BACKEND_URL` | idem público | chamadas do browser |
+| `DATABASE_PATH` | `./database/leads.db` | SQLite |
+| `INSTAGRAM_ACCESS_TOKEN` | `EAAG...` | Lead Hunter |
+| `INSTAGRAM_APP_ID` / `APP_SECRET` | da Meta | refresh de token |
+| `SMTP_HOST` / `SMTP_PORT` | `smtp.gmail.com` / `587` | e-mails |
+| `SMTP_USER` / `SMTP_PASSWORD` | app password | autenticação |
+| `FROM_EMAIL` / `FROM_NAME` | `contato@dominio.com` / `Fábrica` | remetente |
+| `TRACKING_DOMAIN` | `https://go.seudominio.com` | UTM/rastreio |
+| `HOTMART_WEBHOOK_SECRET` | gerado no Hotmart | validar webhook |
+| `HOTMART_CLIENT_ID` / `CLIENT_SECRET` | do app Hotmart | API de pagamento |
+| `OPENAI_API_KEY` | `sk-...` | copy/DM com IA |
+| `OPENAI_MODEL` | `gpt-4o-mini` | modelo default |
+| `VPS_HOST` / `VPS_USER` / `VPS_PATH` | `167.86.x.x` / `root` / `/opt/maquina-vendas` | deploy Docker |
+| `VERCEL_TOKEN` / `ORG_ID` / `PROJECT_ID` | da conta Vercel | deploy frontend |
+| `SLACK_WEBHOOK_URL` / `DISCORD_WEBHOOK_URL` | do canal | alertas |
+| `MAX_EMAILS_PER_HOUR` | `30` | proteção de reputação |
+| `MAX_EMAILS_PER_DAY` | `200` | proteção de reputação |
+| `MAX_LEADS_PER_DAY` | `100` | teto de captura |
 
-Testar a rota de checkout (deve existir desde a geração — R11):
-```bash
-curl -s -X POST http://localhost:3000/api/checkout \
-  -H "Content-Type: application/json" \
-  -d '{"nome": "Dra. Teste", "email": "teste@exemplo.com", "produto": "obra"}'
-# Esperado: {"success":true,...,"valor":97}
+> **NUNCA** commite o `.env`. Ele está no `.gitignore` da máquina.
 
-# Confirmar que o lead foi registrado no backend
-curl http://localhost:8000/api/leads
-# Esperado: lead "Dra. Teste" na lista
+## 7. Passo 4 — Personalizar por nicho (obrigatório)
+
+A máquina nasce genérica (Regra 12: personalizar, não só gerar). Personalize os
+**8 pontos** abaixo — cada um tem um gate de verificação:
+
+### 7.1 Produtos (`config/produtos.json`)
+
+```json
+{
+  "produtos": [
+    {
+      "id": "livro-autor-digital",
+      "nome": "O Segredo do Autor Digital",
+      "preco": 47.00,
+      "preco_riscado": 67.00,
+      "tipo": "livro"
+    }
+  ],
+  "produto_default": "livro-autor-digital"
+}
 ```
 
----
+**Gate:** o `produto_default` deve existir no array — o checkout o usa para montar o
+link do Hotmart. Produto desalinhado = 404 no botão PAGAR.
 
-## 6. CONFIGURAR O BACKEND
+### 7.2 Funis (`config/funis.json`)
 
-### 6.1 Abrir novo terminal
-
-```bash
-cd marketing/maquinas/inteligencia-artificial-empreendedores/backend
+```json
+{
+  "funis": {
+    "nutricao-livro": {
+      "produto": "livro-autor-digital",
+      "desconto": { "codigo": "LANCTO30", "percentual": 30 },
+      "steps": [
+        { "dias": 0, "tipo": "boas-vindas" },
+        { "dias": 2, "tipo": "educativo" },
+        { "dias": 5, "tipo": "oferta" }
+      ]
+    }
+  }
+}
 ```
 
-### 6.2 Criar ambiente virtual
+**Gate:** cada funil referencia um produto existente; `steps` não vazio.
 
-```bash
-python -m venv venv
+### 7.3 Personas (`config/personas.json`)
 
-# Windows
-venv\Scripts\activate
-
-# Mac/Linux
-source venv/bin/activate
-```
-
-### 6.3 Instalar dependências
-
-```bash
-pip install -r requirements.txt
-```
-
-Saída esperada:
-```
-Successfully installed fastapi-0.x.x uvicorn-0.x.x pydantic-settings-x.x.x httpx-0.x.x
-```
-
-### 6.4 Configurar variáveis de ambiente
-
-```bash
-# Windows
-set DATABASE_URL=sqlite:///../database/maquina.db
-set SMTP_HOST=smtp.gmail.com
-set SMTP_PORT=587
-set SMTP_USER=seu@email.com
-set SMTP_PASS=sua-app-password
-set STRIPE_SECRET_KEY=sk_test_...
-set STRIPE_WEBHOOK_SECRET=whsec_...
-
-# Mac/Linux
-export DATABASE_URL=sqlite:///../database/maquina.db
-export SMTP_HOST=smtp.gmail.com
-export SMTP_PORT=587
-export SMTP_USER=seu@email.com
-export SMTP_PASS=sua-app-password
-export STRIPE_SECRET_KEY=sk_test_...
-export STRIPE_WEBHOOK_SECRET=whsec_...
-```
-
-### 6.5 Iniciar servidor
-
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Saída esperada:
-```
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process
-INFO:     Started server process
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-```
-
-### 6.6 Testar API
-
-```bash
-# Health check
-curl http://localhost:8000/health
-
-# Listar leads
-curl http://localhost:8000/api/leads
-
-# Criar lead
-curl -X POST http://localhost:8000/api/leads \
-  -H "Content-Type: application/json" \
-  -d '{"nome": "João Silva", "email": "joao@teste.com", "fonte": "instagram"}'
-
-# Métricas do funil
-curl http://localhost:8000/api/funil/metricas
-```
-
-### 6.7 Acessar documentação automática
-
-Swagger UI: http://localhost:8000/docs
-
-ReDoc: http://localhost:8000/redoc
-
----
-
-## 7. CONFIGURAR O BANCO DE DADOS
-
-### 7.1 Verificar schema
-
-```bash
-sqlite3 database/maquina.db ".tables"
-```
-
-Saída esperada:
-```
-campanhas
-emails_enviados
-interacoes
-leads
-metricas_diarias
-vendas
-```
-
-### 7.2 Verificar dados de exemplo
-
-```bash
-sqlite3 database/maquina.db "SELECT * FROM leads LIMIT 5;"
-```
-
-### 7.3 Limpar dados de exemplo (opcional)
-
-```bash
-sqlite3 database/maquina.db "
-DELETE FROM interacoes;
-DELETE FROM vendas;
-DELETE FROM emails_enviados;
-DELETE FROM metricas_diarias;
-DELETE FROM leads;
-DELETE FROM campanhas;
-"
-```
-
-### 7.4 Backup automático
-
-O script `funnel_monitor.py` faz backups diários em `database/backups/`.
-
-Backup manual:
-```bash
-cp database/maquina.db database/backups/maquina_$(date +%Y%m%d).db
-```
-
----
-
-## 8. CONFIGURAR AS AUTOMAÇÕES
-
-### 8.1 Lead Hunter (busca leads no Instagram)
-
-Editar `config/personas.json`:
 ```json
 {
   "personas": [
     {
-      "nome": "Empreendedor Tech",
-      "hashtags": ["#empreendedorismo", "#ia", "#tecnologia", "#startup"],
-      "faixa_seguidores": {"min": 500, "max": 50000},
-      "localizacao": "Brasil"
+      "id": "dentista-gestor",
+      "nome": "Dentista que quer gerir melhor",
+      "dores": ["não fecha o caixa", "não precifica"],
+      "objetivos": ["gestão financeira simples"],
+      "tom": "direto e acolhedor"
     }
   ]
 }
 ```
 
-Editar `config/canais.json`:
+### 7.4 Canais (`config/canais.json`)
+
 ```json
 {
   "instagram": {
-    "limite_diario_dm": 20,
-    "intervalo_entre_dm_minutos": 5,
-    "horario_envio": {"inicio": "08:00", "fim": "22:00"}
+    "hashtags": ["#odontologia", "#gestaoodontologica"],
+    "localizacoes": ["São Paulo, SP"],
+    "max_leads_dia": 100,
+    "delay": 1.5,
+    "janela": { "inicio": "08:00", "fim": "22:00", "fuso": "America/Sao_Paulo" }
   }
 }
 ```
 
-### 8.2 Email Sender (dispara e-mails)
+### 7.5 Landing (`frontend/app/page.tsx` e `captura/page.tsx`)
 
-Editar `config/email.json`:
-```json
-{
-  "smtp": {
-    "host": "smtp.gmail.com",
-    "port": 587,
-    "user_env": "SMTP_USER",
-    "pass_env": "SMTP_PASS"
-  },
-  "remetente": {
-    "nome": "Fábrica de Livros",
-    "email": "contato@seudominio.com"
-  },
-  "limites": {
-    "max_emails_dia": 100,
-    "intervalo_entre_emails_segundos": 30
-  }
-}
-```
+Troque headline, subheadline, bullets e CTA pelo **vocabulário do nicho** (use a
+persona). Exemplo de headline para dentista:
 
-### 8.3 Funnel Monitor (monitoramento 24/7)
+> "O método de 30 dias para o dentista que quer saber quanto ganha de verdade"
 
-Editar `config/funis.json` para ajustar thresholds:
-```json
-{
-  "thresholds": {
-    "taxa_captura_min": 0.02,
-    "taxa_email_open_min": 0.20,
-    "taxa_venda_min": 0.01,
-    "alerta_queda_percentual": 20
-  }
-}
-```
+**Gate:** a palavra do nicho aparece no H1 e o CTA contém verbo de ação + link real.
 
-### 8.4 Auto Correct (correção automática)
+### 7.6 E-mails (`templates/`)
 
-Editar `config/subagentes.json`:
-```json
-{
-  "auto_correct": {
-    "ativo": true,
-    "espera_horas": 48,
-    "min_amostra": 50
-  }
-}
-```
+Reescreva os e-mails da sequência com a copy do nicho. Mantenha: máx. 250 palavras,
+1 link por e-mail, assunto ≤ 60 caracteres.
 
----
+### 7.7 README
 
-## 9. CONFIGURAR INTEGRAÇÕES EXTERNAS
+Atualize o `README.md` da máquina: seu domínio, seu produto, suas credenciais,
+suas instruções de operação.
 
-### 9.1 Stripe (pagamentos)
+### 7.8 `.env`
 
-1. Criar conta em dashboard.stripe.com
-2. Obter API keys (Settings → API Keys)
-3. Configurar webhook:
-   - URL: `https://seu-dominio.com/api/webhook`
-   - Events: `checkout.session.completed`, `payment_intent.succeeded`
-4. Adicionar em `.env`:
-   ```
-   STRIPE_SECRET_KEY=sk_test_...
-   STRIPE_WEBHOOK_SECRET=whsec_...
-   ```
+Preencha com valores reais (§6).
 
-### 9.2 Instagram Graph API (leads)
-
-1. Criar app em developers.facebook.com
-2. Configurar Instagram Graph API
-3. Obter access token de longa duração
-4. Adicionar em `.env`:
-   ```
-   INSTAGRAM_ACCESS_TOKEN=EAAx...
-   ```
-
-### 9.3 SendGrid (e-mails alternativo)
-
-1. Criar conta em sendgrid.com
-2. Obter API key (Settings → API Keys)
-3. Verificar domínio (Settings → Sender Authentication)
-4. Adicionar em `.env`:
-   ```
-   SENDGRID_API_KEY=SG.xxxx
-   ```
-
-### 9.4 ElevenLabs (áudio narrado)
-
-1. Criar conta em elevenlabs.io
-2. Obter API key (Profile → API Key)
-3. Adicionar em `.env`:
-   ```
-   ELEVENLABS_API_KEY=xxxx
-   ```
-
----
-
-## 10. TESTES LOCAIS
-
-### 10.1 Testar frontend
+**Gate final de personalização (antes do deploy):**
 
 ```bash
-cd frontend
-npm run build
+grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/
+# → vazio = pronto
 ```
 
-Se build falhar, corrigir erros de TypeScript.
+## 8. Passo 5 — Configurar os JSONs
 
-### 10.2 Testar backend
-
-```bash
-cd backend
-python -m pytest  # se houver testes
-curl http://localhost:8000/health
-```
-
-### 10.3 Testar fluxo completo
-
-1. Abrir http://localhost:3000/captura
-2. Preencher nome + e-mail
-3. Clicar em "Baixar Grátis"
-4. Verificar se lead foi criado:
-   ```bash
-   curl http://localhost:8000/api/leads
-   ```
-5. Verificar se redirecionou para /obrigado
-6. Testar checkout:
-   ```bash
-   curl -s -X POST http://localhost:3000/api/checkout \
-     -H "Content-Type: application/json" \
-     -d '{"nome": "João Silva", "email": "joao@teste.com", "produto": "livro"}'
-   ```
-7. Confirmar o lead no backend: `curl http://localhost:8000/api/leads`
-
-### 10.4 Testar API de pagamento (Stripe)
-
-```bash
-# Usar Stripe CLI para testar webhook
-stripe listen --forward-to localhost:8000/api/webhook/pagamento
-
-# Em outro terminal, simular evento
-stripe trigger checkout.session.completed
-```
-
----
-
-## 11. DEPLOY EM PRODUÇÃO
-
-### 11.1 Opção A: Docker (VPS)
-
-```bash
-# Na VPS
-git clone https://github.com/Heverton-web/proj_fabrica-de-livros.git
-cd proj_fabrica-de-livros/vendas
-python scripts/criar-maquina-vendas.py <slug>
-
-cd marketing/maquinas/<slug>
-
-# Configurar .env com credenciais reais
-cp .env.example .env
-nano .env  # editar
-
-# Subir containers
-docker-compose up -d
-
-# Verificar
-docker-compose ps
-curl http://localhost/api/health
-```
-
-Serviços que sobem:
-| Serviço | Porta | Função |
+| Arquivo | Campos | Instrução |
 |---|---|---|
-| frontend | 3000 | Next.js |
-| backend | 8000 | FastAPI |
-| worker-emails | — | Processador de e-mails |
-| worker-leads | — | Lead hunter |
-| monitor | — | Funnel monitor |
-| nginx | 80/443 | Proxy reverso |
+| `produtos.json` | catálogo | 1 produto real por oferta; preço sem centavos redondos (47/97) |
+| `funis.json` | funil por oferta | steps em dias após o lead; oferta no step 3+ |
+| `personas.json` | persona | 1-3 personas; a mais forte vira a voz do H1 |
+| `canais.json` | Instagram | hashtags do nicho (5-20), localizações, janela de captura |
+| `email.json` | SMTP + limites | host, porta, usuário, app password, assinatura, listas |
+| `pagamento.json` | Hotmart | CLIENT_ID/SECRET/WEBHOOK_SECRET do app Hotmart |
+| `roteamento_modelos.json` | IA | temperatura (0.7 copy, 0.2 análise) e max_tokens por tarefa |
+| `subagentes.json` | agentes IA | quem escreve copy, quem responde DM, quem analisa lead |
 
-### 11.2 Opção B: Vercel + Railway
+> Edite com JSON válido (sem comentários). Valide com `python -m json.tool arquivo.json`.
 
-#### Frontend → Vercel
+## 9. Passo 6 — Editar o frontend
 
-```bash
-cd frontend
-vercel login
-vercel --prod
+**Rotas (App Router Next.js 14):**
+
+| Rota | Arquivo | Função |
+|---|---|---|
+| `/` | `app/page.tsx` | página de venda: hero, dor, solução, value stack, depoimentos, preço, garantia, CTA |
+| `/captura` | `app/captura/page.tsx` | landing de captura (capítulo gratuito) |
+| `/checkout` | `app/checkout/page.tsx` | **client**: nome/e-mail → `POST /api/checkout` |
+| `/obrigado` | `app/obrigado/page.tsx` | pós-compra |
+| `/admin` | `app/admin/page.tsx` | dashboard (KPIs + leads recentes) |
+| `/admin/leads` | `app/admin/leads/page.tsx` | lista completa, busca, paginação, export CSV |
+| `/admin/metricas` | `app/admin/metricas/page.tsx` | gráficos (receita, leads por origem), funil |
+| `/admin/emails` | `app/admin/emails/page.tsx` | sequências com métricas de abertura/clique |
+| `/api/lead` | `app/api/lead/route.ts` | cria lead (zod) |
+| `/api/checkout` | `app/api/checkout/route.ts` | cria lead + processa pedido |
+| `/api/webhook` | `app/api/webhook/route.ts` | webhook genérico (Hotmart etc.) |
+| `/api/health` | `app/api/health/route.ts` | status |
+
+**Regras de ouro:**
+
+- **Nunca** use `<form action method="POST">` vazio no checkout — quebra no
+  `request.json()`. Use componente client com `fetch` + JSON.
+- O formulário de captura deve coletar **nome + e-mail** (nunca só e-mail).
+- CTA com UTM: `https://pay.hotmart.com/XXXXX?utm_source=site&utm_medium=botao&utm_campaign=lancto`.
+- As rotas `/api/*` do Next chamam o backend via `BACKEND_URL` (server-side) ou
+  `NEXT_PUBLIC_BACKEND_URL` (browser).
+
+## 10. Passo 7 — Entender o backend
+
+**FastAPI** em `backend/app/` — `main.py` monta os routers:
+
+| Router | Endpoint | Função |
+|---|---|---|
+| `routers/leads.py` | `POST /api/leads/` | cria lead: `{email, nome, fonte, funil}` → status `novo` |
+| `routers/funil.py` | `GET /api/funil/metricas` | agregados do funil (dashboard) |
+| `routers/emails.py` | `POST /api/emails/disparar` | envia a sequência (respeita rate limits) |
+| `routers/webhooks.py` | `POST /api/webhook` | valida secret e marca lead/venda como pago |
+
+`services/`: `lead_service` (regras de lead), `email_service` (SMTP + rate limit),
+`metricas_service` (agregação), `scoring_service` (prioriza leads quentes),
+`auto_correct` (propõe A/B). `models/`: `lead`, `venda`, `campanha`, `interacao`.
+
+**Tabelas SQLite** (`database/schema.sql` → `backend/data/vendas.db` por default;
+`DATABASE_PATH` no `.env` sobrescreve):
+
+- `leads` — id, email, nome, fonte, funil, status (`novo → nutrido → pago → cancelado`), timestamps
+- `vendas` — pedido, valor, status (confirmação do webhook)
+- `campanhas` — variantes A/B e resultados
+- `interacoes` — aberturas/cliques de e-mail
+
+> **Leads de teste** vivem no banco SQLite da máquina (`backend/data/vendas.db`).
+> Ao testar, limpe o banco de verdade antes de ir pra produção.
+
+## 11. Passo 8 — Checkout e Hotmart
+
+### 11.1 Fluxo
+
+```
+/checkout (client)
+   → nome + e-mail → POST /api/checkout
+   → backend cria lead (status novo) + monta link de pagamento
+   → redireciona para pay.hotmart.com/...?utm_...
+   → Hotmart processa → webhook POST /api/webhook
+   → backend valida assinatura → marca lead PAGO
+   → /obrigado exibe código do pedido
 ```
 
-Configurar env vars no dashboard Vercel:
-- `NEXT_PUBLIC_API_URL` = URL do backend Railway
-- `NEXT_PUBLIC_STRIPE_KEY` = pk_live_...
+### 11.2 Configuração no Hotmart
 
-#### Backend → Railway
+1. Crie o produto (preço igual ao `config/produtos.json`).
+2. Crie um **app** em developer.hotmart.com → pegue `CLIENT_ID` e `CLIENT_SECRET`.
+3. Configure o **webhook** apontando para `https://seudominio.com/api/webhook` com o
+   `WEBHOOK_SECRET` escolhido.
+4. Para testar: use o modo sandbox do Hotmart (compra simulada).
+
+### 11.3 Alinhamento obrigatório
+
+- `produto_default` em `config/produtos.json` == ID do produto no Hotmart.
+- O botão PAGAR (PricingCard) leva a `/checkout`, que envia nome/e-mail via
+  `POST /api/checkout` (rota Next.js com validação zod) — o lead é criado no
+  backend (`/api/leads/`) e o pedido registrado.
+- Máquinas geradas **antes** do fix do checkout (rota `/api/checkout` ausente, form
+  urlencoded vazio) devem ser sincronizadas:
 
 ```bash
-cd backend
-railway login
-railway init
-railway up
+# skill: sincronizar-maquina-vendas
+# copia do template: rota /api/checkout, page client, produto default, BACKEND_URL
 ```
 
-Configurar env vars no dashboard Railway:
-- `DATABASE_URL` = sqlite:///database/maquina.db
-- `SMTP_*` = credenciais
-- `STRIPE_*` = credenciais
+## 12. Passo 9 — Testar tudo localmente
 
-### 11.3 Opção C: VPS com Nginx + PM2
+### 12.1 Frontend
 
 ```bash
-# Instalar PM2
-npm install -g pm2
-
-# Na VPS
-cd marketing/maquinas/<slug>
-
-# Backend
-cd backend
-pip install -r requirements.txt
-pm2 start "uvicorn app.main:app --host 0.0.0.0 --port 8000" --name "mv-api"
-
-# Frontend
-cd ../frontend
+cd marketing/maquinas/<slug>/frontend
 npm install
-npm run build
-pm2 start npm --name "mv-web" -- start
-
-# Workers
-cd ..
-pm2 start scripts/email_sender.py --name "mv-emails" --interpreter python
-pm2 start scripts/lead_hunter.py --name "mv-leads" --interpreter python
-pm2 start scripts/funnel_monitor.py --name "mv-monitor" --interpreter python
-
-# Salvar config PM2
-pm2 save
-pm2 startup
-
-# Nginx
-sudo nano /etc/nginx/sites-available/mv-<slug>
+npm run dev
+# http://localhost:3000
 ```
 
-Configuração Nginx:
-```nginx
-server {
-    listen 80;
-    server_name seudominio.com;
+Verifique: landing carrega, form de captura envia, `/checkout` abre, `/admin` mostra
+o dashboard.
 
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-
-    location /api/ {
-        proxy_pass http://localhost:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-    }
-}
-```
+### 12.2 Backend
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/mv-<slug> /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-
-# SSL com Let's Encrypt
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d seudominio.com
+cd marketing/maquinas/<slug>/backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+# http://localhost:8000/api/health → {"status": "ok"}
 ```
 
-### 11.4 Script de deploy automático
+### 12.3 Fluxo completo (teste de ponta a ponta)
 
 ```bash
-bash scripts/deploy.sh
+# 1. Cria lead
+curl -X POST http://localhost:8000/api/leads/ \
+  -H "Content-Type: application/json" \
+  -d '{"email":"teste@exemplo.com","nome":"Teste","fonte":"manual","funil":"nutricao-livro"}'
+
+# 2. Checkout (via frontend em localhost:3000)
+curl -X POST http://localhost:3000/api/checkout \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Teste","email":"teste@exemplo.com"}'
+# → 200 com url de pagamento
+
+# 3. Simula webhook Hotmart (sandbox)
+curl -X POST http://localhost:8000/api/webhook \
+  -H "Content-Type: application/json" \
+  -H "X-Hotmart-Secret: <HOTMART_WEBHOOK_SECRET>" \
+  -d '{"email":"teste@exemplo.com","status":"pago","codigo":"PED-123"}'
 ```
 
-O script:
-1. Faz backup do banco
-2. Faz git pull
-3. Build do frontend
-4. Instala dependências do backend
-5. Reinicia serviços via PM2
-6. Verifica health check
-7. Rollback se falhar
+Confira no SQLite: `sqlite3 backend/data/vendas.db "SELECT * FROM leads;"`.
 
----
-
-## 12. PÓS-DEPLOY: OPERAÇÃO 24/7
-
-### 12.1 Ativar automações
+### 12.4 Automações (teste manual)
 
 ```bash
-# No diretório da máquina
-python scripts/lead_hunter.py --iniciar
-python scripts/email_sender.py --iniciar
-python scripts/funnel_monitor.py --iniciar
+python scripts/lead_hunter.py --dry-run     # mostra o que buscaria, sem gravar
+python scripts/email_sender.py --dry-run    # mostra o que enviaria
+python scripts/funnel_monitor.py --force    # gera metrics.json agora
+python scripts/auto_correct.py --dry-run    # propõe A/B sem aplicar
 ```
 
-Ou via PM2 (já ativo se usou deploy VPS):
+## 13. Passo 10 — Publicar (deploy)
+
+### Opção A — Docker VPS (recomendada)
+
 ```bash
-pm2 list
+cd marketing/maquinas/<slug>
+./scripts/deploy.sh full        # build das imagens + sobe tudo
+./scripts/deploy.sh status      # saúde dos serviços
+./scripts/deploy.sh backup      # backup do banco
+./scripts/deploy.sh rollback    # volta versão anterior
 ```
 
-### 12.2 Configurar cron jobs
+Pré-requisitos no VPS: Docker + Docker Compose. O `docker-compose.yml` sobe
+frontend (Next.js standalone), backend (uvicorn) e automações (cron).
+
+### Opção B — Vercel + Railway
+
+```bash
+cd marketing/maquinas/<slug>/frontend
+npx vercel deploy --prod        # frontend na Vercel (vercel.json já configurado)
+```
+
+Backend + automações em Railway/Fly.io (ou mesmo VPS). Aponte
+`NEXT_PUBLIC_BACKEND_URL` para o backend hospedado.
+
+### Opção C — Nginx + PM2 (VPS tradicional)
+
+1. Build do frontend: `npm run build && pm2 start npm --name frontend -- start`
+2. Backend: `pm2 start "uvicorn main:app --host 0.0.0.0 --port 8000" --name backend`
+3. Nginx: proxy `/` → frontend (3000), `/api` → backend (8000), SSL Let's Encrypt
+4. `pm2 save && pm2 startup`
+
+### Checklist de produção
+
+- [ ] `.env` real (não o `.env.example`)
+- [ ] `produto_default` alinhado ao Hotmart
+- [ ] CTA com URL real (sem `pay.hotmart.com/XXXXX`)
+- [ ] Webhook do Hotmart apontando para `/api/webhook` com secret
+- [ ] `npm run build` sem erros
+- [ ] `POST /api/checkout` responde 200 em produção
+- [ ] Crontab das 4 automações no fuso America/Sao_Paulo
+- [ ] Backup agendado (3h)
+
+## 14. Passo 11 — Configurar automações (cron)
 
 ```bash
 crontab -e
+# fuso: America/Sao_Paulo
+TZ=America/Sao_Paulo
+
+0 8,14,20 * * * cd /opt/maquina-vendas && python3 scripts/lead_hunter.py >> logs/lead_hunter.log 2>&1
+0 9 * * *     cd /opt/maquina-vendas && python3 scripts/email_sender.py >> logs/email_sender.log 2>&1
+0 * * * *     cd /opt/maquina-vendas && python3 scripts/funnel_monitor.py >> logs/funnel_monitor.log 2>&1
+0 3 * * *     cd /opt/maquina-vendas && ./scripts/deploy.sh backup >> logs/backup.log 2>&1
 ```
 
-Adicionar:
-```bash
-# Lead Hunter: 3x/dia (8h, 14h, 20h)
-0 8,14,20 * * * cd /path/to/maquina && python scripts/lead_hunter.py
+| Automação | Cron default | O que faz |
+|---|---|---|
+| Lead Hunter | 8h/14h/20h | captura leads por hashtags/localizações (respeita `max_leads_dia` e delay 1.5s) |
+| Email Sender | 9h | envia a sequência do funil (30/h, 200/dia) |
+| Funnel Monitor | 1x/hora | `metrics.json` + webhooks Slack/Discord |
+| auto_correct | diário (junto do monitor) | propõe A/B de assunto/CTA/horário |
 
-# Email Sender: 1x/dia (9h)
-0 9 * * * cd /path/to/maquina && python scripts/email_sender.py
+## 15. Passo 12 — Operar 24/7
 
-# Funnel Monitor: a cada hora
-0 * * * * cd /path/to/maquina && python scripts/funnel_monitor.py
+**Ritual diário (10 minutos):**
 
-# Backup diário: 3h da manhã
-0 3 * * * cp /path/to/maquina/database/maquina.db /path/to/backups/maquina_$(date +\%Y\%m\%d).db
-```
+1. Abra `/admin` (ou o dashboard da Vercel) e confira `metrics.json`.
+2. Métricas: leads novos, conversão em checkout, receita, abertura de e-mail.
+3. Leia as sugestões do `auto_correct` (A/B proposto).
+4. Confira logs: `tail -f logs/lead_hunter.log`, `logs/email_sender.log`.
+5. Confira o backup: `./scripts/deploy.sh backup` rodou 3h.
 
-### 12.3 Verificar logs
+**Alertas:** o Funnel Monitor dispara Slack/Discord quando algo cai (ex.: zero
+checkouts em 24h). Nunca ignore alerta de webhook.
 
-```bash
-# PM2
-pm2 logs mv-api
-pm2 logs mv-emails
-pm2 logs mv-leads
+## 16. Passo 13 — Monitorar e escalar
 
-# Docker
-docker-compose logs -f backend
-docker-compose logs -f worker-emails
+| Métrica | Onde | Meta típica |
+|---|---|---|
+| Leads/dia | `/admin` | 10-100 (conforme `max_leads_dia`) |
+| Conversão em checkout | `/admin` | 1-5% dos leads nutridos |
+| Receita | `/admin` | fechar a meta do funil |
+| Abertura de e-mail | Email Sender log | 30-50% |
 
-# Arquivo
-tail -f logs/funnel_monitor.log
-```
+**Escala em 4 níveis:**
+
+1. **Mais leads:** expanda hashtags/localizações e a janela (respeitando o delay).
+2. **Mais conversão:** ative A/B do `auto_correct` (assunto, CTA, horário, preço).
+3. **Mais volume de e-mail:** suba o plano SMTP e ajuste `MAX_EMAILS_*`.
+4. **Banco:** SQLite → PostgreSQL (troque `DATABASE_PATH`; SQLAlchemy já abstrai).
+
+## 17. Troubleshooting
+
+| Sintoma | Causa | Fix |
+|---|---|---|
+| 404 no botão PAGAR | `/api/checkout` ausente ou produto default errado | rodar `sincronizar-maquina-vendas`; alinhar `config/produtos.json` |
+| 500 no checkout | form urlencoded vazio | page client com nome/e-mail + fetch JSON |
+| `grep 'Autor Digital'` retorna | personalização pendente | personalizar os 8 pontos (§7) |
+| Leads de teste poluídos | banco de teste | limpar `backend/data/vendas.db` |
+| E-mails não saem | rate limit atingido | aguardar janela; conferir `email.json` |
+| Instagram sem leads | token expirado / fora da janela | renovar token; janela 08:00-22:00 |
+| Webhook não marca pago | secret errado | conferir `HOTMART_WEBHOOK_SECRET` dos 2 lados |
+| Dashboard vazio | `funnel_monitor` não rodou | `python scripts/funnel_monitor.py --force` |
+| Build falha no Windows | scripts Unix-only | rodar no WSL/Git Bash ou Docker |
+
+## 18. Checklist final
+
+Antes de declarar a máquina **em produção**:
+
+- [ ] Obra publicada e personalização por nicho completa (gate grep vazio)
+- [ ] `.env` com credenciais reais de produção
+- [ ] Checkout testado de ponta a ponta (lead → link → webhook → pago)
+- [ ] Deploy feito (A, B ou C) com `npm run build` verde
+- [ ] Automações no cron com fuso America/Sao_Paulo
+- [ ] Backup agendado e testado (`deploy.sh backup`)
+- [ ] Alertas Slack/Discord funcionando
+- [ ] `metrics.json` sendo gerado e dashboard atualizando
+
+## 19. Referências rápidas
+
+| Comando | Função |
+|---|---|
+| `/criar-maquina <slug> --tipo completo` | gera a máquina |
+| `cp .env.example .env` | prepara o ambiente |
+| `grep -rn 'Autor Digital\|centenas de pessoas' marketing/maquinas/<slug>/` | gate de personalização |
+| `npm run dev` (frontend) | testa local |
+| `uvicorn main:app --reload --port 8000` (backend) | testa API |
+| `./scripts/deploy.sh full \| status \| backup \| rollback` | opera no VPS |
+| `python scripts/funnel_monitor.py --force` | gera métricas na hora |
+| `crontab -e` (TZ=America/Sao_Paulo) | agenda automações |
 
 ---
 
-## 13. MONITORAMENTO E MANUTENÇÃO
-
-### 13.1 Dashboard de métricas
-
-Acessar: `https://seudominio.com/admin`
-
-Métricas disponíveis:
-- Total de leads
-- Taxa de conversão por etapa
-- Receita total
-- E-mails enviados/abertos/cliques
-- ROAS (Return on Ad Spend)
-
-### 13.2 Relatório diário
-
-Gerado automaticamente às 7h em `marketing/maquinas/<slug>/analytics/`:
-
-```bash
-cat analytics/relatorio_2026-08-08.md
-```
-
-### 13.3 Comandos de monitoramento
-
-```bash
-# Status da máquina
-/status
-
-# Métricas em tempo real
-/monitorar inteligencia-artificial-empreendedores
-
-# Forçar auto-correção
-/corrigir inteligencia-artificial-empreendedores
-
-# Ver logs
-pm2 logs --lines 100
-```
-
-### 13.4 Alertas
-
-O `funnel_monitor.py` envia alertas quando:
-- Taxa de conversão cai > 20%
-- Leads param de chegar
-- E-mails não são enviados
-- API fica fora do ar
-
-Alertas vão para: log + webhook (configurável).
-
----
-
-## 14. ESCALANDO A MÁQUINA
-
-### 14.1 Quando escalar
-
-Sinais de que é hora:
-- ROAS > 2x por 7 dias consecutivos
-- Taxa de conversão > 5%
-- Mais de 100 leads/dia
-- Receita > R$ 5.000/mês
-
-### 14.2 Como escalar
-
-```bash
-# Aumentar budget de anúncios
-/escalar inteligencia-artificial-empreendedores --budget +30%
-
-# Criar lookalike audience
-# (automático quando ROAS > 2x)
-```
-
-### 14.3 Escalar infraestrutura
-
-```bash
-# Migrar SQLite → PostgreSQL
-# 1. Exportar dados
-sqlite3 database/maquina.db .dump > dump.sql
-
-# 2. Criar banco Postgres
-createdb maquina_vendas
-
-# 3. Importar
-psql maquina_vendas < dump.sql
-
-# 4. Atualizar DATABASE_URL
-export DATABASE_URL=postgresql://user:pass@localhost/maquina_vendas
-```
-
-### 14.4 Criar máquinas para novas obras
-
-```bash
-# Cada nova obra = nova máquina
-/criar-livro Marketing Digital Avançado
-/criar-maquina marketing-digital-avancado
-
-# Agora tem 2 máquinas rodando em paralelo
-```
-
----
-
-## CHECKLIST FINAL
-
-```
-PRÉ-REQUISITOS
-  □ Python 3.10+ instalado
-  □ Node.js 18+ instalado
-  □ Git instalado
-  □ Pandoc instalado
-  □ Typst instalado
-  □ LLM configurada (MiMoCode/Claude/Gemini)
-
-CONFIGURAÇÃO
-  □ Repositório clonado
-  □ requirements.txt instalado
-  □ .env configurado (SMTP, Stripe, Instagram)
-  □ descobrir_modelos.py rodou com sucesso
-
-CRIAÇÃO
-  □ Obra criada e validada
-  □ Máquina de vendas gerada
-  □ Banco de dados inicializado
-  □ Configs revisados (produtos, funis, personas)
-
-FRONTEND
-  □ npm install rodou
-  □ npm run dev funciona
-  □ Página de venda abre
-  □ Formulário de captura funciona
-  □ Admin dashboard carrega
-
-BACKEND
-  □ pip install rodou
-  □ uvicorn inicia sem erros
-  □ /health retorna OK
-  □ POST /api/leads funciona
-  □ Swagger docs acessível
-
-INTEGRAÇÕES
-  □ Stripe webhook configurado
-  □ Instagram token configurado
-  □ SMTP configurado e testado
-
-DEPLOY
-  □ Build do frontend funciona
-  □ Docker sobe todos os serviços
-  □ SSL configurado (HTTPS)
-  □ Domínio apontando
-
-OPERAÇÃO
-  □ Lead Hunter rodando
-  □ Email Sender rodando
-  □ Funnel Monitor rodando
-  □ Cron jobs configurados
-  □ Backups automáticos ativos
-  □ Dashboard acessível
-  □ Alertas configurados
-```
-
----
-
-*Guia gerado em 2026-08-08 — Fábrica Agêntica de Publicações*
+*Guia mantido por `scripts/atualizar-documentacao.py` — não edite o PDF à mão;
+edite este `.md` e recompile.*
