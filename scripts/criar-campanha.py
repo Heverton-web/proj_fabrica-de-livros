@@ -69,15 +69,22 @@ def nivel_rotulo(senioridade):
 
 
 def variaveis_arte(ctx):
-    """Variaveis comuns de interpolacao dos templates HTML de arte."""
+    """Variaveis comuns de interpolacao dos templates HTML de arte.
+
+    V5.3: suporta titulo_arte/sufixo_arte para variar conteudo entre artes."""
     # Tags TECNICAS do dominio (derivadas dos capitulos/tema) primeiro; o
     # vocabulario condutor metaforico (arnes, mosquetao) fica fora das artes.
     vocab = (ctx.get("tags_arte") or ctx.get("vocabulario") or [])
     tags = "".join(f'<span class="tag">{t}</span>' for t in vocab[:4])
     if not tags:
         tags = f'<span class="tag">{ctx["colecao"]}</span>'
+    # Variar titulo se titulo_arte estiver disponivel (arte individuall)
+    titulo = ctx.get("titulo_arte") or (ctx["titulo"] or ctx["colecao"])
+    sufixo = ctx.get("sufixo_arte", "")
+    if sufixo:
+        titulo = f"{titulo} {sufixo}"
     return {
-        "TITULO": (ctx["titulo"] or ctx["colecao"])[:64],
+        "TITULO": titulo[:64],
         "SUBTITULO": (ctx.get("subtitulo") or ctx.get("projeto_pratico")
                       or ctx["colecao"])[:110],
         "NIVEL": nivel_rotulo(ctx.get("senioridade")),
@@ -230,7 +237,10 @@ def _renderizar_png(html, png_path, dim):
 def gerar_artes(ctx, base, com_artes=True):
     """Artes PNG (post/story/arte) por material, na quantidade que SUPRE o
     cronograma da rede/canal. HTML interpolado fica ao lado como fonte
-    editavel da arte."""
+    editavel da arte.
+
+    V5.3: cada arte usa o indice para variar o conteudo (titulo + sufixo),
+    evitando artes repetidas com o mesmo texto."""
     geradas = []
     for rede, dados in CP.REDES_SOCIAIS.items():
         raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
@@ -242,9 +252,13 @@ def gerar_artes(ctx, base, com_artes=True):
                 else "feed-story" if formato == "feed-story"
                 else "post_ig"]
             prefixo = "post" if formato == "post" else "story"
-            html = _interpolar_arte(nome_template, ctx)
             quantidade = max(1, quantidades.get(formato, 1))
             for i in range(1, quantidade + 1):
+                # Variar conteudo usando indice: titulo + sufixo
+                ctx_variado = ctx.copy()
+                ctx_variado["titulo_arte"] = f"{ctx['titulo']}"
+                ctx_variado["sufixo_arte"] = f"({i}/{quantidade})"
+                html = _interpolar_arte(nome_template, ctx_variado)
                 destino = raiz / f"artes/{formato}"
                 destino.mkdir(parents=True, exist_ok=True)
                 base_html = destino / f"{prefixo}-{i:02d}.html"
