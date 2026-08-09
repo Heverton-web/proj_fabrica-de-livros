@@ -1,0 +1,15 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "I",
+    "capitulo": "1"
+  },
+  "estado_execucao": "concluido_autonomo",
+  "payload_estrategico": {
+    "pilares": [
+      "Janela de contexto como recurso escasso",
+      "Amnésia entre sessões e conhecimento efêmero",
+      "Prompts ad hoc vs conhecimento empacotado"
+    ]
+  }
+}

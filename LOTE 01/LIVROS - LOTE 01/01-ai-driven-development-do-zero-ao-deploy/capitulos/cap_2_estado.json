@@ -1,0 +1,25 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "2" },
+  "estado_execucao": "concluido_autonomo",
+  "payload_estrategico": {
+    "pilares": [
+      "O Mapa das Quatro Camadas",
+      "Padroes de Orquestracao Agentica",
+      "Simplicidade Deliberada como Vantagem Competitiva"
+    ]
+  },
+  "validacao": {
+    "secoes_7_presentes": true,
+    "diagramas_mermaid": 2,
+    "diagramas_validos": 2,
+    "blocos_codigo_verificaveis": 9,
+    "blocos_codigo_ok": 9,
+    "citacoes_inline": 22,
+    "referencias_bibliograficas": 22,
+    "tecnica_pct_do_corpo": 60.4,
+    "callback_capitulo_anterior_presente": true,
+    "cena_de_contraste_presente": true,
+    "persona_leitor_reforcada": 1
+  }
+}

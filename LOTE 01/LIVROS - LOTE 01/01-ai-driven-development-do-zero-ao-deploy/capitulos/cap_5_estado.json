@@ -1,0 +1,22 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "III", "capitulo": "5" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": "Capítulo 4: o par LLM+Tools convertendo raciocínio em ação auditável — agora estendido para o caso em que esse par roda dentro de um subagente isolado, despachado pela tripulação principal.",
+  "validacao": {
+    "ci_codigo": "ok (2/2 blocos verificaveis aprovados: yaml e json; 1 markdown e 4 mermaid nao_aplicavel por ausencia de validador dedicado)",
+    "diagramas_mermaid": "4/4 validos",
+    "secoes_eita_presentes": "7/7",
+    "citacoes_no_corpo": 32,
+    "referencias_bibliograficas": 23,
+    "refs_orfas": 0,
+    "refs_nao_citadas": 0,
+    "citacoes_empilhadas": 0,
+    "horizontal_rules_indevidas": 0,
+    "pendencias_todo_placeholder": 0,
+    "persona_leitor_reforcada": 2,
+    "callback_capitulo_4_na_introducao": true,
+    "conceito_denso_pilar_2_dupla_analogia": true
+  },
+  "arquivo": "output/livros/ai-driven-development-do-zero-ao-deploy/capitulos/cap_5.md"
+}

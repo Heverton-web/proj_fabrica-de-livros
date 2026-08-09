@@ -1,0 +1,28 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "3" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": "Capítulo 2: o mapa das quatro camadas (Tela decide o que aprovar, Harness decide o que é permitido, LLM decide o que tentar, Tools executam), agora aprofundado nas duas primeiras camadas — Tela e Harness — como a ponte de comando e a estrutura/motor do casco da embarcação agêntica.",
+  "payload_estrategico": {
+    "pilares": [
+      "A Ponte de Comando: Intent Preview, Approval Gates, Hybrid Autonomy e Blast Radius",
+      "O Harness como Portão de Permissão: Claude Code e o Claude Agent SDK como Runtime Compartilhado",
+      "O Contrato Harness-Modelo: Harness Decide o Permitido, Modelo Decide o Tentado"
+    ]
+  },
+  "validacao": {
+    "secoes_faltantes": [],
+    "horizontal_rules": 0,
+    "pendencias": [],
+    "truncado": false,
+    "referencias": 24,
+    "citacoes_inline": 27,
+    "citacoes_empilhadas": [],
+    "diagramas_ilustra": 3,
+    "diagramas_total": 3,
+    "blocos_codigo_tecnica": 2,
+    "callback_presente": true,
+    "ci_codigo": "ok (python: ok; typescript: nao_verificado - tsc ausente no ambiente, sem erro de sintaxe detectavel)",
+    "ci_diagramas": "3/3 validos"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "slug": "artigos/sdlc-ai-first--art-05-combustivel-economia-de-tokens-e-custo-d",
+  "tipo_obra": "artigo",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 21307,
+  "paginas_estimadas": 8.5,
+  "requisitos": [
+    {
+      "id": "ARTIGO-NUM",
+      "nome": "Numeracao progressiva de secoes (NBR 6024)",
+      "conforme": true,
+      "detalhe": "secoes sem numeracao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-REF",
+      "nome": "Minimo 20 referencias por secao (NBR 6023)",
+      "conforme": true,
+      "detalhe": "secoes abaixo: nenhuma"
+    },
+    {
+      "id": "ARTIGO-CIT",
+      "nome": "Citacoes autor-data presentes (NBR 10520)",
+      "conforme": true,
+      "detalhe": "secoes sem citacao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "ARTIGO-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    },
+    {
+      "id": "ARTIGO-RASTRO",
+      "nome": "Rastreabilidade citacao <-> referencias",
+      "conforme": true,
+      "detalhe": "secoes com citacao orfa: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "evidencia",
+      "variantes": {
+        "evidencia": 3,
+        "evidência": 3
+      },
+      "ocorrencias": 6
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 5168,
+      "palavras": 720,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 16,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "gineering. 2024. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "evans (2003)",
+        "google (2025)",
+        "qodo (2025)",
+        "wang (2024)"
+      ]
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 5137,
+      "palavras": 692,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 18,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "gineering. 2024. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "jimenez (2024)",
+        "qodo (2025)"
+      ]
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 6506,
+      "palavras": 924,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 18,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "gineering. 2024. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "google (2025)",
+        "qodo (2025)"
+      ]
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 4496,
+      "palavras": 610,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 12,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "gineering. 2024. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "anthropic (2024)",
+        "anthropic (2025)",
+        "evans (2003)",
+        "google (2025)",
+        "hingel (2026)",
+        "jimenez (2024)",
+        "qodo (2025)",
+        "sommerville (2019)"
+      ]
+    }
+  ]
+}

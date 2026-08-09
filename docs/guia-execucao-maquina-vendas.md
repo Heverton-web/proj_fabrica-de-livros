@@ -325,7 +325,62 @@ Editar `app/page.tsx` — substituir placeholders:
 <p>Domine IA aplicada a negócios e saia na frente da concorrência</p>
 ```
 
-### 5.5 Iniciar servidor de desenvolvimento
+### 5.5 PERSONALIZAR POR NICHO (obrigatório)
+
+O template nasce com copy genérica de demonstração ("Autor Digital",
+"centenas de pessoas"). Substituir em **todos** os pontos abaixo pelos
+termos do nicho da obra de origem:
+
+1. **Configs** (`config/`): `produtos.json` (escada de valor real),
+   `personas.json`, `funis.json`, `canais.json` (hashtags do nicho),
+   `email.json` (remetente real).
+2. **Frontend**: `app/page.tsx`, `components/Hero.tsx`, `PricingCard.tsx`,
+   `app/layout.tsx` (metadata), `app/admin/layout.tsx`, `app/captura/page.tsx`.
+3. **E-mails**: `templates/emails/*.html` (boas-vindas, nutrição, venda, reativação).
+4. **Docs**: `README.md`.
+
+Gate de verificação:
+```bash
+grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ README.md
+# deve retornar VAZIO
+```
+
+### 5.5.1 Alinhar o produto default do checkout
+
+A rota `/api/checkout` tem `produto` com default (`z.string().optional().default(...)`).
+**Alinhar esse default ao slug real do produto core em `config/produtos.json`** —
+senão o funil/analytics agrupa por um produto que não existe no catálogo:
+
+```bash
+# 1. Descobrir o slug real do produto core (R$ 97 no exemplo):
+python -c "import json; d=json.load(open('config/produtos.json',encoding='utf-8')); \
+[print(p['slug'], '|', p['tipo'], '|', p['preco']) for p in d['produtos']]"
+
+# 2. Editar frontend/app/api/checkout/route.ts e trocar o default:
+#    produto: z.string().optional().default("dentista-gestor-livro")
+```
+
+### 5.5.2 Sincronizar máquina criada antes do fix do checkout
+
+Máquinas geradas antes da correção do template não têm o checkout funcional:
+- a rota `/api/checkout` pode nem existir (404 no botão PAGAR), e
+- o `checkout/page.tsx` antigo posta `<form method="POST">` urlencoded vazio,
+  que quebra no `request.json()` da rota (retorna 500).
+
+Para sincronizar manualmente, copiar do template (`templates/maquina/`):
+```bash
+cd marketing/maquinas/{slug}
+cp ../../templates/maquina/frontend/app/api/checkout/route.ts frontend/app/api/checkout/
+cp ../../templates/maquina/frontend/app/checkout/page.tsx frontend/app/checkout/
+# Substituir {{SLUG}}/{{PRECO_CORE}}/{{TITULO}} pelos valores reais,
+# manter a copy personalizada do nicho e alinhar o produto default (5.5.1).
+```
+
+Verificar depois: a página renderiza com campos nome/e-mail e
+`POST /api/checkout` responde `{"success":true,...}` registrando o lead em
+`/api/leads/` do backend.
+
+### 5.6 Iniciar servidor de desenvolvimento
 
 ```bash
 npm run dev
@@ -339,7 +394,9 @@ Saída esperada:
 ✓ Ready in 2.3s
 ```
 
-### 5.6 Testar páginas
+> Se a porta 3000 estiver ocupada, o Next sobe em 3001 — ajuste os testes abaixo.
+
+### 5.7 Testar páginas e rotas de API
 
 Abrir no navegador:
 
@@ -351,6 +408,18 @@ Abrir no navegador:
 | http://localhost:3000/checkout | Checkout | Preço correto |
 | http://localhost:3000/admin | Dashboard | Cards de métricas |
 | http://localhost:3000/api/health | Health | `{"status":"ok"}` |
+
+Testar a rota de checkout (deve existir desde a geração — R11):
+```bash
+curl -s -X POST http://localhost:3000/api/checkout \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Dra. Teste", "email": "teste@exemplo.com", "produto": "obra"}'
+# Esperado: {"success":true,...,"valor":97}
+
+# Confirmar que o lead foi registrado no backend
+curl http://localhost:8000/api/leads
+# Esperado: lead "Dra. Teste" na lista
+```
 
 ---
 
@@ -651,6 +720,13 @@ curl http://localhost:8000/health
    curl http://localhost:8000/api/leads
    ```
 5. Verificar se redirecionou para /obrigado
+6. Testar checkout:
+   ```bash
+   curl -s -X POST http://localhost:3000/api/checkout \
+     -H "Content-Type: application/json" \
+     -d '{"nome": "João Silva", "email": "joao@teste.com", "produto": "livro"}'
+   ```
+7. Confirmar o lead no backend: `curl http://localhost:8000/api/leads`
 
 ### 10.4 Testar API de pagamento (Stripe)
 

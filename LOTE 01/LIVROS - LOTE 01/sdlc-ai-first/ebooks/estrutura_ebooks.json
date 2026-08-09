@@ -1,0 +1,84 @@
+{
+  "ebooks": [
+    {
+      "indice": 1,
+      "titulo": "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+      "diretorio": "ebooks/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c/imagens/thumbnail.png",
+      "caracteres": 46513,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 2,
+      "titulo": "O Controlador de Voo: Papel Humano, Agente e Verificação",
+      "diretorio": "ebooks/sdlc-ai-first--eb-02-o-controlador-de-voo-papel-humano-agente",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-02-o-controlador-de-voo-papel-humano-agente/sdlc-ai-first--eb-02-o-controlador-de-voo-papel-humano-agente.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-02-o-controlador-de-voo-papel-humano-agente/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-02-o-controlador-de-voo-papel-humano-agente/imagens/thumbnail.png",
+      "caracteres": 46295,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 3,
+      "titulo": "Plano de Voo: Da Intenção à Spec Executável",
+      "diretorio": "ebooks/sdlc-ai-first--eb-03-plano-de-voo-da-intencao-a-spec-executav",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-03-plano-de-voo-da-intencao-a-spec-executav/sdlc-ai-first--eb-03-plano-de-voo-da-intencao-a-spec-executav.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-03-plano-de-voo-da-intencao-a-spec-executav/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-03-plano-de-voo-da-intencao-a-spec-executav/imagens/thumbnail.png",
+      "caracteres": 46603,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 4,
+      "titulo": "Cartografia do Domínio: Design Orientado a Agentes",
+      "diretorio": "ebooks/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado/imagens/thumbnail.png",
+      "caracteres": 46561,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 5,
+      "titulo": "Os Motores: Harness, Skills, MCPs e Worktrees",
+      "diretorio": "ebooks/sdlc-ai-first--eb-05-os-motores-harness-skills-mcps-e-worktre",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-05-os-motores-harness-skills-mcps-e-worktre/sdlc-ai-first--eb-05-os-motores-harness-skills-mcps-e-worktre.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-05-os-motores-harness-skills-mcps-e-worktre/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-05-os-motores-harness-skills-mcps-e-worktre/imagens/thumbnail.png",
+      "caracteres": 45846,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 6,
+      "titulo": "O Radar: Verificação Adversarial e Evidência",
+      "diretorio": "ebooks/sdlc-ai-first--eb-06-o-radar-verificacao-adversarial-e-eviden",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-06-o-radar-verificacao-adversarial-e-eviden/sdlc-ai-first--eb-06-o-radar-verificacao-adversarial-e-eviden.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-06-o-radar-verificacao-adversarial-e-eviden/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-06-o-radar-verificacao-adversarial-e-eviden/imagens/thumbnail.png",
+      "caracteres": 46211,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 7,
+      "titulo": "Autorização de Pouso: Release e Observabilidade",
+      "diretorio": "ebooks/sdlc-ai-first--eb-07-autorizacao-de-pouso-release-e-observabi",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-07-autorizacao-de-pouso-release-e-observabi/sdlc-ai-first--eb-07-autorizacao-de-pouso-release-e-observabi.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-07-autorizacao-de-pouso-release-e-observabi/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-07-autorizacao-de-pouso-release-e-observabi/imagens/thumbnail.png",
+      "caracteres": 45064,
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 8,
+      "titulo": "Debriefing: O Loop de Aprendizado que Evolui o Ciclo & Combustível: Economia de Tokens e Custo de Contexto",
+      "diretorio": "ebooks/sdlc-ai-first--eb-08-debriefing-o-loop-de-aprendizado-que-evo",
+      "caminho_epub": "ebooks/sdlc-ai-first--eb-08-debriefing-o-loop-de-aprendizado-que-evo/sdlc-ai-first--eb-08-debriefing-o-loop-de-aprendizado-que-evo.epub",
+      "capa": "ebooks/sdlc-ai-first--eb-08-debriefing-o-loop-de-aprendizado-que-evo/imagens/capa.png",
+      "thumbnail": "ebooks/sdlc-ai-first--eb-08-debriefing-o-loop-de-aprendizado-que-evo/imagens/thumbnail.png",
+      "caracteres": 130676,
+      "status": "concluido_autonomo"
+    }
+  ]
+}

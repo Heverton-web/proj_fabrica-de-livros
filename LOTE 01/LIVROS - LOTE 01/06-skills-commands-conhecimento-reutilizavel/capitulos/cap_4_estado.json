@@ -1,0 +1,15 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "II",
+    "capitulo": "4"
+  },
+  "estado_execucao": "concluido_autonomo",
+  "payload_estrategico": {
+    "pilares": [
+      "Scripts executáveis e economia de contexto",
+      "References e assets como camada profunda",
+      "Validação e teste de uma skill antes da publicação"
+    ]
+  }
+}

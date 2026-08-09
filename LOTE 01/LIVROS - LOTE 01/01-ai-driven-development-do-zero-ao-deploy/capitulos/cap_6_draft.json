@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "III", "capitulo": "6" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 5: subagentes como tripulantes especializados com contexto isolado e MCP como protocolo universal de integração — agora o capítulo mostra o diário de bordo (CLAUDE.md/AGENTS.md) que todo tripulante, humano ou agente, consulta antes de aceitar uma ordem de serviço.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "CLAUDE.md/AGENTS.md como diário de bordo do estaleiro: concisão e settingSources explícito",
+        "escopo": "Entra: CLAUDE.md como arquivo de contexto/instruções lido automaticamente pelo Claude Code, mas que exige settingSources explícito no Agent SDK para ser carregado fora do CLI; AGENTS.md como fallback multi-ferramenta quando não há CLAUDE.md; o orçamento de ~150-200 instruções que um LLM frontier segue de forma confiável e por que isso recomenda concisão (idealmente <300 linhas); o risco de regras contraditórias com o comportamento embutido do harness. Fica de fora: sintaxe completa de hooks e settings.json (fica para o Capítulo 7); detalhes de MCP (já coberto no Capítulo 5).",
+        "ancora_visual": "flowchart TD mostrando a Tripulação (novo agente/subagente) entrando no Estaleiro e consultando o Diário de Bordo antes de qualquer ordem de serviço: só é lido se o settingSources do Harness declarar a fonte explicitamente; um Diário de Bordo longo demais estoura o orçamento de instruções que a tripulação consegue seguir com confiabilidade, gerando ordens contraditórias.",
+        "entrega_tecnica": "Python: trecho usando o Claude Agent SDK (ClaudeAgentOptions) configurando settingSources=['project'] para carregar o CLAUDE.md do diretório, com uma função que audita o tamanho do arquivo e alerta se ultrapassar o orçamento de linhas recomendado.",
+        "evolucao_leitor": "De 'escrevo um arquivo de instruções e presumo que o agente sempre o lê' para 'eu configuro explicitamente a fonte de settings e disciplino o tamanho do diário de bordo para caber no orçamento real de instruções que um LLM segue com confiabilidade'.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Chain-of-thought, ReAct, Tree of Thoughts e Reflexion como andaime de raciocínio",
+        "escopo": "Entra: chain-of-thought como raciocínio passo a passo antes de agir; ReAct como o ciclo pensamento-ação-observação que intercala raciocínio com uso de ferramentas; Tree of Thoughts como exploração e comparação de ramos alternativos antes de comprometer uma decisão; Reflexion como autocrítica sobre uma tentativa anterior, usando o próprio histórico como sinal de aprendizado dentro da mesma sessão. Fica de fora: comparação de benchmarks acadêmicos entre as quatro arquiteturas e implementação de fine-tuning (são andaimes de prompt/orquestração, não treinamento de modelo).",
+        "ancora_visual": "stateDiagram-v2 do andaime de raciocínio na Ponte de Comando: Pensamento livre (chain-of-thought) -> ciclo Ação-Observação (ReAct) -> ramificação em Rotas de Reparo alternativas antes de escolher uma (Tree of Thoughts) -> Diário de Bordo da tentativa anterior sendo relido antes de uma nova tentativa (Reflexion). Duas camadas de analogia: uma para o andaime geral (a tripulação pensando em voz alta antes de agir) e outra específica para Reflexion (por que reler o próprio diário de bordo de uma falha anterior é estruturalmente diferente de simplesmente tentar de novo).",
+        "entrega_tecnica": "Python: implementação simplificada de um loop ReAct com uma etapa de Reflexion (pensamento -> ação -> observação -> se falhar, autocrítica registrada e nova tentativa com o histórico de falha no contexto).",
+        "evolucao_leitor": "De 'eu só preciso pedir para o agente pensar antes de agir' para 'eu escolho o andaime de raciocínio certo para o risco da tarefa — linear para o simples, ramificado para decisões caras, com autocrítica para tarefas que toleram mais de uma tentativa'.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Context engineering como evolução do prompt engineering: curar o conjunto ótimo de tokens",
+        "escopo": "Entra: context engineering como a disciplina de curar e manter o conjunto ótimo de tokens que chegam à janela de contexto (não só o texto do prompt, mas system prompt, ferramentas, histórico e resultados recuperados); a pergunta-guia 'qual configuração de contexto tem maior probabilidade de gerar o comportamento desejado do modelo'; compaction como sumarização do histórico quando a janela se aproxima do limite. Fica de fora: implementação detalhada de RAG semântico e das técnicas específicas de economia de tokens (caveman, lean-ctx, headroom ficam para o Capítulo 9).",
+        "ancora_visual": "flowchart LR do Estaleiro decidindo o que entra na Janela de Contexto da Ponte de Comando: Diário de Bordo (CLAUDE.md), Ordens de Serviço em aberto, Ferramentas disponíveis e Histórico de reparos anteriores competindo por espaço limitado no convés; um ponto de decisão de Compaction resume o histórico antigo antes que o convés (contexto) transborde.",
+        "entrega_tecnica": "Python: função de compaction que, ao aproximar-se de um limite de tokens do histórico de conversa, sumariza turnos antigos preservando decisões críticas e descarta resultados de ferramentas redundantes.",
+        "evolucao_leitor": "De 'prompt engineering é escolher as palavras certas' para 'meu trabalho é curar o conjunto inteiro de tokens que chega ao modelo — prompt, ferramentas e histórico — porque é essa configuração completa, não a frase isolada, que determina o comportamento do agente'.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

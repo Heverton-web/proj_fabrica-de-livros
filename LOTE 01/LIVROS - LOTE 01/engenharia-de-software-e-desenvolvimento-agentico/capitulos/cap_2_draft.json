@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "2" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 1: o modelo de camadas OSI/TCP-IP — agora aplicado à camada de aplicação, onde o DNS é a primeira estação da esteira antes de qualquer pacote de dados sair da fábrica",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Hierarquia do DNS: raiz, TLD, autoritativo",
+        "escopo": "Entra: fluxo de resolução (cache local, resolvedor recursivo, servidor raiz, servidor de TLD, servidor autoritativo), papel de cada elo, resolução recursiva vs. iterativa. Fica fora: detalhes de implementação de servidores DNS específicos (BIND, PowerDNS) e DNSSEC (fora do escopo do capítulo).",
+        "ancora_visual": "sequenceDiagram mostrando a requisição do cliente percorrendo a esteira de resolução da fábrica — Cliente -> Cache Local -> Resolvedor Recursivo -> Servidor Raiz -> Servidor de TLD -> Servidor Autoritativo -> retorno do endereço IP até o cliente, com cada estação carimbando a peça (resposta) antes de repassar",
+        "entrega_tecnica": "bash: script com dig/nslookup demonstrando a consulta a cada elo da cadeia (+trace) e leitura da saída",
+        "evolucao_leitor": "De 'DNS é uma caixa-preta que só falha às vezes' para 'consigo rastrear exatamente em qual estação da esteira uma resolução travou'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Tipos de registro (A, AAAA, CNAME, MX) e seus usos",
+        "escopo": "Entra: registros A, AAAA, CNAME, MX e TXT, quando usar cada um, exemplo de zona DNS real. Fica fora: registros raros (SRV, CAA, NAPTR) e provisionamento de zona via API de provedores específicos.",
+        "ancora_visual": "erDiagram representando a zona DNS como o depósito de peças da fábrica, com cada tipo de registro como uma gaveta de peça padronizada (A para IPv4, AAAA para IPv6, CNAME para apelido de estação, MX para rota de correspondência)",
+        "entrega_tecnica": "json: exemplo de arquivo de zona DNS estruturado (registros A, AAAA, CNAME, MX, TXT) comentado",
+        "evolucao_leitor": "De 'só sei que existe registro A' para 'escolho o tipo de registro certo para cada necessidade de arquitetura, sem improviso'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Cache, TTL e propagação: por que mudanças de DNS demoram",
+        "escopo": "Entra: TTL como contrato de validade da peça em cache, propagação como processo assíncrono e não instantâneo, consistência eventual entre resolvedores globais, DNS como primeiro ponto de falha diagnosticado em produção. Fica fora: algoritmos internos de cache de resolvedores específicos.",
+        "ancora_visual": "flowchart TD mostrando a peça (registro DNS) circulando por múltiplos depósitos regionais da fábrica com carimbos de validade (TTL) distintos, e o ponto de decisão 'carimbo venceu? buscar peça nova na estação autoritativa'",
+        "entrega_tecnica": "python: script que consulta TTL restante de um registro e simula contagem regressiva até expiração de cache",
+        "evolucao_leitor": "De 'mudei o DNS e não entendo por que não propagou' para 'projeto a janela de propagação e evito incidentes de corte abrupto de TTL em produção'",
+        "conceito_denso": true
+      }
+    ]
+  }
+}

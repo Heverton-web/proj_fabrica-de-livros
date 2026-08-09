@@ -94,6 +94,11 @@ def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str) -> dict:
 
 def criar_maquina(slug: str, tipo: str = "completo"):
     """Função principal: cria a máquina de vendas."""
+    # UTF-8 no Windows (cp1252 quebra emojis do banner) — não depender só do main()
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     titulo = slug_para_titulo(slug)
     obra_info = verificar_obra_existe(slug)
     destino = OUTPUT_BASE / slug
@@ -145,8 +150,50 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         obra_dest = destino / "conteudo"
         obra_dest.mkdir(exist_ok=True)
         obra_src = Path(obra_info["path"])
-        for item in obra_src.glob("*.md"):
-            shutil.copy2(item, obra_dest / item.name)
+        # Markdown (obra, playbook) + PDF + EPUB
+        for pattern in ["*.md", "*.pdf", "*.epub"]:
+            for item in obra_src.glob(pattern):
+                shutil.copy2(item, obra_dest / item.name)
+        # Derivados da mesma coleção também alimentam a máquina.
+        # Fonte confiável: manifesto da coleção (output/colecoes/<slug>.json)
+        # — lista membros reais com slug/caminho (nomenclatura curta V5).
+        colecao_manifesto = BASE_DIR / "output" / "colecoes" / f"{slug}.json"
+        membros_copiados = set()
+        if colecao_manifesto.exists():
+            try:
+                dados_colecao = json.loads(colecao_manifesto.read_text(encoding="utf-8"))
+                for membro in dados_colecao.get("membros", []):
+                    slug_membro = membro.get("slug", "") if isinstance(membro, dict) else str(membro)
+                    if not slug_membro or slug_membro == slug:
+                        continue
+                    m_dir = OBRA_BASE / slug_membro
+                    if not m_dir.exists():
+                        continue
+                    for item in m_dir.rglob("*"):
+                        if not item.is_file() or item.suffix.lower() not in (".md", ".pdf", ".epub"):
+                            continue
+                        # Evitar duplicar nomes comuns (ex.: livro_final.md de outro membro)
+                        if item.name in membros_copiados:
+                            continue
+                        membros_copiados.add(item.name)
+                        shutil.copy2(item, obra_dest / item.name)
+            except (KeyError, TypeError, OSError) as e:
+                print(f"    ⚠️  Coleção lida com erro ({e}) — derivados não copiados")
+        elif not membros_copiados:
+            # Fallback: primeira palavra do slug nos caminhos dos tipos derivados
+            primeira_palavra = slug.split("-")[0]
+            for tipo in ("playbooks", "ebooks", "decks", "lead-magnets"):
+                base = OBRA_BASE / tipo
+                if not base.exists():
+                    continue
+                for d in base.rglob("*"):
+                    if not d.is_file() or d.suffix.lower() not in (".md", ".pdf", ".epub"):
+                        continue
+                    if primeira_palavra in d.as_posix().split("/"):
+                        if d.name in membros_copiados:
+                            continue
+                        membros_copiados.add(d.name)
+                        shutil.copy2(d, obra_dest / d.name)
         # Copiar artes se existirem
         artes_src = obra_src / "artes"
         if artes_src.exists():
@@ -155,6 +202,14 @@ def criar_maquina(slug: str, tipo: str = "completo"):
             for item in artes_src.iterdir():
                 if item.suffix in [".png", ".jpg", ".jpeg", ".webp", ".svg"]:
                     shutil.copy2(item, artes_dest / item.name)
+        # Capa/imagens alternativas (imagens/ ou capa.*)
+        capa_dest = destino / "frontend" / "public" / "artes"
+        capa_dest.mkdir(parents=True, exist_ok=True)
+        for pat in ("imagens/capa.png", "imagens/capa.jpg", "capa.png", "capa.jpg"):
+            f = obra_src / pat
+            if f.exists():
+                shutil.copy2(f, capa_dest / f.name)
+                break
     else:
         print("  [3/6] Obra não encontrada localmente (pode ter sido gerada em outro diretório)")
 
@@ -209,17 +264,25 @@ def criar_maquina(slug: str, tipo: str = "completo"):
     print(f"  📄 {total_files} arquivos gerados")
     print(f"\n  PRÓXIMOS PASSOS:")
     print(f"  1. cd {destino}")
-    print(f"  2. Revisar config/*.json (produtos, funis, personas)")
-    print(f"  3. Configurar .env (copiar de .env.example)")
+    print(f"  2. PERSONALIZAR por nicho: config/*.json (produtos, funis, personas, canais, email)")
+    print(f"     + copy do frontend (app/page.tsx, Hero, PricingCard, layout, admin)")
+    print(f"     + e-mails (templates/emails/*.html) + README.md")
+    print(f"     (o template nasce com copy genérica — substitua pelos termos do nicho)")
+    print(f"  3. Configurar .env (copiar de .env.example — inclui BACKEND_URL)")
     print(f"  4. cd frontend && npm install && npm run dev")
     print(f"  5. cd backend && pip install -r requirements.txt && uvicorn app.main:app")
-    print(f"  6. Deploy: bash scripts/deploy.sh")
+    print(f"  6. Testar /api/checkout: curl -X POST http://localhost:3000/api/checkout ...")
+    print(f"  7. Deploy: bash scripts/deploy.sh")
     print(f"{'='*60}\n")
 
     return destino
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     if len(sys.argv) < 2:
         print("Uso: python scripts/criar-maquina-vendas.py <slug> [--tipo completo|parcial|landing|backend]")
         print("\nExemplo:")

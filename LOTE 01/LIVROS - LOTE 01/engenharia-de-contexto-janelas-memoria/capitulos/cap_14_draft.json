@@ -1,0 +1,21 @@
+{
+  "slug": "livros/engenharia-de-contexto-janelas-memoria",
+  "capitulo": 14,
+  "titulo": "A Espionagem Invisível: O Estudo de Caso EchoLeak",
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": "Capítulo 13: O Intruso do Pergaminho Oculto, explicando as ameaças de injeção indireta",
+  "pilares": [
+    {
+      "titulo": "Pilar 1: O Conceito de Injeção Indireta Zero-Click",
+      "conteudo": "Investigação detalhada sobre como invasores inserem instruções imperativas ocultas em emails externos, fazendo com que o LLM execute ações no SharePoint corporativo sem interação do usuário (zero-click)."
+    },
+    {
+      "titulo": "Pilar 2: O Canal de Exfiltração Silenciosa via Markdown",
+      "conteudo": "Explicação técnica sobre a vulnerabilidade EchoLeak (CVE-2025-32711), onde o LLM codifica dados secretos em URLs de imagens Markdown (![]()), exfiltrando-as automaticamente ao renderizar o pixel no cliente."
+    },
+    {
+      "titulo": "Pilar 3: Estratégias de Mitigação e Isolamento Contextual",
+      "conteudo": "Definição de defesas robustas, incluindo sanitização de imagens Markdown no frontend, validação de allowlist de domínios, isolamento de ferramentas não confiáveis e verificação estrutural com o Model Context Protocol (MCP)."
+    }
+  ]
+}

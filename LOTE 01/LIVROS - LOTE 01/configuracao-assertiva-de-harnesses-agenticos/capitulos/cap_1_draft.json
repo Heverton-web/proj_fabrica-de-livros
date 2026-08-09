@@ -1,0 +1,37 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "I",
+    "capitulo": "1"
+  },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "A Turbina Probabilística e o Fluxo Estocástico das LLMs",
+        "escopo": "Compreensão da natureza inerentemente probabilística e estocástica dos LLMs (turbina), contrastando com a necessidade de previsibilidade em sistemas de produção. focado no risco de fluxo descontrolado ('água bruta').",
+        "ancora_visual": "stateDiagram-v2 mostrando os estados de transição probabilística e o caos do fluxo sem controle (caos estocástico vs. represamento)",
+        "entrega_tecnica": "python - código mostrando simulação do comportamento estocástico do LLM (ex.: variação de temperatura e amostragem de tokens acumulando jitter)",
+        "evolucao_leitor": "de 'achar que o LLM é um banco de dados confiável' para 'compreender o caos intrínseco da vazão estocástica'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "O Agent Harness como Concreto Armado da Governança",
+        "escopo": "Definição estrutural de um Agent Harness. A camada rígida determinística que envolve o LLM para interceptar e controlar o fluxo, loops de execução e ferramentas.",
+        "ancora_visual": "flowchart TD mostrando o Agent Harness envolvendo o LLM, com Comportas de Runtime, Sensores de Telemetria e Disjuntores Semânticos regulando o fluxo",
+        "entrega_tecnica": "python - esqueleto de um Agent Harness determinístico (classe abstrata com controle de loops de execução e limite rígido de chamadas)",
+        "evolucao_leitor": "de 'fazer chamadas diretas ao LLM' para 'arquitetar uma camada rígida de contenção e controle de execução'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "O Engenheiro de Controle de Vazão e o Fluxo Informacional",
+        "escopo": "O papel estratégico do engenheiro de controle de vazão (o leitor) na mediação entre flexibilidade cognitiva do LLM e previsibilidade estrita de execução por meio do harness.",
+        "ancora_visual": "sequenceDiagram do fluxo controlado de uma tarefa agêntica, onde as Comportas de Runtime e Canais de Escoamento regulam a vazão de tokens sem sufocar as decisões cognitivas do LLM",
+        "entrega_tecnica": "python - implementação de um mecanismo de backpressure de vazão de tokens simplificado que regula dinamicamente o fluxo informacional",
+        "evolucao_leitor": "de 'desenvolvedor de prompts' para 'Engenheiro de Controle de Vazão' que gerencia a energia da turbina via comportas robustas",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

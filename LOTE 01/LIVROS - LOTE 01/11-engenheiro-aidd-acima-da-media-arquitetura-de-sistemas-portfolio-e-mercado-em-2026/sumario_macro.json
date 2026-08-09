@@ -1,0 +1,161 @@
+{
+  "slug": "livros/11-engenheiro-aidd-acima-da-media-arquitetura-de-sistemas-portfolio-e-mercado-em-2026",
+  "titulo_obra": "O engenheiro(a) AIDD acima da média",
+  "subtitulo": "Arquitetura de sistemas, portfólio e mercado em 2026",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "min_referencias_por_capitulo": 20,
+  "motivo_condutor": {
+    "nome": "O mapa do maquinista e a estação de destino",
+    "tese": "Todo maquinista mediano sabe acelerar a locomotiva; o maquinista acima da média conhece o mapa inteiro da viagem — os trilhos (a arquitetura que dá forma ao sistema), as provas do percurso (o portfólio que documenta cada estação construída) e a estação de destino (o mercado onde o valor é criado e reconhecido). Em 2026, com agentes de código fazendo o trabalho braçal, o que separa o engenheiro comum do acima da média não é a velocidade de digitação — é a visão do sistema completo: quem entende a arquitetura, prova o que constrói e se posiciona onde o valor está sendo criado."
+  },
+  "introducao": "Este livro trata da transição que define a carreira de engenharia em 2026: a passagem do engenheiro escritor de código para o engenheiro orquestrador de sistemas. Com os agentes de código executando a manufatura de software em escala — da especificação à revisão — o diferencial humano deixou de ser a velocidade de digitação e passou a ser a visão do sistema inteiro. Nos capítulos que seguem, o leitor aprende as três fronteiras que separam o engenheiro mediano do acima da média: a arquitetura de sistemas (o desenho que sobrevive a mudanças de modelo e escala), o portfólio de provas (a evidência pública de que se constrói sistemas completos, não demos) e o posicionamento de mercado (entender onde o valor está sendo criado em 2026 e como apresentar esse valor em entrevistas e negociações). Do harness engineering como assinatura profissional à execução durável, do RAG ao MCP, do GitHub como portfólio vivo ao system design sob pressão — o livro transforma a trinca arquitetura, portfólio e mercado em um programa de carreira executável, com o mesmo rigor de evidência que a disciplina AIDD exige dos sistemas que construímos.",
+  "conclusao": "O engenheiro acima da média em 2026 não é aquele que compete com a IA — é aquele que desenha o sistema no qual a IA opera. O livro fecha com a síntese da trinca: a arquitetura como o trilho que dá direção ao trabalho, o portfólio como a prova que transforma competência em reputação, e o mercado como a estação onde essa reputação encontra reconhecimento e valor. Quem domina os três — desenha sistemas que sobrevivem a modelos, prova publicamente o que constrói e se posiciona onde o valor está sendo criado — não depende de sorte de mercado: carrega o mapa inteiro da via, e é isso que o torna, de forma durável, um engenheiro acima da média.",
+  "tabela_de_tamanhos_referencia": "G — 4 Partes, 12 capítulos, ~120 páginas",
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "A Mudança de Papel: do escritor de código ao orquestrador de sistemas",
+      "capitulos": [
+        {
+          "capitulo": 1,
+          "titulo": "O fim do monopólio da digitação: por que o papel do engenheiro mudou em 2026",
+          "objetivo": "Estabelecer a tese central do livro: com agentes de código executando a manufatura, a velocidade de digitação deixou de ser o diferencial — o que separa o engenheiro comum do acima da média é a visão do sistema inteiro.",
+          "pilares_previstos": [
+            "A commodity da digitação: o que os agentes de código tornaram barato",
+            "O novo diferencial: especificar, orquestrar, revisar e governar",
+            "Evidência da transição: casos reais de times que multiplicaram produtividade"
+          ]
+        },
+        {
+          "capitulo": 2,
+          "titulo": "AIDD na prática: o manifesto e as quatro habilidades do orquestrador",
+          "objetivo": "Apresentar o AIDD (AI-Driven Development) como disciplina formal e as quatro habilidades que definem o orquestrador: especificação, orquestração, revisão e governança do harness.",
+          "pilares_previstos": [
+            "O manifesto AIDD: o desenvolvedor como parceiro deliberado da IA",
+            "As quatro habilidades: especificar, orquestrar, revisar, governar",
+            "Do pleno ao sênior: o que muda em cada nível de maturidade AIDD"
+          ]
+        },
+        {
+          "capitulo": 3,
+          "titulo": "O harness como assinatura: guias, sensores e a fábrica que se auto-mantém",
+          "objetivo": "Ensinar harness engineering como a habilidade-assinatura do engenheiro acima da média: guias (feedforward), sensores (feedback), legibilidade de agentes e controle de entropia do repositório.",
+          "pilares_previstos": [
+            "Agent = Model + Harness: a camada que o engenheiro controla",
+            "Guias e sensores: feedforward e feedback na fábrica de código",
+            "Controle de entropia: linters, garbage collection e repositório legível para agentes"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "Arquitetura de Sistemas: o desenho que sobrevive aos modelos",
+      "capitulos": [
+        {
+          "capitulo": 4,
+          "titulo": "Workflows vs agentes: a regra de ouro da arquitetura de IA",
+          "objetivo": "Ensinar a primeira decisão arquitetural de qualquer sistema com IA: quando usar workflows determinísticos e quando usar agentes autônomos — e como essa escolha define custo, previsibilidade e auditabilidade.",
+          "pilares_previstos": [
+            "A regra de ouro: workflows para previsibilidade, agentes para exploração",
+            "Padrões de workflow: prompt chaining, routing, parallelization, evaluator-optimizer",
+            "Trade-offs: custo, latência, governança e quando a autonomia compensa"
+          ]
+        },
+        {
+          "capitulo": 5,
+          "titulo": "Execução durável e resiliência: o estado que sobrevive a falhas",
+          "objetivo": "Ensinar a disciplina de sistemas distribuídos aplicada a agentes: durable execution, retries stateful, event-sourcing de estado e o desenho de sistemas que se recuperam de falhas de LLM e infraestrutura.",
+          "pilares_previstos": [
+            "Por que agentes exigem disciplina de sistemas distribuídos",
+            "Durable execution: retries, checkpoints e event-sourcing de estado",
+            "Degradação graciosa: o que acontece quando a API do modelo cai"
+          ]
+        },
+        {
+          "capitulo": 6,
+          "titulo": "RAG, MCP e observabilidade: o sistema completo do agente",
+          "objetivo": "Ensinar a arquitetura completa de um agente em produção: RAG como camada de conhecimento, MCP como protocolo de ferramentas e observabilidade como o radar que torna o sistema operável.",
+          "pilares_previstos": [
+            "RAG e GraphRAG: a camada de conhecimento que alimenta o contexto",
+            "MCP: o protocolo que desacopla modelo e ferramentas",
+            "Observabilidade: traces, custo por requisição e depuração do raciocínio"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "O Portfólio de Provas: evidência pública de construção",
+      "capitulos": [
+        {
+          "capitulo": 7,
+          "titulo": "Portfólio vs currículo: a evidência que abre portas",
+          "objetivo": "Estabelecer que em 2026 o portfólio vence o currículo: recrutadores gastam segundos no CV, mas engajam com sistemas completos, executáveis e mensuráveis — e ensinar a arquitetura de um portfólio de elite.",
+          "pilares_previstos": [
+            "Por que o portfólio supera o currículo em 2026",
+            "A regra dos 3-5 projetos de ponta a ponta",
+            "Métricas de impacto: a linguagem que recrutadores entendem"
+          ]
+        },
+        {
+          "capitulo": 8,
+          "titulo": "Projetos que provam senioridade: do protótipo ao sistema em produção",
+          "objetivo": "Ensinar a construir projetos de portfólio que demonstram senioridade: não demos, mas sistemas com arquitetura, testes, observabilidade e tratamento de falhas — o ciclo de vida completo da IA.",
+          "pilares_previstos": [
+            "O ciclo de vida completo: dados, arquitetura, evals, deploy, monitoramento",
+            "Stack que prova senioridade: RAG avançado, MCP, agentes, harnesses",
+            "README como documentação técnica: decisões, trade-offs e autocrítica"
+          ]
+        },
+        {
+          "capitulo": 9,
+          "titulo": "GitHub, escrita técnica e marca pessoal: a presença que trabalha 24/7",
+          "objetivo": "Ensinar a terceira camada do portfólio: o GitHub como portfólio vivo (commits iterativos, testes, histórico), a escrita técnica como prova de autoridade e a marca pessoal que funciona sem você estar presente.",
+          "pilares_previstos": [
+            "GitHub como portfólio vivo: histórico, testes e código original",
+            "Escrita técnica: post-mortems, comparações e prova de autoridade",
+            "Marca pessoal: a presença digital que trabalha 24/7"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "O Mercado em 2026: onde o valor está e como se posicionar",
+      "capitulos": [
+        {
+          "capitulo": 10,
+          "titulo": "O mapa do mercado: salários, vagas e a explosão do AI engineer",
+          "objetivo": "Apresentar o retrato do mercado em 2026 com dados: crescimento de vagas de IA, prêmio salarial do profissional com LLMs, a retração júnior e onde o valor está sendo criado.",
+          "pilares_previstos": [
+            "Os números de 2026: vagas, salários e o prêmio da especialização em IA",
+            "O perfil T-shaped: profundidade em IA com amplitude de sistemas",
+            "A retração júnior e a porta de entrada: como entrar sem anos de experiência"
+          ]
+        },
+        {
+          "capitulo": 11,
+          "titulo": "Entrevistas e system design: provar arquitetura sob pressão",
+          "objetivo": "Ensinar a fase de provas do mercado: a evolução das entrevistas de system design em 2026 (AI-aware design, cost reasoning, failure modes) e como apresentar o portfólio como evidência de senioridade.",
+          "pilares_previstos": [
+            "A nova rubrica de system design: custo, falhas e design sensível a IA",
+            "O portfólio como evidência em entrevistas: narrar, não listar",
+            "Negociação: como o prêmio de IA se materializa na proposta"
+          ]
+        },
+        {
+          "capitulo": 12,
+          "titulo": "O plano de carreira: do pleno ao engenheiro acima da média",
+          "objetivo": "Fechar o livro com um programa executável de carreira: a síntese da trinca arquitetura-portfólio-mercado em um plano de 12 meses, com metas, marcos e a mentalidade que sustenta o diferencial.",
+          "pilares_previstos": [
+            "O plano de 12 meses: arquitetura, portfólio e mercado em ciclos",
+            "A mentalidade de evidência: medir o próprio progresso como sistema",
+            "O diferencial durável: o que nenhum agente de código vai substituir"
+          ]
+        }
+      ]
+    }
+  ]
+}

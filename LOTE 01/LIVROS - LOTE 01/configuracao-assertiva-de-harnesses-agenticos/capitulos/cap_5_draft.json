@@ -1,0 +1,37 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "II",
+    "capitulo": "5"
+  },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 4: o conceito de validação feedforward na Pré-Tarefa (Pre-Task Verification), estendendo agora para controle de realimentação (feedback) de vazão de tokens.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Transição Métrica: Da Gestão de Requisições (RPM) à Pressão de Tokens por Minuto (TPM)",
+        "escopo": "Explicar por que a métrica tradicional de RPM é insuficiente para agentes (onde uma única chamada pode engolir milhares de tokens de contexto) e como o monitoramento em tempo real de TPM e tokens acumulados previne a saturação da API.",
+        "ancora_visual": "flowchart TD mostrando o fluxo de tokens na usina: o sensor de telemetria medindo o fluxo de tokens por requisição, comparando com a capacidade do canal de escoamento e gerando alertas de pressão hidráulica de API.",
+        "entrega_tecnica": "Criação de um decorador ou classe em Python para medição dinâmica de tokens consumidos por requisição e atualização do acumulador TPM.",
+        "evolucao_leitor": "De medir requisições cegas para controlar a vazão hidráulica real de tokens em tempo real.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Algoritmos de Controle de Fluxo por Orçamento de Tokens (Token-Budget)",
+        "escopo": "Estruturação matemática e algorítmica de um balde de tokens (token bucket) dinâmico integrado ao harness. Modelagem do orçamento financeiro por sessão/agente e restrições dinâmicas para evitar colapso de rate limit.",
+        "ancora_visual": "stateDiagram-v2 representando as comportas de runtime controladas pelo orçamento de tokens: estados Ativo (Vazão Normal), Alerta (Orçamento Crítico) e Repouso/Bloqueio (Vazão Suspensa para Recarga).",
+        "entrega_tecnica": "Implementação em Python de um Token Bucket limitador com reabastecimento assíncrono (asyncio) e controle de cota financeira estrita por sessão.",
+        "evolucao_leitor": "De sofrer com estouros inesperados de cota para governar orçamentos determinísticos de execução.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Estratégias de Recuo Exponencial com Jitter Dinâmico",
+        "escopo": "Implementação de retentativas inteligentes quando a pressão atinge o limite máximo. O uso do Jitter dinâmico (vertedouro de Jitter) para evitar o fenômeno da manada faminta (thundering herd) em pipelines altamente concorrentes.",
+        "ancora_visual": "sequenceDiagram detalhando o fluxo de concorrência: múltiplas threads/agentes batendo no limite, recebendo HTTP 429, aplicando recuo exponencial com jitter aleatório e reentrando no canal de escoamento de forma escalonada.",
+        "entrega_tecnica": "Função Python assíncrona com decorator de retry calculando dinamicamente backoff exponencial com Jitter (Full Jitter) para chamadas de LLM resilientes.",
+        "evolucao_leitor": "De causar travamento em pipelines concorrentes por colisões repetitivas para suavizar picos de vazão informacional de forma elástica.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "E-mail Marketing e Automação: O Relacionamento de Longo Prazo & Content Marketing e Inbound: Atração Baseada em Valor — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "marketing-na-era-digital",
+  "capitulos_fonte_livro_mae": [
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30"
+  ],
+  "introducao": "Recorte investigativo sobre: E-mail Marketing e Automação: O Relacionamento de Longo Prazo, Content Marketing e Inbound: Atração Baseada em Valor, Lifecycle Marketing: Nutrição e Ciclo de Vida do Cliente, Fidelização: Programas de Lealdade e Comunidades de Marca, Copywriting Digital: Escrevendo para Converter em Cada Canal, Social Media Marketing: Construindo Comunidade e Autoridade, Marketing de Influência: Autoridade Transferida, Branding Digital: Identidade, Posicionamento e Presença de Marca, Growth Marketing: Experimentação e Canais de Crescimento, Marketing B2B: Geração de Demanda e Account-Based Marketing.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "E-mail Marketing e Automação: O Relacionamento de Longo Prazo",
+            "Content Marketing e Inbound: Atração Baseada em Valor",
+            "Lifecycle Marketing: Nutrição e Ciclo de Vida do Cliente"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "E-mail Marketing e Automação: O Relacionamento de Longo Prazo",
+            "Content Marketing e Inbound: Atração Baseada em Valor",
+            "Lifecycle Marketing: Nutrição e Ciclo de Vida do Cliente"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "E-mail Marketing e Automação: O Relacionamento de Longo Prazo",
+            "Content Marketing e Inbound: Atração Baseada em Valor",
+            "Lifecycle Marketing: Nutrição e Ciclo de Vida do Cliente"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "E-mail Marketing e Automação: O Relacionamento de Longo Prazo",
+            "Content Marketing e Inbound: Atração Baseada em Valor",
+            "Lifecycle Marketing: Nutrição e Ciclo de Vida do Cliente"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

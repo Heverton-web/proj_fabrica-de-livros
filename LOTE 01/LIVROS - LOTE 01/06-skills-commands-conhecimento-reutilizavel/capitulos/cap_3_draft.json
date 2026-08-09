@@ -1,0 +1,22 @@
+{
+  "capitulo": "3",
+  "parte": "II",
+  "titulo": "Anatomia de uma skill: SKILL.md, frontmatter e disclosure progressiva",
+  "pilares": [
+    {
+      "pilar": "Estrutura de diretório e o SKILL.md canônico",
+      "conceito_denso": false
+    },
+    {
+      "pilar": "Frontmatter: name, description e o gatilho semântico",
+      "conceito_denso": true
+    },
+    {
+      "pilar": "Disclosure progressiva em 3 níveis",
+      "conceito_denso": false
+    }
+  ],
+  "ancora_visual": "Diagrama mermaid na secao Ilustra usando o vocabulario da Oficina do Engenheiro Agenico",
+  "entrega_tecnica": "Codigo Python validavel na secao Tecnica",
+  "callback_capitulo_anterior": "conceito do capitulo 2"
+}

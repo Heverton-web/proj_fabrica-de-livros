@@ -1,0 +1,16 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "I",
+    "capitulo": "1"
+  },
+  "estado_execucao": "concluido_autonomo",
+  "metricas": {
+    "caracteres": 15632,
+    "diagramas_mermaid": 1,
+    "blocos_codigo": 1,
+    "referencias_abnt": 9,
+    "valido_sintaxe_codigo": true,
+    "valido_diagramas_mermaid": true
+  }
+}

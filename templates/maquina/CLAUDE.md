@@ -54,6 +54,15 @@ maquina/
 - Templates usam sintaxe `{{VARIAVEL}}`.
 - Logs seguem formato: `%(asctime)s [%(levelname)s] %(name)s: %(message)s`.
 
+## Frontend — Rotas de API
+
+- `/api/lead` — POST, captura lead (valida com zod).
+- `/api/checkout` — POST, registra pedido + lead no backend (`/api/leads/`).
+  **Não remover**: `checkout/page.tsx` posta nela; sem ela o checkout dá 404.
+  Configurar `BACKEND_URL`/`NEXT_PUBLIC_BACKEND_URL` no `.env` (fallback local).
+- `/api/webhook` — POST, webhook de pagamento (stub).
+- `/api/health` — GET, health check.
+
 ## O que NÃO fazer
 
 - NUNCA commitar `.env` ou credenciais.
@@ -61,3 +70,6 @@ maquina/
 - NUNCA enviar e-mails fora do horário configurado.
 - NUNCA exceder rate limits das APIs externas.
 - NUNCA alterar templates de e-mail sem revisão.
+- NUNCA remover a rota `/api/checkout` (quebra o fluxo de checkout).
+- NUNCA publicar com copy genérica do template ("Autor Digital", "centenas de
+  pessoas") — personalizar por nicho antes do deploy.

@@ -1,0 +1,13 @@
+{
+  "titulo": "Code Review Graph",
+  "autor": "Heverton Eduardo Peres",
+  "idioma": "pt-BR",
+  "tipo": "ebook",
+  "livro_mae": "code-review-graph",
+  "capitulos_originais": [
+    "cap_03.md",
+    "cap_04.md"
+  ],
+  "observacoes": "Ebook derivado do livro-mae Code Review Graph. Tom adaptado para comercial acessivel.",
+  "subtitulo": "Funcionalidades Essenciais"
+}

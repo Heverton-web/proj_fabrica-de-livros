@@ -1,0 +1,11 @@
+{
+  "tema": "MCP na prática: conectando agentes ao mundo real — dominar o protocolo que virou o padrão de fato para dar a agentes acesso seguro e padronizado a ferramentas e dados externos (arquitetura MCP host/client/server, construção de servidores do zero em TypeScript e Python, consumo de servidores existentes, segurança MCP com least-privilege schemas/capability tokens/audit logging/RBAC, MCP Engineering como disciplina e riscos documentados de servidores mal configurados)",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 20,
+  "tamanho_obra": "G",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "senioridade_obra": "intermediario"
+}

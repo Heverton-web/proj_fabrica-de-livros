@@ -1,0 +1,157 @@
+{
+  "titulo_obra": "MimoCode: Guia Completo",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "motivo_condutor": {
+    "nome": "A Linha de Montagem de Software",
+    "descricao": "O terminal é a linha de montagem do desenvolvedor moderno; o MiMoCode é o robô de braço articulado instalado na linha — rápido, programável e integrado ao chão de fábrica. Cada sessão é um turno de produção: a ordem de serviço (prompt), o posto de trabalho (workspace e permissões), as esteiras de ferramentas (MCP e plugins), a memória da fábrica (SQLite FTS5) e o controle de qualidade (plan, build e compose). O operador mantém o botão de parada de emergência; o robô executa, verifica e reporta.",
+    "vocabulario": [
+      "linha de montagem",
+      "robô de braço articulado",
+      "turno de produção",
+      "ordem de serviço",
+      "posto de trabalho",
+      "esteira de ferramentas",
+      "memória da fábrica",
+      "controle de qualidade",
+      "botão de parada de emergência",
+      "chão de fábrica"
+    ],
+    "persona_leitor": "Operador de Linha de Montagem"
+  },
+  "introducao": "Introdução de impacto: o leitor chega com o problema real de quem programa com IA — agentes que fazem besteira, contexto que vaza, custo que explode, sessões que esquecem tudo. Apresenta a promessa e a frustração dos agentes de codificação de terminal e promete o controle da linha: entender o MiMoCode por dentro (fork da Xiaomi do OpenCode), configurá-lo do zero e dominar o que a documentação oficial não ensina. A persona 'Operador de Linha de Montagem' é apresentada ao leitor como o papel que ele assumirá.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos — Conhecendo a Linha de Montagem",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O que é o MiMoCode e por que o terminal voltou a ser o centro",
+          "objetivo": "Fazer o leitor explicar o que é o MiMoCode (agente de codificação nativo de terminal, fork do OpenCode mantido pela equipe MiMo da Xiaomi), situá-lo no ecossistema (Claude Code, OpenCode, Cursor, Codex CLI) e entender por que agentes de terminal voltaram a ser o campo de batalha do desenvolvimento.",
+          "pilares_previstos": [
+            "Definição e origem: o que é, quem criou (equipe MiMo da Xiaomi), o fork do OpenCode (anomalyco), licença MIT, o lançamento v0.1.0 em junho/2026 e os três modos (build, plan, compose)",
+            "O cenário competitivo: Claude Code, OpenCode, Cursor, Codex CLI, Gemini CLI — onde cada um ataca e o que o MiMoCode diferencia (memória persistente SQLite FTS5, skills, workflows)",
+            "O renascimento do terminal: por que CLIs agênticas superam IAs de chat para código (contexto do repositório, ferramentas, reprodutibilidade) e os benchmarks divulgados (SWE-Bench Pro 62%, Terminal Bench 2 73%)"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Arquitetura: como o MiMoCode funciona por dentro",
+          "objetivo": "Fazer o leitor compreender a anatomia do agente (LLM + ferramentas + loop), a arquitetura de servidor do MiMoCode (TUI ↔ servidor headless, mimo serve, mimo attach), o protocolo ACP e o sistema de memória persistente em três pilares.",
+          "pilares_previstos": [
+            "O loop do agente: modelo de linguagem, ferramentas (read, edit, bash, grep), iteração e o conceito de ACI (Agent-Computer Interface)",
+            "Cliente-servidor no MiMoCode: por que a TUI é um cliente de um servidor headless, mimo serve / mimo attach / mimo run, e a separação entre superfícies",
+            "Memória persistente: SQLite FTS5, MEMORY.md, checkpoint.md, tasks/<id>/progress.md, e como isso combate a amnésia da IA entre sessões"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Partida da Linha — Instalação e Primeira Configuração",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Instalação em todas as plataformas e o primeiro turno",
+          "objetivo": "Fazer o leitor instalar o MiMoCode na sua máquina (Windows/PowerShell, macOS/Linux via curl, NPM), rodar o primeiro comando, entender o onboarding com MiMo Auto e decolar na TUI sem travar.",
+          "pilares_previstos": [
+            "Instalação multiplataforma: curl -fsSL para macOS/Linux, PowerShell irm para Windows, npm install -g @mimo-ai/cli, mimo upgrade/uninstall/completion",
+            "Primeira configuração: o onboarding do primeiro `mimo`, MiMo Auto como porta de entrada zero-config, mimo providers para autenticar e mimo models para escolher o modelo",
+            "Estrutura de pastas: .mimocode/ no projeto, ~/.config/mimocode/ global, tui.json, auth.json e a variável MIMOCODE_HOME"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Provedores e credenciais: conectando qualquer modelo",
+          "objetivo": "Fazer o leitor conectar provedores variados (Plataforma MiMo, Anthropic, OpenAI, OpenRouter, xAI/Grok) e modelos locais (Ollama), com auth.json, variáveis de ambiente e provider custom OpenAI-compatible.",
+          "pilares_previstos": [
+            "O sistema de credenciais: mimo providers/auth, auth.json, MIMOCODE_HOME, e as opções de login (OAuth da Plataforma MiMo, Codex/ChatGPT, importação do Claude Code)",
+            "Provedores em detalhe: catálogo com Anthropic, OpenAI, OpenRouter, xAI/Grok, e a configuracao de provider custom com baseURL e apiKey para gateways e proxies",
+            "Modelos locais e OpenAI-compatíveis: Ollama local/remoto, o modelo secundário small_model para tarefas de fundo e a sintaxe provider/model com a primeira barra separando provider de modelo"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Linha em Produção — Operação no Dia a Dia",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Dominando a TUI: modos Build/Plan/Compose e o dia a dia",
+          "objetivo": "Fazer o leitor operar a TUI com fluência: os três modos principais alternáveis via Tab (build, plan, compose), o fluxo de planejar sem editar (plan) e executar (build), a menção de arquivos e agentes, e a navegação entre sessões.",
+          "pilares_previstos": [
+            "Os modos principais: build (permissões completas), plan (somente leitura para exploração e design) e compose (orquestração specs-driven) — alternância via Tab",
+            "O fluxo de trabalho: planejar antes de editar, iterar com feedback, o papel do AGENTS.md por projeto e o padrão de dar contexto como a um dev júnior",
+            "Sessões na TUI: -c/--continue, -s/--session, --fork, a navegação entre sessões e o atalho para alternar agentes"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "mimo run e a automação: o agente sem interface",
+          "objetivo": "Fazer o leitor usar o MiMoCode de forma programática e automatizada: mimo run com flags (--continue, --session, --fork, --prompt, --agent, --never-ask), mimo stats para custos, export/import de sessões e integração com GitHub (mimo github e mimo pr).",
+          "pilares_previstos": [
+            "Modo não-interativo: mimo run [message], -m/--model, --agent, --prompt, --never-ask e --dangerously-skip-permissions com seus riscos",
+            "Gerenciamento de sessões pela CLI: --continue/-c, --session/-s, --fork, mimo session, mimo export/import (JSON) e mimo stats (tokens e custos)",
+            "Automação e CI: mimo github, mimo pr <number> para buscar e rodar um PR, e mimo run em pipelines de integração contínua"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Sala de Máquinas — Configuração que Ninguém Te Ensina",
+      "capitulos": [
+        {
+          "capitulo": "7",
+          "titulo": "Configuração avançada: mimocode.jsonc, permissões e agentes custom",
+          "objetivo": "Fazer o leitor escrever um mimocode.jsonc profissional: precedência de configs, permissões granulares (allow/ask/deny com globs), agentes custom, small_model e o schema oficial com autocompletação.",
+          "pilares_previstos": [
+            "O modelo de precedência: config do projeto (.mimocode/mimocode.jsonc), global (~/.config/mimocode/), MIMOCODE_HOME e a mesclagem de configurações com schema JSON oficial",
+            "Permissões em profundidade: regras allow/ask/deny avaliadas em sequência, deny sempre sobrepõe allow, external_directory, e o padrão 'regras específicas depois das gerais'",
+            "Agentes e small_model: agentes custom, o modelo secundário para tarefas de fundo e checkpoints, e a sintaxe de configuração de provider/model"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "MCP, ACP, plugins e ferramentas: ampliando o robô",
+          "objetivo": "Fazer o leitor conectar o MiMoCode ao mundo externo: servidores MCP locais e remotos (mimo mcp), o protocolo ACP para orquestração entre agentes, plugins (mimo plugin) e o custo de contexto de cada ferramenta.",
+          "pilares_previstos": [
+            "MCP na prática: config de servidores MCP (JSON-RPC, locais e remotos), mimo mcp add/remove/list, e exemplos reais de ferramentas externas",
+            "ACP e orquestração: o Agent Client Protocol, delegação entre agentes, e o uso em arquiteturas multi-agente",
+            "Plugins e gestão de contexto: mimo plugin, o flag --pure para rodar sem plugins externos, mimo db para o banco local e a disciplina de não inflar o contexto"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "V",
+      "titulo_parte": "Torre de Controle — Extraindo o Máximo do Harness",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "O que ninguém te ensina: memória, compactação e custo",
+          "objetivo": "Fazer o leitor dominar as configurações ocultas do MiMoCode: o sistema de memória (MEMORY.md, /dream), a compactação de contexto (/context-limit e compaction.max_context), o controle de custos com mimo stats e o comando /goal com juiz independente.",
+          "pilares_previstos": [
+            "Memória persistente na prática: MEMORY.md, checkpoint.md, /dream para consolidar, /distill para transformar fluxos manuais em skills",
+            "Compactação de contexto: compaction.max_context por modelo, /context-limit, e por que compactar antes do limite nativo reduz latência e custo",
+            "Custo e estatísticas: mimo stats, tokens por sessão, o modelo small_model para reduzir gastos e a matemática do custo de contexto"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "Extraindo ao máximo do Harness: o fluxo profissional completo",
+          "objetivo": "Fazer o leitor montar o fluxo de trabalho profissional: workflows determinísticos (compose, deep-research, fact-check), git worktrees com TDD, subagentes em paralelo, skills nativas e o ecossistema (awesome-mimo-agent), fechando a obra com um plano de adoção da linha de montagem.",
+          "pilares_previstos": [
+            "Workflows determinísticos: scripts JS em sandbox (compose, deep-research, fact-check), execução specs-driven e git worktrees com TDD por tarefa",
+            "Skills e ecossistema: as 20+ skills nativas acionadas via / ou por relevância BM25, /distill para criar as suas, e o awesome-mimo-agent da comunidade",
+            "O plano de adoção: roteiro do Operador de Linha de Montagem para integrar o MiMoCode ao time, com governança, revisão e métricas de sucesso"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética: o leitor fecha o turno olhando para trás — da primeira instalação ao fluxo profissional com workflows, memória e governança. Recapitula o motivo condutor da linha de montagem, reforça o que o MiMoCode entrega (memória persistente, modos build/plan/compose, ACP/MCP) e deixa um convite: assumir o posto de Operador de Linha de Montagem e continuar evoluindo com a ferramenta e o ecossistema.",
+  "subtitulo": "Configuração, Uso e os Detalhes que Ninguém Te Conta"
+}

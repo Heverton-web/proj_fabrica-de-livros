@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "A virada de mercado 2024-2026: do autocomplete ao SDLC agêntico",
+        "escopo": "Entra: dados de adoção (76,6% das organizações usam IA ativamente em desenvolvimento, 20,4% avaliando), a leitura da Forrester sobre migração de assistentes pontuais para agentes orquestrados de SDLC completo, casos Fujitsu e Microsoft/Azure+GitHub de SDLC 'AI-first' ponta a ponta, e a tensão inicial com TDD clássico (agente gera código plausível em segundos, mas 'parecer plausível' não é 'funcionar'). Fica de fora: a mecânica interna de TDD/TDAD (isso é o Pilar 3) e a arquitetura de 4 camadas (isso é o Capítulo 2).",
+        "ancora_visual": "flowchart LR mostrando a linha do tempo do Estaleiro Agêntico: da 'Doca Seca' (autocomplete/vibe coding, 2024) até a 'Quilha Assentada' (SDLC agêntico, 2026), com marcos de adoção de mercado como boias ao longo do trajeto.",
+        "entrega_tecnica": "YAML de pipeline de CI comentado mostrando os pontos onde, em 2024, só havia 'lint + build' manual, versus os pontos onde, em 2026, um agente é inserido (revisão de PR, remediação, verificação pós-deploy) — mesmo arquivo, duas eras comentadas lado a lado.",
+        "evolucao_leitor": "De 'IA no código é só um autocomplete chique' para 'entendo que 2024-2026 é uma virada estrutural de mercado, no nível do DevOps/Agile, com dados que provam a escala da adoção'.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Vibe coding vs. agentic coding: autonomia com accountability",
+        "escopo": "Entra: definição precisa de vibe coding (humano no loop revisando cada saída conversacional) vs. agentic coding (agente planeja, executa, testa e itera com supervisão mínima); o eixo central não é grau de autonomia, é engenharia — testes/linting/CI/CD como superfície de controle que sustenta accountability. Fica de fora: implementação de guardrails específicos de TDD (Pilar 3) e detalhes de CI/CD (Capítulo 10).",
+        "ancora_visual": "flowchart TB comparando dois turnos de trabalho no estaleiro: 'Turno Vibe' (operário aprova cada rebite manualmente, sem registro no diário de bordo) vs. 'Turno Agêntico' (tripulação autônoma solda o casco inteiro, mas cada solda é registrada e auditável no diário de bordo antes da vistoria do mestre).",
+        "entrega_tecnica": "Python: uma função de 'agente de commit' simplificada que primeiro roda a suíte de testes e só then aplica o commit se todos passarem — ilustrando accountability como código, não como promessa.",
+        "evolucao_leitor": "De 'vibe coding e agentic coding são a mesma coisa com nomes diferentes' para 'domino a distinção estrutural: autonomia sem accountability é risco, autonomia com controles é o que diferencia um profissional agêntico'.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "TDD e TDAD como guardrail estrutural contra alucinação de código plausível",
+        "escopo": "Entra: o problema da alucinação de código plausível (sintaticamente correto, falha em produção), por que o agente não tem memória institucional nem hesitação em apagar um teste que falha, o TDD como definição do 'correto' antes da implementação, ganhos de até 90% em qualidade ao custo de até 35% mais tempo, e o TDAD (Test-Driven Agentic Development) com análise de impacto baseada em grafos para reduzir regressões. Fica de fora: tutorial completo de TDD para iniciantes (assume-se familiaridade básica) e a implementação de pipeline de CI/CD (Capítulo 10).",
+        "ancora_visual": "stateDiagram-v2 do ciclo de vida de uma peça no estaleiro: 'Especificação (teste escrito)' -> 'Fabricação (agente codifica)' -> 'Vistoria (suíte roda)' -> decisão 'Aprovado (casco segue)' ou 'Reprovado (retorno à fabricação)' — nunca 'Aprovado sem vistoria'.",
+        "entrega_tecnica": "Python com pytest: par teste-primeiro / implementação de uma função de validação de credenciais de deploy, demonstrando TDD clássico; segundo bloco mostrando como um grafo de dependências (dict de impacto) simula a lógica de análise de impacto do TDAD ao decidir quais testes re-rodar após uma mudança do agente.",
+        "evolucao_leitor": "De 'testes são um passo opcional que atrasa a entrega' para 'vejo o que os engenheiros agênticos experientes veem: TDD/TDAD é o guardrail estrutural que torna a velocidade do agente segura, não um freio burocrático'.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

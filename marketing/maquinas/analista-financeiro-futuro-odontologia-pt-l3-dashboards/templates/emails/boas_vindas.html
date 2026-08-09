@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo!</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f4f7; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; }
+    .header p { color: #e0e0ff; font-size: 14px; margin: 10px 0 0; }
+    .body { padding: 30px; color: #333333; line-height: 1.7; }
+    .body h2 { color: #333; font-size: 22px; margin-top: 0; }
+    .body p { font-size: 16px; margin: 15px 0; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff !important; text-decoration: none; padding: 15px 40px; border-radius: 8px; font-size: 16px; font-weight: 600; margin: 20px 0; }
+    .highlight-box { background-color: #f8f7ff; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .highlight-box p { margin: 5px 0; }
+    .footer { background-color: #f4f4f7; padding: 30px; text-align: center; color: #888888; font-size: 12px; }
+    .footer a { color: #667eea; text-decoration: none; }
+    .social { margin: 15px 0; }
+    .social a { display: inline-block; margin: 0 10px; color: #667eea; text-decoration: none; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Bem-vindo, {{NOME}}!</h1>
+      <p>{{EMPRESA_NOME}}</p>
+    </div>
+
+    <div class="body">
+      <h2>Que bom ter você aqui! 🎉</h2>
+
+      <p>Olá, <strong>{{NOME}}</strong>,</p>
+
+      <p>Fico muito feliz em ter você na nossa comunidade! Você deu o primeiro passo para transformar seu conhecimento em um livro digital de sucesso.</p>
+
+      <div class="highlight-box">
+        <p><strong>📚 Seu material gratuito já está disponível:</strong></p>
+        <p>Um guia prático com os 7 passos para escrever e publicar seu primeiro livro digital em até 30 dias.</p>
+      </div>
+
+      <p>Nos próximos dias, vou compartilhar com você:</p>
+      <ul style="font-size: 15px; color: #555;">
+        <li>O erro #1 que impede a maioria de escrever</li>
+        <li>Como encontrar seu nicho perfeito</li>
+        <li>A fórmula para escrever 1.000 palavras por dia</li>
+        <li>O segredo dos autores que vivem de livros</li>
+      </ul>
+
+      <p style="text-align: center;">
+        <a href="{{PRODUTO_LINK}}" class="cta-button">Acessar Material Gratuito</a>
+      </p>
+
+      <p>Se tiver alguma dúvida, basta responder este e-mail. Estou aqui para ajudar!</p>
+
+      <p>Um abraço,<br>
+      <strong>Equipe {{EMPRESA_NOME}}</strong></p>
+    </div>
+
+    <div class="footer">
+      <div class="social">
+        <a href="#">Instagram</a> |
+        <a href="#">YouTube</a> |
+        <a href="#">Site</a>
+      </div>
+      <p>Você recebeu este e-mail porque se inscreveu em {{EMPRESA_NOME}}.</p>
+      <p><a href="{{UNSUBSCRIBE_URL}}">Cancelar inscrição</a></p>
+    </div>
+  </div>
+</body>
+</html>

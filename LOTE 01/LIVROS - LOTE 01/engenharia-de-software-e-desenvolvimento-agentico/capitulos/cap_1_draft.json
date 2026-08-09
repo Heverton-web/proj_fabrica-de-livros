@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Modelo OSI: as sete camadas conceituais",
+        "escopo": "Definir as sete camadas OSI (Física, Enlace, Rede, Transporte, Sessão, Apresentação, Aplicação), sua origem na ISO (anos 1980) e seu papel como referência didática — não diretamente implementável, mas essencial como vocabulário comum de diagnóstico. Fica de fora: detalhamento de protocolos específicos de cada camada (reservado aos capítulos 2 a 5).",
+        "ancora_visual": "flowchart TD mostrando a fábrica com sete estações empilhadas (uma por camada OSI), o pacote de dados descendo a linha de montagem como matéria-prima sendo embalada estação a estação, e voltando a ser desembalada do outro lado.",
+        "entrega_tecnica": "Python: estrutura de dados (lista de dicionários) representando as 7 camadas OSI, com função `descer_linha_de_montagem()` que simula o encapsulamento sequencial de um payload por todas as estações.",
+        "evolucao_leitor": "De 'ouvi falar do modelo OSI' para 'consigo nomear e ordenar as sete camadas e explicar por que cada uma existe'.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Modelo TCP/IP: a pilha que realmente roda na internet",
+        "escopo": "Explicar as 4 camadas do TCP/IP (Interface de Rede, Internet, Transporte, Aplicação), sua origem no projeto DARPA/ARPANET, e por que ele — não o OSI — é o que de fato roda em produção. Mostrar como o TCP/IP funde em uma única camada de Aplicação o que o OSI separa em três (Aplicação, Apresentação, Sessão). Fica de fora: o detalhe interno de TCP vs UDP (capítulo 3).",
+        "ancora_visual": "flowchart LR comparando lado a lado as sete estações do OSI e as quatro estações do TCP/IP, com chaves de agrupamento mostrando quais estações OSI colapsam em cada estação TCP/IP — a mesma fábrica, vista pelo manual teórico (OSI) e pela esteira real em operação (TCP/IP).",
+        "entrega_tecnica": "Python: função `empacotar_tcp_ip(payload)` que encapsula uma string em 4 camadas (Aplicação → Transporte → Internet → Interface de Rede), adicionando um cabeçalho simulado por camada, e `desempacotar_tcp_ip()` fazendo o caminho inverso.",
+        "evolucao_leitor": "De 'acho que TCP/IP e OSI são a mesma coisa' para 'entendo por que a internet real roda em 4 camadas, e o modelo de 7 é só o mapa de parede da fábrica'.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Comparação prática: onde cada protocolo do dia a dia se encaixa",
+        "escopo": "Mapear protocolos que o leitor já usa no dia a dia (HTTP, TLS, TCP, UDP, DNS, WebSocket, REST/GraphQL/gRPC como exemplos de camada de aplicação) para a camada OSI e TCP/IP correspondente, fechando o capítulo com uma ferramenta de diagnóstico mental replicável em qualquer stack nova que o leitor encontrar no mercado.",
+        "ancora_visual": "Reaproveita o mesmo flowchart da fábrica (pilar 2), agora com os protocolos do dia a dia anexados como 'produtos' saindo de cada estação — HTTP/TLS/DNS na estação de Aplicação, TCP/UDP na estação de Transporte etc.",
+        "entrega_tecnica": "Python: dicionário `MAPA_PROTOCOLOS` (protocolo → camada OSI/TCP-IP) e função `diagnosticar_protocolo(nome)` que devolve em qual estação da fábrica aquele protocolo mora — a ferramenta de bolso do Engenheiro Agêntico para qualquer stack nova.",
+        "evolucao_leitor": "De 'sei usar HTTP e DNS' para 'consigo posicionar qualquer protocolo novo dentro da planta baixa da fábrica sem precisar decorar uma tabela'.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

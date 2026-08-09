@@ -1,0 +1,44 @@
+{
+  "slug_livro_mae": "code-review-graph",
+  "artigos": {
+    "total": 0,
+    "itens": []
+  },
+  "ebooks": {
+    "total": 3,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Fundamentos",
+        "slug": "code-review-graph--eb-01-fundamentos",
+        "diretorio": "ebooks/code-review-graph--eb-01-fundamentos",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Funcionalidades Essenciais",
+        "slug": "code-review-graph--eb-02-funcionalidades-essenciais",
+        "diretorio": "ebooks/code-review-graph--eb-02-funcionalidades-essenciais",
+        "capitulos_fonte_livro_mae": [
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Guia Completo",
+        "slug": "code-review-graph-guide",
+        "diretorio": "ebooks/code-review-graph-guide",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    ]
+  }
+}

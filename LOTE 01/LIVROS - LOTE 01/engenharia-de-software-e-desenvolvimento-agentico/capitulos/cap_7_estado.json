@@ -1,0 +1,22 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "7" },
+  "estado_execucao": "concluido_autonomo",
+  "titulo": "A Camada de Frontend: Conceitos, Frameworks e Tecnologias de Mercado",
+  "callback_capitulo_anterior": "Capítulo 6: a arquitetura em camadas como organismo único (frontend/backend/banco de dados/API), com o frontend definido como a interface visual que envia requisições e gerencia estado do cliente",
+  "validacao": {
+    "validar_codigo": "OK — 6 blocos analisados, 3 verificaveis, 100% aprovacao, 0 erros de sintaxe",
+    "renderizar_diagramas": "OK — 2 diagramas, 2 validos",
+    "secoes_7_eita": true,
+    "hr_dentro_capitulo": false,
+    "citacoes_unicas_no_corpo": 22,
+    "referencias_bibliograficas": 22,
+    "min_referencias_exigido": 20,
+    "diagramas_mermaid": 2,
+    "blocos_codigo_com_linguagem": 4,
+    "callback_capitulo_6_presente": true,
+    "cena_contraste_aplica": true,
+    "persona_leitor_reforcada": true
+  },
+  "rodadas_correcao": 0
+}

@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "Do Marketing Tradicional ao Digital: A Mudança de Paradigma & O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "marketing-na-era-digital",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "introducao": "Recorte investigativo sobre: Do Marketing Tradicional ao Digital: A Mudança de Paradigma, O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online, A Economia da Atenção: Como Conquistar o Consumidor Distraído, O Consumidor Conectado: Comportamento e Motivações Digitais, Marketing Digital na Prática: Aplicação em Diferentes Portes de Negócio, Funil de Vendas e Jornada do Cliente: Mapeando a Navegação, Personas e Segmentação: Conhecendo o Viajante, Touchpoints e Momentos de Verdade: A Experiência Multicanal, Experiência do Cliente (CX) e o Marketing de Relacionamento, Neuromarketing e a Psicologia da Decisão de Compra Online.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Do Marketing Tradicional ao Digital: A Mudança de Paradigma",
+            "O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online",
+            "A Economia da Atenção: Como Conquistar o Consumidor Distraído"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Do Marketing Tradicional ao Digital: A Mudança de Paradigma",
+            "O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online",
+            "A Economia da Atenção: Como Conquistar o Consumidor Distraído"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Do Marketing Tradicional ao Digital: A Mudança de Paradigma",
+            "O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online",
+            "A Economia da Atenção: Como Conquistar o Consumidor Distraído"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Do Marketing Tradicional ao Digital: A Mudança de Paradigma",
+            "O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online",
+            "A Economia da Atenção: Como Conquistar o Consumidor Distraído"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

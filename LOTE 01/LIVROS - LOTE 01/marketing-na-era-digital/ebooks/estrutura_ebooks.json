@@ -1,0 +1,74 @@
+{
+  "ebooks": [
+    {
+      "indice": 1,
+      "titulo": "Fundamentos — O Novo Território",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-01-fundamentos-o-novo-territorio",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-01-fundamentos-o-novo-territorio/marketing-na-era-digital--eb-01-fundamentos-o-novo-territorio.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 2,
+      "titulo": "A Jornada do Consumidor — Mapeando a Navegação",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-02-a-jornada-do-consumidor-mapeando-a-naveg",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-02-a-jornada-do-consumidor-mapeando-a-naveg/marketing-na-era-digital--eb-02-a-jornada-do-consumidor-mapeando-a-naveg.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 3,
+      "titulo": "Busca — A Rota da Intenção",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-03-busca-a-rota-da-intencao",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-03-busca-a-rota-da-intencao/marketing-na-era-digital--eb-03-busca-a-rota-da-intencao.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 4,
+      "titulo": "Redes Sociais — Territórios de Comunidade",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-04-redes-sociais-territorios-de-comunidade",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-04-redes-sociais-territorios-de-comunidade/marketing-na-era-digital--eb-04-redes-sociais-territorios-de-comunidade.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 5,
+      "titulo": "Relacionamento — A Rota da Retenção",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-05-relacionamento-a-rota-da-retencao",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-05-relacionamento-a-rota-da-retencao/marketing-na-era-digital--eb-05-relacionamento-a-rota-da-retencao.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 6,
+      "titulo": "Estratégias Sociais — Rotas de Autoridade",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-06-estrategias-sociais-rotas-de-autoridade",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-06-estrategias-sociais-rotas-de-autoridade/marketing-na-era-digital--eb-06-estrategias-sociais-rotas-de-autoridade.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 7,
+      "titulo": "Conversão — O Porto Seguro",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-07-conversao-o-porto-seguro",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-07-conversao-o-porto-seguro/marketing-na-era-digital--eb-07-conversao-o-porto-seguro.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 8,
+      "titulo": "Métricas — O Radar de Navegação",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-08-metricas-o-radar-de-navegacao",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-08-metricas-o-radar-de-navegacao/marketing-na-era-digital--eb-08-metricas-o-radar-de-navegacao.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 9,
+      "titulo": "Economia do Cliente — A Matemática do Negócio",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-09-economia-do-cliente-a-matematica-do-nego",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-09-economia-do-cliente-a-matematica-do-nego/marketing-na-era-digital--eb-09-economia-do-cliente-a-matematica-do-nego.epub",
+      "status": "concluido"
+    },
+    {
+      "indice": 10,
+      "titulo": "Futuro — A Previsão do Tempo",
+      "diretorio": "ebooks/marketing-na-era-digital--eb-10-futuro-a-previsao-do-tempo",
+      "caminho_epub": "ebooks/marketing-na-era-digital--eb-10-futuro-a-previsao-do-tempo/marketing-na-era-digital--eb-10-futuro-a-previsao-do-tempo.epub",
+      "status": "concluido"
+    }
+  ]
+}

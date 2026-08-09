@@ -1,0 +1,210 @@
+{
+  "titulo_obra": "Engenharia de contexto: janelas, mem\u00f3ria e o fim do prompt solto",
+  "tipo_obra": "livro",
+  "tamanho_obra": "GG",
+  "motivo_condutor": {
+    "nome": "O Bibliotec\u00e1rio Imperial e os Pergaminhos Sagrados",
+    "descricao": "O Bibliotec\u00e1rio Imperial (LLM) precisa ler e responder a consultas sobre os pergaminhos sagrados em uma mesa de tamanho limitado (Janela de Contexto). Se a mesa ficar cheia ou desorganizada (Context Rot), ele se confunde e demora para responder.",
+    "vocabulario": [
+      "Mesa de Aten\u00e7\u00e3o",
+      "Mensageiro RAG",
+      "Scriba de Resumos",
+      "Salas Blindadas",
+      "Gargalo da Mesa",
+      "Pergaminho de Instru\u00e7\u00e3o",
+      "Pergaminho Oculto",
+      "Arquivo de Cera",
+      "Selo Imperial",
+      "Mesa Auxiliar"
+    ],
+    "persona_leitor": "Curador de Contexto"
+  },
+  "introducao": "Introduzir a import\u00e2ncia hist\u00f3rica da transi\u00e7\u00e3o do prompt solto para a Engenharia de Contexto, demonstrando como ela capacita o leitor a se tornar um Curador de Contexto profissional em sistemas ag\u00eantica de alta confiabilidade.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Parte I \u2014 Fundamentos da Mesa (Janela de Contexto)",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "A Mesa de Aten\u00e7\u00e3o do Bibliotec\u00e1rio: Como os Modelos Enxergam Textos",
+          "objetivo": "Compreender o que \u00e9 a janela de contexto, como os tokens s\u00e3o computados e o limite de mem\u00f3ria dos LLMs.",
+          "pilares_previstos": [
+            "A anatomia de um token e como as palavras se transformam em n\u00fameros para o modelo",
+            "O limite f\u00edsico do buffer de contexto: o espa\u00e7o limitado da Mesa de Aten\u00e7\u00e3o",
+            "O ciclo de preenchimento da janela de contexto no processo autoregressivo"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "O Peso dos S\u00edmbolos: A Matem\u00e1tica por Tr\u00e1s do Foco",
+          "objetivo": "Entender o mecanismo de autoaten\u00e7\u00e3o (Self-Attention) e por que processar textos longos consome tantos recursos.",
+          "pilares_previstos": [
+            "A equa\u00e7\u00e3o da autoaten\u00e7\u00e3o: como o Bibliotec\u00e1rio distribui seu olhar pelos pergaminhos",
+            "A complexidade quadr\u00e1tica O(N\u00b2) de processamento de tokens e o impacto na lat\u00eancia",
+            "A evolu\u00e7\u00e3o com FlashAttention e as janelas f\u00edsicas de milh\u00f5es de tokens"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "O Meio Esquecido: O Fen\u00f4meno de 'Lost in the Middle'",
+          "objetivo": "Identificar o vi\u00e9s de primazia e rec\u00eancia nos LLMs e por que informa\u00e7\u00f5es no meio do contexto s\u00e3o perdidas.",
+          "pilares_previstos": [
+            "A curva de desempenho em U e os v\u00edcios de posi\u00e7\u00e3o (Primacy vs. Recency)",
+            "Como testar a mem\u00f3ria do LLM usando a t\u00e9cnica do 'Needle in a Haystack'",
+            "Estrat\u00e9gias de posicionamento de diretrizes essenciais no topo e no final da janela"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "O Gargalo da Mesa Entulhada: Entendendo o Apodrecimento de Contexto",
+          "objetivo": "Aprender sobre o fen\u00f4meno de 'Context Rot' e como o ac\u00famulo de mensagens antigas degrada o comportamento do agente.",
+          "pilares_previstos": [
+            "O que \u00e9 Context Rot e como o ru\u00eddo enfraquece a ader\u00eancia das instru\u00e7\u00f5es",
+            "Aten\u00e7\u00e3o difusa e alucina\u00e7\u00f5es induzidas por hist\u00f3ricos redundantes de chats",
+            "O impacto do tamanho do prompt no tempo at\u00e9 o primeiro token (TTFT)"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Parte II \u2014 O Mensageiro da Biblioteca (RAG e Recupera\u00e7\u00e3o)",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "O Mensageiro RAG e os Arquivos Ocultos do Reino",
+          "objetivo": "Introduzir o conceito de Retrieval-Augmented Generation (RAG) como ponte para acessar bases de dados externas.",
+          "pilares_previstos": [
+            "As limita\u00e7\u00f5es de conhecimento est\u00e1tico do modelo e a necessidade de dados din\u00e2micos",
+            "O fluxo b\u00e1sico de busca: converter perguntas em vetores e consultar a biblioteca",
+            "O papel do Mensageiro RAG no fornecimento de contexto cir\u00fargico \u00e0 Mesa de Aten\u00e7\u00e3o"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Fatiando Pergaminhos com Precis\u00e3o: O Poder da Divis\u00e3o Sem\u00e2ntica",
+          "objetivo": "Comparar os m\u00e9todos de segmenta\u00e7\u00e3o est\u00e1tica de documentos com a inovadora divis\u00e3o sem\u00e2ntica baseada em vetores.",
+          "pilares_previstos": [
+            "Por que a divis\u00e3o por caracteres quebra o sentido do texto e causa alucina\u00e7\u00f5es",
+            "A mec\u00e2nica do Semantic Chunking: calculando a dist\u00e2ncia por cosseno entre frases",
+            "Implementa\u00e7\u00e3o pr\u00e1tica de divisores sem\u00e2nticos para manter o par\u00e1grafo tem\u00e1tico \u00edntegro"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "O Reranking e a Mesa Perfeitamente Organizada",
+          "objetivo": "Entender o papel do Reranking no reposicionamento estrat\u00e9gico dos dados recuperados, neutralizando perdas de contexto.",
+          "pilares_previstos": [
+            "O problema da redund\u00e2ncia e da satura\u00e7\u00e3o na Mesa ap\u00f3s a busca inicial",
+            "A mec\u00e2nica de reclassifica\u00e7\u00e3o com Cross-Encoders para selecionar os pergaminhos mais valiosos",
+            "Organiza\u00e7\u00e3o t\u00e1tica dos dados para colocar chunks relevantes nos extremos da janela"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "A Mesa Auxiliar: A Arquitetura de Mem\u00f3ria Virtual do MemGPT",
+          "objetivo": "Explorar como o MemGPT aplica os conceitos de pagina\u00e7\u00e3o e swap de sistemas operacionais para estender a mem\u00f3ria do LLM.",
+          "pilares_previstos": [
+            "A distin\u00e7\u00e3o entre RAM (Main Context imediato) e Disco (Archival e Recall Memory)",
+            "A autonomia do Bibliotec\u00e1rio em gerenciar a Mesa Auxiliar via chamadas de fun\u00e7\u00f5es",
+            "Fluxos de pagina\u00e7\u00e3o din\u00e2mica para resgatar mem\u00f3rias frias sem saturar a aten\u00e7\u00e3o"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Parte III \u2014 O Trabalho dos Escribas (Compress\u00e3o e Sele\u00e7\u00e3o)",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "O Scriba de Resumos: Reduzindo Textos Sem Perder o Sentido",
+          "objetivo": "Compreender as t\u00e1ticas de compress\u00e3o de contexto para reduzir o volume de tokens e baratear a opera\u00e7\u00e3o do sistema.",
+          "pilares_previstos": [
+            "O trade-off entre tamanho do prompt, fidelidade de instru\u00e7\u00e3o e custo operacional do LLM",
+            "Uso de modelos menores e ultra-r\u00e1pidos como assistentes de compress\u00e3o de texto",
+            "Como o Scriba de Resumos elimina preposi\u00e7\u00f5es e palavras \u00f3bvias sem alterar as instru\u00e7\u00f5es"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "O Julgamento da Perplexidade: A Tecnologia LLMLingua",
+          "objetivo": "Estudar o framework LLMLingua e como a m\u00e9trica de perplexidade matem\u00e1tica determina quais tokens descartar.",
+          "pilares_previstos": [
+            "O conceito de entropia informacional e perplexidade na an\u00e1lise lingu\u00edstica",
+            "Mecanismo de compress\u00e3o din\u00e2mico: identificar e remover tokens altamente previs\u00edveis",
+            "Compress\u00e3o Query-Aware com LongLLMLingua para focar exclusivamente na d\u00favida do leitor"
+          ]
+        },
+        {
+          "capitulo": "11",
+          "titulo": "A Escrita R\u00e1pida e Classificativa: Conhecendo o LLMLingua-2",
+          "objetivo": "Entender o funcionamento do LLMLingua-2 e como a classifica\u00e7\u00e3o extrativa bin\u00e1ria acelera a compress\u00e3o com total precis\u00e3o.",
+          "pilares_previstos": [
+            "A transi\u00e7\u00e3o do c\u00e1lculo de perplexidade auto-regressivo para classifica\u00e7\u00e3o bin\u00e1ria r\u00e1pida",
+            "Uso de encoders bidirecionais (XLM-RoBERTa) destilados com conhecimento de ponta",
+            "Vantagens na preserva\u00e7\u00e3o absoluta dos fatos, impedindo alucina\u00e7\u00f5es no compressor"
+          ]
+        },
+        {
+          "capitulo": "12",
+          "titulo": "O Arquivo de Cera: O Prompt Caching nas APIs Modernas",
+          "objetivo": "Aprender a utilizar o cache de prompts (Prompt Caching) para acelerar respostas e economizar at\u00e9 90% nos custos de token.",
+          "pilares_previstos": [
+            "A mec\u00e2nica do Prompt Caching: guardar blocos est\u00e1veis do contexto em mem\u00f3ria de alta velocidade",
+            "Breakpoints expl\u00edcitos na Anthropic API (cache_control ephemeral) e as taxas de escrita e leitura",
+            "Caching autom\u00e1tico e impl\u00edcito na OpenAI API para fluxos longos e repetitivos"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Parte IV \u2014 As Salas Blindadas (Isolamento, Seguran\u00e7a e Governan\u00e7a)",
+      "capitulos": [
+        {
+          "capitulo": "13",
+          "titulo": "O Intruso do Pergaminho Oculto: Inje\u00e7\u00f5es Indiretas de Prompt",
+          "objetivo": "Desvelar o perigo da Inje\u00e7\u00e3o Indireta de Prompt (IPI) e a confus\u00e3o ontol\u00f3gica entre instru\u00e7\u00f5es e dados nos LLMs.",
+          "pilares_previstos": [
+            "A unifica\u00e7\u00e3o do fluxo de tokens: como instru\u00e7\u00f5es do sistema e dados externos dividem a mesma mente",
+            "Cen\u00e1rios de ataque indireto: sites, e-mails e arquivos externos que fingem ser ordens do mestre",
+            "A incapacidade inata dos LLMs em separar o mensageiro da mensagem sem t\u00e9cnicas ativas"
+          ]
+        },
+        {
+          "capitulo": "14",
+          "titulo": "A Espionagem Invis\u00edvel: O Estudo de Caso EchoLeak",
+          "objetivo": "Analisar a vulnerabilidade EchoLeak (CVE-2025-32711) para entender como dados confidenciais podem ser exfiltrados sem cliques.",
+          "pilares_previstos": [
+            "A anatomia da explora\u00e7\u00e3o zero-click e o sequestro silencioso de contexto de trabalho",
+            "Exfiltra\u00e7\u00e3o via renderiza\u00e7\u00e3o de imagens Markdown acionadas dinamicamente com dados sens\u00edveis",
+            "An\u00e1lise de impacto e severidade do EchoLeak em ambientes ag\u00eantica corporativos reais"
+          ]
+        },
+        {
+          "capitulo": "15",
+          "titulo": "O Selo Imperial e as Salas Blindadas: Isolamento na Pr\u00e1tica",
+          "objetivo": "Projetar arquiteturas seguras de isolamento de contexto usando tags estritas e segmenta\u00e7\u00e3o de privil\u00e9gios entre subagentes.",
+          "pilares_previstos": [
+            "Segmenta\u00e7\u00e3o r\u00edgida via tags estruturadas (XML/JSON) e o spotlighting no System Prompt",
+            "Arquitetura Multi-Agente Segura: separar agentes leitores de agentes escritores (blast radius)",
+            "Isolamento computacional: execu\u00e7\u00e3o em micro-containers sandboxed para interpretadores de c\u00f3digo"
+          ]
+        },
+        {
+          "capitulo": "16",
+          "titulo": "As Leis do Castelo: Governan\u00e7a de Contexto com CLAUDE.md, AGENTS.md e MEMORY.md",
+          "objetivo": "Implementar uma estrutura robusta de arquivos de mem\u00f3ria hier\u00e1rquica est\u00e1tica para governar o workspace do desenvolvedor.",
+          "pilares_previstos": [
+            "A cascata de diretrizes: o escopo global do CLAUDE.md e as fronteiras do AGENTS.md",
+            "Gerenciamento de fatos frios com o MEMORY.md local e as regras locais (.clinerules)",
+            "Pr\u00e1ticas de higiene de contexto no dia a dia do Curador de Contexto para manter a Mesa de Aten\u00e7\u00e3o limpa"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Sintetizar as estrat\u00e9gias de controle de contexto estudadas, capacitando o Curador de Contexto a liderar projetos de arquitetura de IA resilientes a custos e vulnerabilidades de inje\u00e7\u00e3o direta e indireta."
+}

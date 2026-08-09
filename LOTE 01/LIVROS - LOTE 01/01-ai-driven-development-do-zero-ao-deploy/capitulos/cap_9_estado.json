@@ -1,0 +1,15 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "IV", "capitulo": "9" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": "Capítulo 8: os guindastes do cais fabricados com manual de operação (schema) e trava contra sabotagem (tool poisoning)",
+  "validacao": {
+    "diagramas_mermaid": 1,
+    "blocos_codigo": 3,
+    "linguagens": ["python", "bash", "json"],
+    "citacoes_inline": 22,
+    "referencias_bibliograficas": 22,
+    "ci_codigo": "aprovado",
+    "ci_diagramas": "aprovado"
+  }
+}

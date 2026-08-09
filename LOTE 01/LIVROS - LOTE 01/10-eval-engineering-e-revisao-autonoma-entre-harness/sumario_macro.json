@@ -1,0 +1,168 @@
+{
+  "slug": "livros/10-eval-engineering-e-revisao-autonoma-entre-harness",
+  "titulo_obra": "Eval Engineering e revisão autônoma entre harness",
+  "subtitulo": "Garantindo confiança em sistemas de IA",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "min_referencias_por_capitulo": 20,
+  "motivo_condutor": {
+    "nome": "O relógio de aferição e o painel de instrumentos",
+    "tese": "Todo maquinista confia em sua locomotiva porque o painel de instrumentos diz a verdade sobre o estado da viagem — e um inspetor independente audita o percurso. Os evals são o painel de instrumentos do agente; a revisão autônoma entre harnesses é o inspetor que percorre os trilhos. Sem aferição contínua, a confiança em sistemas de IA é superstição: parece que funciona até o dia em que o descarrilamento acontece.",
+    "persona_leitor": "Engenheiro de Qualidade de IA / Tech Lead de Evals / Engenheiro de Plataforma que precisa provar — não apenas prometer — que agentes autônomos são confiáveis o suficiente para produção"
+  },
+  "introducao": "Este livro trata da disciplina que transforma a confiança em sistemas de IA de uma promessa em uma propriedade medida: a Eval Engineering. Nos capítulos que seguem, o leitor aprende a construir o painel de instrumentos do agente — os evals que dizem a verdade sobre o que o sistema faz — e a formar o corpo de inspetores autônomos que revisam o percurso entre harnesses. Do tipo certo de eval para cada risco à calibração de juízes de IA, do CI/CD que bloqueia regressões ao red-teaming automatizado, o caminho vai da medição ingênua à garantia contínua de confiança em produção.",
+  "conclusao": "A Eval Engineering é a profissão de fé convertida em método: confiar sem medir é superstição, medir sem revisar é burocracia, e revisar sem autonomia é gargalo. O livro fecha com o painel completo — evals, juízes calibrados, revisão autônoma entre harnesses e governança contínua — a trilha que permite declarar, com evidência, que um sistema de IA é confiável.",
+  "tabela_de_tamanhos_referencia": {
+    "P": {"partes": 1, "capitulos": 4, "paginas": 40, "caracteres": 100000},
+    "M": {"partes": 2, "capitulos": 8, "paginas": 80, "caracteres": 200000},
+    "G": {"partes": 3, "capitulos": 12, "paginas": 120, "caracteres": 300000},
+    "GG": {"partes": 4, "capitulos": 16, "paginas": 160, "caracteres": 400000},
+    "XG": {"partes": 5, "capitulos": 20, "paginas": 200, "caracteres": 500000}
+  },
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "A Superstição: por que confiança sem medição descarrila",
+      "capitulos": [
+        {
+          "capitulo": 1,
+          "titulo": "O problema da confiança: quando a demo engana e a produção revela",
+          "objetivo": "Estabelecer o problema central: sistemas de IA que parecem funcionar nas demos e falham em produção — polite failures, alucinações plausíveis e a diferença entre vibe e evidência.",
+          "pilares_previstos": [
+            "Polite failures: o erro que parece sucesso",
+            "Por que testes de software tradicionais não bastam para LLMs",
+            "Confiança como propriedade medida, não declarada"
+          ]
+        },
+        {
+          "capitulo": 2,
+          "titulo": "O painel de instrumentos: anatomia de um sistema de evals",
+          "objetivo": "Definir a arquitetura conceitual de um sistema de avaliação: tarefas, tentativas, graders, datasets, métricas e o loop especificar-medir-melhorar.",
+          "pilares_previstos": [
+            "Os componentes: tarefa, tentativa, grader, transcrição",
+            "A cadeia Specify → Measure → Improve da OpenAI",
+            "Evals offline vs. online: pré-deploy e monitoramento"
+          ]
+        },
+        {
+          "capitulo": 3,
+          "titulo": "Tipos de evals e a arte de escrevê-los: unit, integration, end-to-end, rubricas e critérios",
+          "objetivo": "Mapear a taxonomia completa de evals — do componente isolado ao agente inteiro — e ensinar a escrever evals que não enganam: critérios claros, rubricas detalhadas e armadilhas de design de teste.",
+          "pilares_previstos": [
+            "Unit, integration e end-to-end evals; golden sets",
+            "Evals de trajetória: auditar o caminho, não só a resposta",
+            "Rubricas, qualidade do exemplar e armadilhas de design"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "Os Instrumentos: graders, datasets e ferramentas",
+      "capitulos": [
+        {
+          "capitulo": 4,
+          "titulo": "Graders determinísticos: código, regex, schemas e testes executáveis",
+          "objetivo": "Cobrir a camada mais confiável de avaliação: checagens por código, validação de schema, testes unitários de código gerado — e quando eles são suficientes.",
+          "pilares_previstos": [
+            "Validação estrutural: JSON schema, regex e asserts",
+            "Testes executáveis: rodando pytest na saída de coding agents",
+            "Os limites do determinístico: o que código não mede"
+          ]
+        },
+        {
+          "capitulo": 5,
+          "titulo": "Graders model-based: LLM-as-a-judge, calibração e o juiz que julga",
+          "objetivo": "Explicar o uso de modelos como avaliadores: quando usar, como escrever rubricas para o juiz, calibração com humanos e as armadilhas de viés do julgamento automático.",
+          "pilares_previstos": [
+            "Rubricas para o juiz e chain-of-thought no julgamento",
+            "Viés de posição, verbosidade e recompensa hacking",
+            "Calibração com anotação humana e few-shot do juiz"
+          ]
+        },
+        {
+          "capitulo": 6,
+          "titulo": "Golden sets, curadoria e o ferramental: do padrão ouro ao ecossistema de evals",
+          "objetivo": "Ensinar a criar, versionar e evoluir datasets de referência — curadoria, splits, vazamento de dados — e mapear as ferramentas do mercado (promptfoo, DeepEval, LangSmith, Langfuse) com critérios de seleção.",
+          "pilares_previstos": [
+            "Curadoria contínua a partir de logs de produção",
+            "Versionamento acoplado de datasets, prompts e modelos; test data leakage",
+            "Panorama de ferramentas e quando construir o próprio grader"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "O Inspetor Autônomo: revisão entre harnesses",
+      "capitulos": [
+        {
+          "capitulo": 7,
+          "titulo": "Revisão autônoma entre harness: quando um agente audita outro agente",
+          "objetivo": "Estabelecer o conceito central do livro: a revisão autônoma como camada de garantia — agent-as-a-judge, revisores com acesso ao log de ações e a detecção de falhas procedimentais.",
+          "pilares_previstos": [
+            "Agent-as-a-judge: raciocínio, ferramentas e log de ações",
+            "Falhas procedimentais invisíveis na resposta final",
+            "Harnesses assimétricos: revisores menores auditando agentes complexos"
+          ]
+        },
+        {
+          "capitulo": 8,
+          "titulo": "Loops de reflexão, auto-correção e deliberação: do Reflexion ao painel de juízes",
+          "objetivo": "Cobrir os mecanismos em que o agente se revisa e quando um revisor não basta: Reflexion, memória episódica, ensembles com personas contrastantes e agregação de veredictos.",
+          "pilares_previstos": [
+            "Reflexion: feedback verbal e memória episódica",
+            "Debate, promotor-defensor e personas contrastantes",
+            "Concordância entre juízes: medindo a confiabilidade do revisor"
+          ]
+        },
+        {
+          "capitulo": 9,
+          "titulo": "Red-teaming automatizado: o adversário que prova a resiliência",
+          "objetivo": "Ensinar a construir o adversário: red-teaming automatizado, OWASP LLM Top 10 como checklist, armadilhas curadas por humanos e a fronteira entre teste e ataque.",
+          "pilares_previstos": [
+            "Prompt injection, excessive agency e o OWASP GenAI Top 10",
+            "Red-team traps curados por humanos a montante",
+            "Testes adversarial em sandbox: limites éticos e operacionais"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "A Viagem Garantida: evals no ciclo de vida e governança de confiança",
+      "capitulos": [
+        {
+          "capitulo": 10,
+          "titulo": "Evals no ciclo de vida: EDD, CI/CD e o gate que bloqueia regressão",
+          "objetivo": "Integrar evals ao desenvolvimento: eval-driven development, pipelines de CI com evals em GitHub Actions, gates de qualidade e regressão de prompts.",
+          "pilares_previstos": [
+            "Eval-driven development: o eval como especificação executável",
+            "CI/CD com evals: thresholds, prompts versionados, bloqueio de merge",
+            "Prompt regression e a deriva silenciosa dos modelos"
+          ]
+        },
+        {
+          "capitulo": 11,
+          "titulo": "Confiabilidade das métricas e governança: quando o número mente e quem presta contas",
+          "objetivo": "Cobrir a meta-camada: variância estatística dos evals, tamanho de amostra, NIST AI RMF, SLAs de qualidade para sistemas probabilísticos e trilha de auditoria.",
+          "pilares_previstos": [
+            "Variância e não-determinismo: pass@k vs. pass^k",
+            "NIST AI RMF: Govern, Map, Measure, Manage",
+            "SLAs para IA, auditoria e responsabilidade"
+          ]
+        },
+        {
+          "capitulo": 12,
+          "titulo": "O relógio de aferição: a carreira e a cultura da Eval Engineering",
+          "objetivo": "Fechar a obra com a dimensão humana e profissional: a carreira de eval engineer, a cultura de evidência nas organizações e o futuro da garantia de confiança em IA.",
+          "pilares_previstos": [
+            "A carreira de eval engineer: habilidades, funções e trajetória",
+            "Cultura de evidência: convencendo times a medir antes de afirmar",
+            "O futuro: evals como commodity e a confiança como serviço"
+          ]
+        }
+      ]
+    }
+  ]
+}

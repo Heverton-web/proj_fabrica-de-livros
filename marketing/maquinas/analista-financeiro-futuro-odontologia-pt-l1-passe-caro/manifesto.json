@@ -1,0 +1,40 @@
+{
+  "id": "mv-20260808-analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "slug": "analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "titulo": "Analista Financeiro Futuro Odontologia Pt L1 Passe Caro",
+  "obra_origem": "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\output\\livros\\analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "tipo_obra": "livros",
+  "tipo_maquina": "completo",
+  "criada_em": "2026-08-08T21:38:35.274226",
+  "status": "criada",
+  "stack": {
+    "frontend": "nextjs-14",
+    "backend": "fastapi",
+    "database": "sqlite",
+    "deploy": "docker-vercel"
+  },
+  "escada_valor": {
+    "nivel_0": {
+      "tipo": "lead_magnet",
+      "preco": 0
+    },
+    "nivel_1": {
+      "tipo": "tripwire",
+      "preco": 37
+    },
+    "nivel_2": {
+      "tipo": "core",
+      "preco": 97
+    },
+    "nivel_3": {
+      "tipo": "obra_completa",
+      "preco": 297
+    }
+  },
+  "metricas": {
+    "leads": 0,
+    "vendas": 0,
+    "receita": 0.0,
+    "taxa_conversao": 0.0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "8" },
+  "titulo": "A Camada de Backend: Linguagens, Frameworks e Padrões de Servidor",
+  "estado_execucao": "concluido_autonomo",
+  "validacao": {
+    "codigo": "ok (python: ok x2, yaml: ok, mermaid: nao_aplicavel ao validador de codigo)",
+    "diagramas_mermaid": "3 diagramas, 3 validos",
+    "secoes_7": "presentes e integras (1 a 7)",
+    "referencias": 24,
+    "citacoes_no_corpo": 32,
+    "min_referencias_exigido": 20,
+    "callback_capitulo_anterior": "Capitulo 7 (SSR/renderizacao) citado explicitamente na Introducao"
+  },
+  "rodadas_correcao": 1
+}

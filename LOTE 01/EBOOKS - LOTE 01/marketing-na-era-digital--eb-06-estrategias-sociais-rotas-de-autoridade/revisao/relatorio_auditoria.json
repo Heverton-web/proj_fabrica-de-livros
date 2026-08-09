@@ -1,0 +1,349 @@
+{
+  "slug": "ebooks/marketing-na-era-digital--eb-06-estrategias-sociais-rotas-de-autoridade",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 5,
+  "caracteres_obra": 47136,
+  "paginas_estimadas": 18.9,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "47.136 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.747,
+      "trecho": "O código acima é o núcleo técnico de *Marketing de Influência: Autoridade Transferida*: validável, executável e adaptável ao contexto real do leitor. A prática recomendada é rodá-l"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.735,
+      "trecho": "O código acima é o núcleo técnico de *Social Media Marketing: Construindo Comunidade e Autoridade*: validável, executável e adaptável ao contexto real do leitor. A prática recomend"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.735,
+      "trecho": "O código acima é o núcleo técnico de *Marketing de Influência: Autoridade Transferida*: validável, executável e adaptável ao contexto real do leitor. A prática recomendada é rodá-l"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.726,
+      "trecho": "O código acima é o núcleo técnico de *Marketing de Influência: Autoridade Transferida*: validável, executável e adaptável ao contexto real do leitor. A prática recomendada é rodá-l"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.718,
+      "trecho": "O código acima é o núcleo técnico de *Social Media Marketing: Construindo Comunidade e Autoridade*: validável, executável e adaptável ao contexto real do leitor. A prática recomend"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.709,
+      "trecho": "O código acima é o núcleo técnico de *Social Media Marketing: Construindo Comunidade e Autoridade*: validável, executável e adaptável ao contexto real do leitor. A prática recomend"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.709,
+      "trecho": "O código acima é o núcleo técnico de *Social Media Marketing: Construindo Comunidade e Autoridade*: validável, executável e adaptável ao contexto real do leitor. A prática recomend"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.709,
+      "trecho": "O código acima é o núcleo técnico de *Branding Digital: Identidade, Posicionamento e Presença de Marca*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.709,
+      "trecho": "O código acima é o núcleo técnico de *Growth Marketing: Experimentação e Canais de Crescimento*: validável, executável e adaptável ao contexto real do leitor. A prática recomendada"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.704,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.701,
+      "trecho": "O código acima é o núcleo técnico de *Branding Digital: Identidade, Posicionamento e Presença de Marca*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.69,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.69,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.681,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.671,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.662,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.662,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.662,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.662,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.653,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.64,
+      "trecho": "No capítulo anterior, *Social Media Marketing: Construindo Comunidade e Autoridade*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma "
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.64,
+      "trecho": "No capítulo anterior, *Marketing de Influência: Autoridade Transferida*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma esse repertó"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.627,
+      "trecho": "No capítulo anterior, *Copywriting Digital: Escrevendo para Converter em Cada Canal*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.627,
+      "trecho": "No capítulo anterior, *Marketing de Influência: Autoridade Transferida*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma esse repertó"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.615,
+      "trecho": "No capítulo anterior, *Social Media Marketing: Construindo Comunidade e Autoridade*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.604,
+      "trecho": "No capítulo anterior, *Copywriting Digital: Escrevendo para Converter em Cada Canal*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.604,
+      "trecho": "No capítulo anterior, *Copywriting Digital: Escrevendo para Converter em Cada Canal*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.604,
+      "trecho": "No capítulo anterior, *Social Media Marketing: Construindo Comunidade e Autoridade*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma "
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.604,
+      "trecho": "No capítulo anterior, *Branding Digital: Identidade, Posicionamento e Presença de Marca*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo re"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.593,
+      "trecho": "No capítulo anterior, *Copywriting Digital: Escrevendo para Converter em Cada Canal*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retoma"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.528,
+      "trecho": "A marca é o resultado acumulado de todas as interações: branding digital exige coerência entre identidade, voz e comportamento em cada território. Esse eixo conecta os três pilares"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.522,
+      "trecho": "Canais avaliados pelo mesmo critério — custo de aquisição e potencial de escala — permitem decidir onde dobrar a aposta e onde parar. Esse eixo conecta os três pilares e explica po"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.522,
+      "trecho": "O marketing de influência transfere confiança: criadores de nicho com audiências menores e mais engajadas superam, em conversão atribuída, celebridades de alcance massivo. Esse eix"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.511,
+      "trecho": "Na prática, o ecossistema de criadores: nano, micro, macro e mega influenciadores significa transformar a teoria em rotina operacional — exatamente o que *Marketing de Influência: "
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.511,
+      "trecho": "Na prática, posicionamento de marca e diferenciação no digital significa transformar a teoria em rotina operacional — exatamente o que *Branding Digital: Identidade, Posicionamento"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.511,
+      "trecho": "Canais avaliados pelo mesmo critério — custo de aquisição e potencial de escala — permitem decidir onde dobrar a aposta e onde parar. Esse eixo conecta os três pilares e explica po"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.511,
+      "trecho": "O marketing de influência transfere confiança: criadores de nicho com audiências menores e mais engajadas superam, em conversão atribuída, celebridades de alcance massivo. Esse eix"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.511,
+      "trecho": "A autoridade se acumula com consistência: poucos canais bem operados superam muitos canais mal operados em retorno sobre o esforço. Esse eixo conecta os três pilares e explica por "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.506,
+      "trecho": "Na prática, estratégia de presença: objetivos, plataformas e tom de voz significa transformar a teoria em rotina operacional — exatamente o que *Social Media Marketing: Construindo"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.506,
+      "trecho": "Na prática, o ecossistema de criadores: nano, micro, macro e mega influenciadores significa transformar a teoria em rotina operacional — exatamente o que *Marketing de Influência: "
+    }
+  ],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 9225,
+      "palavras": 1308,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 9269,
+      "palavras": 1309,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 9343,
+      "palavras": 1323,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 9223,
+      "palavras": 1311,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 9370,
+      "palavras": 1340,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "titulo_obra": "Hooks, Config e Governança",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "min_referencias_por_capitulo": 20,
+  "motivo_condutor": {
+    "nome": "A Torre de Controle de Tráfego Aéreo",
+    "descricao": "O agente autônomo é uma aeronave moderna: potente, capaz e perigosa sem supervisão. O harness é a torre de controle que autoriza decolagens, define corredores de voo, intercepta desvios, mantém a caixa-preta de cada manobra e, quando necessário, derruba o plano — não o avião. O engenheiro é o controlador de tráfego que projeta as regras antes que o tráfego decole.",
+    "vocabulario": [
+      "torre de controle",
+      "plano de voo",
+      "corredor aéreo",
+      "autorização de decolagem",
+      "caixa-preta",
+      "holding pattern",
+      "zona restrita",
+      "interceptação",
+      "checklist de partida",
+      "controlador de tráfego"
+    ],
+    "persona_leitor": "Engenheiro de Governança Agêntica"
+  },
+  "introducao": "Introdução de impacto: apresentar o paradoxo da autonomia — quanto mais capaz o agente, mais necessário o controle — e o salto conceitual de 'instruções que pedem' para 'guardrails que impõem'. Ancorar na metáfora da torre de controle e na persona do engenheiro de governança.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos: o Problema do Controle",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O contrato de execução: por que instrução não é controle",
+          "objetivo": "Estabelecer a diferença fundamental entre instruções probabilísticas (CLAUDE.md, rules) e controles determinísticos (hooks, permissões), e por que a camada de harness existe.",
+          "pilares_previstos": [
+            "A natureza probabilística da obediência: por que 'não faça X' no prompt não é garantia",
+            "O harness como camada de execução: o que roda antes, durante e depois do modelo",
+            "O contrato de execução: exit codes, stdout e a máquina de estados do agente"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "O ciclo de vida do agente: os eventos que governam a sessão",
+          "objetivo": "Mapear os eventos do ciclo de vida (SessionStart, PreToolUse, PostToolUse, Stop e demais) como os momentos discretos onde o controle pode ser injetado.",
+          "pilares_previstos": [
+            "A anatomia de uma sessão: da inicialização ao encerramento",
+            "O loop de ferramentas: onde o perigo mora e onde o guardrail age",
+            "O catalogo de eventos: sessão, prompt, ferramenta, subagente e encerramento"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Configuração como Política: Settings e Permissões",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "A cascata de configuração: escopos e precedência",
+          "objetivo": "Ensinar o sistema de settings.json em camadas (managed, CLI, local, projeto, usuário) e como a precedência define quem manda em cada ambiente.",
+          "pilares_previstos": [
+            "Os escopos de configuração e a ordem de precedência",
+            "Estrutura do settings.json: permissions, env, additionalDirectories, hooks",
+            "Configuração para times: o que vai para o git e o que fica local"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "O guardião de três portas: Deny, Ask e Allow",
+          "objetivo": "Dominar a camada de permissões — regras allow/deny/ask, matchers de comando, modos de permissão e o fluxo de aprovação humana.",
+          "pilares_previstos": [
+            "A semântica de Deny, Ask e Allow e a precedência entre elas",
+            "Matchers de permissão: ferramentas, comandos e curingas",
+            "Modos de permissão e o ciclo de vida da aprovação (default, acceptEdits, plan, auto, dontAsk, bypassPermissions)"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Hooks em Ação: Guardrails Determinísticos",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Matchers e handlers: a gramática do disparo",
+          "objetivo": "Ensinar a configuração precisa de hooks: eventos, matchers (file-path, tool-name, regex), tipos de handler (command, http, prompt, agent) e o contrato de entrada/saída.",
+          "pilares_previstos": [
+            "O bloco hooks do settings.json e a gramática de matchers",
+            "Os quatro tipos de handler e quando usar cada um",
+            "O contrato de dados: stdin, payload JSON e o ciclo de resposta"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "O PreToolUse e a arte do bloqueio",
+          "objetivo": "Construir guardrails de segurança reais: exit codes, hookSpecificOutput, permissionDecision, updatedInput e o padrão de bloquear antes que o dano aconteça.",
+          "pilares_previstos": [
+            "Exit codes e a semântica do bloqueio (0, 2, demais códigos)",
+            "A resposta JSON refinada: permissionDecision, updatedInput, additionalContext",
+            "Casos reais: proteger .env, bloquear rm -rf, validar comandos git"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Governança no Mundo Real: Ameaças e Auditoria",
+      "capitulos": [
+        {
+          "capitulo": "7",
+          "titulo": "O modelo de ameaças do agente autônomo",
+          "objetivo": "Mapear as ameaças reais a agentes (prompt injection indireto, tool poisoning, exfiltração, rogue agents) usando OWASP Top 10 for Agentic Applications e MITRE ATLAS.",
+          "pilares_previstos": [
+            "Da entrada estática ao agente com ferramentas: a nova superfície de ataque",
+            "A taxonomia de ameaças: goal hijack, tool misuse, cascading failures, rogue agents",
+            "O princípio de Least Agency: menos autonomia inicial, mais confiança gradual"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Sandboxing e isolamento: o agente em quarentena",
+          "objetivo": "Projetar ambientes de execução isolados — containers efêmeros, gVisor, namespaces, sandbox de rede — para que o pior caso do agente nunca toque o host.",
+          "pilares_previstos": [
+            "Por que executar código gerado exige isolamento",
+            "Containers efêmeros, gVisor e a matriz de isolamento",
+            "Sandbox de rede e filesystem: deny-by-default e allowlists de domínio"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "V",
+      "titulo_parte": "O Profissional do Futuro: Escala e Liderança",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Governança enterprise: política gerenciada e auditoria",
+          "objetivo": "Levar os guardrails à escala organizacional: managed policy, SSO/SCIM, audit logs, Compliance API e a cadeia de responsabilidade corporativa.",
+          "pilares_previstos": [
+            "Política gerenciada: o que a empresa impõe e o que o dev não pode burlar",
+            "Audit logs e a caixa-preta corporativa: quem fez o quê, quando e por quê",
+            "SSO, provisionamento e o ciclo de vida da identidade do agente"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "O plano de voo: arquitetando a camada de controle da organização",
+          "objetivo": "Sintetizar tudo em uma arquitetura de governança multi-harness — comparativo entre harnesses, padrões de design de guardrails e o roadmap do engenheiro de governança.",
+          "pilares_previstos": [
+            "O comparativo multi-harness: Claude Code, OpenCode, Cursor, Windsurf, Copilot e Cline",
+            "Padrões de design: kill switches, HITL, circuit breakers e approval gates",
+            "O roadmap do engenheiro de governança: da primeira regra à política corporativa"
+          ]
+        },
+        {
+          "capitulo": "11",
+          "titulo": "Hooks em produção: do guardrail individual à política de organização",
+          "objetivo": "",
+          "pilares_previstos": []
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Config como código: segredos, ambientes e revisão contínua",
+          "objetivo": "",
+          "pilares_previstos": []
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética: revisitar a metáfora da torre de controle — o engenheiro de governança não limita a aviação, ele a torna possível. Recapitular o arco do controle (fundamentos → configuração → hooks → ameaças → escala) e deixar o leitor pronto para projetar a própria camada de controle.",
+  "subtitulo": "Guardrails para Agentes Autônomos"
+}

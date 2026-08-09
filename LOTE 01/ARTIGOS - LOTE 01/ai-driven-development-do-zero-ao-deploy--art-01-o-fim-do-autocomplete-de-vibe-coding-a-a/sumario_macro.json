@@ -1,0 +1,60 @@
+{
+  "titulo_obra": "O Fim do Autocomplete: De Vibe Coding a Agentic Coding & A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3"
+  ],
+  "introducao": "Recorte investigativo sobre: O Fim do Autocomplete: De Vibe Coding a Agentic Coding, A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools, Camada Tela e Camada Harness: Intent Preview e o Runtime do Agente.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "O Fim do Autocomplete: De Vibe Coding a Agentic Coding",
+            "A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools",
+            "Camada Tela e Camada Harness: Intent Preview e o Runtime do Agente"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "O Fim do Autocomplete: De Vibe Coding a Agentic Coding",
+            "A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools",
+            "Camada Tela e Camada Harness: Intent Preview e o Runtime do Agente"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "O Fim do Autocomplete: De Vibe Coding a Agentic Coding",
+            "A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools",
+            "Camada Tela e Camada Harness: Intent Preview e o Runtime do Agente"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "O Fim do Autocomplete: De Vibe Coding a Agentic Coding",
+            "A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools",
+            "Camada Tela e Camada Harness: Intent Preview e o Runtime do Agente"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

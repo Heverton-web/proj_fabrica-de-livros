@@ -1,0 +1,20 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "III",
+    "capitulo": "11"
+  },
+  "estado_execucao": "rascunho_completo",
+  "slug_obra": "livros/engenharia-de-contexto-janelas-memoria",
+  "callback_capitulo_anterior": "Capítulo 10: O Julgamento da Perplexidade, introduzindo o funcionamento básico do LLMLingua",
+  "senioridade": "iniciante",
+  "tema": "A Escrita Rápida e Classificativa: Conhecendo o LLMLingua-2",
+  "motivo_condutor": "O Bibliotecário Imperial",
+  "payload_estrategico": {
+    "pilares": [
+      "Compressão como classificação binária extrativa em vez de cálculo auto-regressivo de perplexidade.",
+      "Destilação de dados do GPT-4 para treinamento de encoders bidirecionais leves (XLM-RoBERTa).",
+      "Redução de latência de compressão em até 6x para sistemas de tempo real e alta escala."
+    ]
+  }
+}

@@ -288,6 +288,10 @@ Ou via script:
 python scripts/criar-maquina-vendas.py <slug> --tipo completo
 ```
 
+**Importante:** após gerar, a máquina nasce com **copy genérica de demonstração**
+("Autor Digital", "centenas de pessoas") — a personalização por nicho é obrigatória
+antes de publicar (ver seção 3.10).
+
 ### 3.3 TIPOS DE MÁQUINA
 
 | Tipo | Componentes | Quando usar |
@@ -329,8 +333,13 @@ marketing/maquinas/{slug}/
 | `/admin/emails` | E-mails | Sequências e status |
 | `/admin/metricas` | Métricas | Funil de conversão |
 | `/api/lead` | API Lead | POST: cadastro de lead |
+| `/api/checkout` | API Checkout | POST: registra pedido + lead no backend, devolve link de pagamento (R11) |
 | `/api/webhook` | API Webhook | POST: pagamento |
 | `/api/health` | API Health | GET: status |
+
+> **Não remover a rota `/api/checkout`** — o `checkout/page.tsx` posta nela; sem
+> ela o checkout quebra com 404. Ela lê `BACKEND_URL`/`NEXT_PUBLIC_BACKEND_URL`
+> (fallback `http://127.0.0.1:8000`) e registra o lead em `/api/leads/`.
 
 ### 3.6 BACKEND (FastAPI)
 
@@ -381,6 +390,48 @@ marketing/maquinas/{slug}/
 | `config/pagamento.json` | Stripe/Kiwify |
 | `config/roteamento_modelos.json` | Roteamento LLM por tier |
 | `config/subagentes.json` | Registry de subagentes |
+
+### 3.10 PERSONALIZAÇÃO POR NICHO (OBRIGATÓRIA)
+
+O template nasce com copy genérica de demonstração. Antes de publicar a máquina,
+personalizar em **todos** os pontos abaixo pelos termos do nicho da obra de origem:
+
+| Área | Arquivos | O que trocar |
+|------|----------|-------------|
+| Configs | `config/produtos.json`, `personas.json`, `funis.json`, `canais.json`, `email.json` | Escada de valor, persona, funis, hashtags e remetente do nicho |
+| Frontend | `app/page.tsx`, `components/Hero.tsx`, `PricingCard.tsx`, `app/layout.tsx`, `app/admin/layout.tsx`, `app/captura/page.tsx` | Headline, dor/solução, CTA, metadata |
+| E-mails | `templates/emails/*.html` | Copy de boas-vindas, nutrição, venda, reativação |
+| Docs | `README.md` | Apresentação no nicho |
+
+**Gate de verificação (R12):**
+```bash
+grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ README.md
+# deve retornar VAZIO
+```
+
+**Teste do checkout (R11):**
+```bash
+curl -s -X POST http://localhost:3000/api/checkout \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Dra. Teste", "email": "teste@exemplo.com", "produto": "obra"}'
+# Esperado: {"success":true,...,"valor":97}
+# Confirmar o lead no backend:
+curl http://localhost:8000/api/leads
+```
+
+**Alinhar o produto default do checkout:** o `default(...)` da rota deve usar o
+slug real do produto core em `config/produtos.json` (senão o funil agrupa por
+um produto inexistente). Checar com:
+```bash
+python -c "import json; d=json.load(open('config/produtos.json',encoding='utf-8')); \
+[print(p['slug'], '|', p['preco']) for p in d['produtos']]"
+```
+
+**Máquinas criadas antes do fix:** se a rota `/api/checkout` não existe ou o
+`checkout/page.tsx` usa `<form action method="POST">` urlencoded vazio (retorna
+500), copiar os arquivos corrigidos do template (`templates/maquina/frontend/
+app/api/checkout/` e `app/checkout/page.tsx`), resolver os placeholders e manter
+a copy do nicho.
 
 ---
 
@@ -667,6 +718,13 @@ MÁQUINA CRIADA
         │
         ▼
 ┌──────────────────┐
+│  PERSONALIZAR    │  ← Copy por nicho (seção 3.10)
+│  POR NICHO       │     configs + frontend + e-mails + README
+│  (OBRIGATÓRIO)   │     gate: grep 'Autor Digital|centenas de pessoas'
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
 │  COPYWRITER      │  ← Gera páginas de venda/captura
 │  (standard LLM)  │     + sequências de e-mail/DM
 └────────┬─────────┘
@@ -739,6 +797,10 @@ HEYGEN_API_KEY=...
 # Frontend
 NEXT_PUBLIC_API_URL=http://localhost:8000
 NEXT_PUBLIC_STRIPE_KEY=pk_live_...
+
+# Backend (rota /api/checkout do Next.js)
+BACKEND_URL=http://127.0.0.1:8000
+NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:8000
 ```
 
 ### 12.2 Deploy Docker
@@ -822,6 +884,10 @@ Detecta harness, lista modelos disponíveis, roteia cada tarefa para o modelo ma
 | "SQLite corrompido" | Arquivo deletado | Rodar migrations novamente |
 | "E-mails não enviam" | SMTP não configurado | Configurar `config/email.json` |
 | "Leads não aparecem" | Instagram token ausente | Configurar `.env` |
+| "Checkout dá 404" | Rota `/api/checkout` removida | Regerar do template (rota nasce na geração) |
+| "Checkout sempre dá erro" | Form html posta urlencoded; rota exige JSON | `checkout/page.tsx` usa fetch JSON com nome/e-mail (padrão do template) |
+| "Site com copy genérica" | Máquina não personalizada | Seguir seção 3.10 (gate R12) |
+| "Acentos/emojis quebrados no console" | Terminal Windows cp1252 | Scripts da fábrica usam `console_utf8()`/`sys.stdout.reconfigure` (regra 11 do AGENTS.md) |
 | "Gasto tokens alto" | Modelo errado para tarefa | `python scripts/descobrir_modelos.py` |
 | "Build Typst falha" | Template com erro | Verificar `.typ` no editor |
 | "Diagrama não renderiza" | Mermaid inválido | `renderizar-diagramas.py --validar` |

@@ -1,0 +1,544 @@
+{
+  "slug": "livros/10-eval-engineering-e-revisao-autonoma-entre-harness",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 12,
+  "caracteres_obra": 358526,
+  "paginas_estimadas": 143.4,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 12 capitulos",
+      "conforme": true,
+      "detalhe": "12 capitulo(s) (minimo 12)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 120 paginas (~300.000 caracteres)",
+      "conforme": true,
+      "detalhe": "358.526 caracteres (minimo 300.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 75,
+        "porquê": 1
+      },
+      "ocorrencias": 76
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 62,
+        "esta": 4,
+        "Esta": 1
+      },
+      "ocorrencias": 67
+    },
+    {
+      "termo_normalizado": "metrica",
+      "variantes": {
+        "métrica": 55,
+        "metrica": 1
+      },
+      "ocorrencias": 56
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "contínua": 27,
+        "continua": 5
+      },
+      "ocorrencias": 32
+    },
+    {
+      "termo_normalizado": "versao",
+      "variantes": {
+        "versão": 18,
+        "versao": 1
+      },
+      "ocorrencias": 19
+    },
+    {
+      "termo_normalizado": "acao",
+      "variantes": {
+        "ação": 9,
+        "acao": 1
+      },
+      "ocorrencias": 10
+    },
+    {
+      "termo_normalizado": "valida",
+      "variantes": {
+        "valida": 8,
+        "válida": 1
+      },
+      "ocorrencias": 9
+    },
+    {
+      "termo_normalizado": "suites",
+      "variantes": {
+        "suítes": 6,
+        "suites": 1
+      },
+      "ocorrencias": 7
+    },
+    {
+      "termo_normalizado": "reexecutar",
+      "variantes": {
+        "reexecutar": 5,
+        "re-executar": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "especifica",
+      "variantes": {
+        "especifica": 3,
+        "específica": 2
+      },
+      "ocorrencias": 5
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": false,
+    "vocabulario_motivo_condutor": [],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "6",
+        "ocorrencias": [
+          "[13][14]"
+        ]
+      },
+      {
+        "capitulo": "8",
+        "ocorrencias": [
+          "[2][4]"
+        ]
+      },
+      {
+        "capitulo": "9",
+        "ocorrencias": [
+          "[1][5]"
+        ]
+      },
+      {
+        "capitulo": "10",
+        "ocorrencias": [
+          "[2][4]"
+        ]
+      },
+      {
+        "capitulo": "11",
+        "ocorrencias": [
+          "[2][5]"
+        ]
+      },
+      {
+        "capitulo": "12",
+        "ocorrencias": [
+          "[1][2]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 27271,
+      "palavras": 3811,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 48,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "em: https://latitude.so/blog/ultimate-ci-cd-llm-evaluation-guide. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.5,
+        "coeficiente_variacao": 0.685
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 31143,
+      "palavras": 4065,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 56,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "m: https://www.anthropic.com/engineering/writing-effective-tools. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        8
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 27.5,
+        "coeficiente_variacao": 0.697
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 29669,
+      "palavras": 3947,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 57,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ttps://galileo.ai/blog/continuous-integration-ci-ai-fundamentals. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.5,
+        "coeficiente_variacao": 0.64
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 28864,
+      "palavras": 3793,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 55,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "Disponível em: https://www.evidentlyai.com/blog/owasp-top-10-llm. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.7,
+        "coeficiente_variacao": 0.713
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 26326,
+      "palavras": 3402,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 42,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "loudsecurityalliance.org/agentic/agentic-nist-ai-rmf-profile-v1/. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.8,
+        "coeficiente_variacao": 0.689
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 30047,
+      "palavras": 4022,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 61,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "onível em: https://www.nist.gov/itl/ai-risk-management-framework. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[13][14]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28,
+        "coeficiente_variacao": 0.649
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 31249,
+      "palavras": 4102,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 61,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "Disponível em: https://www.evidentlyai.com/blog/owasp-top-10-llm. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28.2,
+        "coeficiente_variacao": 0.7
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 31414,
+      "palavras": 3955,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 60,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ttps://galileo.ai/blog/continuous-integration-ci-ai-fundamentals. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[2][4]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.0,
+        "coeficiente_variacao": 0.691
+      }
+    },
+    {
+      "capitulo": "9",
+      "arquivo": "cap_9.md",
+      "caracteres": 30970,
+      "palavras": 3974,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 66,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ". 2026. Disponível em: https://langchain-ai.github.io/langgraph/. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][5]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28.0,
+        "coeficiente_variacao": 0.671
+      }
+    },
+    {
+      "capitulo": "10",
+      "arquivo": "cap_10.md",
+      "caracteres": 29837,
+      "palavras": 4050,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 64,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ". 2026. Disponível em: https://langchain-ai.github.io/langgraph/. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[2][4]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28.2,
+        "coeficiente_variacao": 0.657
+      }
+    },
+    {
+      "capitulo": "11",
+      "arquivo": "cap_11.md",
+      "caracteres": 29412,
+      "palavras": 3998,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 63,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "//www.evidentlyai.com/blog/llm-unit-testing-ci-cd-github-actions. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[2][5]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28.1,
+        "coeficiente_variacao": 0.66
+      }
+    },
+    {
+      "capitulo": "12",
+      "arquivo": "cap_12.md",
+      "caracteres": 28584,
+      "palavras": 3951,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 57,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "//www.evidentlyai.com/blog/llm-unit-testing-ci-cd-github-actions. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][2]"
+      ],
+      "vocabulario_fora_ilustra": null,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 29.0,
+        "coeficiente_variacao": 0.702
+      }
+    }
+  ]
+}

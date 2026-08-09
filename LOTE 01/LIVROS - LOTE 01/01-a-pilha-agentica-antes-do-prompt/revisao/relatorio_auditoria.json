@@ -1,0 +1,702 @@
+{
+  "slug": "livros/01-a-pilha-agentica-antes-do-prompt",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 12,
+  "caracteres_obra": 405221,
+  "paginas_estimadas": 162.1,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 12 capitulos",
+      "conforme": true,
+      "detalhe": "12 capitulo(s) (minimo 12)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 120 paginas (~300.000 caracteres)",
+      "conforme": true,
+      "detalhe": "405.221 caracteres (minimo 300.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 112,
+        "esta": 9,
+        "Está": 1,
+        "Esta": 1
+      },
+      "ocorrencias": 123
+    },
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 36,
+        "porquê": 3
+      },
+      "ocorrencias": 39
+    },
+    {
+      "termo_normalizado": "valida",
+      "variantes": {
+        "valida": 33,
+        "válida": 1
+      },
+      "ocorrencias": 34
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "contínua": 18,
+        "continua": 4,
+        "Contínua": 2
+      },
+      "ocorrencias": 24
+    },
+    {
+      "termo_normalizado": "mantem",
+      "variantes": {
+        "mantém": 12,
+        "mantêm": 3
+      },
+      "ocorrencias": 15
+    },
+    {
+      "termo_normalizado": "media",
+      "variantes": {
+        "média": 12,
+        "Media": 1
+      },
+      "ocorrencias": 13
+    },
+    {
+      "termo_normalizado": "ancora",
+      "variantes": {
+        "âncora": 12,
+        "ancora": 1
+      },
+      "ocorrencias": 13
+    },
+    {
+      "termo_normalizado": "especifica",
+      "variantes": {
+        "específica": 3,
+        "especifica": 3
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "copia",
+      "variantes": {
+        "cópia": 4,
+        "copia": 2
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "publica": 5,
+        "pública": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "seria",
+      "variantes": {
+        "séria": 3,
+        "seria": 1
+      },
+      "ocorrencias": 4
+    },
+    {
+      "termo_normalizado": "contem",
+      "variantes": {
+        "contém": 3,
+        "contêm": 1
+      },
+      "ocorrencias": 4
+    },
+    {
+      "termo_normalizado": "transacao",
+      "variantes": {
+        "transação": 3,
+        "Transacao": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "token",
+      "janela de contexto",
+      "atenção",
+      "alucinação",
+      "Git",
+      "branch",
+      "pull request",
+      "teste automatizado",
+      "CI/CD",
+      "observabilidade",
+      "API",
+      "banco de dados",
+      "modelo",
+      "tool",
+      "tool calling",
+      "agente",
+      "agent loop",
+      "AIDD"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "02",
+        "ocorrencias": [
+          "[16][17]",
+          "[9][10]"
+        ]
+      },
+      {
+        "capitulo": "03",
+        "ocorrencias": [
+          "[8][10]",
+          "[6][7]",
+          "[2][5]",
+          "[8][9]",
+          "[2][5]",
+          "[2][3]"
+        ]
+      },
+      {
+        "capitulo": "04",
+        "ocorrencias": [
+          "[5][6]",
+          "[1][7]",
+          "[7][8]",
+          "[4][5]",
+          "[7][8]",
+          "[15][17]"
+        ]
+      },
+      {
+        "capitulo": "05",
+        "ocorrencias": [
+          "[17][18]",
+          "[2][7]",
+          "[13][14]",
+          "[13][14]"
+        ]
+      },
+      {
+        "capitulo": "06",
+        "ocorrencias": [
+          "[10][11]"
+        ]
+      },
+      {
+        "capitulo": "07",
+        "ocorrencias": [
+          "[9][10]",
+          "[1][10]",
+          "[9][10]"
+        ]
+      },
+      {
+        "capitulo": "08",
+        "ocorrencias": [
+          "[1][7]",
+          "[4][20]"
+        ]
+      },
+      {
+        "capitulo": "09",
+        "ocorrencias": [
+          "[3][5]",
+          "[5][10]"
+        ]
+      },
+      {
+        "capitulo": "10",
+        "ocorrencias": [
+          "[12][14]",
+          "[14][12]",
+          "[12][14]",
+          "[12][13][14]",
+          "[1][2]",
+          "[12][14]",
+          "[1][2]",
+          "[1][2]",
+          "[1][3]",
+          "[1][2]"
+        ]
+      },
+      {
+        "capitulo": "11",
+        "ocorrencias": [
+          "[5][6]",
+          "[5][6]",
+          "[13][15]",
+          "[1][11]"
+        ]
+      },
+      {
+        "capitulo": "12",
+        "ocorrencias": [
+          "[5][6]",
+          "[2][7]",
+          "[17][19]",
+          "[4][13]",
+          "[7][8]",
+          "[1][7]",
+          "[5][17]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "01",
+      "arquivo": "cap_01.md",
+      "caracteres": 36556,
+      "palavras": 5714,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 138,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 1,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l em: https://www.atlassian.com/git/tutorials/comparing-workflows. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 112,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.3,
+        "coeficiente_variacao": 0.615
+      }
+    },
+    {
+      "capitulo": "02",
+      "arquivo": "cap_02.md",
+      "caracteres": 37500,
+      "palavras": 5714,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 176,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://www.anthropic.com/news/model-context-protocol. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[16][17]",
+        "[9][10]"
+      ],
+      "vocabulario_fora_ilustra": 116,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.1,
+        "coeficiente_variacao": 0.56
+      }
+    },
+    {
+      "capitulo": "03",
+      "arquivo": "cap_03.md",
+      "caracteres": 36764,
+      "palavras": 5675,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 173,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "e-vs-github-copilot-2026-agentic-vs-autocomplete-enterprise-guide. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[8][10]",
+        "[6][7]",
+        "[2][5]",
+        "[8][9]",
+        "[2][5]",
+        "[2][3]"
+      ],
+      "vocabulario_fora_ilustra": 311,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.3,
+        "coeficiente_variacao": 0.638
+      }
+    },
+    {
+      "capitulo": "04",
+      "arquivo": "cap_04.md",
+      "caracteres": 37480,
+      "palavras": 5773,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 219,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ce. Disponível em: https://www.trychroma.com/research/context-rot. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[5][6]",
+        "[1][7]",
+        "[7][8]",
+        "[4][5]",
+        "[7][8]",
+        "[15][17]"
+      ],
+      "vocabulario_fora_ilustra": 168,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.2,
+        "coeficiente_variacao": 0.598
+      }
+    },
+    {
+      "capitulo": "05",
+      "arquivo": "cap_05.md",
+      "caracteres": 36874,
+      "palavras": 5294,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 207,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 7,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://keyholesoftware.com/vibe-coding-trends-2026/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[17][18]",
+        "[2][7]",
+        "[13][14]",
+        "[13][14]"
+      ],
+      "vocabulario_fora_ilustra": 182,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.5,
+        "coeficiente_variacao": 0.64
+      }
+    },
+    {
+      "capitulo": "06",
+      "arquivo": "cap_06.md",
+      "caracteres": 39574,
+      "palavras": 5721,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 228,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://keyholesoftware.com/vibe-coding-trends-2026/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[10][11]"
+      ],
+      "vocabulario_fora_ilustra": 168,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.3,
+        "coeficiente_variacao": 0.685
+      }
+    },
+    {
+      "capitulo": "07",
+      "arquivo": "cap_07.md",
+      "caracteres": 38603,
+      "palavras": 5716,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 235,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://testing-library.com/docs/guiding-principles/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[9][10]",
+        "[1][10]",
+        "[9][10]"
+      ],
+      "vocabulario_fora_ilustra": 228,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.4,
+        "coeficiente_variacao": 0.606
+      }
+    },
+    {
+      "capitulo": "08",
+      "arquivo": "cap_08.md",
+      "caracteres": 38353,
+      "palavras": 5611,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 242,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://testing-library.com/docs/guiding-principles/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][7]",
+        "[4][20]"
+      ],
+      "vocabulario_fora_ilustra": 206,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 17.2,
+        "coeficiente_variacao": 0.567
+      }
+    },
+    {
+      "capitulo": "09",
+      "arquivo": "cap_09.md",
+      "caracteres": 35793,
+      "palavras": 4425,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 171,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://testing-library.com/docs/guiding-principles/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[3][5]",
+        "[5][10]"
+      ],
+      "vocabulario_fora_ilustra": 293,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.4,
+        "coeficiente_variacao": 0.68
+      }
+    },
+    {
+      "capitulo": "10",
+      "arquivo": "cap_10.md",
+      "caracteres": 37555,
+      "palavras": 5190,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 211,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://testing-library.com/docs/guiding-principles/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[12][14]",
+        "[14][12]",
+        "[12][14]",
+        "[12][13][14]",
+        "[1][2]",
+        "[12][14]",
+        "[1][2]",
+        "[1][2]",
+        "[1][3]",
+        "[1][2]"
+      ],
+      "vocabulario_fora_ilustra": 182,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.5,
+        "coeficiente_variacao": 0.769
+      }
+    },
+    {
+      "capitulo": "11",
+      "arquivo": "cap_11.md",
+      "caracteres": 13924,
+      "palavras": 1786,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 52,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://www.promptingguide.ai/agents/function-calling. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        16,
+        18,
+        19,
+        20
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[5][6]",
+        "[5][6]",
+        "[13][15]",
+        "[1][11]"
+      ],
+      "vocabulario_fora_ilustra": 88,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 14.9,
+        "coeficiente_variacao": 0.868
+      }
+    },
+    {
+      "capitulo": "12",
+      "arquivo": "cap_12.md",
+      "caracteres": 12261,
+      "palavras": 1720,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 52,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ".ai/blog/coding-ai-agents-for-accelerating-engineering-workflows/. Acesso em: 5 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        20
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[5][6]",
+        "[2][7]",
+        "[17][19]",
+        "[4][13]",
+        "[7][8]",
+        "[1][7]",
+        "[5][17]"
+      ],
+      "vocabulario_fora_ilustra": 86,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 14.8,
+        "coeficiente_variacao": 0.774
+      }
+    }
+  ]
+}

@@ -1,0 +1,805 @@
+{
+  "slug": "livros/06-skills-commands-conhecimento-reutilizavel",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 12,
+  "caracteres_obra": 404056,
+  "paginas_estimadas": 161.6,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 12 capitulos",
+      "conforme": true,
+      "detalhe": "12 capitulo(s) (minimo 12)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 120 paginas (~300.000 caracteres)",
+      "conforme": true,
+      "detalhe": "404.056 caracteres (minimo 300.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "8",
+      "similaridade": 0.67,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "9",
+      "capitulo_b": "10",
+      "similaridade": 0.648,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.647,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "8",
+      "similaridade": 0.642,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "5",
+      "capitulo_b": "6",
+      "similaridade": 0.585,
+      "trecho": "[1] ANTHROPIC. *Claude Code SDK — Slash Commands*. Disponível em: https://code.claude.com/docs/en/agent-sdk/slash-commands. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Claude Code Ski"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.57,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "8",
+      "similaridade": 0.557,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.555,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "8",
+      "capitulo_b": "10",
+      "similaridade": 0.537,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "9",
+      "similaridade": 0.52,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "10",
+      "similaridade": 0.508,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "6",
+      "similaridade": 0.504,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "10",
+      "similaridade": 0.504,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "10",
+      "similaridade": 0.503,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.491,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "11",
+      "similaridade": 0.489,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "6",
+      "capitulo_b": "10",
+      "similaridade": 0.489,
+      "trecho": "[1] ANTHROPIC. *Claude Code SDK — Slash Commands*. Disponível em: https://code.claude.com/docs/en/agent-sdk/slash-commands. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Claude Code Ski"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "9",
+      "similaridade": 0.488,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "8",
+      "capitulo_b": "9",
+      "similaridade": 0.488,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "9",
+      "similaridade": 0.486,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "10",
+      "similaridade": 0.48,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "11",
+      "similaridade": 0.479,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.473,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.468,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "8",
+      "capitulo_b": "11",
+      "similaridade": 0.468,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "8",
+      "similaridade": 0.46,
+      "trecho": "[1] ZHANG, et al. *Code as Agent Harness: Toward Executable, Verifiable, and Stateful Agent Systems*. Disponível em: https://arxiv.org/abs/2605.18747. Acesso em: 06 ago. 2026.\n[2] "
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "11",
+      "similaridade": 0.457,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.453,
+      "trecho": "[1] AGENTSKILLS.IO. *Agent Skills Specification*. Disponível em: https://agentskills.io/specification. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Agent Skills — Claude Platform Docs*"
+    },
+    {
+      "capitulo_a": "6",
+      "capitulo_b": "8",
+      "similaridade": 0.451,
+      "trecho": "[1] ANTHROPIC. *Claude Code SDK — Slash Commands*. Disponível em: https://code.claude.com/docs/en/agent-sdk/slash-commands. Acesso em: 06 ago. 2026.\n[2] ANTHROPIC. *Claude Code Ski"
+    }
+  ],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 77,
+        "Porque": 1,
+        "porquê": 1
+      },
+      "ocorrencias": 79
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 65,
+        "esta": 9
+      },
+      "ocorrencias": 74
+    },
+    {
+      "termo_normalizado": "swebench",
+      "variantes": {
+        "SWE-bench": 21,
+        "SWEBENCH": 11
+      },
+      "ocorrencias": 32
+    },
+    {
+      "termo_normalizado": "agentsmd",
+      "variantes": {
+        "AGENTS.md": 21,
+        "agents-md": 11
+      },
+      "ocorrencias": 32
+    },
+    {
+      "termo_normalizado": "mantem",
+      "variantes": {
+        "mantém": 30,
+        "mantêm": 1
+      },
+      "ocorrencias": 31
+    },
+    {
+      "termo_normalizado": "referencia",
+      "variantes": {
+        "referência": 19,
+        "referencia": 8
+      },
+      "ocorrencias": 27
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "continua": 9,
+        "contínua": 9
+      },
+      "ocorrencias": 18
+    },
+    {
+      "termo_normalizado": "analise",
+      "variantes": {
+        "análise": 5,
+        "Analise": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "publica": 5,
+        "pública": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "media",
+      "variantes": {
+        "média": 4,
+        "media": 1
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "evidencia",
+      "variantes": {
+        "evidência": 3,
+        "evidencia": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "oficina",
+      "ferramentaria",
+      "bancada",
+      "etiqueta",
+      "manual de instruções",
+      "puxar a ferramenta da parede",
+      "procedimento gravado",
+      "catálogo da ferramentaria",
+      "manutenção preventiva",
+      "chão de fábrica agêntico"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "1",
+        "ocorrencias": [
+          "[1][2]",
+          "[7][18]"
+        ]
+      },
+      {
+        "capitulo": "2",
+        "ocorrencias": [
+          "[18][17]"
+        ]
+      },
+      {
+        "capitulo": "3",
+        "ocorrencias": [
+          "[16][17]"
+        ]
+      },
+      {
+        "capitulo": "4",
+        "ocorrencias": [
+          "[15][16]",
+          "[5][9]"
+        ]
+      },
+      {
+        "capitulo": "7",
+        "ocorrencias": [
+          "[13][14]"
+        ]
+      },
+      {
+        "capitulo": "8",
+        "ocorrencias": [
+          "[14][15]"
+        ]
+      },
+      {
+        "capitulo": "11",
+        "ocorrencias": [
+          "[9][14]",
+          "[1][16]",
+          "[1][20]",
+          "[1][1]",
+          "[1][16]",
+          "[1][8]",
+          "[15][19]",
+          "[1][16]",
+          "[1][8]",
+          "[1][16]"
+        ]
+      },
+      {
+        "capitulo": "12",
+        "ocorrencias": [
+          "[6][2]",
+          "[1][8]",
+          "[1][8]",
+          "[1][19]",
+          "[1][8]",
+          "[1][8]",
+          "[1][8]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [
+      "11",
+      "12"
+    ],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 42374,
+      "palavras": 5473,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 52,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ng the Harness*. Disponível em: https://arxiv.org/abs/2605.23950. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][2]",
+        "[7][18]"
+      ],
+      "vocabulario_fora_ilustra": 10,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.8,
+        "coeficiente_variacao": 0.479
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 38827,
+      "palavras": 4692,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 47,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "nesses (NLAHs)*. Disponível em: https://arxiv.org/abs/2603.25723. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[18][17]"
+      ],
+      "vocabulario_fora_ilustra": 21,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.4,
+        "coeficiente_variacao": 0.538
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 37436,
+      "palavras": 4767,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 48,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ng the Harness*. Disponível em: https://arxiv.org/abs/2605.23950. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[16][17]"
+      ],
+      "vocabulario_fora_ilustra": 14,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.3,
+        "coeficiente_variacao": 0.547
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 38354,
+      "palavras": 4746,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 45,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "nt skills*. Disponível em: https://github.com/vercel-labs/skills. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        17,
+        18
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[15][16]",
+        "[5][9]"
+      ],
+      "vocabulario_fora_ilustra": 7,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.1,
+        "coeficiente_variacao": 0.539
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 35655,
+      "palavras": 4461,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 46,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ng the Harness*. Disponível em: https://arxiv.org/abs/2605.23950. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 15,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.4,
+        "coeficiente_variacao": 0.506
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 36025,
+      "palavras": 4432,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 46,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "surf Documentation*. Disponível em: https://codeium.com/windsurf. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 11,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.0,
+        "coeficiente_variacao": 0.554
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 37154,
+      "palavras": 4458,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 48,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ng the Harness*. Disponível em: https://arxiv.org/abs/2605.23950. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[13][14]"
+      ],
+      "vocabulario_fora_ilustra": 21,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.6,
+        "coeficiente_variacao": 0.503
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 37319,
+      "palavras": 4217,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 42,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ng the Harness*. Disponível em: https://arxiv.org/abs/2605.23950. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[14][15]"
+      ],
+      "vocabulario_fora_ilustra": 8,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.9,
+        "coeficiente_variacao": 0.549
+      }
+    },
+    {
+      "capitulo": "9",
+      "arquivo": "cap_9.md",
+      "caracteres": 38221,
+      "palavras": 4000,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 42,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "d Applications*. Disponível em: https://arxiv.org/abs/2602.05665. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 10,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22,
+        "coeficiente_variacao": 0.581
+      }
+    },
+    {
+      "capitulo": "10",
+      "arquivo": "cap_10.md",
+      "caracteres": 36680,
+      "palavras": 3888,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 40,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "d Applications*. Disponível em: https://arxiv.org/abs/2602.05665. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 21,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.4,
+        "coeficiente_variacao": 0.596
+      }
+    },
+    {
+      "capitulo": "11",
+      "arquivo": "cap_11.md",
+      "caracteres": 11231,
+      "palavras": 1377,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 55,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ging Frontiers*. Disponível em: https://arxiv.org/abs/2603.07670. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12,
+        13,
+        17,
+        18
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[9][14]",
+        "[1][16]",
+        "[1][20]",
+        "[1][1]",
+        "[1][16]",
+        "[1][8]",
+        "[15][19]",
+        "[1][16]",
+        "[1][8]",
+        "[1][16]"
+      ],
+      "vocabulario_fora_ilustra": 0,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 14.9,
+        "coeficiente_variacao": 0.624
+      }
+    },
+    {
+      "capitulo": "12",
+      "arquivo": "cap_12.md",
+      "caracteres": 11581,
+      "palavras": 1417,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 51,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "nível em: https://www.firecrawl.dev/blog/best-claude-code-skills. Acesso em: 06 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        3,
+        7,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        20
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[6][2]",
+        "[1][8]",
+        "[1][8]",
+        "[1][19]",
+        "[1][8]",
+        "[1][8]",
+        "[1][8]"
+      ],
+      "vocabulario_fora_ilustra": 0,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 15.2,
+        "coeficiente_variacao": 0.635
+      }
+    }
+  ]
+}

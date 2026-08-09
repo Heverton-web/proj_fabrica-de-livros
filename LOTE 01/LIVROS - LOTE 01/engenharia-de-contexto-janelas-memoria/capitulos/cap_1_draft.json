@@ -1,0 +1,21 @@
+{
+  "slug": "livros/engenharia-de-contexto-janelas-memoria",
+  "capitulo": 1,
+  "titulo": "A Mesa de Atenção do Bibliotecário: Como os Modelos Enxergam Textos",
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": null,
+  "pilares": [
+    {
+      "nome": "O Alfabeto Fragmentado: Do Texto Bruto aos Tokens",
+      "descricao": "Explicação do processo de tokenização e de como os grandes modelos de linguagem quebram a linguagem humana em pedaços menores e quantificáveis, os tokens, que servem de matéria-prima para o Bibliotecário Imperial."
+    },
+    {
+      "nome": "A Mesa de Trabalho do Bibliotecário: O Mecanismo de Atenção",
+      "descricao": "Desmistificação da equação de autoatenção por meio da metáfora da mesa do Bibliotecário, mapeando os vetores Query, Key e Value para processos manuais intuitivos."
+    },
+    {
+      "nome": "As Restrições da Mesa de Madeira: Limites de Contexto e Complexidade",
+      "descricao": "Demonstração das limitações físicas e computacionais associadas ao custo quadrático da atenção e o fenômeno de perda de sinal de contexto (Context Rot)."
+    }
+  ]
+}

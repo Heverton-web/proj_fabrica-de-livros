@@ -1,0 +1,62 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "4" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "titulo": "Blindando a Linha: TLS 1.3 e a Segurança em Trânsito",
+  "objetivo": "Explicar como o TLS 1.3 protege dados em trânsito e o que mudou em relação às versões anteriores.",
+  "callback_capitulo_anterior": "Capítulo 3: o handshake de três vias do TCP (SYN, SYN-ACK, ACK) que garante a esteira de transporte confiável — agora o Capítulo 4 mostra o handshake TLS 1.3 rodando por cima dessa mesma esteira, reduzido a 1-RTT para não duplicar a lentidão que o TCP já resolveu",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Handshake TLS 1.3: menos idas e vindas, mais velocidade",
+        "escopo": "Entra: por que o TLS existe (proteção de dados em trânsito acima da esteira TCP), o handshake de 1-RTT do TLS 1.3 (uma única ida e volta antes de trafegar dados cifrados) contra o handshake de 2-RTT do TLS 1.2, o conceito de forward secrecy (chave de sessão nova a cada conexão, mesmo que a chave privada do servidor vaze no futuro) e o fato de o handshake em si já vir majoritariamente cifrado no TLS 1.3. Fica de fora: a matemática de criptografia simétrica/assimétrica (RSA, ECC, AES) — isso é reservado ao Capítulo 11 (Criptografia Aplicada); aqui o handshake é tratado como caixa-preta de troca de chave.",
+        "ancora_visual": "sequenceDiagram comparando, lado a lado na mesma esteira de expedição, o handshake TLS 1.2 (2-RTT: ClientHello → ServerHello+Certificate+ServerKeyExchange → ClientKeyExchange → Finished, dados só depois da 2ª volta) e o handshake TLS 1.3 (1-RTT: ClientHello com key_share → ServerHello+Certificate+Finished já cifrados → dados de aplicação já na 1ª resposta) — participantes nomeados 'Cliente (Sala de Controle)' e 'Servidor (Chão de Fábrica)', com nota indicando o ponto exato onde a esteira já libera dados de aplicação em cada versão",
+        "entrega_tecnica": "bash — comando `openssl s_client -connect exemplo.com:443 -tls1_3 -brief` (ou trace equivalente) anotado linha a linha, mostrando o handshake TLS 1.3 real acontecendo em produção e onde aparece a confirmação de versão/cifra negociada",
+        "evolucao_leitor": "De 'TLS é só o cadeado verde do navegador, um detalhe de infraestrutura' para 'eu sei exatamente por que o TLS 1.3 corta a latência do handshake pela metade e por que isso importa em toda decisão de performance de produção'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Certificados digitais e cadeia de confiança",
+        "escopo": "Entra: o que é um certificado digital (documento que vincula uma chave pública a uma identidade), a cadeia de confiança (certificado raiz autoassinado → certificado intermediário → certificado folha do servidor), o papel das Autoridades Certificadoras (CAs) e do trust store do sistema operacional/navegador, e como o cliente valida a cadeia até uma raiz confiável antes de aceitar a conexão. Fica de fora: automação de emissão/renovação (Let's Encrypt/ACME) e mTLS — reservados ao Capítulo 12 (TLS Avançado e Gestão de Certificados em Produção).",
+        "ancora_visual": "flowchart TD do depósito de peças da fábrica representado como cadeia de confiança: 'CA Raiz (depósito matriz, autoassinado)' → 'CA Intermediária (posto de controle de qualidade regional)' → 'Certificado Folha (peça final, nome do servidor)', com um ramal mostrando o navegador do cliente consultando seu 'manual de operação' (trust store) para validar cada elo antes de liberar a peça para a linha de montagem",
+        "entrega_tecnica": "python — script curto usando o módulo `ssl` da biblioteca padrão para conectar a um host, extrair o certificado apresentado (`getpeercert()`) e imprimir emissor, validade e cadeia resumida, demonstrando programaticamente a validação de cadeia de confiança",
+        "evolucao_leitor": "De 'certificado é só um arquivo que o time de infra configura' para 'eu sei ler e validar uma cadeia de confiança, e sei diagnosticar por que um cliente rejeita um certificado que parece correto'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Erros comuns de configuração TLS em produção",
+        "escopo": "Entra: os erros de configuração TLS mais recorrentes em produção — certificado expirado ou com hostname divergente (mismatch), cadeia intermediária incompleta enviada pelo servidor, cifras/protocolos legados ainda habilitados (TLS 1.0/1.1, cifras sem AEAD), ausência de HSTS e de redirecionamento HTTP→HTTPS forçado — e como diagnosticá-los antes que virem incidente. Fica de fora: pentest formal e ferramentas ofensivas (Capítulo 13, OWASP Top 10).",
+        "ancora_visual": null,
+        "entrega_tecnica": "nginx — bloco de configuração `server { }` comparado em duas versões comentadas lado a lado: a versão com erro comum (cifras legadas habilitadas, sem HSTS, cadeia incompleta) e a versão corrigida (TLS 1.3/1.2 apenas, HSTS ativo, `ssl_certificate` com cadeia completa, redirecionamento 301 de HTTP para HTTPS)",
+        "evolucao_leitor": "De 'configurei TLS uma vez e nunca mais mexi' para 'eu faço o controle de qualidade da configuração TLS antes de expedir para produção, porque sei exatamente quais são os pontos de falha mais comuns do mercado'",
+        "conceito_denso": false
+      }
+    ]
+  },
+  "fontes_rag_autorizadas": [
+    "RFC EDITOR - RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3 - https://datatracker.ietf.org/doc/html/rfc8446",
+    "THE SSL STORE - TLS 1.3 is finally published by the IETF as RFC 8446 - https://www.thesslstore.com/blog/tls-1-3-approved/",
+    "LOGICMONITOR - TLS 1.2 vs. 1.3—Handshake, Performance, and Other Improvements - https://www.logicmonitor.com/deep-dive/http3-vs-http2/tls1-2-vs-1-3",
+    "IBM - What is Asymmetric Encryption? - https://www.ibm.com/think/topics/asymmetric-encryption",
+    "DESTCERT - Asymmetric Cryptography: RSA, ECC & PKI Explained - https://destcert.com/resources/asymmetric-cryptography/",
+    "OWASP FOUNDATION - Certificate and Public Key Pinning - https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning",
+    "SSL.COM - What Is Certificate Pinning? - https://www.ssl.com/blogs/what-is-certificate-pinning/",
+    "PALO ALTO NETWORKS - What Is Certificate Pinning? Benefits, Risks & Best Practices - https://www.paloaltonetworks.com/cyberpedia/what-is-certificate-pinning",
+    "OWASP FOUNDATION - A05:2021 – Security Misconfiguration - https://owasp.org/Top10/2021/A05_2021-Security_Misconfiguration/",
+    "MDN WEB DOCS - Cross-Origin Resource Sharing (CORS) - https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+    "RFC EDITOR - RFC 9110: HTTP Semantics - https://www.rfc-editor.org/rfc/rfc9110.html",
+    "FORTINET - TCP/IP Model vs. OSI Model: Similarities and Differences - https://www.fortinet.com/resources/cyberglossary/tcp-ip-model-vs-osi-model",
+    "A1 DIGITAL - OSI and TCP/IP model: Differences explained - https://www.a1.digital/knowledge-hub/osi-and-tcp-ip-model-differences-explained/",
+    "CLOUDFLARE - What is HTTP/3? - https://www.cloudflare.com/learning/performance/what-is-http3/",
+    "MDN WEB DOCS - How the web works - https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "MDN WEB DOCS - Overview of HTTP - https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview",
+    "MDN WEB DOCS - Client-server overview - https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
+    "OWASP FOUNDATION - Cross Site Request Forgery (CSRF) - https://owasp.org/www-community/attacks/csrf",
+    "OWASP CHEAT SHEET SERIES - Cross-Site Request Forgery Prevention Cheat Sheet - https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+    "OWASP FOUNDATION - Cross Site Scripting (XSS) - https://owasp.org/www-community/attacks/xss/",
+    "OWASP FOUNDATION - Types of XSS - https://owasp.org/www-community/Types_of_Cross-Site_Scripting",
+    "IMPERVA - What is Penetration Testing | Step-By-Step Process & Methods - https://www.imperva.com/learn/application-security/penetration-testing/",
+    "EC-COUNCIL - 5 Penetration Testing Phases: Key Steps, Tools & Benefits - https://www.eccouncil.org/cybersecurity-exchange/penetration-testing/penetration-testing-phases/",
+    "PORTSWIGGER - What is CORS (cross-origin resource sharing)? Tutorial & Examples - https://portswigger.net/web-security/cors"
+  ]
+}

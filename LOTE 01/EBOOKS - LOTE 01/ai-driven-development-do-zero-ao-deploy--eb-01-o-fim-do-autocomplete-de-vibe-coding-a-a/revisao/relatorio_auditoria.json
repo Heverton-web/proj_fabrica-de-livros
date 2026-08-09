@@ -1,0 +1,127 @@
+{
+  "slug": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 5,
+  "caracteres_obra": 158711,
+  "paginas_estimadas": 63.5,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "158.711 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 45,
+        "esta": 4,
+        "Esta": 4,
+        "Está": 1
+      },
+      "ocorrencias": 54
+    },
+    {
+      "termo_normalizado": "evidencia",
+      "variantes": {
+        "evidência": 3,
+        "evidencia": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 31478,
+      "palavras": 4090,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l deste capítulo em um sistema replicável, e não em disciplina isolada de um único agente.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 31409,
+      "palavras": 3467,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " negocia risco com o humano e como o Harness aplica permissões antes de qualquer execução.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 30791,
+      "palavras": 4037,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "delo nunca executa nada diretamente e como esse par converte raciocínio em ação auditável.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 31648,
+      "palavras": 4130,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "uestrar trabalho em paralelo sobre essa mesma base de LLM+Tools que você acabou de erguer.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 33385,
+      "palavras": 4746,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " a sua última automação com IA tem um diário de bordo à prova de rasura, ou só parece ter?",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

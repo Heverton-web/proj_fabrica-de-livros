@@ -1,0 +1,13 @@
+{
+  "slug": "livros/sdlc-ai-first",
+  "modo": "livro",
+  "arquivos": [
+    "output\\livros\\sdlc-ai-first\\_livro_render.md"
+  ],
+  "total": 11,
+  "renderizados": 11,
+  "cache": 0,
+  "falhas": [],
+  "ignorados": [],
+  "validos": 0
+}

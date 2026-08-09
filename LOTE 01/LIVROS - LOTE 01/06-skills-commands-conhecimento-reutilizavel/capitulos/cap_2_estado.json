@@ -1,0 +1,15 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "I",
+    "capitulo": "2"
+  },
+  "estado_execucao": "concluido_autonomo",
+  "payload_estrategico": {
+    "pilares": [
+      "O loop agêntico e a camada de harness",
+      "Skills: ferramentas penduradas na parede da ferramentaria",
+      "Commands: bancadas com procedimento gravado"
+    ]
+  }
+}

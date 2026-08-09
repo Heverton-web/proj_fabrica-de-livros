@@ -1,0 +1,39 @@
+{
+  "artigos": [
+    {
+      "indice": 1,
+      "titulo": "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou & O Controlador de Voo: Papel Humano, Agente e Verificação — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+      "diretorio": "artigos/sdlc-ai-first--art-01-do-sdlc-classico-ao-ai-first-por-que-o-c",
+      "caminho_pdf": "artigos/sdlc-ai-first--art-01-do-sdlc-classico-ao-ai-first-por-que-o-c/livro_final.pdf",
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 2,
+      "titulo": "Plano de Voo: Da Intenção à Spec Executável & Cartografia do Domínio: Design Orientado a Agentes — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+      "diretorio": "artigos/sdlc-ai-first--art-02-plano-de-voo-da-intencao-a-spec-executav",
+      "caminho_pdf": "artigos/sdlc-ai-first--art-02-plano-de-voo-da-intencao-a-spec-executav/livro_final.pdf",
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 3,
+      "titulo": "Os Motores: Harness, Skills, MCPs e Worktrees & O Radar: Verificação Adversarial e Evidência — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+      "diretorio": "artigos/sdlc-ai-first--art-03-os-motores-harness-skills-mcps-e-worktre",
+      "caminho_pdf": "artigos/sdlc-ai-first--art-03-os-motores-harness-skills-mcps-e-worktre/livro_final.pdf",
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 4,
+      "titulo": "Autorização de Pouso: Release e Observabilidade & Debriefing: O Loop de Aprendizado que Evolui o Ciclo — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+      "diretorio": "artigos/sdlc-ai-first--art-04-autorizacao-de-pouso-release-e-observabi",
+      "caminho_pdf": "artigos/sdlc-ai-first--art-04-autorizacao-de-pouso-release-e-observabi/livro_final.pdf",
+      "status": "concluido_autonomo"
+    },
+    {
+      "indice": 5,
+      "titulo": "Combustível: Economia de Tokens e Custo de Contexto & O Futuro do SDLC: Maturidade, Riscos e a Próxima Década — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+      "diretorio": "artigos/sdlc-ai-first--art-05-combustivel-economia-de-tokens-e-custo-d",
+      "caminho_pdf": "artigos/sdlc-ai-first--art-05-combustivel-economia-de-tokens-e-custo-d/livro_final.pdf",
+      "status": "concluido_autonomo"
+    }
+  ]
+}

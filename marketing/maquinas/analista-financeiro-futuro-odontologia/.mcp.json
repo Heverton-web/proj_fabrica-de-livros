@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "db_state": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\deps\\node_modules\\mcp-server-sqlite-npx\\dist\\index.js",
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\marketing\\maquinas\\analista-financeiro-futuro-odontologia\\database\\maquina.db"
+      ]
+    },
+    "file_writer": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\deps\\node_modules\\@modelcontextprotocol\\server-filesystem\\dist\\index.js",
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\marketing\\maquinas\\analista-financeiro-futuro-odontologia"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "titulo": "O Scriba de Resumos: Reduzindo Textos Sem Perder o Sentido",
+  "coordenadas": "Parte III, Capítulo 9",
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": "Capítulo 8: A Mesa Auxiliar, explicando a memória virtual do MemGPT",
+  "metas": [
+    "Apresentar a compressão de prompts e a redução seletiva de contexto",
+    "Explicar o funcionamento do LLMLingua e LLMLingua-2 por meio da metáfora do Scriba de Resumos",
+    "Demonstrar códigos práticos de compressão de contexto para iniciantes"
+  ],
+  "pilares": [
+    {
+      "nome": "O Escriba Imperial",
+      "descricao": "A metáfora do escriba que lê pergaminhos imensos e resume os fatos principais antes de entregá-los ao Imperador (o LLM Flagship)."
+    },
+    {
+      "nome": "Mecanismos de Perplexidade e LLMLingua",
+      "descricao": "Como modelos menores medem a 'surpresa' de cada palavra (perplexidade), descartando o previsível e mantendo o essencial."
+    },
+    {
+      "nome": "LongLLMLingua e Classificação Extrativa (LLMLingua-2)",
+      "descricao": "A evolução para compressão orientada a perguntas (query-aware) e classificação binária rápida de manter ou descartar."
+    }
+  ]
+}

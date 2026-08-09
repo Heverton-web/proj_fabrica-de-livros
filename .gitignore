@@ -36,3 +36,13 @@ Thumbs.db
 *.log
 logs/
 .agents/
+
+# Máquinas de vendas — dependências e artefatos de runtime
+**/node_modules/
+**/.next/
+**/backend/data/
+**/database/*.db
+**/database/*.db-*
+
+# Artefato acidental de redirect Windows
+nul

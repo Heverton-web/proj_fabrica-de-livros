@@ -1,0 +1,55 @@
+{
+  "titulo_obra": "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou & O Controlador de Voo: Papel Humano, Agente e Verificação — Um Recorte de SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "sdlc-ai-first",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2"
+  ],
+  "introducao": "Recorte investigativo sobre: Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou, O Controlador de Voo: Papel Humano, Agente e Verificação.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+            "O Controlador de Voo: Papel Humano, Agente e Verificação"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+            "O Controlador de Voo: Papel Humano, Agente e Verificação"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+            "O Controlador de Voo: Papel Humano, Agente e Verificação"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+            "O Controlador de Voo: Papel Humano, Agente e Verificação"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "livros/engenharia-de-contexto-janelas-memoria",
+  "capitulo": 8,
+  "titulo": "A Mesa Auxiliar: A Arquitetura de Memória Virtual do MemGPT",
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": "Capítulo 7: O Reranking, mostrando como ordenar prioridades na mesa",
+  "pilares": [
+    {
+      "nome": "O Buffer Principal e a Memória de Trabalho (RAM)",
+      "descricao": "Explicação da correspondência entre a janela de atenção atual (Main Context) e a mesa de trabalho do Bibliotecário Imperial, onde as interações ativas residem."
+    },
+    {
+      "nome": "Os Arquivos do Palácio e a Memória Externa (Recall e Archival)",
+      "descricao": "Explicação detalhada dos depósitos de memória secundária fora da mesa do Bibliotecário, divididos entre registros de conversas anteriores (Recall) e arquivos históricos estruturados (Archival)."
+    },
+    {
+      "nome": "A Paginação Inteligente por Chamada de Função",
+      "descricao": "Demonstração de como o Bibliotecário executa tarefas de paginação (Swap) e troca de contexto de forma dinâmica através do uso de ferramentas específicas (Function Calling)."
+    }
+  ]
+}

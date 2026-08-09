@@ -1,0 +1,39 @@
+{
+  "artigos": [
+    {
+      "indice": 1,
+      "titulo": "Do Marketing Tradicional ao Digital: A Mudança de Paradigma & O Mix Digital: Produto, Preço, Praça e Promoção no Ambiente Online — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+      "diretorio": "artigos/marketing-na-era-digital--art-01-do-marketing-tradicional-ao-digital-a-mu",
+      "caminho_pdf": "artigos/marketing-na-era-digital--art-01-do-marketing-tradicional-ao-digital-a-mu/livro_final.pdf",
+      "status": "concluido"
+    },
+    {
+      "indice": 2,
+      "titulo": "Google Ads e SEM: A Rota da Intenção de Compra & SEO: Conquistando Visibilidade Orgânica — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+      "diretorio": "artigos/marketing-na-era-digital--art-02-google-ads-e-sem-a-rota-da-intencao-de-c",
+      "caminho_pdf": "artigos/marketing-na-era-digital--art-02-google-ads-e-sem-a-rota-da-intencao-de-c/livro_final.pdf",
+      "status": "concluido"
+    },
+    {
+      "indice": 3,
+      "titulo": "E-mail Marketing e Automação: O Relacionamento de Longo Prazo & Content Marketing e Inbound: Atração Baseada em Valor — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+      "diretorio": "artigos/marketing-na-era-digital--art-03-e-mail-marketing-e-automacao-o-relaciona",
+      "caminho_pdf": "artigos/marketing-na-era-digital--art-03-e-mail-marketing-e-automacao-o-relaciona/livro_final.pdf",
+      "status": "concluido"
+    },
+    {
+      "indice": 4,
+      "titulo": "CRO: Otimizando a Conversão no Porto Seguro & E-commerce e Omnicanalidade: Vendendo em Todos os Territórios — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+      "diretorio": "artigos/marketing-na-era-digital--art-04-cro-otimizando-a-conversao-no-porto-segu",
+      "caminho_pdf": "artigos/marketing-na-era-digital--art-04-cro-otimizando-a-conversao-no-porto-segu/livro_final.pdf",
+      "status": "concluido"
+    },
+    {
+      "indice": 5,
+      "titulo": "CAC e LTV: A Matemática da Aquisição e Retenção & Data-Driven Marketing: Da Intuição ao Dado — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+      "diretorio": "artigos/marketing-na-era-digital--art-05-cac-e-ltv-a-matematica-da-aquisicao-e-re",
+      "caminho_pdf": "artigos/marketing-na-era-digital--art-05-cac-e-ltv-a-matematica-da-aquisicao-e-re/livro_final.pdf",
+      "status": "concluido"
+    }
+  ]
+}

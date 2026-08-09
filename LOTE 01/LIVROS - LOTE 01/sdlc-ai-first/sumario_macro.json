@@ -1,0 +1,156 @@
+{
+  "titulo_obra": "SDLC AI-first: O Ciclo de Vida do Software na Era dos Agentes",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "motivo_condutor": {
+    "nome": "A Torre de Controle de Tráfego Aéreo",
+    "descricao": "O SDLC AI-first é uma torre de controle: cada fase é um voo (intenção, spec, design, build, verificação, entrega, operação) que decola apenas com plano aprovado, é monitorado em tempo real e só aterra com verificação adversarial. O humano é o controlador de voo — ele autoriza decolagens, arbitra desvios e nunca pilota sozinho.",
+    "vocabulario": [
+      "plano de voo (spec)",
+      "decolagem (início de fase)",
+      "torre de controle (orquestração)",
+      "monitoramento de radar (observabilidade)",
+      "aterrissagem (entrega)",
+      "desvio de rota (correção)",
+      "caixa-preta (log/evidência)",
+      "autorização de pouso (merge)",
+      "combustível (tokens/contexto)",
+      "controlador de voo (humano)"
+    ],
+    "persona_leitor": "Comandante de Operações de Software"
+  },
+  "introducao": "Prefácio de impacto: o aeroporto de software está mudando — quem controla o tráfego hoje controla o céu de amanhã. Contextualizar a passagem do SDLC clássico para o AI-first, apresentar a metáfora da torre de controle e o destino da jornada: formar o Comandante de Operações de Software.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos — O Novo Contrato",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Do SDLC Clássico ao AI-first: Por Que o Contrato Mudou",
+          "objetivo": "O leitor entende o que é o SDLC AI-first, a diferença estrutural frente ao Waterfall/Ágil e por que o artefato-mestre deixou de ser o documento para ser a spec executável + testes.",
+          "pilares_previstos": [
+            "SDLC clássico (Waterfall, Ágil) e suas premissas manuais",
+            "Agentic Software Engineering: de autocomplete a agentes autônomos",
+            "A mudança de custo dominante: de horas-homem para tokens + contexto"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "O Controlador de Voo: Papel Humano, Agente e Verificação",
+          "objetivo": "O leitor entende a matriz de papéis do novo ciclo — humano orquestra e arbitra, agente executa, verificação refuta — e como isso redistribui responsabilidade em cada fase.",
+          "pilares_previstos": [
+            "Matriz RACI do SDLC AI-first: quem decide em cada fase",
+            "Spec-driven, verify-driven e feedback-driven como tripé",
+            "Governança mínima: o humano como árbitro, não gargalo"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "O Contrato — Spec e Design",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Plano de Voo: Da Intenção à Spec Executável",
+          "objetivo": "O leitor aprende a transformar intenção vaga em spec que vira teste de aceite: escopo, requisitos R1..Rn, casos de borda e bloqueios explícitos entre tickets.",
+          "pilares_previstos": [
+            "Elicitação de intenção: brainstorm, grill e questionários",
+            "Spec como contrato: requisitos, critérios de aceite e casos de borda",
+            "De spec a tickets com dependências explícitas (to-tickets, wayfinder)"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Cartografia do Domínio: Design Orientado a Agentes",
+          "objetivo": "O leitor domina a modelagem de domínio e design de fronteiras (deep modules, vocabulário ubíguo, ADRs) como pré-condição para a execução agêntica sem retrabalho.",
+          "pilares_previstos": [
+            "Vocabulário ubíguo e glossário de domínio",
+            "Interfaces primeiro: deep modules e fronteiras testáveis",
+            "Registro de decisões de arquitetura (ADR) como artefato de contrato"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Execução Agêntica — Build e Verificação",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Os Motores: Harness, Skills, MCPs e Worktrees",
+          "objetivo": "O leitor aprende a operar o ecossistema de execução: harness agêntico, skills como operários, MCPs como ferramentas, worktrees como isolamento e despacho paralelo de subagentes.",
+          "pilares_previstos": [
+            "Arquitetura harness → LLM → ferramentas (MCP, skills, scripts)",
+            "Isolamento com worktrees e despacho paralelo de subagentes",
+            "Test-first como régua do build: vermelho antes do código"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "O Radar: Verificação Adversarial e Evidência",
+          "objetivo": "O leitor domina a camada de verificação em três níveis — máquina (typecheck/lint/testes), adversarial (revisor que refuta) e humano (decisão de merge) — com evidência antes de afirmação.",
+          "pilares_previstos": [
+            "Pré-flight: typecheck, lint e testes antes de avançar de fase",
+            "Revisão adversarial: quem escreve não valida sozinho",
+            "Evidência antes de afirmação: output de comando, não promessa"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Mundo Real — Entrega, Operação e Aprendizado",
+      "capitulos": [
+        {
+          "capitulo": "7",
+          "titulo": "Autorização de Pouso: Release e Observabilidade",
+          "objetivo": "O leitor aprende a entregar com segurança — build reproduzível, deploy canário/gradual e observabilidade do comportamento do próprio agente em produção.",
+          "pilares_previstos": [
+            "Release como artefato reproduzível e fallbacks de ambiente",
+            "Deploy gradual: canário, feature flags e rollback",
+            "Observabilidade do agente: métricas, logs e caixa-preta"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Debriefing: O Loop de Aprendizado que Evolui o Ciclo",
+          "objetivo": "O leitor entende como erros de produção viram insumo de melhoria — skills novas, memória de erros recorrentes e specs revisadas — fechando o ciclo de vida do próprio ciclo de vida.",
+          "pilares_previstos": [
+            "Post-mortem como insumo, não burocracia",
+            "Captura de conhecimento: skills e memória de erros recorrentes",
+            "Revisão de specs: o SDLC aprende a cada iteração"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "V",
+      "titulo_parte": "O Comandante — Governança e Futuro",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Combustível: Economia de Tokens e Custo de Contexto",
+          "objetivo": "O leitor domina a disciplina que torna o SDLC AI-first economicamente viável: rate limits, compressão de logs, subagentes enxutos e handoffs bem projetados.",
+          "pilares_previstos": [
+            "Tokens, rate limits e o custo do contexto como variável de projeto",
+            "LeanCTX, compressão de logs e comunicação telegráfica entre agentes",
+            "Handoff e sessões longas: estender a vida útil do ciclo"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "O Futuro do SDLC: Maturidade, Riscos e a Próxima Década",
+          "objetivo": "O leitor conecta tudo ao mercado: níveis de maturidade (L1-L5), anti-padrões, riscos (dívida técnica, erosão de competências) e o roadmap do profissional que lidera o ciclo.",
+          "pilares_previstos": [
+            "Níveis de maturidade: copiloto, supervisionado, spec-driven, adversarial, autônomo",
+            "Anti-padrões: prompt-and-pray, specs decorativas, verificação do próprio agente",
+            "DORA e IA: throughput vs. estabilidade, governança e futuro da disciplina"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética: o céu do software agora tem torres de controle — o SDLC AI-first não é sobre máquinas que escrevem código, mas sobre humanos que autorizam, arbitram e evoluem contratos. Devolver ao leitor a imagem do Comandante de Operações de Software pronto para decolar na própria jornada."
+}

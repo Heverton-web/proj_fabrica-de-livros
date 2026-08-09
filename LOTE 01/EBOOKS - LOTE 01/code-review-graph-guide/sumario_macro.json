@@ -1,0 +1,92 @@
+{
+  "titulo_obra": "Code Review Graph: Guia Completo",
+  "tipo_obra": "ebook",
+  "tamanho_obra": "P",
+  "motivo_condutor": {
+    "nome": "O Grafo de Código Inteligente",
+    "descricao": "O Code Review Graph transforma seu repositório em um grafo inteligente que permite aos agentes de IA lerem apenas o que importa, reduzindo tokens em até 376x.",
+    "vocabulario": [
+      "grafo",
+      "nó",
+      "aresta",
+      "blast radius",
+      "MCP",
+      "tree-sitter",
+      "community",
+      "tokens"
+    ],
+    "persona_leitor": "Desenvolvedor Python"
+  },
+  "introducao": "Guia prático do Code Review Graph — ferramenta que constrói um mapa estrutural do seu código para ferramentas de IA.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O Problema dos Tokens",
+          "objetivo": "Entender por que agentes de IA gastam tokens desnecessários e como o CRG resolve isso.",
+          "pilares_previstos": [
+            "O custo de ler código inteiro para o LLM",
+            "Redução de 65x mediana com grafos",
+            "Comparativo: antes vs depois"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Instalação e Configuração",
+          "objetivo": "Instalar e configurar o CRG em qualquer projeto.",
+          "pilares_previstos": [
+            "pip install code-review-graph",
+            "code-review-graph install (auto-detecta plataformas)",
+            "code-review-graph build"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Funcionalidades",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Blast Radius e Impact Analysis",
+          "objetivo": "Usar análise de raio de explosão para reviews inteligentes.",
+          "pilares_previstos": [
+            "Como o grafo rastreia dependências",
+            "Ferramentas MCP: get_impact_radius, detect_changes",
+            "Exemplo prático: mudanças em login()"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "MCP Tools e Integração com IA",
+          "objetivo": "Integrar o CRG com Claude Code, Cursor, Copilot e outras ferramentas.",
+          "pilares_previstos": [
+            "30 ferramentas MCP disponíveis",
+            "Prompts: review, architecture, debug, onboard, pre-merge",
+            "Configuração por plataforma"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Avançado",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Visualização e Exportação",
+          "objetivo": "Visualizar o grafo e exportar em múltiplos formatos.",
+          "pilares_previstos": [
+            "code-review-graph visualize (D3.js interativo)",
+            "Exportação: GraphML, Neo4j, Obsidian, SVG",
+            "Detecção de hubs e bridges"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "O Code Review Graph é uma ferramenta essencial para qualquer equipe que usa IA para code review. Reduza tokens, melhore a qualidade dos reviews, integre com seu fluxo de trabalho."
+}

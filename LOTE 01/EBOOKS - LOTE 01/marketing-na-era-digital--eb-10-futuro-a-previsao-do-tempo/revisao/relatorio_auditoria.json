@@ -1,0 +1,349 @@
+{
+  "slug": "ebooks/marketing-na-era-digital--eb-10-futuro-a-previsao-do-tempo",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 5,
+  "caracteres_obra": 47217,
+  "paginas_estimadas": 18.9,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "47.217 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.693,
+      "trecho": "O código acima é o núcleo técnico de *IA no Marketing: Automação, Personalização e Geração de Conteúdo*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.693,
+      "trecho": "O código acima é o núcleo técnico de *Automação e MarTech: O Stack Tecnológico do Marketing Moderno*: validável, executável e adaptável ao contexto real do leitor. A prática recome"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.693,
+      "trecho": "O código acima é o núcleo técnico de *Experiências Imersivas: Metaverso, Realidade Aumentada e Novos Formatos*: validável, executável e adaptável ao contexto real do leitor. A prát"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.685,
+      "trecho": "O código acima é o núcleo técnico de *IA no Marketing: Automação, Personalização e Geração de Conteúdo*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.685,
+      "trecho": "O código acima é o núcleo técnico de *IA no Marketing: Automação, Personalização e Geração de Conteúdo*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.685,
+      "trecho": "O código acima é o núcleo técnico de *Automação e MarTech: O Stack Tecnológico do Marketing Moderno*: validável, executável e adaptável ao contexto real do leitor. A prática recome"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.678,
+      "trecho": "O código acima é o núcleo técnico de *Privacy-First e o Futuro Sem Cookies: Navegando com LGPD e GDPR*: validável, executável e adaptável ao contexto real do leitor. A prática reco"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.67,
+      "trecho": "O código acima é o núcleo técnico de *IA no Marketing: Automação, Personalização e Geração de Conteúdo*: validável, executável e adaptável ao contexto real do leitor. A prática rec"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.67,
+      "trecho": "O código acima é o núcleo técnico de *Privacy-First e o Futuro Sem Cookies: Navegando com LGPD e GDPR*: validável, executável e adaptável ao contexto real do leitor. A prática reco"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.67,
+      "trecho": "O código acima é o núcleo técnico de *Privacy-First e o Futuro Sem Cookies: Navegando com LGPD e GDPR*: validável, executável e adaptável ao contexto real do leitor. A prática reco"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.645,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.645,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.645,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.636,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.636,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.636,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.628,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.62,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.62,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.62,
+      "trecho": "Observe o laço de retorno: a medição alimenta o próximo ciclo de campanha. Essa é a diferença estrutural entre campanha e sistema — a campanha termina quando o orçamento acaba; o s"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.582,
+      "trecho": "No capítulo anterior, *Planejamento e Orçamento de Marketing: Alocando Recursos com Inteligência*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este ca"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.582,
+      "trecho": "No capítulo anterior, *IA no Marketing: Automação, Personalização e Geração de Conteúdo*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo re"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.582,
+      "trecho": "No capítulo anterior, *Automação e MarTech: O Stack Tecnológico do Marketing Moderno*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo retom"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.571,
+      "trecho": "No capítulo anterior, *Planejamento e Orçamento de Marketing: Alocando Recursos com Inteligência*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este ca"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.571,
+      "trecho": "No capítulo anterior, *Planejamento e Orçamento de Marketing: Alocando Recursos com Inteligência*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este ca"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.571,
+      "trecho": "No capítulo anterior, *IA no Marketing: Automação, Personalização e Geração de Conteúdo*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo re"
+    },
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.566,
+      "trecho": "A confiança emergiu como o ativo de marketing mais caro e mais frágil da era digital: transparência virou posicionamento. Esse eixo conecta os três pilares e explica por que o capí"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.561,
+      "trecho": "No capítulo anterior, *Privacy-First e o Futuro Sem Cookies: Navegando com LGPD e GDPR*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo ret"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "5",
+      "similaridade": 0.56,
+      "trecho": "A IA na publicidade automatiza criativos e otimização, mas a supervisão humana permanece como guarda de qualidade e de ética. Esse eixo conecta os três pilares e explica por que o "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 0.552,
+      "trecho": "No capítulo anterior, *Planejamento e Orçamento de Marketing: Alocando Recursos com Inteligência*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este ca"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.552,
+      "trecho": "No capítulo anterior, *IA no Marketing: Automação, Personalização e Geração de Conteúdo*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo re"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.552,
+      "trecho": "No capítulo anterior, *Privacy-First e o Futuro Sem Cookies: Navegando com LGPD e GDPR*, você aprendeu os conceitos que servem de plataforma para o que vem agora. Este capítulo ret"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "5",
+      "similaridade": 0.547,
+      "trecho": "O ambiente privacy-first reescreveu as regras da medição: o fim dos cookies de terceiros força first-party data, consentimento explícito e contextual targeting. Esse eixo conecta o"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 0.547,
+      "trecho": "A IA na publicidade automatiza criativos e otimização, mas a supervisão humana permanece como guarda de qualidade e de ética. Esse eixo conecta os três pilares e explica por que o "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.534,
+      "trecho": "O ambiente privacy-first reescreveu as regras da medição: o fim dos cookies de terceiros força first-party data, consentimento explícito e contextual targeting. Esse eixo conecta o"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.528,
+      "trecho": "O ambiente privacy-first reescreveu as regras da medição: o fim dos cookies de terceiros força first-party data, consentimento explícito e contextual targeting. Esse eixo conecta o"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "5",
+      "similaridade": 0.522,
+      "trecho": "A IA generativa deslocou o gargalo da criação: o custo do conteúdo caiu, e o diferencial passou a ser curadoria, consistência de marca e supervisão humana. Esse eixo conecta os trê"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 0.511,
+      "trecho": "A IA generativa deslocou o gargalo da criação: o custo do conteúdo caiu, e o diferencial passou a ser curadoria, consistência de marca e supervisão humana. Esse eixo conecta os trê"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 0.505,
+      "trecho": "A IA na publicidade automatiza criativos e otimização, mas a supervisão humana permanece como guarda de qualidade e de ética. Esse eixo conecta os três pilares e explica por que o "
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 0.5,
+      "trecho": "Na prática, ia generativa na criação de conteúdo e criativos significa transformar a teoria em rotina operacional — exatamente o que *IA no Marketing: Automação, Personalização e G"
+    }
+  ],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 9308,
+      "palavras": 1345,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 9397,
+      "palavras": 1379,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 9275,
+      "palavras": 1355,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 9410,
+      "palavras": 1341,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 9134,
+      "palavras": 1306,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rar: ler o território, escolher a rota com dados e ajustar o percurso quando o vento muda.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

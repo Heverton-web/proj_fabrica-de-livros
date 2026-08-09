@@ -1,0 +1,37 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "II",
+    "capitulo": "4"
+  },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 3: o conceito de barreiras rígidas e restrições semânticas em NLAHs, agora escalado para validação sistemática de parâmetros e intenções antes da execução de ferramentas (Pre-Task Verification).",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Disciplina Regulatória da Verificação Pré-Tarefa",
+        "escopo": "Conceito de controle feedforward, validação de intenção vs. checagem reativa, validação de clareza de parâmetros de entrada.",
+        "ancora_visual": "flowchart TD mostrando o fluxo de entrada de uma tarefa no harness, passando pelo sensor de telemetria até a comporta inteligente de Pre-Task Verification antes do envio à turbina probabilística.",
+        "entrega_tecnica": "python - Classe de validação de intenção de tarefa usando PydanticAI / Pydantic V2 para garantir que o prompt contenha parâmetros estritos.",
+        "evolucao_leitor": "De desenvolvedor reativo que trata erros após a chamada de API para engenheiro proativo que blinda o runtime controlando a vazão e autorização.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Modelagem de Esquemas Estritos e Contratos de Execução",
+        "escopo": "Definição de schemas JSON/Pydantic estritos para ferramentas, validação de parâmetros numéricos/strings, checagem de escopo (ex: IDs permitidos, caminhos de arquivo autorizados).",
+        "ancora_visual": "sequenceDiagram de um agente solicitando execução de ferramenta (tool execution), onde a comporta inteligente do harness valida o contrato de execução antes de despachar a task para o Sandbox.",
+        "entrega_tecnica": "python - Implementação de um harness que intercepta chamadas de ferramentas e valida seus argumentos contra um schema estrito e lista de recursos autorizados (RBAC).",
+        "evolucao_leitor": "De integrador que confia cegamente nas saídas estruturadas da LLM para projetista de contratos de execução invioláveis.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Barreiras Preventivas e Interceptação Precoce em Sandboxes",
+        "escopo": "Uso de sandboxes seguros para testar comandos de ferramentas gerados por LLM, checagem pré-execução via análise estática ou dry-run, contenção física.",
+        "ancora_visual": "stateDiagram-v2 mostrando o ciclo de vida de uma ferramenta: Submetida -> ValidandoContrato -> EmSandbox -> Executada -> Sucesso, com transições de desvio para Vertedouro se houver falha de segurança.",
+        "entrega_tecnica": "python - Mock de ambiente de execução isolado (Sandbox) com validação de comandos OS permitidos antes de rodar subprocessos em ambiente controlado.",
+        "evolucao_leitor": "De espectador passivo de comandos destrutivos para controlador absoluto de fronteiras computacionais.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "IV",
+    "capitulo": "7"
+  },
+  "estado_execucao": "concluido_autonomo",
+  "payload_estrategico": {
+    "pilares": [
+      "Especificação aberta e interoperabilidade",
+      "Marketplaces e o gerenciador npx skills",
+      "Portabilidade: uma skill, múltiplos harnesses"
+    ]
+  }
+}

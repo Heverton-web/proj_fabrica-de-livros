@@ -1,0 +1,11 @@
+{
+  "tema": "code-review-graph https://github.com/tirth8205/code-review-graph",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 20,
+  "tamanho_obra": "P",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": true,
+  "qtd_ebooks": 2,
+  "senioridade_obra": "iniciante"
+}

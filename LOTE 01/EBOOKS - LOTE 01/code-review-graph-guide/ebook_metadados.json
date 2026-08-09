@@ -1,0 +1,16 @@
+{
+  "titulo": "Code Review Graph",
+  "autor": "Heverton Eduardo Peres",
+  "idioma": "pt-BR",
+  "tipo": "ebook",
+  "livro_mae": "code-review-graph",
+  "capitulos_originais": [
+    "cap_01.md",
+    "cap_02.md",
+    "cap_03.md",
+    "cap_04.md",
+    "cap_05.md"
+  ],
+  "observacoes": "Guia completo do Code Review Graph, cobrindo fundamentos, funcionalidades e nivel avancado. Tom adaptado para comercial acessivel.",
+  "subtitulo": "Guia Completo de Code Review com IA"
+}

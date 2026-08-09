@@ -1,0 +1,119 @@
+{
+  "slug": "artigos/ai-driven-development-do-zero-ao-deploy--art-02-camadas-llm-e-tools-raciocinio-selecao-d",
+  "tipo_obra": "artigo",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 45665,
+  "paginas_estimadas": 18.3,
+  "requisitos": [
+    {
+      "id": "ARTIGO-NUM",
+      "nome": "Numeracao progressiva de secoes (NBR 6024)",
+      "conforme": true,
+      "detalhe": "secoes sem numeracao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-REF",
+      "nome": "Minimo 20 referencias por secao (NBR 6023)",
+      "conforme": true,
+      "detalhe": "secoes abaixo: nenhuma"
+    },
+    {
+      "id": "ARTIGO-CIT",
+      "nome": "Citacoes autor-data presentes (NBR 10520)",
+      "conforme": true,
+      "detalhe": "secoes sem citacao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "ARTIGO-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    },
+    {
+      "id": "ARTIGO-RASTRO",
+      "nome": "Rastreabilidade citacao <-> referencias",
+      "conforme": true,
+      "detalhe": "secoes com citacao orfa: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 11217,
+      "palavras": 1374,
+      "numeracao_progressiva": true,
+      "referencias": 34,
+      "citacoes_inline": 33,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l em: https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "team (2026)"
+      ]
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 12167,
+      "palavras": 1414,
+      "numeracao_progressiva": true,
+      "referencias": 43,
+      "citacoes_inline": 42,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "/yage.ai/share/why-coding-agents-still-use-grep-en-20260327.html. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "team (2026)"
+      ]
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 16295,
+      "palavras": 2052,
+      "numeracao_progressiva": true,
+      "referencias": 42,
+      "citacoes_inline": 42,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "/yage.ai/share/why-coding-agents-still-use-grep-en-20260327.html. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 5986,
+      "palavras": 677,
+      "numeracao_progressiva": true,
+      "referencias": 23,
+      "citacoes_inline": 20,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l em: https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "konishi (2026)",
+        "mcp (2026)",
+        "subagent (2026)"
+      ]
+    }
+  ]
+}

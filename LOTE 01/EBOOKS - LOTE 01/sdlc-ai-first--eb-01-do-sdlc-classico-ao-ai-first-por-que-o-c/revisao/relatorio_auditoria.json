@@ -1,0 +1,73 @@
+{
+  "slug": "ebooks/sdlc-ai-first--eb-01-do-sdlc-classico-ao-ai-first-por-que-o-c",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 2,
+  "caracteres_obra": 46513,
+  "paginas_estimadas": 18.6,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "46.513 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "continua": 2,
+        "contínua": 2,
+        "Contínua": 1
+      },
+      "ocorrencias": 5
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 45450,
+      "palavras": 5070,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "executar contra um critério. É essa troca que o restante do livro explora em profundidade.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 1062,
+      "palavras": 165,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "— Heverton Eduardo Peres.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

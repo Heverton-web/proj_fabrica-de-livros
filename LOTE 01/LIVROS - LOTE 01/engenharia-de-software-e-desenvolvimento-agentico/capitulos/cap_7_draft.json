@@ -1,0 +1,60 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "7" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "titulo": "A Camada de Frontend: Conceitos, Frameworks e Tecnologias de Mercado",
+  "objetivo": "Mapear o que é a camada de frontend e as principais tecnologias de mercado disponíveis para construí-la.",
+  "callback_capitulo_anterior": "Capítulo 6: a arquitetura em camadas como organismo único, onde frontend, backend, banco de dados e API são estações interdependentes da mesma linha de produção — o Capítulo 6 definiu o frontend como 'a interface visual que envia requisições e gerencia estado do cliente'; o Capítulo 7 abre essa estação por dentro e mostra a matéria-prima e as máquinas que a fazem funcionar.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "HTML, CSS e JavaScript como matéria-prima da interface",
+        "escopo": "Entra: os três materiais brutos de qualquer interface web — HTML como estrutura/semântica do que é entregue ao navegador, CSS como camada de apresentação/estilo, JavaScript como camada de comportamento/interatividade que manipula o DOM em tempo real; TypeScript como camada de tipagem estática sobre esse JavaScript, adicionada quando o projeto cresce em complexidade e times (TypeScript Handbook como referência canônica). Fica de fora: sintaxe detalhada de cada linguagem linha a linha (não é curso de HTML/CSS/JS) e frameworks (reservado ao Pilar 2) — aqui o material é tratado como matéria-prima antes de qualquer ferramenta a transformar.",
+        "ancora_visual": "flowchart LR mostrando a esteira de matéria-prima da estação Frontend: 'HTML (estrutura)' + 'CSS (apresentação)' + 'JavaScript (comportamento)' convergindo para um nó central 'DOM renderizado no navegador (Sala de Controle do usuário)', com um ramal indicando que TypeScript entra como 'controle de qualidade' aplicado sobre o JavaScript bruto antes de seguir para a esteira de build",
+        "entrega_tecnica": "typescript — trecho curto e comentado mostrando uma função tipada que recebe dados de uma API e valida o formato antes de manipular o DOM, contrastando com o equivalente em JavaScript puro sem tipagem para evidenciar o ganho de controle de qualidade do TypeScript",
+        "evolucao_leitor": "De 'frontend é só HTML bonito com CSS e um pouco de JS' para 'eu sei exatamente qual material resolve qual problema — estrutura, apresentação ou comportamento — e por que TypeScript é a camada de controle de qualidade que a matéria-prima ganha antes de seguir esteira acima'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Frameworks modernos (React, Vue, Svelte) e quando usar cada um",
+        "escopo": "Entra: React (Meta, componentes reutilizáveis, maior fatia de mercado) como padrão-fábrica de mercado; Vue.js (sintaxe de template acessível, times pequenos/médios); Angular (Google, estrutura opinativa, injeção de dependência, times grandes); Svelte (compila em build-time, menores bundles, sem runtime de framework no navegador); Next.js como camada sobre o React que adiciona roteamento por sistema de arquivos, App Router, Server Components e Route Handlers. Entram também as ferramentas de build que movem essa matéria-prima pela esteira: Vite (módulos ES nativos, HMR quase instantâneo, empacota via Rolldown) vs. Webpack (bundler histórico, mais configurável, HMR mais lento por reavaliar todo o grafo de dependências). Fica de fora: comparação de sintaxe linha a linha entre frameworks e configuração avançada de bundler — o pilar é sobre critério de escolha, não sobre tutorial de cada ferramenta.",
+        "ancora_visual": "flowchart TD comparando quatro linhas de montagem paralelas na mesma fábrica de frontend — 'React (linha de montagem mais usada do mercado)', 'Vue (linha enxuta para equipe pequena)', 'Angular (linha opinativa e estruturada para fábrica grande)', 'Svelte (linha que compila e sai enxuta, sem motor extra rodando no chão de fábrica do navegador)' — convergindo para um posto de decisão 'qual esteira escolher' alimentado por critério de tamanho de equipe e necessidade de estrutura, com um ramal separado mostrando Vite e Webpack como as duas esteiras de empacotamento que alimentam qualquer uma das quatro linhas",
+        "entrega_tecnica": "bash — sequência de comandos reais de scaffolding comparando a criação de um projeto novo via Vite (`npm create vite@latest`) e a inicialização de um projeto Next.js (`npx create-next-app@latest`), anotada linha a linha explicando o que cada comando gera na esteira de build",
+        "evolucao_leitor": "De 'preciso escolher um framework de frontend e não sei por onde começar' para 'eu sei comparar React, Vue, Angular e Svelte pelo critério certo — tamanho de equipe, necessidade de estrutura, tamanho de bundle — e sei por que Vite substituiu Webpack como esteira de build padrão de mercado'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Renderização: SSR, CSR, SSG e o impacto em performance",
+        "escopo": "Entra: Client-Side Rendering (CSR, o navegador processa tudo, primeiro carregamento mais lento mas navegação seguinte mais fluida), Server-Side Rendering (SSR, o servidor entrega HTML já renderizado, melhor SEO e first paint, com hidratação client-side depois), Static Site Generation (SSG, o HTML é gerado em build-time e servido como arquivo estático, o mais rápido possível para conteúdo que não muda por requisição), e abordagens híbridas que combinam SSR inicial com hidratação — o modelo que Next.js oferece por padrão. Entra também Progressive Web Apps (PWA) e Service Workers como proxy de rede para cache de ativos e funcionamento offline, e WebAssembly (WASM) como esteira paralela para tarefas computacionalmente pesadas (jogos, edição de imagem/vídeo, inferência de ML) rodando a velocidade quase nativa ao lado do JavaScript. Fecha com acessibilidade (WCAG, W3C — 4 princípios: perceptível, operável, compreensível, robusto; WCAG 2.2 como versão vigente) como controle de qualidade que atravessa qualquer estratégia de renderização escolhida. Fica de fora: implementação passo a passo de um Service Worker e auditoria WCAG completa — ambos citados como existência e critério, não como tutorial.",
+        "ancora_visual": "sequenceDiagram comparando, na mesma esteira de expedição, três estratégias de entrega da página — 'CSR: Cliente pede página vazia → Servidor entrega esqueleto HTML → Navegador baixa e executa JS → DOM é montado no navegador (produto pronto só depois de 3 etapas)', 'SSR: Cliente pede página → Servidor já renderiza HTML completo → Navegador exibe conteúdo pronto e hidrata JS por cima (produto expedido quase pronto)', 'SSG: Cliente pede página → Servidor entrega arquivo estático pré-fabricado em build-time (produto já estava no depósito de peças, expedição instantânea)' — participantes nomeados 'Cliente (Sala de Controle)' e 'Servidor/CDN (Chão de Fábrica)'",
+        "entrega_tecnica": "javascript — trecho comentado de um componente Next.js simplificado demonstrando a diferença de sintaxe entre uma função de página que roda em build-time (`generateStaticParams`/SSG) e uma que busca dados a cada requisição (SSR), com comentários indicando em qual ponto da esteira cada uma executa",
+        "evolucao_leitor": "De 'todo site React só carrega em branco e depois aparece' para 'eu sei diagnosticar se uma página precisa de CSR, SSR ou SSG olhando para o requisito de SEO, first paint e frequência de mudança do conteúdo — e sei que isso é uma decisão de arquitetura, não um detalhe do framework'",
+        "conceito_denso": true
+      }
+    ]
+  },
+  "fontes_rag_autorizadas": [
+    "REACT.DEV - Quick Start - https://react.dev/learn",
+    "MDN WEB DOCS - Getting started with React - https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Frameworks_libraries/React_getting_started",
+    "NEXT.JS DOCS - App Router: Getting Started - https://nextjs.org/docs/app/getting-started",
+    "ASCENDIENT LEARNING - React vs. Angular vs. Vue: A Practical Comparison for 2026 - https://www.ascendientlearning.com/blog/comparing-angular-react-vue-svelte",
+    "PHAROS PRODUCTION - Frontend Framework Comparison 2026 - https://pharosproduction.com/insights/engineering/frontend-framework-comparison-2026/",
+    "VITE.DEV - Why Vite - https://vite.dev/guide/why",
+    "LOGROCKET - Vite vs. Webpack for react apps in 2025 - https://blog.logrocket.com/vite-vs-webpack-react-apps-2025-senior-engineer/",
+    "TYPESCRIPT DOCS - Handbook - https://www.typescriptlang.org/docs/handbook/intro.html",
+    "PIXELFREESTUDIO - The Role of SSR in Progressive Web Apps - https://blog.pixelfreestudio.com/the-role-of-ssr-in-progressive-web-apps/",
+    "GOOGLE FOR DEVELOPERS - Progressive Web Apps: Service Worker Includes - https://developers.google.com/codelabs/pwa-training/pwa06--service-worker-includes",
+    "MDN WEB DOCS - Structural overview of progressive web apps - https://mdn2.netlify.app/en-us/docs/web/progressive_web_apps/structural_overview/",
+    "WEBASSEMBLY.ORG - Use Cases - https://webassembly.org/docs/use-cases/",
+    "MDN WEB DOCS - WebAssembly - https://developer.mozilla.org/en-US/docs/WebAssembly",
+    "W3C - WCAG 2 Overview - https://www.w3.org/WAI/standards-guidelines/wcag/",
+    "W3C - Web Content Accessibility Guidelines (WCAG) 2.2 - https://www.w3.org/TR/WCAG22/",
+    "MDN WEB DOCS - How the web works - https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "MDN WEB DOCS - Overview of HTTP - https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview",
+    "MDN WEB DOCS - Client-server overview - https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
+    "MEDIUM (GOALIST BLOG) - Three Layer Architecture in Backend Development - https://medium.com/goalist-blog/three-layer-architecture-in-backend-development-c3e52c0d6682",
+    "WEWEB DOCS - APIs and databases: the critical connection - https://docs.weweb.io/web-development-basics/apis-and-databases.html",
+    "CLOUDFLARE - Content Delivery Network (CDN) Reference Architecture - https://developers.cloudflare.com/reference-architecture/architectures/cdn/",
+    "NODE.JS - About Node.js - https://nodejs.org/en/about"
+  ]
+}

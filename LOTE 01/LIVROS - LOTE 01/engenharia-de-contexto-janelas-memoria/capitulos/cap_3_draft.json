@@ -1,0 +1,17 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "I",
+    "capitulo": "3"
+  },
+  "estado_execucao": "aguardando_checkpoint_humano",
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": "Capítulo 2: O Peso dos Símbolos, explicando como a matemática guia a atenção",
+  "payload_estrategico": {
+    "pilares": [
+      "Compreensão teórica e empírica do fenômeno de Lost in the Middle, analisando os vieses de Primazia e Recência e a curva de desempenho em U sob a ótica do Bibliotecário Imperial.",
+      "Análise de benchmarks empíricos como o teste Needle in a Haystack (NIAH) de Greg Kamradt e as limitações práticas de janelas longas de contexto.",
+      "Implementação técnica e robusta em Python de um algoritmo mitigador de Lost in the Middle, aplicando técnicas de reordenação (reranking) baseada em relevância e compressão de prompt inspirada em frameworks modernos como LLMLingua."
+    ]
+  }
+}

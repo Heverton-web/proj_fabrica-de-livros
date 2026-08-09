@@ -1,0 +1,22 @@
+{
+  "capitulo": "7",
+  "parte": "IV",
+  "titulo": "Marketplaces e portabilidade: npx skills, agentskills.io e o padrão aberto",
+  "pilares": [
+    {
+      "pilar": "Especificação aberta e interoperabilidade",
+      "conceito_denso": false
+    },
+    {
+      "pilar": "Marketplaces e o gerenciador npx skills",
+      "conceito_denso": true
+    },
+    {
+      "pilar": "Portabilidade: uma skill, múltiplos harnesses",
+      "conceito_denso": false
+    }
+  ],
+  "ancora_visual": "Diagrama mermaid na secao Ilustra usando o vocabulario da Oficina do Engenheiro Agenico",
+  "entrega_tecnica": "Codigo Python validavel na secao Tecnica",
+  "callback_capitulo_anterior": "conceito do capitulo 6"
+}

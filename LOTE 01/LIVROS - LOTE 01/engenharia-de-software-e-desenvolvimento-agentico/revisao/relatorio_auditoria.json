@@ -1,0 +1,391 @@
+{
+  "slug": "livros/engenharia-de-software-e-desenvolvimento-agentico",
+  "tipo_obra": "livro",
+  "veredito": "NAO CONFORME",
+  "total_capitulos": 8,
+  "caracteres_obra": 192134,
+  "paginas_estimadas": 76.9,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 50 capitulos",
+      "conforme": false,
+      "detalhe": "8 capitulo(s) (minimo 50)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 1000 paginas (~2.500.000 caracteres)",
+      "conforme": false,
+      "detalhe": "192.134 caracteres (minimo 2.500.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": false,
+      "detalhe": "capitulos fora de ordem: 1"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 40,
+        "Esta": 2,
+        "esta": 1
+      },
+      "ocorrencias": 43
+    },
+    {
+      "termo_normalizado": "versao",
+      "variantes": {
+        "versão": 23,
+        "versao": 2,
+        "Versão": 1
+      },
+      "ocorrencias": 26
+    },
+    {
+      "termo_normalizado": "http3vshttp2",
+      "variantes": {
+        "http3-vs-http2": 5,
+        "http-3-vs-http-2": 4
+      },
+      "ocorrencias": 9
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "pública": 6,
+        "publica": 1
+      },
+      "ocorrencias": 7
+    },
+    {
+      "termo_normalizado": "copia",
+      "variantes": {
+        "cópia": 3,
+        "copia": 2
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "valida",
+      "variantes": {
+        "valida": 2,
+        "válida": 2
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "chão de fábrica",
+      "linha de montagem",
+      "esteira",
+      "sala de controle",
+      "motor da fábrica",
+      "matéria-prima",
+      "controle de qualidade",
+      "expedição",
+      "manual de operação",
+      "depósito de peças"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "7",
+        "ocorrencias": [
+          "[16][17]",
+          "[19][20]",
+          "[1][2]",
+          "[4][5]",
+          "[10][11]",
+          "[12][13]",
+          "[14][15]",
+          "[3][9]",
+          "[14][15]",
+          "[4][5]",
+          "[8][16]",
+          "[1][4][5][6][7]",
+          "[9][3]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 27446,
+      "palavras": 3318,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 23,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rowser Support*. Disponível em: https://websocket.org/standards/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": false,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 30,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 24.3,
+        "coeficiente_variacao": 0.779
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 21809,
+      "palavras": 2696,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 22,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "g/edge-computing-vs-cdn-identifying-their-roles-in-data-delivery. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 12,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 23.6,
+        "coeficiente_variacao": 0.824
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 20591,
+      "palavras": 2572,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 24,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rowser Support*. Disponível em: https://websocket.org/standards/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 19,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.8,
+        "coeficiente_variacao": 0.759
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 24228,
+      "palavras": 3011,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 28,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ecurity-exchange/penetration-testing/penetration-testing-phases/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 18,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 24.7,
+        "coeficiente_variacao": 0.894
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 23713,
+      "palavras": 3106,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 27,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ". Disponível em: https://restfulapi.net/rest-api-best-practices/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 7,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.9,
+        "coeficiente_variacao": 0.852
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 25216,
+      "palavras": 2961,
+      "secoes_faltantes": [],
+      "referencias": 27,
+      "citacoes_inline": 32,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "Version 3.1.0*. Disponível em: https://swagger.io/specification/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 12,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 23.6,
+        "coeficiente_variacao": 0.877
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 24757,
+      "palavras": 3140,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 47,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ".JS. *About Node.js*. Disponível em: https://nodejs.org/en/about. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[16][17]",
+        "[19][20]",
+        "[1][2]",
+        "[4][5]",
+        "[10][11]",
+        "[12][13]",
+        "[14][15]",
+        "[3][9]",
+        "[14][15]",
+        "[4][5]",
+        "[8][16]",
+        "[1][4][5][6][7]",
+        "[9][3]"
+      ],
+      "vocabulario_fora_ilustra": 27,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.7,
+        "coeficiente_variacao": 0.818
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 24374,
+      "palavras": 3003,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 32,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ". Disponível em: https://restfulapi.net/rest-api-best-practices/. Acesso em: 03 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 4,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.1,
+        "coeficiente_variacao": 0.896
+      }
+    }
+  ]
+}

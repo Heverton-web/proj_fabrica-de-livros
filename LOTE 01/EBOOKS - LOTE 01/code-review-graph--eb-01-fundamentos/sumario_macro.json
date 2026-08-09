@@ -1,0 +1,9 @@
+{
+  "titulo_obra": "Fundamentos",
+  "tipo_obra": "ebook",
+  "slug_livro_mae": "code-review-graph",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "tema": "Marketing na Era Digital - Conceitos, Plataformas e Estratégias",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 20,
+  "tamanho_obra": "G",
+  "gerar_artigos": true,
+  "qtd_artigos": 5,
+  "gerar_ebooks": true,
+  "qtd_ebooks": 10,
+  "senioridade_obra": "iniciante"
+}

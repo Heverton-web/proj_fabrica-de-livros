@@ -1,0 +1,124 @@
+{
+  "titulo_obra": "Engenharia de contexto: janelas, memória e o fim do prompt solto",
+  "subtitulo": "Livro 3 da série A Pilha Agêntica — da primeira linha de código à engenharia de sistemas autônomos de IA em produção",
+  "serie": "A Pilha Agêntica — AI-Driven Development (AIDD)",
+  "motivo_condutor": {
+    "nome": "O Ambiente Informacional como Próxima Camada da Pilha",
+    "descricao": "Todo sistema de IA — inclusive os agentes autônomos dos volumes seguintes — depende do que o modelo vê antes de responder. Dominar a engenharia de contexto é dominar o ambiente informacional do agente: a janela, o que entra, o que permanece, o que é recuperado e o que é lembrado. A pilha se empilha: cada camada nasce dos limites da anterior — o contexto é a substância que o prompt não pode carregar sozinho.",
+    "vocabulario": [
+      "engenharia de contexto",
+      "janela de contexto",
+      "token",
+      "context rot",
+      "lost in the middle",
+      "write",
+      "select",
+      "compress",
+      "isolate",
+      "subagente",
+      "RAG",
+      "recuperação",
+      "memória",
+      "compactação",
+      "cache de contexto",
+      "contaminação cruzada",
+      "diagnóstico de falha",
+      "reserva de segurança",
+      "ambiente informacional",
+      "prompt de sistema",
+      "agulha no palheiro",
+      "distrator"
+    ]
+  },
+  "tamanho": "G",
+  "total_capitulos": 10,
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "A Janela como Recurso Finito",
+      "objetivo": "Estabelecer a base econômica e cognitiva: o que é a janela de contexto, por que mais tokens não é melhor e como a degradação acontece",
+      "capitulos": [
+        {
+          "capitulo": 1,
+          "titulo": "O ambiente informacional: do prompt ao contexto"
+        },
+        {
+          "capitulo": 2,
+          "titulo": "A janela de contexto como recurso finito"
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "A Degradação do Contexto",
+      "objetivo": "Ensinar por que contexto demais degrada o desempenho, com as evidências empíricas da literatura",
+      "capitulos": [
+        {
+          "capitulo": 3,
+          "titulo": "Context rot: por que mais contexto nem sempre é melhor"
+        },
+        {
+          "capitulo": 4,
+          "titulo": "Lost in the middle: a anatomia do esquecimento posicional"
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "O Framework write/select/compress/isolate",
+      "objetivo": "Dominar as quatro operações centrais da engenharia de contexto documentadas pela Anthropic",
+      "capitulos": [
+        {
+          "capitulo": 5,
+          "titulo": "Write e select: escrever e selecionar o contexto certo"
+        },
+        {
+          "capitulo": 6,
+          "titulo": "Compress: compactar histórico e limpar resultados"
+        },
+        {
+          "capitulo": 7,
+          "titulo": "Isolate: subagentes e o isolamento de contexto"
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "O Diagnóstico e a Recuperação",
+      "objetivo": "Integrar o diagnóstico de falhas e a recuperação de conhecimento (RAG) ao design de contexto",
+      "capitulos": [
+        {
+          "capitulo": 8,
+          "titulo": "Diagnóstico prático: prompt, contexto ou outra camada?"
+        },
+        {
+          "capitulo": 9,
+          "titulo": "RAG: quando e por que recuperar conhecimento"
+        }
+      ]
+    },
+    {
+      "parte": 5,
+      "titulo_parte": "Memória, Produção e Métricas",
+      "objetivo": "Cobrir memória, cache e as métricas de sucesso que medem o valor do contexto bem curado",
+      "capitulos": [
+        {
+          "capitulo": 10,
+          "titulo": "Memória, cache e o contexto em produção"
+        },
+        {
+          "capitulo": "11",
+          "titulo": "Janelas longas na prática: quando 200 mil tokens ajudam e quando atrapalham",
+          "objetivo": "",
+          "pilares_previstos": []
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Diagnóstico por camadas: isolando a falha entre prompt, contexto e recuperação",
+          "objetivo": "",
+          "pilares_previstos": []
+        }
+      ]
+    }
+  ]
+}

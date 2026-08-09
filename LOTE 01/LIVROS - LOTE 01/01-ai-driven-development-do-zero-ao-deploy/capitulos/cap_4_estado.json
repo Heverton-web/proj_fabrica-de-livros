@@ -1,0 +1,19 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "4" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": "Capítulo 3: o contrato harness-modelo (o harness decide o que é permitido; o modelo decide o que tentar) — agora completado pelo par LLM+Tools.",
+  "validacao": {
+    "ci_codigo": "ok (2/2 blocos verificaveis aprovados; 1 typescript nao_verificado por ausencia de tsc no ambiente; 3 mermaid nao_aplicavel/sem validador dedicado)",
+    "diagramas_mermaid": "3/3 validos",
+    "secoes_eita_presentes": "7/7",
+    "citacoes_no_corpo": 33,
+    "citacoes_unicas": 26,
+    "citacoes_empilhadas": 0,
+    "referencias_bibliograficas": 26,
+    "horizontal_rules_indevidas": 0,
+    "persona_leitor_reforcada": 1,
+    "callback_capitulo_3_na_introducao": true
+  },
+  "arquivo": "output/livros/ai-driven-development-do-zero-ao-deploy/capitulos/cap_4.md"
+}

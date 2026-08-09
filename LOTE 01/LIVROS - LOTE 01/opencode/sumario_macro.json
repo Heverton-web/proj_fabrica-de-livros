@@ -1,0 +1,158 @@
+{
+  "titulo_obra": "OpenCode: Guia Completo",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "motivo_condutor": {
+    "nome": "A Cabine de Comando",
+    "descricao": "O terminal é a cabine de comando do desenvolvedor moderno; o OpenCode é o copiloto que senta ao lado do piloto (você). Cada sessão é um voo: o plano de voo (prompt), os instrumentos (ferramentas e MCP), a autorização da torre (permissões) e a correção de rota (undo/redo). O piloto mantém o controle; o copiloto executa, verifica e sugere.",
+    "vocabulario": [
+      "cabine de comando",
+      "piloto",
+      "copiloto",
+      "plano de voo",
+      "instrumentos",
+      "torre de controle",
+      "correção de rota",
+      "checklist de decolagem",
+      "hangar",
+      "turbulência"
+    ],
+    "persona_leitor": "Piloto de Desenvolvimento"
+  },
+  "introducao": "Introdução de impacto: o leitor em plena turbulência do 'agora todo mundo programa com IA' — apresenta a promessa e a frustração dos agentes de codificação, e promete o controle de cabine: entender o OpenCode por dentro, configurá-lo do zero e dominar o que a documentação oficial não ensina. Persona 'Piloto de Desenvolvimento' é apresentada ao leitor como o papel que ele assumirá.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos — Primeiro Contato com a Cabine",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O que é o OpenCode e por que o terminal voltou",
+          "objetivo": "Fazer o leitor explicar o que é o OpenCode (agente de codificação open-source de terminal), situá-lo no ecossistema (Claude Code, Cursor, Aider, Gemini CLI) e entender por que agentes de terminal viraram o novo campo de batalha do desenvolvimento.",
+          "pilares_previstos": [
+            "Definição e posicionamento: o que é, quem criou (ecossistema SST/anomalyco), licença open-source, as três superfícies (TUI, desktop, IDE)",
+            "O cenário competitivo: Claude Code, Cursor, Aider, Gemini CLI, OpenHands, SWE-agent — onde cada um ataca e o que o OpenCode diferencia",
+            "O renascimento do terminal: por que CLIs agênticas superam IAs de chat para código (contexto do repositório, ferramentas, reprodutibilidade)"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Arquitetura: como um agente de codificação funciona por dentro",
+          "objetivo": "Fazer o leitor compreender a anatomia do agente (LLM + ferramentas + loop), a arquitetura cliente-servidor do OpenCode (TUI ↔ servidor headless, OpenAPI 3.1) e os fundamentos acadêmicos (SWE-bench, ACI, agentless).",
+          "pilares_previstos": [
+            "O loop do agente: modelo de linguagem, ferramentas (read, edit, bash, grep), iteração e o conceito de ACI (Agent-Computer Interface) dos papers SWE-agent e OpenHands",
+            "Cliente-servidor no OpenCode: por que a TUI é um cliente de um servidor local, spec OpenAPI 3.1 em /doc, endpoints de sessão/mensagem e eventos SSE",
+            "Como o contexto é gerenciado: sessões, AGENTS.md, skills, MCP e os limites que definem a qualidade do resultado"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Checklist de Decolagem — Instalação e Primeira Configuração",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Instalação em todas as plataformas e o primeiro voo",
+          "objetivo": "Fazer o leitor instalar o OpenCode na sua máquina (Windows/WSL, macOS, Linux, Docker), rodar o primeiro comando, executar /init, entender o AGENTS.md e decolar com a TUI sem travar.",
+          "pilares_previstos": [
+            "Instalação multiplataforma: script curl, npm/bun/pnpm/yarn (opencode-ai), Homebrew (anomalyco/tap), Arch (pacman/AUR), Windows (WSL recomendado, Chocolatey, Scoop, Mise), Docker e atualização (upgrade)",
+            "Primeira configuração: /connect, OpenCode Zen como porta de entrada, opencode.ai/auth, e o /models para escolher o modelo",
+            "Inicialização de projeto: /init, geração e commit do AGENTS.md, estrutura de pastas de config (opencode.json, tui.json, .opencode/)"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Provedores e credenciais: conectando qualquer modelo",
+          "objetivo": "Fazer o leitor conectar provedores variados (Anthropic, OpenAI, Azure, Bedrock, DeepSeek, Cerebras, Cloudflare) e modelos locais (Ollama, LM Studio, vLLM, Atomic Chat), com auth.json, variáveis de ambiente e configuração de baseURL.",
+          "pilares_previstos": [
+            "O sistema de credenciais: /connect e auth.json, opencode auth login/list/logout, variáveis de ambiente padrão e .env do projeto",
+            "Provedores em detalhe: Anthropic, OpenAI, Azure OpenAI/Cognitive Services, Amazon Bedrock (profile/região/endpoint), e os casos com baseURL custom (proxies e gateways)",
+            "Modelos locais e OpenAI-compatíveis: provider custom com @ai-sdk/openai-compatible, baseURL, mapeamento de models, dicas de tool-calling com Qwen-Coder/DeepSeek-Coder"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Piloto em Cruzeiro — Operação no Dia a Dia",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Dominando a TUI: comandos, keybinds e os modos Build/Plan",
+          "objetivo": "Fazer o leitor operar a TUI com fluência: slash commands (/, /init, /undo, /redo, /share, /models), keybinds com leader key, temas, modo Plan vs Build (Tab), @ menção de arquivos e subagentes, e a navegação entre sessões.",
+          "pilares_previstos": [
+            "Slash commands essenciais e comandos custom (/nome com $ARGUMENTS, $1..$n, !shell, @arquivo)",
+            "Keybinds e produtividade: leader key (ctrl+x), alternância de agentes (Tab), undo/redo, cópia de mensagens, sessões filhas e o tui.json de personalização",
+            "Fluxo Build/Plan: planejar sem editar (Plan), executar (Build), iterar com feedback e o padrão recomendado de dar contexto como a um dev júnior"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "opencode run e a automação: o agente sem interface",
+          "objetivo": "Fazer o leitor usar o OpenCode de forma programática e automatizada: opencode run com flags (--continue, --session, --fork, --auto, --format json, --file, --share), sessões via CLI, stats, export/import, e integração com CI (GitHub agent).",
+          "pilares_previstos": [
+            "Modo não-interativo: opencode run, --prompt, --format json para eventos brutos, --file para anexar arquivos, --auto e seus riscos",
+            "Gerenciamento de sessões pela CLI: --continue/-c, --session/-s, --fork, session list/delete, export/import (JSON/Markdown, --sanitize)",
+            "Automação e CI: opencode stats (tokens/custos por modelo e projeto), opencode github install/run com GitHub Actions e opencode pr"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Sala de Máquinas — Personalização Profunda",
+      "capitulos": [
+        {
+          "capitulo": "7",
+          "titulo": "Configuração avançada: permissões, agentes custom e skills",
+          "objetivo": "Fazer o leitor escrever um opencode.json profissional: precedência de configs, permission granular (allow/ask/deny com globs), agentes custom em JSON e Markdown, temperature/steps, skills (SKILL.md) e formatters.",
+          "pilares_previstos": [
+            "O modelo de precedência: remote (.well-known/opencode), global, OPENCODE_CONFIG, projeto, .opencode, managed/MDM — e a mesclagem de configs",
+            "Permissões em profundidade: chaves (read, edit, bash, webfetch...), sintaxe de objeto com padrões glob, external_directory, doom_loop, e o padrão '* primeiro, regras específicas depois'",
+            "Agentes e skills custom: agentes JSON vs Markdown (frontmatter), mode primary/subagent, temperature, steps, hidden; skills SKILL.md com permissões por padrão"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "MCP, plugins e ferramentas: ampliando o copiloto",
+          "objetivo": "Fazer o leitor conectar o OpenCode ao mundo externo: servidores MCP locais e remotos (com OAuth), gerenciamento via opencode mcp, plugins (eventos e custom tools) e o custo de contexto de cada ferramenta.",
+          "pilares_previstos": [
+            "MCP na prática: config mcp (type local/remote, command/url, environment, headers), OAuth automático (RFC 7591), opencode mcp add/list/auth/logout/debug, e exemplos reais (Sentry, Context7, Grep by Vercel)",
+            "Plugins: eventos do ciclo de vida (tool.execute.before/after, session.*, shell.env), custom tools com SDK @opencode-ai/plugin, proteção de .env e injeção de variáveis",
+            "Gestão de ferramentas e contexto: tools globais vs por agente, globs (mymcp_*), .ignore do ripgrep, e a disciplina de não inflar o contexto com MCPs pesados"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "V",
+      "titulo_parte": "Torre de Controle — Produção, Colaboração e Governança",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Servidor headless, web e colaboração em equipe",
+          "objetivo": "Fazer o leitor montar infraestrutura de time com OpenCode: opencode serve/web/attach, basic auth via OPENCODE_SERVER_PASSWORD, mDNS, remote config organizacional (.well-known/opencode), share de sessões e MDM para governança corporativa.",
+          "pilares_previstos": [
+            "Modo servidor: opencode serve (OpenAPI, /doc, endpoints de sessão/mensagem), opencode web, e opencode attach para conectar a TUI a servidores remotos com autenticação",
+            "Colaboração: /share e share manual/auto/disabled, privacidade dos links públicos, remote config .well-known/opencode para defaults organizacionais",
+            "Governança corporativa: managed config (macOS/Linux/Windows), MDM via .mobileconfig (Jamf, Kandji, FleetDM), e políticas experimentais (deny de provedores)"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "O que ninguém te conta: segurança, custo e armadilhas",
+          "objetivo": "Fazer o leitor operar no nível profissional cobrado pelo mercado: proteger credenciais, controlar custos de tokens, evitar as armadilhas de contexto e segurança documentadas em papers, e montar o fluxo completo do dia a dia como Piloto de Desenvolvimento.",
+          "pilares_previstos": [
+            "Segurança de verdade: proteção do auth.json, risco do --auto, plugins de assinatura Claude Pro/Max proibidos (v1.3.0), injeção por MCP e .env protegidos por padrão",
+            "Economia de tokens: stats por modelo/projeto, limits de steps, compactação de contexto, o custo real de coding agents (papers) e como prever gastos",
+            "O fluxo profissional completo: checklist do dia a dia (AGENTS.md versionado, Plan antes de Build, review com subagente, share controlado, update diário) e as armadilhas finais do ecossistema"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética: o leitor, agora um Piloto de Desenvolvimento autônomo, relembra o voo completo — do primeiro /init ao servidor headless compartilhado — e recebe o checklist final de decolagem para aplicar o OpenCode na sua rotina real de trabalho, mantendo o controle da cabine em todas as fases.",
+  "_origem": "esbocar_fase0",
+  "subtitulo": "Configuração e Uso na Prática"
+}

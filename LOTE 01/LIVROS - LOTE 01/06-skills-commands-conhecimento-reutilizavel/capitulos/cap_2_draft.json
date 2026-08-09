@@ -1,0 +1,22 @@
+{
+  "capitulo": "2",
+  "parte": "I",
+  "titulo": "Harness, skills e commands: a anatomia da oficina",
+  "pilares": [
+    {
+      "pilar": "O loop agêntico e a camada de harness",
+      "conceito_denso": false
+    },
+    {
+      "pilar": "Skills: ferramentas penduradas na parede da ferramentaria",
+      "conceito_denso": true
+    },
+    {
+      "pilar": "Commands: bancadas com procedimento gravado",
+      "conceito_denso": false
+    }
+  ],
+  "ancora_visual": "Diagrama mermaid na secao Ilustra usando o vocabulario da Oficina do Engenheiro Agenico",
+  "entrega_tecnica": "Codigo Python validavel na secao Tecnica",
+  "callback_capitulo_anterior": "conceito do capitulo 1"
+}

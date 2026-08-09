@@ -1,0 +1,23 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "3" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": "Capítulo 2: o conceito de resolução de nomes via DNS (o endereço da estação já foi encontrado) — agora aplicado à entrega real dos dados por essa rota",
+  "payload_estrategico": {
+    "pilares": [
+      "TCP: handshake, confirmação e reenvio garantido",
+      "UDP: velocidade sem garantia, e por que isso é vantagem em certos casos",
+      "Escolhendo o protocolo de transporte certo para cada aplicação"
+    ]
+  },
+  "validacao": {
+    "blocos_codigo": 3,
+    "blocos_codigo_nao_aplicavel": 2,
+    "codigo_status": "ok",
+    "diagramas_mermaid": 2,
+    "diagramas_status": "ok",
+    "referencias_bibliograficas": 23,
+    "citacoes_no_corpo": 23,
+    "secoes_completas": 7
+  }
+}

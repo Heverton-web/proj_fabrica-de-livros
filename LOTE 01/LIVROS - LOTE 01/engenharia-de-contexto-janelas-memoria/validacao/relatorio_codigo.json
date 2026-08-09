@@ -1,0 +1,329 @@
+{
+  "slug": "livros/engenharia-de-contexto-janelas-memoria",
+  "total_blocos": 37,
+  "resumo": {
+    "nao_aplicavel": 21,
+    "ok": 16
+  },
+  "por_linguagem": {
+    "mermaid": {
+      "total": 16,
+      "ok": 0,
+      "falha": 0
+    },
+    "python": {
+      "total": 15,
+      "ok": 15,
+      "falha": 0
+    },
+    "bash": {
+      "total": 1,
+      "ok": 1,
+      "falha": 0
+    },
+    "markdown": {
+      "total": 5,
+      "ok": 0,
+      "falha": 0
+    }
+  },
+  "taxa_aprovacao_pct": 100.0,
+  "blocos": [
+    {
+      "origem": "cap_1",
+      "linha": 48,
+      "linguagem": "mermaid",
+      "linhas_codigo": 13,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_1",
+      "linha": 70,
+      "linguagem": "python",
+      "linhas_codigo": 63,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 25,
+      "linguagem": "mermaid",
+      "linhas_codigo": 12,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_2",
+      "linha": 47,
+      "linguagem": "python",
+      "linhas_codigo": 17,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 32,
+      "linguagem": "mermaid",
+      "linhas_codigo": 12,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_3",
+      "linha": 58,
+      "linguagem": "python",
+      "linhas_codigo": 121,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 202,
+      "linguagem": "bash",
+      "linhas_codigo": 3,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 51,
+      "linguagem": "mermaid",
+      "linhas_codigo": 15,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_4",
+      "linha": 77,
+      "linguagem": "python",
+      "linhas_codigo": 83,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_5",
+      "linha": 49,
+      "linguagem": "mermaid",
+      "linhas_codigo": 8,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_5",
+      "linha": 66,
+      "linguagem": "python",
+      "linhas_codigo": 72,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_6",
+      "linha": 36,
+      "linguagem": "mermaid",
+      "linhas_codigo": 11,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_6",
+      "linha": 59,
+      "linguagem": "python",
+      "linhas_codigo": 92,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_7",
+      "linha": 25,
+      "linguagem": "mermaid",
+      "linhas_codigo": 13,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_7",
+      "linha": 44,
+      "linguagem": "python",
+      "linhas_codigo": 48,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 20,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_8",
+      "linha": 67,
+      "linguagem": "python",
+      "linhas_codigo": 82,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_9",
+      "linha": 46,
+      "linguagem": "mermaid",
+      "linhas_codigo": 13,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_9",
+      "linha": 68,
+      "linguagem": "python",
+      "linhas_codigo": 53,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_10",
+      "linha": 45,
+      "linguagem": "mermaid",
+      "linhas_codigo": 19,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_10",
+      "linha": 72,
+      "linguagem": "python",
+      "linhas_codigo": 62,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_11",
+      "linha": 26,
+      "linguagem": "mermaid",
+      "linhas_codigo": 15,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_11",
+      "linha": 55,
+      "linguagem": "python",
+      "linhas_codigo": 104,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_12",
+      "linha": 34,
+      "linguagem": "mermaid",
+      "linhas_codigo": 27,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_12",
+      "linha": 72,
+      "linguagem": "python",
+      "linhas_codigo": 123,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_13",
+      "linha": 57,
+      "linguagem": "mermaid",
+      "linhas_codigo": 20,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_13",
+      "linha": 94,
+      "linguagem": "python",
+      "linhas_codigo": 85,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_13",
+      "linha": 195,
+      "linguagem": "markdown",
+      "linhas_codigo": 3,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_14",
+      "linha": 30,
+      "linguagem": "markdown",
+      "linhas_codigo": 2,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_14",
+      "linha": 44,
+      "linguagem": "mermaid",
+      "linhas_codigo": 19,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_14",
+      "linha": 75,
+      "linguagem": "python",
+      "linhas_codigo": 64,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_15",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 11,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_15",
+      "linha": 54,
+      "linguagem": "python",
+      "linhas_codigo": 107,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_16",
+      "linha": 40,
+      "linguagem": "mermaid",
+      "linhas_codigo": 29,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_16",
+      "linha": 79,
+      "linguagem": "markdown",
+      "linhas_codigo": 17,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_16",
+      "linha": 99,
+      "linguagem": "markdown",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_16",
+      "linha": 116,
+      "linguagem": "markdown",
+      "linhas_codigo": 10,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    }
+  ]
+}

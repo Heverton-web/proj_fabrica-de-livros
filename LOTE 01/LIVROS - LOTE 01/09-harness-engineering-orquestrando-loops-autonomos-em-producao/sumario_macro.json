@@ -1,0 +1,169 @@
+{
+  "slug": "livros/09-harness-engineering-orquestrando-loops-autonomos-em-producao",
+  "titulo_obra": "Harness Engineering",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "min_referencias_por_capitulo": 20,
+  "motivo_condutor": {
+    "nome": "A locomotiva e os trilhos",
+    "tese": "O agente é a locomotiva e o harness é a via férrea: a bitola (padrões), os sinais (guardrails), as estações (checkpoints) e a cabine do maquinista (orquestração) são o que transforma autonomia em transporte confiável de passageiros — sem trilhos, a locomotiva mais potente só produz descarrilamento.",
+    "persona_leitor": "Engenheiro de Plataforma / MLOps / Tech Lead de agentes de IA que precisa colocar loops autônomos em produção sem perder o controle"
+  },
+  "introducao": "Este livro trata da camada que separa agentes de IA que impressionam em demos de agentes que sobrevivem em produção: o harness. Nos capítulos que seguem, o leitor percorre o caminho do descarrilamento à via férrea — do loop autônomo sem contenção até a orquestração governada por telemetria, evals, orçamentos de passos e execução durável.",
+  "conclusao": "A engenharia de harness é a disciplina que torna a autonomia de agentes um ativo operacional, e não uma aposta. O livro fecha com o harness como produto: a camada que permite escalar loops autônomos com confiança, auditoria e responsabilidade — a via férrea completa para a era dos agentes.",
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "O Descarrilamento: por que a autonomia sem trilhos degenera",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O loop autônomo: a promessa e o caos",
+          "objetivo": "Estabelecer o problema central: agentes sem harness degeneram em loops infinitos, custo descontrolado e decisões erradas que parecem corretas (polite failures).",
+          "pilares_previstos": [
+            "A promessa da autonomia e o custo do descarrilamento",
+            "Polite failures: quando o erro parece sucesso",
+            "O harness como a via férrea do agente"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Anatomia do loop: perceber, raciocinar, agir, observar",
+          "objetivo": "Decompor o ciclo executivo do agente (perceber-raciocinar-agir-observar), os padrões ReAct e DAPER, e os pontos exatos onde o loop perde o controle.",
+          "pilares_previstos": [
+            "A anatomia do ciclo: perceber, raciocinar, agir, observar",
+            "ReAct e DAPER: dois dialetos do mesmo loop",
+            "Pontos de falha estruturais do ciclo"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "A Via Férrea: construindo o harness",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Contexto como superfície de controle",
+          "objetivo": "Explicar a engenharia de contexto como sucessora da engenharia de prompt: janela de atenção, context rot, compaction, progressive disclosure e system prompts em altitude correta.",
+          "pilares_previstos": [
+            "A janela de contexto como superfície de controle",
+            "Context rot e a curadoria ativa de tokens",
+            "Compaction, notas estruturadas e progressive disclosure"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Ferramentas como superfícies de ação: a ACI",
+          "objetivo": "Tratar o design de ferramentas (Agent-Computer Interface) como engenharia de primeira classe: poka-yoke, namespacing, eficiência de tokens e validação de esquemas.",
+          "pilares_previstos": [
+            "ACI: projetar ferramentas para agentes, não para humanos",
+            "Poka-yoke, namespacing e eficiência de tokens",
+            "Validação de esquema e allow-lists na execução"
+          ]
+        },
+        {
+          "capitulo": "5",
+          "titulo": "Memória: persistir além da janela",
+          "objetivo": "Apresentar as camadas de memória do harness: memória de trabalho, notas estruturadas, RAG e bancos de memória; e como cada uma combate o apagamento do loop.",
+          "pilares_previstos": [
+            "As três camadas de memória do harness",
+            "Notas estruturadas e RAG como memória externa",
+            "Persistência de estado e checkpointing"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "O loop como máquina de estado: padrões de orquestração",
+          "objetivo": "Cobrir os padrões de orquestração (supervisor/worker, planner-executor, reflexão, roteamento) e os trade-offs de custo, latência e isolamento de cada topologia.",
+          "pilares_previstos": [
+            "Padrões de orquestração: supervisor, executor, reflexão",
+            "Trade-offs de custo, latência e isolamento",
+            "Topologias: fan-out, pipeline, debate e swarm"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "A Operação: confiabilidade e observabilidade em produção",
+      "capitulos": [
+        {
+          "capitulo": "7",
+          "titulo": "Observabilidade de agentes: telemetria do loop",
+          "objetivo": "Instrumentar o loop com tracing por passo, convenções gen_ai.* do OpenTelemetry, métricas de sessão e a diferença entre monitorar apps e monitorar agentes.",
+          "pilares_previstos": [
+            "Por que agentes falham de forma educada",
+            "Tracing por passo e convenções gen_ai.*",
+            "Métricas de loop: passos, tokens, latência, sucesso"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Evals de agentes: o habite-se antes do embarque",
+          "objetivo": "Construir suítes de avaliação de agentes: task/trial/transcript/outcome, graders por código vs. LLM-as-judge vs. humanos, capability vs. regression evals e golden sets.",
+          "pilares_previstos": [
+            "A anatomia de um eval de agente",
+            "Graders: código, modelo e humano",
+            "Capability evals, regression evals e golden sets"
+          ]
+        },
+        {
+          "capitulo": "9",
+          "titulo": "Contenção: step budgets, circuit breakers e kill switches",
+          "objetivo": "Implementar as válvulas de segurança do harness: orçamento de passos, anti-loops e doom spirals, tetos de custo, guardrails de runtime e kill switches.",
+          "pilares_previstos": [
+            "Step budget: o teto de iterações",
+            "Circuit breakers anti-loop e tetos de custo",
+            "Guardrails de runtime e kill switches"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "Execução durável: do replay à aprovação humana",
+          "objetivo": "Cobrir durabilidade de loops: journal imutável, replay determinístico, idempotency keys, retries coordenados e HITL assíncrono com checkpointing.",
+          "pilares_previstos": [
+            "Journal, replay determinístico e idempotência",
+            "Retries coordenados sem retry storms",
+            "Human-in-the-loop assíncrono e durável"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "A Governança: o harness como produto",
+      "capitulos": [
+        {
+          "capitulo": "11",
+          "titulo": "Governança de loops autônomos",
+          "objetivo": "Estabelecer a camada de governança: menor agência, trilha de auditoria imutável, identidade de máquina, model pinning e políticas de custo.",
+          "pilares_previstos": [
+            "Princípio da menor agência",
+            "Auditoria imutável e identidade de máquina",
+            "Model pinning e monitoramento de drift"
+          ]
+        },
+        {
+          "capitulo": "12",
+          "titulo": "O harness como produto: segurança e o futuro",
+          "objetivo": "Fechar a obra com segurança (prompt injection, OWASP Top 10 for Agentic Apps, separação cognitivo-executiva) e a visão do harness como camada de produto.",
+          "pilares_previstos": [
+            "Prompt injection e a taxonomia OWASP de agentes",
+            "Separação cognitivo-executiva e sandboxing",
+            "O harness como produto: a via férrea completa"
+          ]
+        }
+      ]
+    }
+  ],
+  "tabela_de_tamanhos_referencia": {
+    "G": {
+      "partes": 3,
+      "capitulos": 12,
+      "paginas": 120,
+      "caracteres": 300000
+    }
+  },
+  "subtitulo": "Orquestrando Loops Autônomos em Produção"
+}

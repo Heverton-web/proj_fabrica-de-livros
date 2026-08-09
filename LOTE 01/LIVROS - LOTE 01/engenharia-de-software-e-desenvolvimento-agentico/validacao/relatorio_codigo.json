@@ -1,0 +1,76 @@
+{
+  "slug": "livros/engenharia-de-software-e-desenvolvimento-agentico",
+  "total_blocos": 6,
+  "resumo": {
+    "nao_aplicavel": 3,
+    "ok": 3
+  },
+  "por_linguagem": {
+    "mermaid": {
+      "total": 3,
+      "ok": 0,
+      "falha": 0
+    },
+    "python": {
+      "total": 2,
+      "ok": 2,
+      "falha": 0
+    },
+    "yaml": {
+      "total": 1,
+      "ok": 1,
+      "falha": 0
+    }
+  },
+  "taxa_aprovacao_pct": 100.0,
+  "blocos": [
+    {
+      "origem": "cap_8",
+      "linha": 29,
+      "linguagem": "mermaid",
+      "linhas_codigo": 8,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_8",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 12,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_8",
+      "linha": 61,
+      "linguagem": "mermaid",
+      "linhas_codigo": 15,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_8",
+      "linha": 86,
+      "linguagem": "python",
+      "linhas_codigo": 20,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 114,
+      "linguagem": "yaml",
+      "linhas_codigo": 18,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 140,
+      "linguagem": "python",
+      "linhas_codigo": 32,
+      "status": "ok",
+      "detalhe": ""
+    }
+  ]
+}

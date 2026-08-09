@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "Google Ads e SEM: A Rota da Intenção de Compra & SEO: Conquistando Visibilidade Orgânica — Um Recorte de Marketing na Era Digital: Conceitos, Plataformas e Estratégias",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "marketing-na-era-digital",
+  "capitulos_fonte_livro_mae": [
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+  ],
+  "introducao": "Recorte investigativo sobre: Google Ads e SEM: A Rota da Intenção de Compra, SEO: Conquistando Visibilidade Orgânica, Pesquisa de Palavras-Chave: Mapeando a Intenção do Viajante, SEO Técnico e Core Web Vitals: Performance como Fator de Ranqueamento, O Futuro da Busca: SGE e a Otimização para Respostas de IA, Meta: Facebook e Instagram como Ecossistema de Negócio, TikTok, YouTube e LinkedIn: Territórios Especializados, Estratégia de Vídeo Vertical: Reels, Shorts e Conteúdo de Formato Curto, Tráfego Pago em Escala: Estrutura, Teste e Otimização de Campanhas, Plataformas de Nicho e Comunidades: Pinterest, X/Twitter, Reddit e Grupos.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Google Ads e SEM: A Rota da Intenção de Compra",
+            "SEO: Conquistando Visibilidade Orgânica",
+            "Pesquisa de Palavras-Chave: Mapeando a Intenção do Viajante"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Google Ads e SEM: A Rota da Intenção de Compra",
+            "SEO: Conquistando Visibilidade Orgânica",
+            "Pesquisa de Palavras-Chave: Mapeando a Intenção do Viajante"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Google Ads e SEM: A Rota da Intenção de Compra",
+            "SEO: Conquistando Visibilidade Orgânica",
+            "Pesquisa de Palavras-Chave: Mapeando a Intenção do Viajante"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Google Ads e SEM: A Rota da Intenção de Compra",
+            "SEO: Conquistando Visibilidade Orgânica",
+            "Pesquisa de Palavras-Chave: Mapeando a Intenção do Viajante"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

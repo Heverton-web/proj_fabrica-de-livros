@@ -1,0 +1,174 @@
+{
+  "slug": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-02-claude-md-agents-md-e-engenharia-de-prom",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 6,
+  "caracteres_obra": 150385,
+  "paginas_estimadas": 60.2,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "150.385 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 37,
+        "Esta": 4,
+        "esta": 4
+      },
+      "ocorrencias": 45
+    },
+    {
+      "termo_normalizado": "producao",
+      "variantes": {
+        "produção": 27,
+        "producao": 1
+      },
+      "ocorrencias": 28
+    },
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 24,
+        "porquê": 1
+      },
+      "ocorrencias": 25
+    },
+    {
+      "termo_normalizado": "pratica",
+      "variantes": {
+        "prática": 19,
+        "pratica": 1,
+        "Prática": 1
+      },
+      "ocorrencias": 21
+    },
+    {
+      "termo_normalizado": "fabrica",
+      "variantes": {
+        "fabrica": 4,
+        "fábrica": 1
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "critico",
+      "variantes": {
+        "crítico": 3,
+        "critico": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 30109,
+      "palavras": 3584,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " fluxo que você possui, não como um texto que se escreve uma vez e nunca mais se revisita.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 30376,
+      "palavras": 3693,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "e um estaleiro maduro prefere descobrir isso num teste controlado, não num incidente real.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 28334,
+      "palavras": 3277,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "em das anteparas que você instala entre a leitura da descrição e o efeito real da chamada.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 28498,
+      "palavras": 3639,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sto nunca aparece como um incidente dramático: aparece devagar, na fatura do mês seguinte.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 31070,
+      "palavras": 3420,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "precisando de uma antepara que não dependa de ele ter decidido bem daquela vez específica.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 1993,
+      "palavras": 319,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "Obrigado por ler até aqui. O leme, a partir de agora, continua com você.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

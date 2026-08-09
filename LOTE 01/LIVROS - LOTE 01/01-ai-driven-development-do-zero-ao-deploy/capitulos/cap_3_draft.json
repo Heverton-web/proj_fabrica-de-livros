@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "3" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 2: o mapa das quatro camadas (Tela decide o que aprovar, Harness decide o que é permitido, LLM decide o que tentar, Tools executam), agora aprofundado nas duas primeiras camadas — Tela e Harness — como a ponte de comando e a estrutura/motor do casco da embarcação agêntica.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "A Ponte de Comando: Intent Preview, Approval Gates, Hybrid Autonomy e Blast Radius",
+        "escopo": "Entra: o que é intent preview (resumo do plano antes da execução), approval gates para ações de alto risco, hybrid autonomy (baixo risco automático, alto risco escalado ao humano) e a estimativa de blast radius antes da aprovação — como padrões de interface de 2026 que substituem 'ajude-me a escrever código' por 'revise o que eu fiz'. Fica de fora: implementação interna do harness (pilar 2) e o contrato de decisão harness-modelo (pilar 3).",
+        "ancora_visual": "flowchart LR do fluxo na ponte de comando do estaleiro: Tripulante (Engenheiro Agêntico) emite ordem -> agente monta plano -> Tela exibe intent preview com blast radius estimado -> ponto de decisão (approval gate): baixo risco segue automático (hybrid autonomy), alto risco aguarda aprovação do comandante na ponte -> execução ou cancelamento.",
+        "entrega_tecnica": "TypeScript/pseudocódigo de front-end de uma tela de intent preview: uma função que recebe o plano de ações do agente, classifica cada ação por nível de risco (leitura, escrita local, escrita remota/destrutiva) e decide se renderiza um approval gate bloqueante ou libera hybrid autonomy.",
+        "evolucao_leitor": "De 'eu preciso ler cada linha de código gerada' para 'eu decido negociar risco com o agente pela interface certa, aprovando só o que tem raio de impacto real'.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "O Harness como Portão de Permissão: Claude Code e o Claude Agent SDK como Runtime Compartilhado",
+        "escopo": "Entra: o harness como estrutura e motor do casco — Claude Code como harness agêntico de referência (portão de permissão por ferramenta, pipeline de regras verificado antes de qualquer execução) e o Claude Agent SDK como o mesmo motor exposto para agentes customizados embutidos em aplicações próprias. Fica de fora: configuração detalhada de settings.json/hooks (fica para o Capítulo 7) — aqui o foco é o princípio arquitetural do portão, não o arquivo de configuração.",
+        "ancora_visual": "flowchart TB da sala de máquinas do casco: Comando do tripulante entra pelo eixo -> Portão de Permissão (Harness) com pipeline de regras (allow/deny/ask) -> se aprovado, aciona a Ferramenta correspondente -> resultado sobe de volta ao Diário de Bordo (contexto). Mostrar Claude Code e Claude Agent SDK como dois cascos diferentes montados sobre o mesmo motor de portão.",
+        "entrega_tecnica": "Python usando o padrão do Claude Agent SDK: um cliente de agente customizado que registra uma ferramenta com um pipeline de permissão simples (callback de aprovação) antes de permitir a execução — demonstrando que o mesmo motor de portão do Claude Code é reaproveitável fora do CLI.",
+        "evolucao_leitor": "De 'o modelo decide o que roda' para 'existe uma camada de motor entre o modelo e o mundo real que decide o que é permitido, e esse motor é portável entre Claude Code e minhas próprias aplicações'.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "O Contrato Harness-Modelo: Harness Decide o Permitido, Modelo Decide o Tentado",
+        "escopo": "Entra: a separação de responsabilidades entre harness e LLM como contrato formal — por que essa separação é o que torna o sistema auditável e seguro mesmo quando o modelo tenta algo indevido; conexão com o mapa de 4 camadas do Capítulo 2. Fica de fora: o detalhamento de chain-of-thought e typed tool schemas, que pertencem à camada LLM+Tools do Capítulo 4.",
+        "ancora_visual": "sequenceDiagram do estaleiro: Tripulante -> Ponte de Comando (Tela): ordem; Ponte de Comando -> Modelo (Oficial de Bordo): planeja ação; Modelo -> Portão de Permissão (Harness): tenta executar ferramenta; Portão de Permissão -> Portão de Permissão: verifica pipeline allow/deny/ask; alt permitido: Portão de Permissão -> Ferramenta: libera execução; else negado: Portão de Permissão -> Modelo: recusa e retorna motivo.",
+        "entrega_tecnica": null,
+        "evolucao_leitor": "De 'confio que o modelo só vai fazer coisas razoáveis' para 'eu vejo o ponto exato do sistema onde a intenção do modelo vira ação real — e é esse ponto que eu controlo, não o modelo em si'.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

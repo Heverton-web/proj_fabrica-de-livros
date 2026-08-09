@@ -1,0 +1,132 @@
+{
+  "slug": "artigos/ai-driven-development-do-zero-ao-deploy--art-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+  "tipo_obra": "artigo",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 37047,
+  "paginas_estimadas": 14.8,
+  "requisitos": [
+    {
+      "id": "ARTIGO-NUM",
+      "nome": "Numeracao progressiva de secoes (NBR 6024)",
+      "conforme": true,
+      "detalhe": "secoes sem numeracao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-REF",
+      "nome": "Minimo 20 referencias por secao (NBR 6023)",
+      "conforme": true,
+      "detalhe": "secoes abaixo: nenhuma"
+    },
+    {
+      "id": "ARTIGO-CIT",
+      "nome": "Citacoes autor-data presentes (NBR 10520)",
+      "conforme": true,
+      "detalhe": "secoes sem citacao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "ARTIGO-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    },
+    {
+      "id": "ARTIGO-RASTRO",
+      "nome": "Rastreabilidade citacao <-> referencias",
+      "conforme": true,
+      "detalhe": "secoes com citacao orfa: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 9298,
+      "palavras": 1143,
+      "numeracao_progressiva": true,
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://en.wikipedia.org/wiki/Model_Context_Protocol. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 8397,
+      "palavras": 992,
+      "numeracao_progressiva": true,
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://en.wikipedia.org/wiki/Model_Context_Protocol. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 13026,
+      "palavras": 1743,
+      "numeracao_progressiva": true,
+      "referencias": 25,
+      "citacoes_inline": 24,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://en.wikipedia.org/wiki/Model_Context_Protocol. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "arxiv (2024)"
+      ]
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 6326,
+      "palavras": 706,
+      "numeracao_progressiva": true,
+      "referencias": 25,
+      "citacoes_inline": 7,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://en.wikipedia.org/wiki/Model_Context_Protocol. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "agenta (2026)",
+        "aimultiple (2026)",
+        "artezio (2026)",
+        "arxiv (2024)",
+        "arxiv (2026)",
+        "blaxel (2026)",
+        "comet (2026)",
+        "forrester (2026)",
+        "fujitsu (2026)",
+        "futurum (2026)",
+        "hartenfeller (2026)",
+        "humanlayer (2026)",
+        "ibm (2026)",
+        "microsoft (2026)",
+        "prompthub (2026)",
+        "researchgate (2026)",
+        "wavespeed (2026)",
+        "wikipedia (2026)"
+      ]
+    }
+  ]
+}

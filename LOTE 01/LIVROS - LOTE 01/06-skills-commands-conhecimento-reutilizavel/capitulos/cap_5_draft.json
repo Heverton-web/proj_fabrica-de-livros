@@ -1,0 +1,22 @@
+{
+  "capitulo": "5",
+  "parte": "III",
+  "titulo": "Slash commands: o prompt determinístico sob demanda",
+  "pilares": [
+    {
+      "pilar": "Estrutura de um arquivo de comando",
+      "conceito_denso": false
+    },
+    {
+      "pilar": "Argumentos, placeholders e autocomplete",
+      "conceito_denso": true
+    },
+    {
+      "pilar": "Controle de invocação: manual vs autônoma",
+      "conceito_denso": false
+    }
+  ],
+  "ancora_visual": "Diagrama mermaid na secao Ilustra usando o vocabulario da Oficina do Engenheiro Agenico",
+  "entrega_tecnica": "Codigo Python validavel na secao Tecnica",
+  "callback_capitulo_anterior": "conceito do capitulo 4"
+}

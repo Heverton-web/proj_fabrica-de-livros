@@ -1,0 +1,88 @@
+{
+  "slug": "ebooks/sdlc-ai-first--eb-04-cartografia-do-dominio-design-orientado",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 2,
+  "caracteres_obra": 46561,
+  "paginas_estimadas": 18.6,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "46.561 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 14,
+        "esta": 2
+      },
+      "ocorrencias": 16
+    },
+    {
+      "termo_normalizado": "usuario",
+      "variantes": {
+        "usuário": 3,
+        "Usuario": 3
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "cobranca",
+      "variantes": {
+        "cobrança": 3,
+        "Cobranca": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 45498,
+      "palavras": 5334,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " essa mudança de economia entende por que o processo precisa mudar junto com a ferramenta.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 1062,
+      "palavras": 165,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "— Heverton Eduardo Peres.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

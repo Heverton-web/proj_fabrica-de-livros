@@ -1,0 +1,101 @@
+{
+  "titulo_obra": "MCP na prática: conectando agentes ao mundo real",
+  "subtitulo": "Livro 4 da série A Pilha Agêntica — da primeira linha de código à engenharia de sistemas autônomos de IA em produção",
+  "serie": "A Pilha Agêntica — AI-Driven Development (AIDD)",
+  "motivo_condutor": {
+    "nome": "A Ponte Padronizada entre o Agente e o Mundo",
+    "descricao": "Todo agente precisa acessar ferramentas e dados externos; o Model Context Protocol (MCP) virou o padrão de fato para essa ponte. O livro domina a arquitetura host/client/server, a construção de servidores do zero em TypeScript e Python, o consumo do ecossistema e do registro oficial, e a disciplina de segurança (least-privilege, capability tokens, OAuth 2.1, audit logging, RBAC) que impede que servidores mal configurados virem porta de entrada não revisada.",
+    "vocabulario": "Model Context Protocol, MCP, host, client, server, tool, resource, prompt, primitiva, transporte, stdio, Streamable HTTP, JSON-RPC 2.0, sessão, autorização, OAuth 2.1, PKCE, least privilege, capability token, audit log, RBAC, SSRF, prompt injection, tool poisoning, cross-server tool shadowing, token passthrough, registry, ecossistema, SDK TypeScript, SDK Python, superfície de ataque, fronteira de confiança, schema de ferramenta, escopo mínimo, consentimento, data logging, fronteira, segurança de servidor"
+  },
+  "tamanho": "G",
+  "total_capitulos": 10,
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "O Protocolo que Conectou os Agentes ao Mundo",
+      "objetivo": "Estabelecer por que agentes isolados são inúteis, como nasceu o MCP como padrão aberto e qual é a arquitetura fundamental host/client/server com suas três primitivas",
+      "capitulos": [
+        {
+          "capitulo": 1,
+          "titulo": "O agente isolado e a explosão dos conectores proprietários"
+        },
+        {
+          "capitulo": 2,
+          "titulo": "Arquitetura MCP: host, client e server"
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "Transportes e Primitivas",
+      "objetivo": "Dominar as camadas de comunicação do protocolo: os transportes stdio e Streamable HTTP e as três primitivas tools, resources e prompts que definem o que um servidor expõe",
+      "capitulos": [
+        {
+          "capitulo": 3,
+          "titulo": "Transportes: do stdio ao Streamable HTTP"
+        },
+        {
+          "capitulo": 4,
+          "titulo": "As três primitivas: tools, resources e prompts"
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "Construindo e Consumindo Servidores",
+      "objetivo": "Ensinar na prática a construir servidores MCP do zero em TypeScript e Python, e a consumir o ecossistema existente com curadoria do registro oficial",
+      "capitulos": [
+        {
+          "capitulo": 5,
+          "titulo": "Construindo um servidor MCP do zero em TypeScript"
+        },
+        {
+          "capitulo": 6,
+          "titulo": "Servidores MCP em Python: da tipagem ao deploy"
+        },
+        {
+          "capitulo": 7,
+          "titulo": "Consumindo servidores existentes: registro oficial e ecossistema"
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "Segurança: a Porta de Entrada Não Revisada",
+      "objetivo": "Cobrir a disciplina de segurança MCP — least-privilege, OAuth 2.1, capability tokens, audit logging e RBAC — e os riscos documentados de servidores mal configurados",
+      "capitulos": [
+        {
+          "capitulo": 8,
+          "titulo": "Segurança MCP: least-privilege, OAuth e capability tokens"
+        },
+        {
+          "capitulo": 9,
+          "titulo": "Riscos documentados: prompt injection, tool poisoning e SSRF"
+        }
+      ]
+    },
+    {
+      "parte": 5,
+      "titulo_parte": "MCP Engineering como Disciplina",
+      "objetivo": "Sintetizar a disciplina de engenharia que decide o que expor, com que granularidade e com que controle de acesso, integrando governança e auditoria contínua",
+      "capitulos": [
+        {
+          "capitulo": 10,
+          "titulo": "MCP Engineering: a disciplina de expor o mundo ao agente"
+        },
+        {
+          "capitulo": "11",
+          "titulo": "MCP em produção: observabilidade, testes e confiabilidade de servidores",
+          "objetivo": "",
+          "pilares_previstos": []
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Padrões avançados e governança de MCP: multi-agente, descoberta e segurança",
+          "objetivo": "",
+          "pilares_previstos": []
+        }
+      ]
+    }
+  ]
+}

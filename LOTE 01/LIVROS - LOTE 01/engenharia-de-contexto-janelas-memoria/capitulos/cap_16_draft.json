@@ -1,0 +1,21 @@
+{
+  "titulo": "As Leis do Castelo: Governança de Contexto com CLAUDE.md, AGENTS.md e MEMORY.md",
+  "capitulo": 16,
+  "senioridade": "iniciante",
+  "callback_capitulo_anterior": "Capítulo 15: O Selo Imperial, mostrando o isolamento físico de subagentes",
+  "metafora_bibliotecario": "O Bibliotecário Imperial explica que, assim como um grande reino precisa de códigos de conduta para o palácio (CLAUDE.md), um registro oficial para saber as permissões de cada guilda (AGENTS.md) e um diário de fatos cronológicos para registrar as descobertas de cada expedição (MEMORY.md), um sistema multiagente de engenharia de contexto precisa destas três colunas fundamentais para que os agentes operem sem anarquia e sem se perderem na névoa da amnésia.",
+  "pilares": [
+    {
+      "pilar": "CLAUDE.md: A Constituição Imperial do Workspace",
+      "descricao": "Define a infraestrutura estática do reino digital: comandos de teste autorizados, regras de compilação estritas e regras de nomenclatura sagradas. É a lei suprema que todos os agentes leem ao entrar na sessão."
+    },
+    {
+      "pilar": "AGENTS.md: O Registro de Guildas e Ofícios de Orquestração",
+      "descricao": "Determina quais agentes e subagentes existem, quais são suas competências, suas fronteiras de ação física e as rotas seguras para se comunicarem sem gerar conflito de autoridade."
+    },
+    {
+      "pilar": "MEMORY.md: O Diário de Fatos e Aprendizados Dinâmicos",
+      "descricao": "Onde são registradas as verdades incontestáveis e descobertas mutáveis das expedições. Funciona como um índice enxuto que aponta para diários menores, evitando o inchaço e a cegueira de contexto."
+    }
+  ]
+}

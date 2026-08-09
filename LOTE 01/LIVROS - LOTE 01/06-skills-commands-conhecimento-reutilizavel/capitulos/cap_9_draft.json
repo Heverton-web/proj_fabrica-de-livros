@@ -1,0 +1,22 @@
+{
+  "capitulo": "9",
+  "parte": "V",
+  "titulo": "Orquestração no harness: skills, MCP e memória procedural",
+  "pilares": [
+    {
+      "pilar": "MCP: ferramentas externas e dados sob protocolo",
+      "conceito_denso": false
+    },
+    {
+      "pilar": "Memória procedural e auto-melhoria guiada por trajetória",
+      "conceito_denso": true
+    },
+    {
+      "pilar": "Harnesses de longa duração: estado, progresso e retomada",
+      "conceito_denso": false
+    }
+  ],
+  "ancora_visual": "Diagrama mermaid na secao Ilustra usando o vocabulario da Oficina do Engenheiro Agenico",
+  "entrega_tecnica": "Codigo Python validavel na secao Tecnica",
+  "callback_capitulo_anterior": "conceito do capitulo 8"
+}

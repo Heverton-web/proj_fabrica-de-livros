@@ -136,6 +136,38 @@ bash scripts/deploy.sh status
 bash scripts/deploy.sh rollback v1.0.0
 ```
 
+## Frontend — Páginas e Rotas de API
+
+| Rota | Função |
+|------|--------|
+| `/` | Página de venda (Hero, pricing, CTA) |
+| `/captura` | Captura de lead (formulário nome + e-mail) |
+| `/checkout` | Checkout do produto core |
+| `/obrigado` | Página de agradecimento pós-captura |
+| `/admin` | Dashboard de métricas |
+| `/api/lead` | POST — captura lead no funil |
+| `/api/checkout` | POST — registra pedido + lead no backend, devolve link de pagamento |
+| `/api/webhook` | POST — webhook de pagamento (stub) |
+| `/api/health` | GET — health check |
+
+> **Não remover a rota `/api/checkout`**: o `checkout/page.tsx` posta nela;
+> sem ela o checkout quebra com 404. Ela lê `BACKEND_URL`/`NEXT_PUBLIC_BACKEND_URL`
+> (fallback `http://127.0.0.1:8000`) e registra o lead em `/api/leads/`.
+
+## Personalização por Nicho (obrigatória)
+
+O template nasce com copy genérica de demonstração ("Autor Digital",
+"centenas de pessoas"). Antes de publicar, substitua pelos termos do nicho:
+
+1. **Configs**: `config/produtos.json` (escada de valor), `personas.json`,
+   `funis.json`, `canais.json` (hashtags), `email.json` (remetente).
+2. **Frontend**: `app/page.tsx`, `components/Hero.tsx`, `PricingCard.tsx`,
+   `app/layout.tsx`, `app/admin/layout.tsx`, `app/captura/page.tsx`.
+3. **E-mails**: `templates/emails/*.html`.
+4. **Docs**: `README.md`.
+
+Gate: `grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ README.md` retorna vazio.
+
 ## Configuração
 
 ### Variáveis de Ambiente
@@ -150,6 +182,7 @@ Copie `.env.example` para `.env` e preencha:
 | `FROM_EMAIL` | Sim | E-mail remetente |
 | `OPENAI_API_KEY` | Não | Para geração de copy |
 | `HOTMART_WEBHOOK_SECRET` | Sim | Validação de pagamentos |
+| `BACKEND_URL` | Não | URL do backend FastAPI (default `http://127.0.0.1:8000`) — usado pela rota `/api/checkout` |
 
 ### Personas
 

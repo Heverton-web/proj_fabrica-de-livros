@@ -1,0 +1,168 @@
+{
+  "slug": "livros/do-zero-ao-codigo-assistido-guia-pratico-de-inteligencia-artificial-para-iniciantes",
+  "titulo_obra": "Do Zero ao Código Assistido",
+  "subtitulo": "O Guia Prático de Inteligência Artificial para Iniciantes — Entenda a arquitetura em 4 camadas, domine harnesses gratuitos e construa projetos reais sem complicação.",
+  "tipo_obra": "livro",
+  "tamanho_obra": "G",
+  "min_referencias_por_capitulo": 20,
+  "motivo_condutor": {
+    "nome": "O desencantamento produtivo: da caixa-preta no navegador ao sistema de 4 camadas",
+    "tese": "O iniciante chega a este livro encarando a IA como uma caixa-preta mágica no navegador: digita, recebe uma resposta e não entende o que aconteceu por trás. A jornada da obra é o desencantamento produtivo — desmontar a caixa-preta nas 4 camadas (Tela, Harness, LLM e Tools), demonstrar que cada camada é compreensível e, na maioria dos casos, gratuita, e terminar com o leitor não apenas entendendo a arquitetura, mas construindo um projeto real com ferramentas de custo zero. Cada módulo remove uma camada de mistério: a história explica de onde a tecnologia veio, a arquitetura mostra do que ela é feita, os harnesses colocam o leitor no comando, a configuração gratuita prova que o custo não é barreira e o fluxo prático transforma compreensão em habilidade.",
+    "vocabulario": ["desencantamento produtivo", "caixa-preta", "4 camadas", "Tela", "Harness", "LLM", "Tools", "custo zero", "Aprendiz de Construtor"]
+  },
+  "introducao": "Este livro nasceu de uma pergunta que todo iniciante faz ao abrir um assistente de IA pela primeira vez: o que acontece por trás daquela caixa de texto? A resposta curta é que existe uma arquitetura inteira — a Tela onde você digita, o Harness que orquestra o contexto e as instruções, a LLM que raciocina e gera, e as Tools que executam ações no mundo real. A resposta longa é este livro: uma jornada do absoluto zero até a construção de projetos reais com ferramentas gratuitas.\n\nO guia começa pela história — de onde veio a IA, como as redes neurais e o Transformer mudaram tudo, e como chegamos à era dos agentes autônomos. Em seguida, desmonta a arquitetura em 4 camadas e mostra, na prática, o papel de cada uma. Depois, o leitor domina os harnesses — os ambientes que estruturam o trabalho do modelo — e aprende a conectar LLMs gratuitas, de provedores de roteamento a execução local. Por fim, o fluxo de trabalho prático: engenharia de instruções para iniciantes, um primeiro projeto guiado do início ao fim e as boas práticas de segurança, privacidade e evolução contínua.\n\nAo final, o leitor não apenas entende a IA — ele a opera. Sem mistério, sem jargão inacessível e sem custo.",
+  "conclusao": "A jornada que começou com uma caixa de texto misteriosa termina com um sistema compreendido e operado. O leitor que percorreu as 4 camadas — Tela, Harness, LLM e Tools — agora sabe que a IA não é magia: é engenharia, e engenharia pode ser aprendida, configurada e dominada por qualquer pessoa disposta a começar do zero. O primeiro projeto guiado é apenas o primeiro de muitos: a partir dele, cada nova ideia reaproveita o mesmo fluxo — instrução clara, harness configurado, modelo conectado e ferramentas à disposição. O ecossistema evolui rápido, mas a fundação deste livro — a arquitetura, a mentalidade prática e o fluxo de trabalho — permanece como base para todo o crescimento futuro no universo do desenvolvimento assistido por IA.",
+  "tabela_de_tamanhos_referencia": "G — 5 Partes (Módulos), 12 capítulos, ~120 páginas",
+  "partes": [
+    {
+      "parte": 1,
+      "titulo_parte": "A História e a Evolução da IA",
+      "capitulos": [
+        {
+          "capitulo": 1,
+          "titulo": "O surgimento da Inteligência Artificial: da lógica simbólica ao aprendizado estatístico",
+          "objetivo": "Definir o que é Inteligência Artificial e estabelecer a distinção fundamental entre os sistemas baseados em regras e algoritmos simbólicos das primeiras décadas e os modelos estatísticos que aprendem padrões a partir de dados — a base histórica que o iniciante precisa para entender o que mudou e o que permaneceu.",
+          "pilares_previstos": [
+            "O que é IA: lógica tradicional vs. aprendizado de máquina",
+            "Os sistemas baseados em regras e a IA simbólica dos anos 1950–1980",
+            "A virada estatística: modelos que aprendem padrões dos dados"
+          ]
+        },
+        {
+          "capitulo": 2,
+          "titulo": "A era do aprendizado profundo: redes neurais e o divisor de águas Transformer",
+          "objetivo": "Explicar como as redes neurais e o processamento de dados em grande escala transformaram a IA, culminando na arquitetura Transformer que deu origem ao processamento de linguagem natural moderno — o componente técnico que tornou possíveis os assistentes que usamos hoje.",
+          "pilares_previstos": [
+            "Redes neurais: neurônios artificiais e o aprendizado em camadas",
+            "O processamento de dados em grande escala e o deep learning",
+            "O Transformer: atenção e o nascimento da PLN moderna"
+          ]
+        },
+        {
+          "capitulo": 3,
+          "titulo": "A era das LLMs e dos agentes autônomos: do chat à ação",
+          "objetivo": "Mapear o salto dos modelos generativos (GPT, Claude, Gemini) até o cenário atual, em que a IA deixou de apenas responder no chat e passou a interagir com sistemas, arquivos e código — preparando o terreno para a arquitetura em 4 camadas do Capítulo 5.",
+          "pilares_previstos": [
+            "Os modelos generativos: GPT, Claude, Gemini e a corrida das LLMs",
+            "Além do chat: contextos longos, raciocínio e planejamento",
+            "Agentes autônomos: a IA que interage com sistemas, arquivos e código"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 2,
+      "titulo_parte": "Desconstruindo a IA: a Arquitetura em 4 Camadas",
+      "capitulos": [
+        {
+          "capitulo": 4,
+          "titulo": "O ecossistema do desenvolvedor: por que a IA não é apenas um chat no navegador",
+          "objetivo": "Mostrar ao iniciante que a IA produtiva vive dentro do ambiente do desenvolvedor — editores, terminais e interfaces — e não apenas no navegador, apresentando o território que as 4 camadas habitam.",
+          "pilares_previstos": [
+            "O navegador como ponto de partida e seus limites",
+            "O território do desenvolvedor: editores, terminais e interfaces",
+            "O que muda quando a IA tem acesso ao seu projeto"
+          ]
+        },
+        {
+          "capitulo": 5,
+          "titulo": "As 4 camadas explicadas na prática: Tela, Harness, LLM e Tools",
+          "objetivo": "Apresentar e fixar o modelo das 4 camadas — a Tela (UI/interface), o Harness (orquestrador), a LLM (cérebro) e as Tools (braços) — com exemplos concretos de como cada camada funciona e se conecta, formando a espinha dorsal conceitual de todo o restante do livro.",
+          "pilares_previstos": [
+            "A Tela: onde o usuário digita e visualiza os resultados (VS Code, terminais, web)",
+            "O Harness: contexto, estrutura de arquivos e preparação das instruções",
+            "A LLM e as Tools: o cérebro que raciocina e os braços que executam"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 3,
+      "titulo_parte": "Dominando os Harnesses",
+      "capitulos": [
+        {
+          "capitulo": 6,
+          "titulo": "O que é um harness e por que ele é essencial",
+          "objetivo": "Diferenciar a conversa com uma LLM pura do trabalho com um harness estruturado, explicando como o harness injeta regras de projeto, rastreia alterações e mantém a memória de trabalho — o coração da produtividade assistida.",
+          "pilares_previstos": [
+            "LLM pura vs. harness estruturado: a diferença prática",
+            "Como o harness injeta regras de projeto e lê a estrutura de arquivos",
+            "Rastreamento de alterações e memória de trabalho"
+          ]
+        },
+        {
+          "capitulo": 7,
+          "titulo": "Ecossistema de harnesses práticos: ferramentas comerciais e alternativas gratuitas",
+          "objetivo": "Apresentar o mapa de harnesses disponíveis — ferramentas avançadas e comerciais (Claude Code, Cursor, Antigravity) e alternativas gratuitas e open-source (Open Code, Mimo Code, FreeBuff e soluções comunitárias) — com comparativo de recursos, facilidade de uso e cenários ideais para cada perfil de iniciante.",
+          "pilares_previstos": [
+            "Os harnesses comerciais: Claude Code, Cursor e Antigravity",
+            "As alternativas gratuitas e open-source: Open Code, Mimo Code, FreeBuff",
+            "Comparativo de recursos, facilidade de uso e cenários ideais"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 4,
+      "titulo_parte": "Modelos Gratuitos e Configuração Custo Zero",
+      "capitulos": [
+        {
+          "capitulo": 8,
+          "titulo": "Conectando LLMs gratuitas aos seus harnesses: APIs, provedores e roteamento",
+          "objetivo": "Explicar o que são APIs de modelos e provedores de roteamento (OpenRouter, Groq, Hugging Face) e a execução local com Ollama, ensinando como obter chaves gratuitas e configurar limites de uso — o caminho do custo zero.",
+          "pilares_previstos": [
+            "O que é uma API de LLM e o que é um provedor de roteamento",
+            "OpenRouter, Groq, Hugging Face e Ollama: o cardápio gratuito",
+            "Chaves gratuitas e limites de uso: obtendo e protegendo credenciais"
+          ]
+        },
+        {
+          "capitulo": 9,
+          "titulo": "Guia passo a passo de configuração: do zero ao primeiro fluxo funcionando",
+          "objetivo": "Guiar o iniciante pela instalação e configuração de um harness gratuito do zero, vinculando modelos abertos e gratuitos (Llama, DeepSeek, Qwen) e testando a comunicação completa entre Tela, Harness, LLM e Tools — o primeiro sistema próprio do leitor.",
+          "pilares_previstos": [
+            "Instalando e configurando o harness gratuito do zero",
+            "Vinculando modelos abertos e gratuitos: Llama, DeepSeek e Qwen",
+            "Testando a comunicação Tela → Harness → LLM → Tools"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": 5,
+      "titulo_parte": "O Fluxo de Trabalho Prático",
+      "capitulos": [
+        {
+          "capitulo": 10,
+          "titulo": "Engenharia de instruções para iniciantes: falando a língua da IA",
+          "objetivo": "Ensinar o vocabulário essencial da comunicação com modelos — contexto, restrições e objetivos claros — e as técnicas básicas para reduzir alucinações e evitar loops de erro, transformando o leitor em um operador competente do harness.",
+          "pilares_previstos": [
+            "Os três ingredientes de uma boa instrução: contexto, restrições e objetivo",
+            "Reduzindo alucinações: verificabilidade e escopo",
+            "Evitando loops de erro: lendo respostas e ajustando o comando"
+          ]
+        },
+        {
+          "capitulo": 11,
+          "titulo": "Seu primeiro projeto guiado: das 4 camadas ao aplicativo funcionando",
+          "objetivo": "Conduzir o leitor na criação de uma aplicação simples do início ao fim usando as 4 camadas — da ideia à implementação com o harness —, incluindo a leitura de logs, a aceitação/rejeição de alterações propostas pelo harness e a depuração de problemas.",
+          "pilares_previstos": [
+            "Definindo o projeto: uma aplicação simples com escopo de iniciante",
+            "Executando com as 4 camadas: instrução, geração, aplicação e testes",
+            "Lendo logs, aceitando/rejeitando alterações e depurando problemas"
+          ]
+        },
+        {
+          "capitulo": 12,
+          "titulo": "O futuro da criação com IA: segurança, privacidade e próximos passos",
+          "objetivo": "Fechar o livro com as boas práticas de segurança e privacidade no uso de ferramentas de IA, o reconhecimento dos limites das ferramentas e um roteiro de próximos passos para continuar evoluindo no ecossistema de inteligência artificial.",
+          "pilares_previstos": [
+            "Segurança e privacidade: dados, permissões e boas práticas",
+            "Limites das ferramentas: quando a IA erra e como mitigar",
+            "Próximos passos: o mapa de evolução além deste livro"
+          ]
+        }
+      ]
+    }
+  ]
+}

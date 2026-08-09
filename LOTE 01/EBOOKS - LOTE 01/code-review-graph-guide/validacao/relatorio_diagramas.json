@@ -1,0 +1,13 @@
+{
+  "slug": "ebooks/code-review-graph-guide",
+  "modo": "livro",
+  "arquivos": [
+    "output\\ebooks\\code-review-graph-guide\\_livro_render.md"
+  ],
+  "total": 6,
+  "renderizados": 0,
+  "cache": 6,
+  "falhas": [],
+  "ignorados": [],
+  "validos": 0
+}

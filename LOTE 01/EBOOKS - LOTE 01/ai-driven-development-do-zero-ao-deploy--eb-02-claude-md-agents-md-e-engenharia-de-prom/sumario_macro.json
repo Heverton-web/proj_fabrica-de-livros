@@ -1,0 +1,12 @@
+{
+  "titulo_obra": "CLAUDE.md, AGENTS.md e Engenharia de Prompt: o Contrato entre Humano e Agente & Configurando o Harness na Prática: settings.json, Hooks e Permissions",
+  "tipo_obra": "ebook",
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy",
+  "capitulos_fonte_livro_mae": [
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ]
+}

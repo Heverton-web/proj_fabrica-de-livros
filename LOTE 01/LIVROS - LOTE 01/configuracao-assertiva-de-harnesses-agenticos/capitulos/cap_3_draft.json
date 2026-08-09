@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "3" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 2: Loop Agêntico Infinito (IAL) e as causas estruturais de instabilidade recursiva",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Arquitetura de Natural-Language Agent Harnesses (NLAHs) e a operação do runtime inteligente",
+        "escopo": "Definição estrutural dos NLAHs, processamento sintático de comandos em texto livre e acoplamento seguro ao runtime inteligente determinístico.",
+        "ancora_visual": "sequenceDiagram do fluxo informacional de um NLAH demonstrando o fluxo de água (tokens) passando pela Turbina Probabilística e sendo regulado pelas Comportas de Runtime.",
+        "entrega_tecnica": "python: Classe de runtime inteligente que realiza o parsing de instruções em linguagem natural e orquestra chamadas de ferramentas de forma controlada.",
+        "evolucao_leitor": "De integrador ad-hoc de chamadas de LLM para engenheiro capaz de projetar arquiteturas estáveis de runtimes inteligentes baseados em texto livre.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "O equilíbrio dinâmico entre a flexibilidade da linguagem natural e a previsibilidade do código tradicional",
+        "escopo": "Mapeamento bidirecional entre texto não-estruturado e contratos estritos de software, utilizando tipagem estática (Pydantic), tratamento robusto de exceções semânticas e contenção de drift.",
+        "ancora_visual": "flowchart TD que ilustra o equilíbrio de vazão com o Vertedouro de Jitter de prompt e Comportas de Runtime, prevenindo o estouro da bacia semântica.",
+        "entrega_tecnica": "python: Implementação de um middleware de validação estrita com Pydantic e tratamento de falhas semânticas para blindar as interfaces de execução.",
+        "evolucao_leitor": "De desenvolvedor suscetível a erros de formatação e alucinações a projetista de interfaces de coexistência blindadas e resilientes.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Construção física da bacia de segurança por meio de limites de fronteira rígidos e restrições semânticas",
+        "escopo": "Configuração prática de limitadores físicos (timeouts, número máximo de iterações, cotas de tokens) combinada com Disjuntores Semânticos para contenção imediata de vazão indesejada.",
+        "ancora_visual": "stateDiagram-v2 que representa os estados de transição da bacia de segurança e ativação dos Disjuntores Semânticos diante de detecções de anomalias de fluxo.",
+        "entrega_tecnica": "python: Decorator e gerenciador de contexto para execução segura de chamadas agênticas com aplicação de timeouts, limites de tokens e interrupção graciosa.",
+        "evolucao_leitor": "De programador exposto a loops infinitos invisíveis para Engenheiro de Controle de Vazão com domínio completo sobre o isolamento físico de recursos computacionais.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

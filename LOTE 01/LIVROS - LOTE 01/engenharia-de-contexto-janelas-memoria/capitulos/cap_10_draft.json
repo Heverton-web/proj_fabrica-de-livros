@@ -1,0 +1,18 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": {
+    "parte": "III",
+    "capitulo": "10"
+  },
+  "estado_execucao": "aguardando_checkpoint_humano",
+  "payload_estrategico": {
+    "pilares": [
+      "Pilar 1: O Julgamento da Perplexidade - A métrica matemática baseada em entropia e perplexidade usada para filtrar tokens redundantes de baixa informação.",
+      "Pilar 2: A Tecnologia LLMLingua e LongLLMLingua - Redução inteligente de prompts e reordenação (reranking) de trechos para evitar o viés de 'Lost in the Middle' de forma ágil.",
+      "Pilar 3: Classificação Extrativa e LLMLingua-2 - Utilização de encoders bidirecionais leves (como XLM-RoBERTa) para etiquetagem rápida de retenção de tokens."
+    ],
+    "metafora": "O Bibliotecário Imperial que decide quais palavras nos longos pergaminhos são redundantes e repetitivas, removendo-as para poupar o tempo de leitura do Imperador.",
+    "senioridade": "iniciante",
+    "callback_capitulo_anterior": "Capítulo 9: O Scriba de Resumos, mostrando a importância da redução de textos"
+  }
+}

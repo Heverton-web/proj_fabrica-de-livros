@@ -1,0 +1,80 @@
+{
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy",
+  "artigos": {
+    "total": 3,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O Fim do Autocomplete: De Vibe Coding a Agentic Coding & A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy--art-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy--art-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3"
+        ],
+        "status": "concluido_autonomo"
+      },
+      {
+        "indice": 2,
+        "titulo": "Camadas LLM e Tools: Raciocínio, Seleção de Ferramentas e Efeito Real no Mundo & Skills, Subagentes e MCP: Orquestrando a Tripulação Agêntica — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy--art-02-camadas-llm-e-tools-raciocinio-selecao-d",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy--art-02-camadas-llm-e-tools-raciocinio-selecao-d",
+        "capitulos_fonte_livro_mae": [
+          "4",
+          "5",
+          "6"
+        ],
+        "status": "concluido_autonomo"
+      },
+      {
+        "indice": 3,
+        "titulo": "Configurando o Harness na Prática: settings.json, Hooks e Permissions & Construindo Tools e Servidores MCP: Schemas e Blindagem contra Tool Poisoning — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy--art-03-configurando-o-harness-na-pratica-settin",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy--art-03-configurando-o-harness-na-pratica-settin",
+        "capitulos_fonte_livro_mae": [
+          "7",
+          "8",
+          "9",
+          "10"
+        ],
+        "status": "concluido_autonomo"
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 2,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O Fim do Autocomplete: De Vibe Coding a Agentic Coding & A Arquitetura de Quatro Camadas: Tela, Harness, LLM e Tools",
+        "slug": "ai-driven-development-do-zero-ao-deploy--eb-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-01-o-fim-do-autocomplete-de-vibe-coding-a-a",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "status": "concluido_autonomo",
+        "epub": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-01-o-fim-do-autocomplete-de-vibe-coding-a-a/ai-driven-development-do-zero-ao-deploy--eb-01-o-fim-do-autocomplete-de-vibe-coding-a-a.epub"
+      },
+      {
+        "indice": 2,
+        "titulo": "CLAUDE.md, AGENTS.md e Engenharia de Prompt: o Contrato entre Humano e Agente & Configurando o Harness na Prática: settings.json, Hooks e Permissions",
+        "slug": "ai-driven-development-do-zero-ao-deploy--eb-02-claude-md-agents-md-e-engenharia-de-prom",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-02-claude-md-agents-md-e-engenharia-de-prom",
+        "capitulos_fonte_livro_mae": [
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+        ],
+        "status": "concluido_autonomo",
+        "epub": "ebooks/ai-driven-development-do-zero-ao-deploy--eb-02-claude-md-agents-md-e-engenharia-de-prom/ai-driven-development-do-zero-ao-deploy--eb-02-claude-md-agents-md-e-engenharia-de-prom.epub"
+      }
+    ]
+  }
+}

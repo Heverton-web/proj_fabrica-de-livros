@@ -1,0 +1,21 @@
+{
+  "capitulo": 12,
+  "titulo": "O Arquivo de Cera: O Prompt Caching nas APIs Modernas",
+  "senioridade": "iniciante",
+  "metafora": "O Bibliotecário Imperial e suas tábuas de cera reutilizáveis",
+  "callback_capitulo_anterior": "Capítulo 11: A Escrita Rápida e Classificativa, explicando compressão binária",
+  "pilares": [
+    {
+      "nome": "O Conceito de Tábuas de Cera (Prompt Caching)",
+      "descricao": "Como o armazenamento temporário de trechos de texto fixos evita o retrabalho de processar grandes volumes repetidamente."
+    },
+    {
+      "nome": "Diferença entre Caching Explícito e Automático",
+      "descricao": "O contraste entre o controle cirúrgico por breakpoints (Anthropic) e a facilidade do caching automático por prefixo (OpenAI e DeepSeek)."
+    },
+    {
+      "nome": "Impacto Econômico e Redução de Latência",
+      "descricao": "A drástica redução de custos (até 90%) e o tempo de resposta quase instantâneo ao reutilizar contextos estáticos."
+    }
+  ]
+}

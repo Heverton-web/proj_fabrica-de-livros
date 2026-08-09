@@ -1,0 +1,502 @@
+{
+  "slug": "livros/ai-driven-development-do-zero-ao-deploy",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 10,
+  "caracteres_obra": 377328,
+  "paginas_estimadas": 150.9,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 10 capitulos",
+      "conforme": true,
+      "detalhe": "10 capitulo(s) (minimo 10)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 150 paginas (~375.000 caracteres)",
+      "conforme": true,
+      "detalhe": "377.328 caracteres (minimo 375.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 75,
+        "Esta": 8,
+        "esta": 6
+      },
+      "ocorrencias": 89
+    },
+    {
+      "termo_normalizado": "producao",
+      "variantes": {
+        "produção": 68,
+        "producao": 1
+      },
+      "ocorrencias": 69
+    },
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 61,
+        "porquê": 1
+      },
+      "ocorrencias": 62
+    },
+    {
+      "termo_normalizado": "pratica",
+      "variantes": {
+        "prática": 49,
+        "Prática": 2,
+        "pratica": 1
+      },
+      "ocorrencias": 52
+    },
+    {
+      "termo_normalizado": "fabrica",
+      "variantes": {
+        "fábrica": 7,
+        "fabrica": 3,
+        "Fábrica": 1
+      },
+      "ocorrencias": 11
+    },
+    {
+      "termo_normalizado": "seria",
+      "variantes": {
+        "seria": 6,
+        "séria": 2
+      },
+      "ocorrencias": 8
+    },
+    {
+      "termo_normalizado": "modelcontextprotocol",
+      "variantes": {
+        "modelcontextprotocol": 6,
+        "model-context-protocol": 2
+      },
+      "ocorrencias": 8
+    },
+    {
+      "termo_normalizado": "evidencia",
+      "variantes": {
+        "evidência": 5,
+        "evidencia": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "critica",
+      "variantes": {
+        "crítica": 5,
+        "critica": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "critico",
+      "variantes": {
+        "crítico": 3,
+        "critico": 2
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "rapida",
+      "variantes": {
+        "rápida": 3,
+        "rapida": 1
+      },
+      "ocorrencias": 4
+    },
+    {
+      "termo_normalizado": "contem",
+      "variantes": {
+        "contém": 2,
+        "contêm": 2
+      },
+      "ocorrencias": 4
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "pública": 3,
+        "publica": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "estaleiro",
+      "quilha",
+      "casco",
+      "ponte de comando",
+      "sala de máquinas",
+      "tripulação",
+      "diário de bordo",
+      "doca seca",
+      "botadura",
+      "cais de lançamento"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "3",
+        "ocorrencias": [
+          "[25][26]",
+          "[25][26][28]"
+        ]
+      },
+      {
+        "capitulo": "6",
+        "ocorrencias": [
+          "[16][17]"
+        ]
+      },
+      {
+        "capitulo": "7",
+        "ocorrencias": [
+          "[3][4]",
+          "[2][5]",
+          "[6][7]",
+          "[3][4]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 37832,
+      "palavras": 4838,
+      "secoes_faltantes": [],
+      "referencias": 26,
+      "citacoes_inline": 27,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ment Paradigms*. Disponível em: https://arxiv.org/pdf/2507.06323. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 37,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 25.5,
+        "coeficiente_variacao": 0.719
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 39088,
+      "palavras": 4473,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 37,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 9,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": ".mindstudio.ai/blog/what-is-agent-harness-architecture-explained. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        1
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 23,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 30.2,
+        "coeficiente_variacao": 0.819
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 38009,
+      "palavras": 4866,
+      "secoes_faltantes": [],
+      "referencias": 28,
+      "citacoes_inline": 38,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l em: https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[25][26]",
+        "[25][26][28]"
+      ],
+      "vocabulario_fora_ilustra": 14,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.3,
+        "coeficiente_variacao": 0.741
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 37833,
+      "palavras": 4829,
+      "secoes_faltantes": [],
+      "referencias": 28,
+      "citacoes_inline": 45,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ocol Ecosystem*. Disponível em: https://arxiv.org/pdf/2512.08290. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 49,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.2,
+        "coeficiente_variacao": 0.719
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 37293,
+      "palavras": 5096,
+      "secoes_faltantes": [],
+      "referencias": 26,
+      "citacoes_inline": 43,
+      "diagramas_ilustra": 4,
+      "diagramas_total": 4,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "-copilot/agent-mode-101-all-about-github-copilots-powerful-mode/. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 27,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 27.7,
+        "coeficiente_variacao": 0.768
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 37211,
+      "palavras": 4473,
+      "secoes_faltantes": [],
+      "referencias": 26,
+      "citacoes_inline": 50,
+      "diagramas_ilustra": 3,
+      "diagramas_total": 3,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "//platform.claude.com/docs/en/agents-and-tools/tool-use/overview. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[16][17]"
+      ],
+      "vocabulario_fora_ilustra": 44,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.3,
+        "coeficiente_variacao": 0.846
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 37759,
+      "palavras": 4621,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 50,
+      "diagramas_ilustra": 4,
+      "diagramas_total": 4,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "I/CD Pipelines*. Disponível em: https://arxiv.org/pdf/2606.09935. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[3][4]",
+        "[2][5]",
+        "[6][7]",
+        "[3][4]"
+      ],
+      "vocabulario_fora_ilustra": 19,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 26.4,
+        "coeficiente_variacao": 0.864
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 35321,
+      "palavras": 4161,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 32,
+      "diagramas_ilustra": 4,
+      "diagramas_total": 4,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "onível em: https://www.anthropic.com/news/model-context-protocol. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 20,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 29.6,
+        "coeficiente_variacao": 0.819
+      }
+    },
+    {
+      "capitulo": "9",
+      "arquivo": "cap_9.md",
+      "caracteres": 35628,
+      "palavras": 4571,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 42,
+      "diagramas_ilustra": 2,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "laude-code-power-user-guide-slash-commands-hooks-skills-more-6ep. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 38,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 32.2,
+        "coeficiente_variacao": 0.807
+      }
+    },
+    {
+      "capitulo": "10",
+      "arquivo": "cap_10.md",
+      "caracteres": 39058,
+      "palavras": 4368,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 37,
+      "diagramas_ilustra": 5,
+      "diagramas_total": 5,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "soft.com/blog/protecting-against-indirect-injection-attacks-mcp/. Acesso em: 02 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 46,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 28.8,
+        "coeficiente_variacao": 0.836
+      }
+    }
+  ]
+}

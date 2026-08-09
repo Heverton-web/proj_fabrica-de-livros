@@ -1,0 +1,43 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "A virada de mercado 2024-2026: do autocomplete ao SDLC agêntico",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Vibe coding vs. agentic coding: autonomia com accountability",
+        "conceito_denso": true
+      },
+      {
+        "nome": "TDD e TDAD como guardrail estrutural contra alucinação de código plausível",
+        "conceito_denso": false
+      }
+    ]
+  },
+  "validacao": {
+    "codigo": "5/5 blocos verificaveis aprovados (validar-codigo.py)",
+    "diagramas": "3/3 diagramas Mermaid validos (renderizar-diagramas.py)",
+    "auditoria_obra_capitulo_1": {
+      "R3_7_secoes": true,
+      "R4_min_20_referencias": true,
+      "R9_sem_horizontal_rules": true,
+      "R10_min_3_citacoes": true,
+      "R11_diagrama_mermaid_ilustra": true,
+      "R12_bloco_codigo_tecnica": true,
+      "R14_rastreabilidade_citacoes": true,
+      "citacoes_empilhadas": false,
+      "callback_presente_ou_null_cap1": true
+    },
+    "observacao_R13": "Auditor sinalizou 'todo' como suposto placeholder — falso positivo confirmado manualmente (palavra portuguesa comum 'todo/toda', sem TODO/placeholder literal no capitulo)."
+  },
+  "arquivo": "output/livros/ai-driven-development-do-zero-ao-deploy/capitulos/cap_1.md",
+  "caracteres": 24304,
+  "referencias": 22,
+  "diagramas": 3,
+  "blocos_codigo": 5
+}
