@@ -192,3 +192,11 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   (regra 11). Derivados copiados via `output/colecoes/<slug>.json` (nomenclatura
   V5 não casa com substring — fallback 1ª palavra). Prevenção: máquinas antigas
   sincronizam copiando rota+page do template — skill `sincronizar-maquina-vendas`.
+- **2026-08-09 Skill `gerar-relatorio-sessao`:** toda sessão com mudanças
+  encerra em `relatorios/<YYYY-MM-DD>-<tema>.md/.pdf` (convenção V5.2) —
+  relatório → testes → commit → push. Fix: `scripts/gerar-relatorio-sessao.py`
+  (slug NFKD, 6 seções obrigatórias, Pandoc→Typst) + skill que orquestra o
+  fluxo completo. Prevenção: nunca commitar sem `pytest -q` verde; mensagem via
+  `git commit -F` (acentos/quebras de linha quebram `-m`); `_commit_msg*.txt`
+  vaza no `git add -A` — apagar ANTES do add ou `git rm --cached` + `--amend`.
+  Arquivo: `.claude/skills/gerar-relatorio-sessao/SKILL.md`.
