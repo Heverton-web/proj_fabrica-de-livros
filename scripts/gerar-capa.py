@@ -194,6 +194,10 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
     dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     config_obra = _ler_json(dir_obra / "config_obra.json")
     sumario = _ler_json(dir_obra / "sumario_macro.json")
+    # ebook_metadados.json tambem serve de "metadados de capa" para tipos nao-ebook
+    # (playbook, lead-magnet): quando o titulo completo do sumario nao cabe na capa,
+    # grava-se titulo/subtitulo curtos aqui — o documento (EPUB/PDF) nao muda porque
+    # gerar-epub/compiladores priorizam sumario.titulo_obra.
     meta_ebook = _ler_json(dir_obra / "ebook_metadados.json")
 
     # V5: o tipo sai do config; o prefixo do slug e o fallback (registro de tipos).

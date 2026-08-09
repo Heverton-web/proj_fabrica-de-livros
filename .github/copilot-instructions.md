@@ -228,7 +228,26 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   bloqueia checagem futura. Achado real do gate: `fin.ai/blog/ai-agent-roi-customer-support`
   404 no cap_1; playbook pbk-1 tem 13 blocos truncados sem elipse (código
   cortado no meio). Arquivo: `scripts/validar-*.py` + `tests/test_validar_*`.
-- **2026-08-09 Máquina de vendas — checkout:** causa: rota `/api/checkout`
+- **2026-08-09 Capas no padrão do projeto (R5) — HUB e títulos:** causa:
+  capas dos materiais divergiam do padrão 2D plano. Três causas reais:
+  (1) `ebook_metadados.json` herdou títulos antigos concatenados com "&" de
+  gerações anteriores (ex.: "…Por Que o Modelo Não Basta & Anatomia de um
+  Harness: O") — `gerar-capa.py` prioriza `meta_ebook.titulo` sobre
+  `sumario.titulo_obra`, então capas mostravam lixo truncado;
+  (2) `validar-capa-nivel.py` procurava em `output/livros/<slug>` (layout
+  plano) e nunca validou no HUB POR COLEÇÃO (`output/<colecao>/livros/…`);
+  (3) títulos longos estouravam a capa (máx. 2 linhas, sem linha de 1
+  palavra) — validar-capa-texto usa largura por TIPO (`playbook` 1600 vs
+  `ebook` 1200 quebram diferente; testar sempre com o tipo real do material).
+  Fix: `validar-capa-nivel.main()` resolve via `tipos_obra.dir_obra` (plano e
+  hub; escopo R5: badge só livro/ebook); capas de título longo usam
+  `ebook_metadados.json` curto (título + subtítulo) SEM tocar no sumário
+  (documento EPUB/PDF mantém título completo — gerar-epub prioriza
+  `sumario.titulo_obra`). Prevenção: ao encurtar título de capa, validar com
+  `gerar-capa.py <slug>` (tipo real) e conferir badge via
+  `validar-capa-nivel.py <slug>`. Arquivos: `scripts/validar-capa-nivel.py`,
+  `scripts/gerar-capa.py`, `scripts/validar-capa-texto.py`,
+  `ebook_metadados.json` dos materiais.
   faltava no template (checkout page postava nela → 404 em toda máquina nova) e
   page antiga usava form urlencoded vazio → 500 no `request.json()`. Fix: rota
   com zod + `/api/leads/` + `BACKEND_URL`; page client com nome/e-mail + fetch
@@ -299,6 +318,23 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `scripts/validar-campanha.py`, `templates/campanha/*.html`,
   `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
   `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.
+- **2026-08-09 Artes da campanha suprem o cronograma (V5.3):** causa:
+  `gerar_artes` gerava `for i in (1,)` — 1 arte por formato (IG 1 post + 1
+  story, LI 1 post, WhatsApp 1 por sequência) enquanto o cronograma cobre
+  14–30 dias de envio. Fix: `campanha.py` ganhou `roteiro_rede` (usa os MESMOS
+  nomes de formato do registro: `feed-story`, não `story` — erro real de
+  contagem) e `n_artes_redes`/`n_artes_whatsapp` (quantidade que supre o
+  cronograma: IG 14d = 7 posts + 7 stories, LI 14d = 7 posts, WhatsApp = 1
+  arte por mensagem da sequência, 4 e 6); `gerar_artes` itera `range(1, n+1)`
+  e `gerar_cronogramas` usa `CP.roteiro_rede` (DRY). Gate R-CP-3 agora valida
+  a CONTAGEM por formato/sequência (`n_real/n_esperado artes (cronograma)`),
+  não só existência/assinatura. Prevenção: ao adicionar formato de arte novo no
+  registro, o nome TEM que casar com o usado em `roteiro_rede`/`TEMPLATES_ARTE`
+  (feed-story ≠ story); regenerar coleção inteira demora (~600s+ por lote de 16
+  materiais com Chromium) — rodar `--completo` e completar materiais restantes
+  com `--material` quando estourar timeout. Arquivos: `scripts/campanha.py`,
+  `scripts/criar-campanha.py`, `scripts/validar-campanha.py`,
+  `tests/test_campanha.py`.
 - **2026-08-09 PDFs em .md de campanha (V5.3) — cronogramas e textos:** causa:
   cronogramas e moldes de texto nasciam só em `.md`; imprimir/compartilhar
   exigia compilar à mão. Fix: `criar-campanha.py` ganhou

@@ -13,11 +13,18 @@ Uso:
 Exit code: 0 = conforme, 1 = reprovado (badge ausente/incoerente/obra sem o
 campo senioridade_obra). Chamado pela cadeia de capa do compilador; qualquer
 reprovacao BLOQUEIA a compilacao do PDF.
+
+V5 (HUB POR COLECAO): o caminho real e resolvido por tipos_obra.dir_obra, que
+aceita tanto o layout plano (output/livros/x) quanto o hub
+(output/<colecao>/livros/x) e os slugs curtos de nomes-curtos V5.1.
 """
 import json
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import tipos_obra as TO  # noqa: E402
 
 ROTULOS = {
     "iniciante": "PARA INICIANTES",
@@ -71,12 +78,17 @@ def main():
         print("uso: python scripts/validar-capa-nivel.py <slug>")
         return 2
     slug = sys.argv[1].strip("/").strip("\\")
-    if slug.startswith("output/"):
-        slug = slug.replace("output/", "", 1)
-    if not slug.startswith(("livros/", "ebooks/")):
-        print("[REPROVADO] slug deve apontar para livros/ ou ebooks/")
+    if slug.startswith(("output/", "output\\")):
+        slug = slug.split("/", 1)[-1].split("\\", 1)[-1]
+    tipo = TO.tipo_por_prefixo(slug)
+    dir_obra = TO.dir_obra(slug)
+    if not dir_obra.exists():
+        print(f"[REPROVADO] obra nao encontrada: {slug} (resolvido: {dir_obra})")
         return 1
-    dir_obra = Path(__file__).resolve().parent.parent / "output" / slug
+    if tipo not in ("livro", "ebook"):
+        print("[REPROVADO] slug deve apontar para livros/ ou ebooks/ "
+              "(badge de nivel obrigatorio so em Livro/E-book, REGRA 5)")
+        return 1
     return validar_capa_nivel(dir_obra)
 
 

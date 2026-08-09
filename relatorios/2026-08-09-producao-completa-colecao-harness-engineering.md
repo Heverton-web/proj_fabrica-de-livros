@@ -125,4 +125,55 @@ cada texto. **512 PDFs gerados** retroativamente na coleção harness-engineerin
 `precisa_pandoc_typst`): **595 testes pytest passando**. RTK atualizado no
 AGENTS.md.
 
+## 10. Artes que suprem o cronograma — correção
+
+Bug real: `gerar_artes` gerava `for i in (1,)` — **1 arte por formato**
+(Instagram 1 post + 1 story, LinkedIn 1 post, WhatsApp 1 por sequência),
+enquanto o cronograma cobre 14–30 dias de envio. Fix:
+`campanha.py` ganhou `roteiro_rede` (usa os MESMOS nomes de formato do
+registro: `feed-story`, não `story` — erro real de contagem) e
+`n_artes_redes`/`n_artes_whatsapp` (quantidade que supre o cronograma:
+IG 14d = 7 posts + 7 stories, LI 14d = 7 posts, WhatsApp = 1 arte por
+mensagem da sequência: 4 e 6). `gerar_artes` itera `range(1, n+1)` e
+`gerar_cronogramas` usa `CP.roteiro_rede` (DRY). Gate R-CP-3 agora valida a
+CONTAGEM por formato/sequência (`n_real/n_esperado artes (cronograma)`).
+
+**Regeneração completa da coleção**: **496 PNGs** = 16 materiais × 31 artes
+(7 IG post + 7 IG story + 7 LI post + 4 WhatsApp nutrição + 6 WhatsApp
+divulgação), renderizados com Chromium real (lote de 16 materiais +
+complemento de 2 com timeout). `validar-campanha.py --completo --estrito`
+CONFORME. 3 testes novos (quantidade por cronograma, gate insuficiente IG,
+gate insuficiente WhatsApp; fixture mocka `_renderizar_png` com placeholder):
+**598 testes pytest passando**. RTK atualizado no AGENTS.md.
+
+## 11. Capas no padrão do projeto — correção (R5)
+
+Queixa: capas dos materiais não seguiam o padrão 2D plano da Editora
+Agêntica. Causas reais encontradas:
+
+1. **Títulos antigos concatenados nos 4 `ebook_metadados.json`** — ex.:
+   eb-01 tinha "A Revolução dos Agentes: Por Que o Modelo Não Basta & Anatomia
+   de um Harness: O" (concatenação de 2 capítulos com "&"), herdada de uma
+   geração anterior. O `gerar-capa.py` prioriza `meta_ebook.titulo` antes do
+   `sumario.titulo_obra` — as capas mostravam o texto truncado. Fix: títulos
+   curtos do sumário gravados nos 4 metadados + capas regeneradas.
+2. **`validar-capa-nivel.py` quebrado no HUB POR COLEÇÃO** — procurava em
+   `output/livros/<slug>` (layout plano), nunca no hub
+   `output/<colecao>/livros/<slug>`; o gate nunca validou de verdade. Fix:
+   `main()` resolve via `tipos_obra.dir_obra` (aceita plano e hub) e mantém o
+   escopo R5 (badge obrigatório só em livro/ebook).
+3. **Títulos ainda estourando em 3 capas** (máximo 2 linhas, sem linha de 1
+   palavra): eb-01 ("A Revolução dos Agentes e a Anatomia do Harness" → 3
+   linhas), playbook ("PLAYBOOK — … — … CONFIÁVEL" → 3 linhas) e lm-6
+   ("MINI-GUIA: … AUTÔNOMO" → linha com 1 palavra). Fix: capa usa metadata
+   curto (`ebook_metadados.json`) com título + subtítulo — documento
+   (sumário/EPUB/PDF) mantém o título completo. O validar-capa-texto precisa
+   do **tipo real** (`playbook` usa largura 1600 vs `ebook` 1200 — quebra
+   diferente; testar sempre com o tipo do material).
+
+Resultado: **13/13 capas conformes** em `validar-capa-texto` + badge
+"PARA INICIANTES" OK (livro + 4 e-books via hub) + inspeção visual no
+browser APROVADA (sem cortes, hierarquia clara). 598 testes pytest passando.
+LOTE 01 sincronizado.
+
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*
