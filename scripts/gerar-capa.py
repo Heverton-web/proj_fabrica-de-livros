@@ -5,7 +5,7 @@ Gerador unico de capa (livro e e-book), padrao Editora Agentica.
 Substitui scripts/gerar-capa-ebook-padrao.py (Playwright/HTML antigo, so
 ebook), scripts/gerar-capa-ebooks.py (Pillow, dimensao 1:1,6 divergente),
 scripts/testar_capa_marketing.py e scripts/gerar_capas_demais_ebooks.py
-(CONFIGS_SERIE hardcoded — agora em output/_series.json via series_capa.py).
+(CONFIGS_SERIE hardcoded — agora em output/series.json via series_capa.py).
 
 Ver docs/superpowers/specs/2026-08-06-capas-padronizadas-design.md.
 
@@ -191,7 +191,7 @@ def _ler_json(caminho):
 
 def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
     """Resolve titulo/subtitulo/cor/ilustracao a partir dos arquivos da propria obra."""
-    dir_obra = DIR_OUTPUT / slug
+    dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     config_obra = _ler_json(dir_obra / "config_obra.json")
     sumario = _ler_json(dir_obra / "sumario_macro.json")
     meta_ebook = _ler_json(dir_obra / "ebook_metadados.json")
@@ -251,10 +251,7 @@ def main():
     if args.todos:
         alvos = []
         for tipo in TIPOS_COM_CAPA:
-            raiz = DIR_OUTPUT / TO.raiz_output(tipo)
-            if raiz.exists():
-                alvos += [f"{TO.raiz_output(tipo)}/{d.name}"
-                          for d in raiz.iterdir() if d.is_dir()]
+            alvos += TO.listar_materiais(tipo, DIR_OUTPUT)
         falhas = []
         for slug in sorted(alvos):
             try:
@@ -271,16 +268,16 @@ def main():
         return 1
 
     if args.titulo:
-        config_obra = _ler_json(DIR_OUTPUT / args.slug / "config_obra.json")
+        config_obra = _ler_json(TO.dir_obra(args.slug, DIR_OUTPUT) / "config_obra.json")
         cor = args.cor or resolver_cor(resolver_serie_key(config_obra, args.slug), args.slug)
-        gerar_capa(args.titulo, args.subtitulo, DIR_OUTPUT / args.slug,
+        gerar_capa(args.titulo, args.subtitulo, TO.dir_obra(args.slug, DIR_OUTPUT),
                    tipo=args.tipo or "livro", cor_acento=cor, badge_texto=args.badge)
     else:
         gerar_capa_da_obra(args.slug, tipo_forcado=args.tipo)
 
     if args.social:
         tipo_social = args.tipo or _ler_json(
-            DIR_OUTPUT / args.slug / "config_obra.json").get("tipo_obra") \
+            TO.dir_obra(args.slug, DIR_OUTPUT) / "config_obra.json").get("tipo_obra") \
             or TO.tipo_por_prefixo(args.slug)
         if TO.dimensoes_capa(tipo_social, variante="social"):
             gerar_capa_da_obra(args.slug, tipo_forcado=tipo_social, variante="social")

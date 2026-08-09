@@ -75,7 +75,9 @@ Compressão/extração são baratas; expansão (ex.: TCC → livro) custa geraç
 Conjunto de todos os artefatos derivados de um mesmo **núcleo canônico**
 (dossiê + `sumario_macro` + `motivo_condutor`), compartilhando identidade visual,
 vocabulário condutor, badge de nível e CTA. Manifesto derivado em
-`output/colecoes/<nome>.json` (`scripts/colecao.py --sincronizar`, comando `/colecao`).
+`<obra>/colecoes/<nome>.json` — o hub da coleção (`scripts/colecao.py
+--sincronizar`, comando `/colecao`). O fallback plano `output/colecoes/<nome>.json`
+só existe quando nenhum hub foi criado (comportamento atual de `colecao.py`).
 
 **Nenhum arquivo ou pasta gerado usa prefixo `_`** — em glob de shell, listagem
 de nuvem e empacotamento ele é tratado como oculto. Caminhos legados são migrados
@@ -132,31 +134,31 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
    nicho** (configs, frontend, e-mails, README) + testar `POST /api/checkout`
    (rota nasce no template — verificar que o lead chega em `/api/leads/`) + deploy.
 
-**Output:** `output/livros/`, `output/tccs/`, `output/artigos/`, `output/ebooks/`,
-`output/playbooks/`, `output/lead-magnets/`, `output/decks/`, `output/emails/`,
-`output/colecoes/`, `output/distribuicao/`
+**Output (HUB POR COLEÇÃO):** cada coleção vive em `output/<slug-colecao>/` com
+as raízes de tipos **dentro do hub** — `livros/`, `tccs/`, `artigos/`, `ebooks/`,
+`playbooks/`, `lead-magnets/`, `decks/`, `emails/`, `distribuicao/` e
+`colecoes/<nome>.json` (manifestos). Não existem raízes planas no topo
+(`output/livros/` etc.) — ver "Estrutura de Coleções (HUB)" abaixo.
 **Nota:** não usar `pandoc --pdf-engine=typst` com figuras (bug de path absoluto Windows). Gerar `.typ` na pasta do livro e chamar `typst compile --root`.
 
-### Estrutura de Séries (V5.1)
+### Estrutura de Coleções (HUB)
 
-Séries de livros são organizadas centralizadamente:
+O agrupamento padrão da pasta `output/` é o **HUB POR COLEÇÃO**: uma pasta por
+coleção (núcleo canônico: dossiê + `sumario_macro` + `motivo_condutor`):
 ```
-output/series/<slug-serie>/
-├── series.json              # Manifesto da série (metadados, lista de livros)
-├── livros/<slug-livro>/     # Cada livro com sua estrutura completa
-├── playbooks/<slug-livro>/  # Playbooks derivados
-├── decks/<slug-livro>/      # Apresentações HTML+PDF
-├── emails/<slug-livro>/     # Sequências de e-mails
-├── lead-magnets/            # Lead magnets da série
-├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+output/<slug-colecao>/
+├── livros/  tccs/  artigos/  ebooks/  playbooks/  lead-magnets/  decks/  emails/
 ├── distribuicao/            # PDFs compilados para distribuição
-├── artigos/                 # Artigos derivados
-├── ebooks/                  # E-books derivados
-└── colecoes/                # Manifesto da coleção
+├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+└── colecoes/<nome>.json     # Manifestos sincronizados (colecao.py --sincronizar)
 ```
-Symlinks de compatibilidade em `output/livros/`, `output/decks/`, etc.
-apontam para `output/series/<serie>/` — scripts da fábrica continuam
-funcionando sem alteração.
+Suportado por `tipos_obra.py` (`_sereis`, `dir_obra`, `listar_materiais`,
+`_obra_raiz`) e `colecao.py` (`_dir_colecoes` prioriza `<obra>/colecoes/`).
+
+**Glossário de nomenclatura:** **coleção = hub** (unidade de organização da
+pasta `output/`); **série = termo obsoleto**, preservado apenas como nome
+interno de compatibilidade do registro de cores `output/series.json` (não
+renomear: as cores persistidas e a migração de `_series.json` dependem do nome).
 
 ### Entrega de Sessão (V5.2) — `relatorios/`
 

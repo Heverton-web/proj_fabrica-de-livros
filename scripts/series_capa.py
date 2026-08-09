@@ -10,7 +10,8 @@ Uma obra (livro ou ebook) resolve sua "serie_key" nesta ordem:
 
 A cor de accent de uma serie_key e estavel: na primeira vez que aparece,
 escolhe deterministicamente (hash) uma cor da paleta curada e grava no
-registro output/_series.json; nas proximas vezes, reusa a cor gravada.
+registro output/series.json (migrado de _series.json); nas proximas vezes,
+reusa a cor gravada.
 
 Ver docs/superpowers/specs/2026-08-06-capas-padronizadas-design.md (secao 4).
 
@@ -28,6 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nomes_curtos import migrar_prefixo_underscore  # noqa: E402
+import tipos_obra as TO  # noqa: E402
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -96,13 +98,66 @@ def _ler_json(caminho):
     return {}
 
 
+def reindexar_membros(base=None):
+    """Reconstroi `membros` do registro com os slugs REAIS no disco (HUB).
+
+    Preserva as cores ja gravadas (chave de cada entrada) e remove os membros
+    orfaos de layouts antigos (ex.: destinos planos `livros/<slug>` de antes da
+    reorg por colecao). Chaves sem material no disco ficam com `membros` vazio —
+    a cor permanece reservada para a colecao. Entradas novas (colecao no disco
+    sem registro previo) ganham cor deterministica.
+    """
+    base = Path(base) if base is not None else DIR_OUTPUT
+    registro = carregar_registro()
+
+    pares_reais = []  # (serie_key, slug real)
+    for tipo in TO.TIPOS:
+        for slug in TO.listar_materiais(tipo, base):
+            config_obra = _ler_json(TO.dir_obra(slug, base) / "config_obra.json")
+            pares_reais.append((resolver_serie_key(config_obra, slug), slug))
+
+    novo = {}
+    for serie_key, entrada in registro.items():
+        cor = entrada.get("cor") if isinstance(entrada, dict) else None
+        membros = sorted({slug for k, slug in pares_reais if k == serie_key})
+        novo[serie_key] = {
+            "cor": cor or _escolher_cor_deterministica(serie_key),
+            "membros": membros,
+        }
+    chaves_disco = {k for k, _ in pares_reais}
+    for serie_key in sorted(chaves_disco - set(novo)):
+        novo[serie_key] = {
+            "cor": _escolher_cor_deterministica(serie_key),
+            "membros": sorted({slug for k, slug in pares_reais
+                               if k == serie_key}),
+        }
+    salvar_registro(novo)
+    return novo
+
+
 def main():
     ap = argparse.ArgumentParser(description="Resolucao de cor de serie por obra")
-    ap.add_argument("slug", help="ex.: livros/meu-livro ou ebooks/meu-livro--eb-01-titulo")
+    ap.add_argument("slug", nargs="?",
+                    help="ex.: livros/meu-livro ou ebooks/meu-livro--eb-01-titulo")
+    ap.add_argument("--reindexar", action="store_true",
+                    help="reconstroi `membros` do registro com os slugs reais "
+                         "no disco, preservando as cores (remove orfaos)")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
-    config_obra = _ler_json(DIR_OUTPUT / args.slug / "config_obra.json")
+    if args.reindexar:
+        novo = reindexar_membros()
+        total_membros = sum(len(e["membros"]) for e in novo.values())
+        print(f"[OK] series.json reindexado: {len(novo)} colecao(ões), "
+              f"{total_membros} membro(s) reais no disco")
+        if args.json:
+            print(json.dumps(novo, ensure_ascii=False, indent=2))
+        return 0
+
+    if not args.slug:
+        ap.error("informe um slug ou use --reindexar")
+
+    config_obra = _ler_json(TO.dir_obra(args.slug, DIR_OUTPUT) / "config_obra.json")
     serie_key = resolver_serie_key(config_obra, args.slug)
     cor = resolver_cor(serie_key, args.slug)
 

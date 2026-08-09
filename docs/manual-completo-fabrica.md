@@ -122,7 +122,7 @@ O layout **série-aware** (decisão V5.1+) organiza tudo por **obra** no topo de
 
 ```text
 output/
-├── series.json                    # cores das séries (persistidas)
+├── series.json                    # cores das coleções (nome legado; persistidas)
 ├── <obra-1>/                      # obra única (single-book) ou série
 │   ├── livros/                    #   livro principal (config_obra.json, capitulos/, sumario_macro.json)
 │   ├── artigos/                   #   artigos derivados
@@ -140,11 +140,11 @@ output/
 ```
 
 - **Single-book:** `output/<obra>/livros/` contém o livro (config direto na raiz do tipo).
-- **Multi-book (série):** `output/<obra>/livros/<livro>/` — um diretório por livro.
+- **Multi-book (coleção):** `output/<obra>/livros/<livro>/` — um diretório por livro.
 - Os scripts resolvem qualquer material via `tipos_obra.dir_obra(slug)` — que aceita
   o layout plano antigo (`output/<tipo>/<slug>`), o por-obra
   (`output/<obra>/<tipo>/<slug>`) e o raiz single-book (`output/<obra>/<tipo>`).
-- `series.json` guarda a cor de accent de cada série (usada em capas e templates).
+- `series.json` guarda a cor de accent de cada coleção (usada em capas e templates).
 
 > **Atenção:** as antigas junctions (`output/livros/`, `output/playbooks/`,
 > `output/lead-magnets/`, …) foram **removidas**. Nada deve assumir o layout plano —
@@ -435,7 +435,7 @@ Tudo em `scripts/` (lista completa em `ls scripts/`). Os principais:
 | `gerar-pptx.py` | PPTX editável (opcional) |
 | `gerar-sequencia-emails.py` | Esqueleto + cronograma da sequência |
 | `gerar-capa.py` | Capa gráfica 2D flat (HTML/CSS + Playwright) |
-| `series_capa.py` | Cor de accent por série (persistida em `output/series.json`) |
+| `series_capa.py` | Cor de accent por coleção (persistida em `output/series.json`) |
 | `gerar-ilustracoes.py` | Ilustrações 2D flat por capítulo |
 | `renderizar-diagramas.py` | Renderiza blocos Mermaid em PNG |
 | `formatar-referencias.py` | Formata referências ABNT |

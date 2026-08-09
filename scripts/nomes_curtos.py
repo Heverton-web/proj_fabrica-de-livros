@@ -128,7 +128,8 @@ def migrar_prefixo_underscore(caminho_novo):
     Nenhum arquivo ou pasta gerado pela fabrica usa prefixo "_": em varios
     contextos (glob de shell, listagem de nuvem, empacotamento) ele e tratado
     como oculto ou interno. A migracao e automatica e idempotente — sem ela,
-    perder `_series.json` faria as capas re-sortearem a cor da colecao.
+    perder o registro de cores (migrado de `_series.json` para `series.json`)
+    faria as capas re-sortearem a cor da colecao.
 
     Devolve True quando migrou de fato."""
     caminho_novo = Path(caminho_novo)

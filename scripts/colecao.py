@@ -8,7 +8,8 @@ um mesmo nucleo canonico (dossie + sumario_macro + motivo_condutor),
 compartilhando identidade visual, vocabulario condutor, badge de nivel e CTA.
 
 O manifesto e derivado (nunca editado a mao): varre output/ inteiro, agrupa por
-serie_key e grava output/colecoes/<colecao>.json.
+serie_key e grava em <obra>/colecoes/<colecao>.json — o hub da colecao (fallback
+plano output/colecoes/ apenas quando nenhum hub existe; ver _dir_colecoes).
 
 Uso:
     python scripts/colecao.py --sincronizar            # todas as colecoes
@@ -31,7 +32,22 @@ from series_capa import resolver_cor, resolver_serie_key
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
-DIR_COLECOES = DIR_OUTPUT / "colecoes"
+
+
+def _dir_colecoes():
+    """Dir onde vivem os manifestos de colecao.
+
+    Por obra: reutiliza o primeiro <obra>/colecoes/ existente (a serie analista
+    centralizou os manifestos na reorg). Se nenhuma obra tiver o dir, cria em
+    output/colecoes/ (legado plano)."""
+    for obra in TO._sereis():
+        cand = obra / "colecoes"
+        if cand.exists():
+            return cand
+    return DIR_OUTPUT / "colecoes"
+
+
+DIR_COLECOES = _dir_colecoes()
 
 
 def _ler_json(caminho, padrao=None):
@@ -75,8 +91,8 @@ def varrer():
         # V5.1 aninhado (<raiz>/<codigo>/<material>). Varrer com `iterdir()` direto
         # encontrava a pasta de CODIGO no lugar do material e, como ela nao tem
         # config_obra.json, inventava uma colecao com o nome do codigo.
-        for slug in TO.listar_materiais(tipo):
-            dir_obra = DIR_OUTPUT / slug
+        for slug in TO.listar_materiais(tipo, DIR_OUTPUT):
+            dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
             config = _ler_json(dir_obra / "config_obra.json")
             sumario = _ler_json(dir_obra / "sumario_macro.json")
             # O tipo declarado no config manda; o prefixo e so o fallback.
@@ -104,7 +120,7 @@ def montar_manifesto(chave, membros):
     nucleo = raizes[0] if raizes else (membros[0] if membros else {})
     motivo = {}
     if nucleo:
-        motivo = _ler_json(DIR_OUTPUT / nucleo["slug"] / "sumario_macro.json") \
+        motivo = _ler_json(TO.dir_obra(nucleo["slug"], DIR_OUTPUT) / "sumario_macro.json") \
             .get("motivo_condutor", {})
 
     faltantes = [t for t in TO.tipos_derivados()
@@ -136,7 +152,7 @@ def sincronizar(slug=None):
     migrar_prefixo_underscore(DIR_COLECOES)       # _colecoes -> colecoes
     colecoes = varrer()
     if slug:
-        alvo = resolver_serie_key(_ler_json(DIR_OUTPUT / slug / "config_obra.json"), slug)
+        alvo = resolver_serie_key(_ler_json(TO.dir_obra(slug, DIR_OUTPUT) / "config_obra.json"), slug)
         colecoes = {k: v for k, v in colecoes.items() if k == alvo}
     DIR_COLECOES.mkdir(parents=True, exist_ok=True)
     # Sem limpar, um manifesto de uma chave que deixou de existir (renomeacao de
