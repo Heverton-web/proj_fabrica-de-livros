@@ -23,6 +23,8 @@ alwaysApply: true
 8. **Fidelidade de Conteúdo (sobrepõe 2-4):** arquivos em `output/**`, JSONs de estado, e verificações de `auditar-obra.py`/`validar-codigo.py`/`revisor-tecnico` são isentos de compressão — leitura sempre integral.
 9. **Busca via Grafo:** usar `.code-review-graph` antes de tools de leitura/busca.
 10. **Auto-commit/push:** alterações devem ser commitadas e pushadas para manter grafo atualizado.
+11. **UTF-8 no Windows:** todo script Python com `print`/emojis DEVE ter `console_utf8()` (padrão `scripts/tipos_obra.py`) ou `sys.stdout.reconfigure(encoding="utf-8")` — sem isso quebra em cp1252 (ex.: `criar-maquina-vendas.py`).
+12. **Personalizar, não só gerar:** a máquina de vendas nasce com copy genérica ("Autor Digital", "centenas de pessoas") — o fluxo `/criar-maquina` exige personalização por nicho (configs + frontend + e-mails + README) com gate `grep 'Autor Digital|centenas de pessoas'` retornando vazio.
 
 ## 1. Regras Globais
 
@@ -123,11 +125,49 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
    ABRE) → `empacotar-colecao.py <coleção>`. O pacote leva **só o que está
    finalizado e abre**, com `LICENCA.txt` e `LEIA-ME.md` que declara o que ficou
    de fora e por quê.
+9. **Máquina de vendas:** `/criar-maquina <slug>` → gerar + **personalizar por
+   nicho** (configs, frontend, e-mails, README) + testar `POST /api/checkout`
+   (rota nasce no template — verificar que o lead chega em `/api/leads/`) + deploy.
 
 **Output:** `output/livros/`, `output/tccs/`, `output/artigos/`, `output/ebooks/`,
 `output/playbooks/`, `output/lead-magnets/`, `output/decks/`, `output/emails/`,
 `output/colecoes/`, `output/distribuicao/`
 **Nota:** não usar `pandoc --pdf-engine=typst` com figuras (bug de path absoluto Windows). Gerar `.typ` na pasta do livro e chamar `typst compile --root`.
+
+### Estrutura de Séries (V5.1)
+
+Séries de livros são organizadas centralizadamente:
+```
+output/series/<slug-serie>/
+├── series.json              # Manifesto da série (metadados, lista de livros)
+├── livros/<slug-livro>/     # Cada livro com sua estrutura completa
+├── playbooks/<slug-livro>/  # Playbooks derivados
+├── decks/<slug-livro>/      # Apresentações HTML+PDF
+├── emails/<slug-livro>/     # Sequências de e-mails
+├── lead-magnets/            # Lead magnets da série
+├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+├── distribuicao/            # PDFs compilados para distribuição
+├── artigos/                 # Artigos derivados
+├── ebooks/                  # E-books derivados
+└── colecoes/                # Manifesto da coleção
+```
+Symlinks de compatibilidade em `output/livros/`, `output/decks/`, etc.
+apontam para `output/series/<serie>/` — scripts da fábrica continuam
+funcionando sem alteração.
+
+### Entrega de Sessão (V5.2) — `relatorios/`
+
+Toda sessão de trabalho na fábrica deve encerrar com um **relatório em
+`relatorios/`** (raiz do projeto), em **MD + PDF** (Pandoc→Typst):
+
+```
+relatorios/<YYYY-MM-DD>-<tema-da-sessao>.md
+relatorios/<YYYY-MM-DD>-<tema-da-sessao>.pdf
+```
+
+Conteúdo mínimo: contexto, bugs descobertos/corrigidos (causa→fix), arquivos
+alterados, validações (testes/verificações rodadas), commits feitos e resumo
+de entregas. O relatório é commitado e pushado junto com o trabalho da sessão.
 
 ## 6. Portabilidade Multi-IDE
 
@@ -136,3 +176,19 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 ## 7. RTK SCRATCHPAD
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
+
+- **2026-08-09 Máquina de vendas — checkout:** causa: rota `/api/checkout`
+  faltava no template (checkout page postava nela → 404 em toda máquina nova) e
+  page antiga usava form urlencoded vazio → 500 no `request.json()`. Fix: rota
+  com zod + `/api/leads/` + `BACKEND_URL`; page client com nome/e-mail + fetch
+  JSON. Prevenção: `produto` default alinhado ao `config/produtos.json`
+  (ex.: `dentista-gestor-livro`); leads de teste vivem em
+  `backend/data/vendas.db` (não `database/maquina.db`) — limpar. Arquivo:
+  `templates/maquina/frontend/app/api/checkout/route.ts`.
+- **2026-08-09 Máquina de vendas — fluxo:** causa: template nascia com copy
+  genérica; `criar-maquina-vendas.py` quebrava no Windows cp1252 (emojis).
+  Fix: personalização por nicho em 8 pontos com gate `grep 'Autor Digital|centenas de pessoas'`
+  vazio (regra 12); `sys.stdout.reconfigure` no corpo de `criar_maquina`
+  (regra 11). Derivados copiados via `output/colecoes/<slug>.json` (nomenclatura
+  V5 não casa com substring — fallback 1ª palavra). Prevenção: máquinas antigas
+  sincronizam copiando rota+page do template — skill `sincronizar-maquina-vendas`.

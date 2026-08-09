@@ -10,8 +10,8 @@
 2. Tipos de Obra (8 tipos)
 3. Máquina de Vendas (projeto deployável)
 4. Comandos Disponíveis (13 comandos)
-5. Scripts Determinísticos (42 scripts)
-6. Skills (24 skills)
+5. Scripts Determinísticos (43 scripts)
+6. Skills (26 skills)
 7. Subagentes (7 agentes)
 8. Templates (12 templates)
 9. SPECS (9 specs)
@@ -455,7 +455,7 @@ a copy do nicho.
 
 ---
 
-## 5. SCRIPTS DETERMINÍSTICOS (42 scripts)
+## 5. SCRIPTS DETERMINÍSTICOS (43 scripts)
 
 ### 5.1 Scripts de Geração
 
@@ -470,6 +470,7 @@ a copy do nicho.
 | `gerar-sequencia-emails.py` | Gera sequência de e-mails | `/criar-emails` |
 | `gerar-ilustracoes.py` | Gera ilustrações | Automático por capítulo |
 | `criar-maquina-vendas.py` | Cria máquina de vendas | `/criar-maquina` |
+| `gerar-relatorio-sessao.py` | Gera relatório de sessão MD+PDF (V5.2) | Final de sessão (skill `gerar-relatorio-sessao`) |
 
 ### 5.2 Scripts de Validação
 
@@ -546,6 +547,7 @@ a copy do nicho.
 |---|---|---|
 | `criar-maquina-vendas` | Gera projeto deployável | Após obra finalizada |
 | `sincronizar-maquina-vendas` | Propaga fix do checkout em máquina existente | Máquina gerada antes do fix (checkout 404/500) |
+| `gerar-relatorio-sessao` | Orquestra fechamento de sessão (relatório + testes + commit + push) | Final de toda sessão com mudanças (V5.2) |
 
 ### 6.3 Skills de Produtividade
 
@@ -919,6 +921,9 @@ marketing/
 ├── maquinas/            Máquinas de vendas
 │   └── {slug}/          Projeto full-stack
 └── leads_global/        Base mestra de leads
+
+relatorios/              Relatórios de sessão (MD + PDF) — entrega obrigatória
+└── {data}-{tema}.md/.pdf  Convenção V5.2 (ver AGENTS.md, Fluxo Operacional)
 ```
 
 ---

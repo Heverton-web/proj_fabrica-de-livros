@@ -46,3 +46,10 @@ logs/
 
 # Artefato acidental de redirect Windows
 nul
+
+# Relatórios de sessão são SEMPRE versionados (convenção V5.2)
+!relatorios/
+!relatorios/*.md
+!relatorios/*.pdf
+# Added by code-review-graph
+.code-review-graph/

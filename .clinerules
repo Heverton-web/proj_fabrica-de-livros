@@ -155,6 +155,20 @@ Symlinks de compatibilidade em `output/livros/`, `output/decks/`, etc.
 apontam para `output/series/<serie>/` — scripts da fábrica continuam
 funcionando sem alteração.
 
+### Entrega de Sessão (V5.2) — `relatorios/`
+
+Toda sessão de trabalho na fábrica deve encerrar com um **relatório em
+`relatorios/`** (raiz do projeto), em **MD + PDF** (Pandoc→Typst):
+
+```
+relatorios/<YYYY-MM-DD>-<tema-da-sessao>.md
+relatorios/<YYYY-MM-DD>-<tema-da-sessao>.pdf
+```
+
+Conteúdo mínimo: contexto, bugs descobertos/corrigidos (causa→fix), arquivos
+alterados, validações (testes/verificações rodadas), commits feitos e resumo
+de entregas. O relatório é commitado e pushado junto com o trabalho da sessão.
+
 ## 6. Portabilidade Multi-IDE
 
 Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlinks: `AGENTS.md`→`CLAUDE.md`, `.cursor/rules/`→`CLAUDE.md`, `.cursor/mcp.json`→`.mcp.json`. VS Code: `scripts/sync-vscode-mcp.mjs`.
