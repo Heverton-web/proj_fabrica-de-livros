@@ -176,7 +176,47 @@ class TestGerador:
         ctx = CP.contexto_material(ambiente["slug"])
         assert ctx["cor_accent"].lstrip("#") in html
         assert "A Obra em Construção" in html
-        assert "fundação" in html  # vocabulario nas tags
+        # tags TECNICAS (pilares do dominio), nao o vocabulario metaforico
+        assert any(t in html for t in ("Contrato", "Schema", "Modelo", "Índice"))
+
+    def test_tags_arte_sao_tecnicas_nao_metafora(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        html = (_raiz(ambiente["slug"])
+                / "redes-sociais/instagram/artes/post/post-01.html") \
+            .read_text(encoding="utf-8")
+        # vocabulario condutor (metafora: fundacao/estrutura/acabamento) NAO
+        # aparece como tag na arte — so as tags tecnicas do dominio
+        for metafora in ("fundação", "estrutura", "acabamento"):
+            assert metafora not in html, f"metafora {metafora} na arte"
+
+    def test_derivar_tags_arte_usa_glossario_tecnico(self):
+        sumario = {
+            "titulo_obra": "Harness Engineering — Do Modelo ao Sistema Autônomo",
+            "partes": [{"parte": "I", "titulo_parte": "Base", "capitulos": [
+                {"capitulo": "1", "titulo": "O que um agente realmente é",
+                 "pilares_previstos": ["Harness", "Guardrails", "Produção"]},
+            ]}],
+        }
+        config = {"tema": "Harness Engineering"}
+        tags = CP.derivar_tags_arte(sumario, config)
+        assert tags, "deveria derivar tags tecnicas"
+        assert all(t.lower() in CP.TAGS_TECNICAS for t in tags)
+        # nenhuma palavra da metafora condutora
+        assert not any(t.lower() in ("arnês", "mosquetão", "corda", "cume")
+                       for t in tags)
+        # sem redundancia de substring (sistema autonomo nao gera 'sistema')
+        baixas = [t.lower() for t in tags]
+        assert len(set(baixas)) == len(baixas)
+
+    def test_derivar_tags_arte_vazio_faz_fallback_vocabulario(self, ambiente):
+        # material sem termos do glossario -> tags_arte vazio -> gerador usa
+        # o vocabulario condutor (comportamento antigo, nunca quebra)
+        sumario = {"titulo_obra": "Tema sem palavras tecnicas reconhecidas"}
+        assert CP.derivar_tags_arte(sumario, {"tema": ""}) == []
+        # e o varivel de arte ainda emite tags (fallback)
+        ctx = CP.contexto_material(ambiente["slug"])
+        variaveis = criador.variaveis_arte(ctx)
+        assert variaveis["TAGS"]
 
     def test_artes_templates_copiados(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)

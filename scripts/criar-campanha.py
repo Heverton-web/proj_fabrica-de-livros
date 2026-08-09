@@ -70,7 +70,9 @@ def nivel_rotulo(senioridade):
 
 def variaveis_arte(ctx):
     """Variaveis comuns de interpolacao dos templates HTML de arte."""
-    vocab = ctx.get("vocabulario") or []
+    # Tags TECNICAS do dominio (derivadas dos capitulos/tema) primeiro; o
+    # vocabulario condutor metaforico (arnes, mosquetao) fica fora das artes.
+    vocab = (ctx.get("tags_arte") or ctx.get("vocabulario") or [])
     tags = "".join(f'<span class="tag">{t}</span>' for t in vocab[:4])
     if not tags:
         tags = f'<span class="tag">{ctx["colecao"]}</span>'
