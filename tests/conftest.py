@@ -176,8 +176,14 @@ def livro_falso(tmp_path, monkeypatch, sumario_macro):
 
 @pytest.fixture
 def redirecionar_output(monkeypatch):
-    """Devolve uma funcao que aponta o DIR_OUTPUT de um modulo para um caminho."""
+    """Devolve uma funcao que aponta o DIR_OUTPUT de um modulo para um caminho.
+
+    A resolucao de caminhos e centralizada em tipos_obra.dir_obra/listar_materiais
+    (leem tipos_obra.DIR_OUTPUT). Para um teste isolar o output real, e preciso
+    redirecionar o root CENTRAL, nao so o do modulo sob teste."""
+    import tipos_obra
     def _aplicar(modulo, raiz):
+        monkeypatch.setattr(tipos_obra, "DIR_OUTPUT", raiz, raising=False)
         monkeypatch.setattr(modulo, "DIR_OUTPUT", raiz, raising=False)
         return modulo
     return _aplicar

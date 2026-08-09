@@ -132,7 +132,7 @@ def html_para_pdf(html_path, pdf_path, cta_texto, cta_url, cor):
 
 
 def compilar(slug, manter_html=False):
-    dir_lm = DIR_OUTPUT / slug
+    dir_lm = TO.dir_obra(slug, DIR_OUTPUT)
     md = dir_lm / "lead_magnet.md"
     if not md.exists():
         print(f"[ERRO] lead_magnet.md nao encontrado em {dir_lm}")
@@ -210,7 +210,7 @@ def main():
         return 1
 
     if args.todos:
-        alvos = TO.listar_materiais("lead-magnet")
+        alvos = TO.listar_materiais("lead-magnet", DIR_OUTPUT)
     elif args.slug:
         alvos = [args.slug]
     else:

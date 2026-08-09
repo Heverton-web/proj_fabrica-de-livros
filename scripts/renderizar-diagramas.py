@@ -34,6 +34,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tipos_obra as TO
 import tempfile
 from pathlib import Path
 
@@ -224,7 +225,7 @@ def main():
                                    "series_capa.py (mesma cor da capa)")
     args = ap.parse_args()
 
-    dir_livro = DIR_OUTPUT / args.slug
+    dir_livro = TO.dir_obra(args.slug, DIR_OUTPUT)
     if not dir_livro.exists():
         print(f"[ERRO] Livro nao encontrado: {dir_livro}")
         return 1

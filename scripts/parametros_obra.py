@@ -106,7 +106,7 @@ def minimos_livro(tamanho):
 
 
 def caminho_config(slug):
-    return DIR_OUTPUT / slug / "config_obra.json"
+    return TO.dir_obra(slug, DIR_OUTPUT) / "config_obra.json"
 
 
 def carregar_config(slug):

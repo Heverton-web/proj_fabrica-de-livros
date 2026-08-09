@@ -89,7 +89,7 @@ def jaccard(a, b):
 
 def _teoria_do_livro_mae(mae_simples, limite_caps=6):
     for raiz in ("livros", "tccs"):
-        dir_mae = DIR_OUTPUT / raiz / mae_simples
+        dir_mae = TO.dir_obra(f"{raiz}/{mae_simples}", DIR_OUTPUT)
         if not (dir_mae / "capitulos").exists():
             continue
         trechos = []
@@ -101,7 +101,7 @@ def _teoria_do_livro_mae(mae_simples, limite_caps=6):
 
 
 def validar(slug, limiar_teoria=LIMIAR_TEORIA):
-    dir_lm = DIR_OUTPUT / slug
+    dir_lm = TO.dir_obra(slug, DIR_OUTPUT)
     cfg = _ler_json(dir_lm / "config_obra.json")
     sumario = _ler_json(dir_lm / "sumario_macro.json")
     md_path = dir_lm / "lead_magnet.md"
@@ -219,7 +219,7 @@ def main():
     args = ap.parse_args()
 
     if args.todos:
-        alvos = TO.listar_materiais("lead-magnet")
+        alvos = TO.listar_materiais("lead-magnet", DIR_OUTPUT)
     elif args.slug:
         alvos = [args.slug]
     else:
@@ -229,7 +229,7 @@ def main():
     relatorios = []
     for alvo in alvos:
         rel = validar(alvo, limiar_teoria=args.limiar_teoria)
-        dir_rev = DIR_OUTPUT / alvo / "revisao"
+        dir_rev = TO.dir_obra(alvo, DIR_OUTPUT) / "revisao"
         dir_rev.mkdir(parents=True, exist_ok=True)
         (dir_rev / "relatorio_gate.json").write_text(
             json.dumps(rel, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -64,11 +64,13 @@ def slugificar(texto, max_len=40):
     return t[:max_len].rstrip("-") or "recorte"
 
 
-def carregar_derivados(dir_mae):
+def carregar_derivados(dir_mae, slug_mae_simples=None):
     """Manifesto de derivados do livro-mae. V5: a lista de secoes vem do registro,
     entao um tipo novo nao exige tocar aqui."""
+    if slug_mae_simples is None:
+        slug_mae_simples = dir_mae.name
     caminho = dir_mae / "derivados.json"
-    base = {"slug_livro_mae": dir_mae.name}
+    base = {"slug_livro_mae": slug_mae_simples}
     for tipo in TO.tipos_derivados():
         base[TO.raiz_output(tipo)] = {"total": 0, "itens": []}
     if caminho.exists():
@@ -79,16 +81,18 @@ def carregar_derivados(dir_mae):
     return base
 
 
-def gravar_derivados(dir_mae, derivados, tipo, itens):
+def gravar_derivados(dir_mae, derivados, tipo, itens, slug_mae_simples=None):
     """Grava a secao de um tipo preservando as demais (artigos, ebooks, ...)."""
-    derivados["slug_livro_mae"] = dir_mae.name
+    if slug_mae_simples is None:
+        slug_mae_simples = dir_mae.name
+    derivados["slug_livro_mae"] = slug_mae_simples
     derivados[TO.raiz_output(tipo)] = {"total": len(itens), "itens": itens}
     (dir_mae / "derivados.json").write_text(
         json.dumps(derivados, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def carregar_sumario_mae(slug):
-    caminho = DIR_OUTPUT / slug / "sumario_macro.json"
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / "sumario_macro.json"
     if not caminho.exists():
         return None
     return json.loads(caminho.read_text(encoding="utf-8"))
@@ -126,8 +130,8 @@ def titulo_recorte(capitulos):
 
 
 def gerar_artigos(slug, qtd, min_refs):
-    dir_mae = DIR_OUTPUT / slug
-    slug_mae_simples = dir_mae.name
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
+    slug_mae_simples = Path(slug).name
     sumario = carregar_sumario_mae(slug)
     if sumario is None:
         print(f"[ERRO] sumario_macro.json nao encontrado para {slug}")
@@ -139,10 +143,12 @@ def gerar_artigos(slug, qtd, min_refs):
         return 1
 
     grupos = particionar(capitulos, qtd)
-    dir_artigos_topo = DIR_OUTPUT / "artigos"
+    obra_raiz = TO._obra_raiz(slug_mae_simples, DIR_OUTPUT)
+    dir_artigos_topo = (obra_raiz / "artigos" if obra_raiz is not None
+                        else DIR_OUTPUT / "artigos")
     dir_artigos_topo.mkdir(parents=True, exist_ok=True)
 
-    derivados = carregar_derivados(dir_mae)
+    derivados = carregar_derivados(dir_mae, slug_mae_simples)
     itens_artigos = []
 
     for i, grupo in enumerate(grupos, 1):
@@ -188,7 +194,7 @@ def gerar_artigos(slug, qtd, min_refs):
         })
         print(f"  [OK] {slug_artigo}: {titulo}")
 
-    gravar_derivados(dir_mae, derivados, "artigo", itens_artigos)
+    gravar_derivados(dir_mae, derivados, "artigo", itens_artigos, slug_mae_simples)
     print(f"\n[OK] {len(grupos)} artigo(s) planejado(s) em {_exibir(dir_artigos_topo)}")
     print("Cada artigo consulta o dossie do livro-mae via RAG:")
     print(f"  python scripts/indexar-dossie.py {slug} --buscar \"<termos>\" --topo 4")
@@ -197,8 +203,8 @@ def gerar_artigos(slug, qtd, min_refs):
 
 def gerar_ebooks(slug, qtd):
     """Fatiamento por Parte (ou agrupamento de capitulos) para N e-books (Fase D)."""
-    dir_mae = DIR_OUTPUT / slug
-    slug_mae_simples = dir_mae.name
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
+    slug_mae_simples = Path(slug).name
     sumario = carregar_sumario_mae(slug)
     if sumario is None:
         print(f"[ERRO] sumario_macro.json nao encontrado para {slug}")
@@ -219,10 +225,12 @@ def gerar_ebooks(slug, qtd):
         grupos = [{"titulo_parte": titulo_recorte(g), "capitulos": g}
                   for g in particionar(lineares, qtd)]
 
-    dir_ebooks_topo = DIR_OUTPUT / "ebooks"
+    obra_raiz = TO._obra_raiz(slug_mae_simples, DIR_OUTPUT)
+    dir_ebooks_topo = (obra_raiz / "ebooks" if obra_raiz is not None
+                       else DIR_OUTPUT / "ebooks")
     dir_ebooks_topo.mkdir(parents=True, exist_ok=True)
 
-    derivados = carregar_derivados(dir_mae)
+    derivados = carregar_derivados(dir_mae, slug_mae_simples)
     itens_ebooks = []
 
     for i, grupo in enumerate(grupos, 1):
@@ -255,7 +263,7 @@ def gerar_ebooks(slug, qtd):
         })
         print(f"  [OK] {slug_ebook}: {titulo} (capitulos-fonte: {capitulos_fonte})")
 
-    gravar_derivados(dir_mae, derivados, "ebook", itens_ebooks)
+    gravar_derivados(dir_mae, derivados, "ebook", itens_ebooks, slug_mae_simples)
     print(f"\n[OK] {len(grupos)} e-book(s) planejado(s) em {_exibir(dir_ebooks_topo)}")
     return 0
 
@@ -266,8 +274,8 @@ def gerar_playbook(slug):
     Nao extrai os cards: isso e trabalho de extrair-passos-praticos.py. Aqui so
     nasce a pasta, o config, o sumario com os estagios e o registro em
     derivados.json. Custo: 0 token."""
-    dir_mae = DIR_OUTPUT / slug
-    slug_mae_simples = dir_mae.name
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
+    slug_mae_simples = Path(slug).name
     sumario = carregar_sumario_mae(slug)
     if sumario is None:
         print(f"[ERRO] sumario_macro.json nao encontrado para {slug}")
@@ -301,8 +309,8 @@ def gerar_playbook(slug):
         })
 
     titulo_obra = sumario.get("titulo_obra", slug_mae_simples)
-    slug_pbk = TO.slug_curto("playbook", slug_mae_simples, nome=titulo_obra)
-    dir_pbk = DIR_OUTPUT / slug_pbk
+    slug_pbk = TO.slug_curto("playbook", slug_mae_simples, nome=titulo_obra, base=DIR_OUTPUT)
+    dir_pbk = TO.dir_obra(slug_pbk, DIR_OUTPUT)
     for sub in ("passos", "imagens", "revisao"):
         (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
 
@@ -324,12 +332,12 @@ def gerar_playbook(slug):
     (dir_pbk / "config_obra.json").write_text(
         json.dumps(config_pbk, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    derivados = carregar_derivados(dir_mae)
+    derivados = carregar_derivados(dir_mae, slug_mae_simples)
     gravar_derivados(dir_mae, derivados, "playbook", [{
         "indice": 1, "titulo": titulo, "slug": TO.nome_arquivo(slug_pbk),
         "diretorio": slug_pbk,
         "estagios": len(estagios),
-    }])
+    }], slug_mae_simples)
 
     print(f"  [OK] {slug_pbk}: {titulo} ({len(estagios)} estagio(s))")
     print(f"\n[OK] Playbook planejado em {_exibir(dir_pbk)}")
@@ -350,7 +358,7 @@ def main():
     ap.add_argument("--qtd", type=int, default=None)
     args = ap.parse_args()
 
-    config_path = DIR_OUTPUT / args.slug / "config_obra.json"
+    config_path = TO.dir_obra(args.slug, DIR_OUTPUT) / "config_obra.json"
     config = {}
     if config_path.exists():
         try:

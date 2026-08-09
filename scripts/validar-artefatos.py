@@ -145,7 +145,7 @@ def verificar_arquivo(caminho):
 
 
 def artefatos_do_slug(slug):
-    dir_obra = DIR_OUTPUT / slug
+    dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     if not dir_obra.exists():
         return []
     config = {}
@@ -168,17 +168,11 @@ def artefatos_do_slug(slug):
 
 
 def _slugs_da_v51():
-    """Todos os materiais V5.1 no disco (<raiz>/<codigo>/<material>)."""
+    """Todos os materiais V5.1 no disco, nos layouts plano e por obra."""
     saida = []
-    for tipo in TO.tipos_validos():
-        raiz = DIR_OUTPUT / TO.raiz_output(tipo)
-        if not raiz.exists():
-            continue
-        padrao = "*/*" if TO.usa_nomes_curtos(tipo) else "*"
-        for d in sorted(raiz.glob(padrao)):
-            if d.is_dir() and (d / "config_obra.json").exists():
-                saida.append(str(d.relative_to(DIR_OUTPUT)).replace("\\", "/"))
-    return saida
+    for t in TO.tipos_validos():
+        saida += TO.listar_materiais(t, DIR_OUTPUT)
+    return sorted(set(saida))
 
 
 def validar(slugs):

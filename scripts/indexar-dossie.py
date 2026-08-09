@@ -25,6 +25,7 @@ import sys
 import unicodedata
 from collections import Counter
 from pathlib import Path
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -137,7 +138,7 @@ def dividir_em_blocos(texto, arquivo):
 
 
 def construir_indice(slug):
-    dir_pesquisa = DIR_OUTPUT / slug / "pesquisa"
+    dir_pesquisa = TO.dir_obra(slug, DIR_OUTPUT) / "pesquisa"
     if not dir_pesquisa.exists():
         print(f"[ERRO] Diretorio de pesquisa nao encontrado: {dir_pesquisa}")
         return None
@@ -193,7 +194,7 @@ def construir_indice(slug):
 
 
 def carregar_indice(slug, auto_indexar=True):
-    caminho = DIR_OUTPUT / slug / "pesquisa" / "indice_dossie.json"
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / "pesquisa" / "indice_dossie.json"
     if not caminho.exists():
         if not auto_indexar:
             print(f"[ERRO] Indice inexistente. Rode: python scripts/indexar-dossie.py {slug} --indexar")

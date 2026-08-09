@@ -129,7 +129,7 @@ def gerar(slug, cta_url=None, intervalo=INTERVALO_PADRAO):
 
     slug_eml = TO.slug_curto("emails", ctx["slug_mae_simples"],
                              nome=ctx.get("titulo_obra", ""))
-    dir_eml = DIR_OUTPUT / slug_eml
+    dir_eml = TO.dir_obra(slug_eml, DIR_OUTPUT)
     (dir_eml / "emails").mkdir(parents=True, exist_ok=True)
     (dir_eml / "revisao").mkdir(parents=True, exist_ok=True)
 

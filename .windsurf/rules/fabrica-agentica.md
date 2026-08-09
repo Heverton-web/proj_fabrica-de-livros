@@ -34,6 +34,7 @@ alwaysApply: true
 - **R4 (Auto-correção):** desvios são corrigidos internamente antes da compilação.
 - **R5 (Capa 2D Plano):** Livro/E-book usam padrão 2D plano (detalhes em `docs/referencia-capa-design.md`). TCC/Artigo usam capa ABNT sóbria. Badge de nível OBRIGATÓRIO (validado por `validar-capa-nivel.py`).
 - **R6 (Modelo Livre):** nenhum modelo LLM fixo. `model: inherit` em todos os agents.
+- **R16 (Pós-implementação — nunca commitar vermelho):** APÓS TODA nova implementação: (1) rodar a suíte de testes necessária (`python -m pytest -q`, ou a suíte específica + a completa); (2) **100%** → commit + push; (3) **<100%** → analisar a falha, corrigir o código, re-testar até 100% (nunca commitar suíte vermelha; nunca contornar o teste para fazê-lo passar — corrigir a causa). Vale para qualquer agente/sessão da fábrica, incluindo reescrita de materiais.
 
 ### Tipos de Obra (V5) — registro declarativo em `scripts/tipos_obra.py`
 
@@ -74,7 +75,9 @@ Compressão/extração são baratas; expansão (ex.: TCC → livro) custa geraç
 Conjunto de todos os artefatos derivados de um mesmo **núcleo canônico**
 (dossiê + `sumario_macro` + `motivo_condutor`), compartilhando identidade visual,
 vocabulário condutor, badge de nível e CTA. Manifesto derivado em
-`output/colecoes/<nome>.json` (`scripts/colecao.py --sincronizar`, comando `/colecao`).
+`<obra>/colecoes/<nome>.json` — o hub da coleção (`scripts/colecao.py
+--sincronizar`, comando `/colecao`). O fallback plano `output/colecoes/<nome>.json`
+só existe quando nenhum hub foi criado (comportamento atual de `colecao.py`).
 
 **Nenhum arquivo ou pasta gerado usa prefixo `_`** — em glob de shell, listagem
 de nuvem e empacotamento ele é tratado como oculto. Caminhos legados são migrados
@@ -92,6 +95,8 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 `indexar-dossie.py` (RAG), `pool-capitulos.py` (lotes), `renderizar-diagramas.py`, `validar-codigo.py`, `auditar-obra.py`, `metadados_livro.py`, `parametros_obra.py`, `validar-abnt-tcc.py`, `fatiar-obra.py`, `gerar-epub.py`, `pdf_typst.py`, `series_capa.py`, `validar-capa-texto.py`, `validar-capa-nivel.py`
 
 **V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`, `gerar-lead-magnet-pdf.py`, `gerar-pptx.py`, `gerar-deck-html.py`, `nomes_curtos.py`, `validar-artefatos.py`, `empacotar-colecao.py`
+
+**Gates de conteúdo (F1/F2 — mérito, além da estrutura R1-R15):** `validar-referencias.py` (R-RF: URL/DOI reais, 4xx/DNS reprova, cache + `--sem-rede`), `validar-metricas.py` (R-MT: ≥1 métrica com valor+unidade+citação por capítulo; `metricas_obrigatorias` no sumário), `validar-escala.py` (R-ES: limites/contorno na seção Aplica), `validar-afirmacoes.py` (R-AF: dado factual sem `[N]` no parágrafo reprova), `validar-fontes.py` (R-FT: hierarquia A/B/C do dossiê ≥70% A+B). `validar-codigo.py --executar` (smoke test real de python/js/bash) e `--playbook` (gate dos cards vira comando executado). Registrados em `tipos_obra.py` → campo `gates_conteudo` do tipo `livro`; `auditar-obra.py --estrito` os encadeia (referências offline).
 
 ### Token Economy Skills
 `lean-ctx`, `headroom`, `caveman`, `rtk-memory`, `pre-flight-check`, `calcular-gastos-sessao`
@@ -115,7 +120,7 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 1. **Input:** operador define tema → `/esbocar <tema>`
 2. **Fase 1:** pesquisador varre → `indexar-dossie.py --indexar` → arquiteto gera sumário macro
 3. **Fase 2:** `pool-capitulos.py --plano --lote 4` → subagentes-redator em lotes (estratégia + redação + diagrama + CI + auto-validação). Retentativa com backoff (máx. 3)
-4. **Fase 2.5:** `auditar-obra.py` + `validar-codigo.py` → `revisor-tecnico` corrige
+4. **Fase 2.5:** `auditar-obra.py` (encadeia os gates de conteúdo F1/F2 via `gates_conteudo` no `--estrito`) + `validar-codigo.py --executar` + `renderizar-diagramas.py --validar` → `revisor-tecnico` corrige (inclui conferência por amostra: reabrir 1 fonte por capítulo e conferir o dado citado)
 5. **Fase 3:** `compilador-abnt` merge + pré/pós-textuais + referências ABNT
 6. **PDF:** `compilar-para-pdf.py <slug> --paginas-exatas` → Pandoc→`.typ`→Typst
 7. **Fase 4 (V5) — Coleção:** `/criar-playbook` → `/criar-lead-magnet --todos` +
@@ -128,32 +133,40 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 9. **Máquina de vendas:** `/criar-maquina <slug>` → gerar + **personalizar por
    nicho** (configs, frontend, e-mails, README) + testar `POST /api/checkout`
    (rota nasce no template — verificar que o lead chega em `/api/leads/`) + deploy.
+10. **Campanha (V5.3):** `/campanha <slug>` (1 material) ou `/campanha-completa
+    [colecao]` (todos os membros do manifesto) → `criar-campanha.py` (estrutura +
+    moldes de copy + artes HTML→Chromium + cronogramas; custo zero) → agente
+    escreve a copy final nos moldes (LLM baixo) → `validar-campanha.py --estrito`
+    (gates R-CP-1..5) → `--marcar-completa`. Vive em
+    `output/<colecao>/campanhas/<material>/` + `campanha.json` (hub). Não é tipo
+    de obra: camada própria (registro declarativo em `scripts/campanha.py`).
 
-**Output:** `output/livros/`, `output/tccs/`, `output/artigos/`, `output/ebooks/`,
-`output/playbooks/`, `output/lead-magnets/`, `output/decks/`, `output/emails/`,
-`output/colecoes/`, `output/distribuicao/`
+**Output (HUB POR COLEÇÃO):** cada coleção vive em `output/<slug-colecao>/` com
+as raízes de tipos **dentro do hub** — `livros/`, `tccs/`, `artigos/`, `ebooks/`,
+`playbooks/`, `lead-magnets/`, `decks/`, `emails/`, `distribuicao/` e
+`colecoes/<nome>.json` (manifestos). Não existem raízes planas no topo
+(`output/livros/` etc.) — ver "Estrutura de Coleções (HUB)" abaixo.
 **Nota:** não usar `pandoc --pdf-engine=typst` com figuras (bug de path absoluto Windows). Gerar `.typ` na pasta do livro e chamar `typst compile --root`.
 
-### Estrutura de Séries (V5.1)
+### Estrutura de Coleções (HUB)
 
-Séries de livros são organizadas centralizadamente:
+O agrupamento padrão da pasta `output/` é o **HUB POR COLEÇÃO**: uma pasta por
+coleção (núcleo canônico: dossiê + `sumario_macro` + `motivo_condutor`):
 ```
-output/series/<slug-serie>/
-├── series.json              # Manifesto da série (metadados, lista de livros)
-├── livros/<slug-livro>/     # Cada livro com sua estrutura completa
-├── playbooks/<slug-livro>/  # Playbooks derivados
-├── decks/<slug-livro>/      # Apresentações HTML+PDF
-├── emails/<slug-livro>/     # Sequências de e-mails
-├── lead-magnets/            # Lead magnets da série
-├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+output/<slug-colecao>/
+├── livros/  tccs/  artigos/  ebooks/  playbooks/  lead-magnets/  decks/  emails/
+├── campanhas/<material-slug>/  # Campanhas (V5.3): redes-sociais + canais-comunicacao
 ├── distribuicao/            # PDFs compilados para distribuição
-├── artigos/                 # Artigos derivados
-├── ebooks/                  # E-books derivados
-└── colecoes/                # Manifesto da coleção
+├── marketing/<slug-livro>/  # Máquinas de vendas (Next.js+FastAPI)
+└── colecoes/<nome>.json     # Manifestos sincronizados (colecao.py --sincronizar)
 ```
-Symlinks de compatibilidade em `output/livros/`, `output/decks/`, etc.
-apontam para `output/series/<serie>/` — scripts da fábrica continuam
-funcionando sem alteração.
+Suportado por `tipos_obra.py` (`_sereis`, `dir_obra`, `listar_materiais`,
+`_obra_raiz`) e `colecao.py` (`_dir_colecoes` prioriza `<obra>/colecoes/`).
+
+**Glossário de nomenclatura:** **coleção = hub** (unidade de organização da
+pasta `output/`); **série = termo obsoleto**, preservado apenas como nome
+interno de compatibilidade do registro de cores `output/series.json` (não
+renomear: as cores persistidas e a migração de `_series.json` dependem do nome).
 
 ### Entrega de Sessão (V5.2) — `relatorios/`
 
@@ -177,6 +190,39 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
+- **2026-08-09 Reescrita e transmutação de materiais:** causa: a esteira só
+  criava novo (-v2) ou retomava; não dava para regravar capítulo/obra nem mudar
+  de tipo sem orfanar série/coleção. Fix: `pool-capitulos.py --reescrever <n>`
+  (backup em `revisao/backups/<ts>/` + flag `reescrever` no estado que o
+  `montar_visao` respeita até `--registrar --sucesso`); campo `reescrever_de`
+  no registro de tipos (transmutação: livro←ebook/playbook/artigo/tcc,
+  tcc←livro/ebook, ebook←livro/tcc/playbook, artigo←livro/tcc/ebook);
+  `scripts/transmutar-obra.py` (recorte origem→destino, slug destino com
+  sufixo `--liv/--tcc/--ebk/--art` no layout plano, `slug_origem` no config,
+  registro em `derivados.json` da origem); comandos `/reescrever-capitulo`,
+  `/reescrever`, `/refinar`, `/reescrever-como`; skills com Modo
+  reescrita/transmutação (preservar refs [N] e diagramas; gates do DESTINO
+  obrigatórios). Prevenção: R16 — após toda implementação, suíte 100% → commit
+  e push; <100% → analisar, corrigir, testar (nunca commitar vermelho).
+  Arquivos: `scripts/pool-capitulos.py`, `scripts/tipos_obra.py`,
+  `scripts/transmutar-obra.py`, `.claude/commands/reescrever*.md`,
+  `.claude/commands/refinar.md`.
+- **2026-08-09 Gates de conteúdo F1/F2 (mérito além da estrutura):** causa:
+  validar estrutura (R1-R15) não pegava referência inventada, código que não
+  roda, capítulo sem métrica nem limite de escala, dado factual sem citação.
+  Fix: 5 gates novos + `validar-codigo --executar/--playbook`; registro via
+  campo `gates_conteudo` no tipo `livro` (tipos_obra.py) e encadeamento em
+  `auditar-obra --estrito` (referências rodam offline `--sem-rede`; o
+  revisor-tecnico roda com rede). Prevenção: estrategista declara
+  `metricas_obrigatorias` no draft; redator-eita cita no mesmo parágrafo,
+  inclui métrica e limites de escala; pesquisador classifica fontes `(A)/(B)/(C)`
+  no dossiê (gate R-FT-1 ≥70% A+B). Ajustes calibrados: superlativos de ênfase
+  ("o mais importante") e garantias técnicas ("nunca confie") NÃO são
+  disparadores factuais (ruído); `**Desafio` (exercício do autor) é excluído;
+  cache de referências só é conclusivo para ok/falha — `nao_verificado` não
+  bloqueia checagem futura. Achado real do gate: `fin.ai/blog/ai-agent-roi-customer-support`
+  404 no cap_1; playbook pbk-1 tem 13 blocos truncados sem elipse (código
+  cortado no meio). Arquivo: `scripts/validar-*.py` + `tests/test_validar_*`.
 - **2026-08-09 Máquina de vendas — checkout:** causa: rota `/api/checkout`
   faltava no template (checkout page postava nela → 404 em toda máquina nova) e
   page antiga usava form urlencoded vazio → 500 no `request.json()`. Fix: rota
@@ -200,3 +246,51 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   `git commit -F` (acentos/quebras de linha quebram `-m`); `_commit_msg*.txt`
   vaza no `git add -A` — apagar ANTES do add ou `git rm --cached` + `--amend`.
   Arquivo: `.claude/skills/gerar-relatorio-sessao/SKILL.md`.
+- **2026-08-09 Padronização HUB POR COLEÇÃO:** causa: `output/` misturava layout
+  plano (`output/livros/`, `output/tccs/` vazios) com hubs; `output/series.json`
+  tinha 120/125 `membros` órfãos (destinos `livros/<slug>` de layout antigo);
+  docs/AGENTS.md ainda descreviam organização por "série" (regra morta
+  `output/series/`). Fix: coleção = hub único (`output/<obra>/<tipo>/...` com
+  manifesto em `<obra>/colecoes/<nome>.json`); "série" virou termo obsoleto —
+  preservado APENAS como nome interno de `output/series.json` (cores persistidas
+  + migração `_series.json` dependem — NÃO renomear); `series_capa.py --reindexar`
+  reconstrói `membros` com slugs reais (via `tipos_obra.listar_materiais` +
+  `resolver_serie_key`), preserva cores, órfãos saem, chaves sem material ficam
+  com `membros: []` (cor reservada). Prevenção: ao criar material novo, usar
+  sempre `dir_obra`/`listar_materiais` (resolvem plano, por-obra e single-book);
+  rodar `series_capa.py --reindexar` após reorganizações de `output/`.
+  Arquivo: `scripts/series_capa.py`, `scripts/tipos_obra.py`, `AGENTS.md` §COLEÇÃO.
+- **2026-08-09 Reestruturação HUB POR COLEÇÃO (manifestos por hub):** causa:
+  `_dir_colecoes` gravava os 7 manifestos no 1º hub com `colecoes/` (analista)
+  e single-books viviam na raiz de `livros/`/`tccs/` (fora do padrão `*/*`);
+  `<hub>/series.json` (metadados ricos) duplicava o conceito do manifesto.
+  Fix: `_dir_colecoes_da` resolve o dir pelo hub da coleção (1º segmento comum
+  dos membros que não seja raiz de tipo; fallback plano `output/colecoes/`);
+  `_metadados_ricos` funde `<hub>/series.json` no manifesto e apaga o legado
+  (idempotente: reusa `metadados` do manifesto anterior); single-books migrados
+  para `<tipo>/<slug>/`; `_todos_dirs_manifestos` varre `DIR_OUTPUT/*/colecoes`
+  (NÃO `tipos_obra._sereis()` — usa `TO.DIR_OUTPUT` real, quebra teste com
+  monkeypatch). Prevenção: limpeza global de manifestos órfãos deve varrer
+  fallback + hubs; `_slug_arquivo` vira `ç` em `-` (minha-cole-o.json).
+  Arquivo: `scripts/colecao.py`, `tests/test_colecao_hub.py`.
+- **2026-08-09 Camada CAMPANHA (V5.3):** causa: a coleção entregava materiais,
+  mas nenhuma camada de divulgação (posts, artes, sequências, cronogramas).
+  Fix: `output/<colecao>/campanhas/<material>/` (HUB por coleção, subpasta por
+  material: redes-sociais/instagram+linkedin e canais-comunicacao/emails+whatsapp);
+  registro declarativo em `scripts/campanha.py` (artefato novo = 1 linha);
+  `criar-campanha.py --material/--completo/--marcar-completa` (estrutura +
+  moldes com rascunho determinístico do config_obra/sumário/manifesto + artes
+  HTML+CSS→Chromium PNG + cronogramas com datas reais; custo zero) →
+  agente reescreve copy (LLM baixo) → `validar-campanha.py` (R-CP-1..5 +
+  R-CP-C1 no --completo; copy genérica regra 12 reprova; molde `Status: RASCUNHO`
+  pendente reprova até a reescrita). Prevenção: campanha NÃO é tipo de obra
+  (não toca tipos_obra.py); identidade vem do manifesto (`cor_accent`,
+  `motivo_condutor.vocabulario`, `nucleo.senioridade`, `cta_url`); arquivo do
+  manifesto usa slug normalizado (`_slug_arquivo` — `Colecao Teste` →
+  `colecao-teste.json`); nos testes, monkeypatch de TODOS os `DIR_OUTPUT`
+  (colecao.py incluído — esquecer `colecao.DIR_OUTPUT` faz o `varrer()` ler o
+  output real e o teste falha de forma confusa).
+  Arquivos: `scripts/campanha.py`, `scripts/criar-campanha.py`,
+  `scripts/validar-campanha.py`, `templates/campanha/*.html`,
+  `.claude/commands/campanha.md`, `.claude/commands/campanha-completa.md`,
+  `tests/test_campanha.py`, spec em `melhorias/09-08-2026-campanhas-camada-nova.md`.

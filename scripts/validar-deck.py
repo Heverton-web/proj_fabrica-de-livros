@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 
 from tipos_obra import console_utf8
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -55,7 +56,7 @@ def _slides(texto):
 
 
 def validar(slug):
-    dir_deck = DIR_OUTPUT / slug
+    dir_deck = TO.dir_obra(slug, DIR_OUTPUT)
     cfg = _ler_json(dir_deck / "config_obra.json")
     sumario = _ler_json(dir_deck / "sumario_macro.json")
     md = dir_deck / "deck.md"
@@ -76,8 +77,8 @@ def validar(slug):
     mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae") or sumario.get("slug_livro_mae")
     dir_mae = None
     for raiz in ("livros", "tccs"):
-        if mae_simples and (DIR_OUTPUT / raiz / mae_simples / "capitulos").exists():
-            dir_mae = DIR_OUTPUT / raiz / mae_simples
+        if mae_simples and (TO.dir_obra(raiz, DIR_OUTPUT) / mae_simples / "capitulos").exists():
+            dir_mae = TO.dir_obra(raiz, DIR_OUTPUT) / mae_simples
             break
     if dir_mae is not None:
         n_caps = len(list((dir_mae / "capitulos").glob("cap_*.md")))
@@ -130,7 +131,7 @@ def main():
     args = ap.parse_args()
 
     rel = validar(args.slug)
-    dir_rev = DIR_OUTPUT / args.slug / "revisao"
+    dir_rev = TO.dir_obra(args.slug, DIR_OUTPUT) / "revisao"
     dir_rev.mkdir(parents=True, exist_ok=True)
     (dir_rev / "relatorio_gate.json").write_text(
         json.dumps(rel, ensure_ascii=False, indent=2), encoding="utf-8")

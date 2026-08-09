@@ -27,6 +27,7 @@ DIR_OUTPUT = DIR_PROJETO / "output"
 
 sys.path.insert(0, str(DIR_PROJETO / "scripts"))
 from series_capa import resolver_cor, resolver_serie_key  # noqa: E402
+import tipos_obra as TO  # noqa: E402
 
 PANDOC = r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages\JohnMacFarlane.Pandoc_Microsoft.Winget.Source_8wekyb3d8bbwe\pandoc-3.10\pandoc.exe"
 
@@ -43,7 +44,7 @@ def achar_capa(dir_ebook):
 
 
 def gerar(slug, gerar_pdf_tambem=False):
-    dir_ebook = DIR_OUTPUT / slug
+    dir_ebook = TO.dir_obra(slug, DIR_OUTPUT)
     md_path = dir_ebook / "livro_final.md"
     if not md_path.exists():
         print(f"[ERRO] livro_final.md nao encontrado em {dir_ebook}")

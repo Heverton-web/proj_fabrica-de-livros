@@ -182,7 +182,7 @@ def html_para_pdf(html_path, pdf_path):
 
 
 def compilar(slug, com_pdf=True):
-    dir_deck = DIR_OUTPUT / slug
+    dir_deck = TO.dir_obra(slug, DIR_OUTPUT)
     md = dir_deck / "deck.md"
     if not md.exists():
         print(f"[ERRO] deck.md nao encontrado em {dir_deck}")
@@ -252,8 +252,8 @@ def main():
         return 1
 
     if args.todos:
-        alvos = [s for s in TO.listar_materiais("deck")
-                 if (DIR_OUTPUT / s / "deck.md").exists()]
+        alvos = [s for s in TO.listar_materiais("deck", DIR_OUTPUT)
+                 if (TO.dir_obra(s, DIR_OUTPUT) / "deck.md").exists()]
     elif args.slug:
         alvos = [args.slug]
     else:

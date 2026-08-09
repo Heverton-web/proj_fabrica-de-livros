@@ -22,6 +22,7 @@ from pathlib import Path
 from secoes_eita import (dividir_secoes, normalizar, secao_por_nome, sem_codigo)
 
 from tipos_obra import console_utf8
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -91,7 +92,7 @@ def linhas_das_partes(card):
 
 
 def validar(slug, limiar_teoria=LIMIAR_TEORIA):
-    dir_pbk = DIR_OUTPUT / slug
+    dir_pbk = TO.dir_obra(slug, DIR_OUTPUT)
     config = _ler_json(dir_pbk / "config_obra.json")
     sumario = _ler_json(dir_pbk / "sumario_macro.json")
     dir_passos = dir_pbk / "passos"
@@ -118,7 +119,7 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
     dir_mae = None
     if slug_mae_simples:
         for raiz in ("livros", "tccs"):
-            candidato = DIR_OUTPUT / raiz / slug_mae_simples
+            candidato = TO.dir_obra(raiz, DIR_OUTPUT) / slug_mae_simples
             if candidato.exists():
                 dir_mae = candidato
                 break
@@ -229,7 +230,7 @@ def main():
 
     rel = validar(args.slug, limiar_teoria=args.limiar_teoria)
 
-    dir_rev = DIR_OUTPUT / args.slug / "revisao"
+    dir_rev = TO.dir_obra(args.slug, DIR_OUTPUT) / "revisao"
     dir_rev.mkdir(parents=True, exist_ok=True)
     (dir_rev / "relatorio_playbook.json").write_text(
         json.dumps(rel, ensure_ascii=False, indent=2), encoding="utf-8")

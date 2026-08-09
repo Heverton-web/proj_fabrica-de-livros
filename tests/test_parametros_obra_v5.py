@@ -156,10 +156,12 @@ class TestFatiarObraPlaybook:
         fatiar.gerar_playbook(ambiente["slug"])
         assert not excede_max_path(self._dir_playbook(ambiente))
 
-    def test_encurta_de_verdade_quando_a_obra_tem_nome_longo(self):
+    def test_encurta_de_verdade_quando_a_obra_tem_nome_longo(self, tmp_path, monkeypatch):
         """A convencao V5.1 existe para o caso REAL. Com um slug ja curto o ganho
         e nulo (ate negativo); o que ela resolve e o nome de obra de 42 chars
         repetido na pasta E no arquivo, que gerava caminhos de ~197."""
+        # Layout plano: sem obra-root no output (serie-aware encontraria a real).
+        monkeypatch.setattr(TO, "DIR_OUTPUT", tmp_path / "output")
         mae = "ai-driven-development-do-zero-ao-deploy-v2"
         antigo = f"playbooks/{mae}--pbk/{mae}--pbk.pdf"      # 109 chars
         slug = TO.slug_curto("playbook", mae, nome="AI Driven Development")

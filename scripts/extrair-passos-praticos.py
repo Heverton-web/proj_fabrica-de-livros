@@ -57,7 +57,7 @@ def _ler_json(caminho, padrao=None):
 
 def contexto_da_obra(slug):
     """Mapa capitulo -> {titulo, objetivo, estagio} + metadados herdados do livro-mae."""
-    dir_mae = DIR_OUTPUT / slug
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
     sumario = _ler_json(dir_mae / "sumario_macro.json")
     config = _ler_json(dir_mae / "config_obra.json")
     motivo = sumario.get("motivo_condutor") or {}
@@ -86,8 +86,8 @@ def contexto_da_obra(slug):
 
     return {
         "slug_mae": slug,
-        "slug_mae_simples": dir_mae.name,
-        "titulo_obra": sumario.get("titulo_obra", dir_mae.name),
+        "slug_mae_simples": Path(slug).name,
+        "titulo_obra": sumario.get("titulo_obra", Path(slug).name),
         "introducao": sumario.get("introducao", ""),
         "motivo_condutor": motivo,
         "persona": motivo.get("persona_leitor", "Praticante"),
@@ -273,7 +273,7 @@ def montar_markdown(cards, contexto, objetivo_material=""):
 # ── Orquestracao ──────────────────────────────────────────────────────────────
 
 def extrair(slug, montar=True):
-    dir_mae = DIR_OUTPUT / slug
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
     dir_caps = dir_mae / "capitulos"
     if not dir_caps.exists():
         print(f"[ERRO] Capitulos nao encontrados: {dir_caps}")
@@ -290,8 +290,8 @@ def extrair(slug, montar=True):
 
     contexto = contexto_da_obra(slug)
     slug_pbk = TO.slug_curto("playbook", contexto["slug_mae_simples"],
-                             nome=contexto["titulo_obra"])
-    dir_pbk = DIR_OUTPUT / slug_pbk
+                             nome=contexto["titulo_obra"], base=DIR_OUTPUT)
+    dir_pbk = TO.dir_obra(slug_pbk, DIR_OUTPUT)
     for sub in ("passos", "revisao", "imagens"):
         (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
 

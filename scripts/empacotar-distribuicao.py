@@ -45,7 +45,7 @@ Para licenciamento e permissoes, contate o autor.
 
 
 def carregar_derivados(slug):
-    caminho = DIR_OUTPUT / slug / "derivados.json"
+    caminho = TO.dir_obra(slug, DIR_OUTPUT) / "derivados.json"
     if not caminho.exists():
         return None
     return json.loads(caminho.read_text(encoding="utf-8"))
@@ -66,7 +66,7 @@ def copiar_derivados_v5(derivados, dest):
         destino = dest / raiz
         destino.mkdir(parents=True, exist_ok=True)
         for item in itens:
-            dir_item = DIR_OUTPUT / item["diretorio"]
+            dir_item = TO.dir_obra(item["diretorio"], DIR_OUTPUT)
             if not dir_item.exists():
                 print(f"  [AVISO] {raiz}/{item['slug']} ausente (opcional)")
                 continue
@@ -145,7 +145,7 @@ def montar_readme(slug, tema, tamanho, pdf_bytes, ebooks, artigos, epub_bytes=No
 
 
 def empacotar(slug):
-    dir_obra = DIR_OUTPUT / slug
+    dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     pdf_orig = dir_obra / "livro_final.pdf"
     if not pdf_orig.exists():
         print(f"[ERRO] livro_final.pdf nao encontrado em {dir_obra}")
@@ -200,7 +200,7 @@ def empacotar(slug):
     artigos_copiados = []
     for a in artigos:
         i = a["indice"]
-        dir_art = DIR_OUTPUT / a["diretorio"]
+        dir_art = TO.dir_obra(a["diretorio"], DIR_OUTPUT)
         pdf_art = dir_art / "livro_final.pdf"
         if pdf_art.exists():
             shutil.copy2(pdf_art, dest_artigos / f"artigo_{i}.pdf")
@@ -214,7 +214,7 @@ def empacotar(slug):
     ebooks_copiados = []
     for e in ebooks_previstos:
         i = e["indice"]
-        dir_eb = DIR_OUTPUT / e["diretorio"]
+        dir_eb = TO.dir_obra(e["diretorio"], DIR_OUTPUT)
         epubs_encontrados = list(dir_eb.glob("*.epub"))
         epub = epubs_encontrados[0] if epubs_encontrados else None
         if epub and epub.exists():

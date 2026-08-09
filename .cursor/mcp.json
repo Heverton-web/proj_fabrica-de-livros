@@ -19,6 +19,15 @@
       "args": [
         "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\pdf-gen-server\\index.js"
       ]
+    },
+    "code-review-graph": {
+      "command": "uvx",
+      "args": [
+        "code-review-graph",
+        "serve"
+      ],
+      "cwd": "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros",
+      "type": "stdio"
     }
   }
 }

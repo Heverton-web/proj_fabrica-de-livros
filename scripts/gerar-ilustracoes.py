@@ -17,6 +17,7 @@ import re
 import sys
 import tempfile
 from pathlib import Path
+import tipos_obra as TO
 
 try:
     from playwright.sync_api import sync_playwright
@@ -374,7 +375,7 @@ def renderizar_png(html_content, caminho_png):
 
 def gerar_ilustracoes_capitulo(slug, num_cap, cor_acento=None):
     """Gera ilustração única para um capítulo."""
-    dir_obra = DIR_OUTPUT / slug
+    dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     dir_ilust = dir_obra / "imagens" / "ilustracoes"
     dir_ilust.mkdir(parents=True, exist_ok=True)
 
@@ -404,7 +405,7 @@ def main():
     ap.add_argument("--validar", action="store_true")
     args = ap.parse_args()
 
-    dir_obra = DIR_OUTPUT / args.slug
+    dir_obra = TO.dir_obra(args.slug, DIR_OUTPUT)
     if not dir_obra.exists():
         print(f"[ERRO] Obra nao encontrada: {dir_obra}")
         return 1

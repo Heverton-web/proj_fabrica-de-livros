@@ -168,9 +168,11 @@ class TestSlugsDoRegistro:
         s = TO.slug_curto("lead-magnet", "ai-driven-development-v2", 1, "armadilhas")
         assert s == "lead-magnets/ai-driven/lm-1-armadilhas"
 
-    def test_slug_curto_encurta_o_caminho_de_verdade(self):
+    def test_slug_curto_encurta_o_caminho_de_verdade(self, tmp_path, monkeypatch):
         mae = "ai-driven-development-do-zero-ao-deploy-v2"
         antigo = f"lead-magnets/{mae}--lm-01-armadilhas/{mae}--lm-01-armadilhas.pdf"
+        # Layout plano: sem obra-root no output (serie-aware encontraria a real).
+        monkeypatch.setattr(TO, "DIR_OUTPUT", tmp_path / "output")
         novo = TO.slug_curto("lead-magnet", mae, 1, "armadilhas")
         novo += f"/{TO.nome_arquivo(novo)}.pdf"
         assert len(novo) < len(antigo) / 2

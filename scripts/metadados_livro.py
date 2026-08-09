@@ -24,6 +24,7 @@ import sys
 import unicodedata
 from collections import Counter
 from pathlib import Path
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -172,7 +173,7 @@ def contar_paginas_pdf(pdf_path):
 
 def coletar(slug, autor=AUTOR_PADRAO, paginas=None, dir_livro=None):
     """Monta o dicionario completo de metadados da obra."""
-    dir_livro = Path(dir_livro) if dir_livro else DIR_OUTPUT / slug
+    dir_livro = Path(dir_livro) if dir_livro else TO.dir_obra(slug, DIR_OUTPUT)
 
     sumario = {}
     caminho_sumario = dir_livro / "sumario_macro.json"
@@ -258,7 +259,7 @@ CHAVES_PANDOC_TCC = (
 def coletar_tcc(slug, autor=AUTOR_PADRAO, dir_livro=None):
     """Metadados de TCC: le output/<slug>/tcc_metadados.json (gravado pelo
     compilador-tcc na Fase 3) com defaults minimos se ainda nao existir."""
-    dir_livro = Path(dir_livro) if dir_livro else DIR_OUTPUT / slug
+    dir_livro = Path(dir_livro) if dir_livro else TO.dir_obra(slug, DIR_OUTPUT)
     caminho = dir_livro / CAMINHO_TCC_METADADOS
     dados = {}
     if caminho.exists():
@@ -310,7 +311,7 @@ CHAVES_PANDOC_ARTIGO = ("resumo", "palavras_chave", "abstract_en", "keywords_en"
 def coletar_artigo(slug, autor=AUTOR_PADRAO, dir_livro=None):
     """Metadados de artigo: le <dir_livro>/artigo_metadados.json (gravado pelo
     compilador-artigo na Fase 3) com defaults minimos se ainda nao existir."""
-    dir_livro = Path(dir_livro) if dir_livro else DIR_OUTPUT / slug
+    dir_livro = Path(dir_livro) if dir_livro else TO.dir_obra(slug, DIR_OUTPUT)
     caminho = dir_livro / CAMINHO_ARTIGO_METADADOS
     dados = {}
     if caminho.exists():
@@ -365,7 +366,7 @@ ROTULOS_NIVEL = {"iniciante": "PARA INICIANTES", "intermediario": "NÍVEL INTERM
 
 def _contexto_derivado(slug, dir_livro=None):
     """Bloco comum aos tres derivados: config + sumario + capa + cor da colecao."""
-    dir_livro = Path(dir_livro) if dir_livro else DIR_OUTPUT / slug
+    dir_livro = Path(dir_livro) if dir_livro else TO.dir_obra(slug, DIR_OUTPUT)
     config = _ler_json_seguro(dir_livro / "config_obra.json")
     sumario = _ler_json_seguro(dir_livro / "sumario_macro.json")
 
@@ -495,8 +496,8 @@ def main():
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
-    if not (DIR_OUTPUT / args.slug).exists():
-        print(f"[ERRO] Livro nao encontrado: {DIR_OUTPUT / args.slug}")
+    if not (TO.dir_obra(args.slug, DIR_OUTPUT)).exists():
+        print(f"[ERRO] Livro nao encontrado: {TO.dir_obra(args.slug, DIR_OUTPUT)}")
         return 1
 
     dados = coletar(args.slug, args.autor, args.paginas)

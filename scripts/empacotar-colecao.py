@@ -204,9 +204,17 @@ def empacotar(colecao, incluir_parciais=False):
 
     migrar_prefixo_underscore(DIR_PACOTES)        # _distribuicao -> distribuicao
     validador = _importar_validador()
+    # Por obra: o pacote nasce em <obra>/distribuicao/ (a serie analista ja tem
+    # esse dir). Sem obra resolvida (layout plano), cai em output/distribuicao/.
+    nucleo = manifesto.get("nucleo", {})
+    obra_raiz = TO._obra_raiz(Path(nucleo.get("slug", "")).name, DIR_OUTPUT)
+    pacotes_root = DIR_PACOTES
+    if obra_raiz is not None:
+        pacotes_root = obra_raiz / "distribuicao"
+        migrar_prefixo_underscore(pacotes_root)
     # Nome curto tambem na RAIZ do pacote: nao adianta encurtar o arquivo se a
     # pasta que o contem devolve os 40 caracteres ao caminho.
-    destino = DIR_PACOTES / pasta_do_pacote(colecao)
+    destino = pacotes_root / pasta_do_pacote(colecao)
     if destino.exists():
         shutil.rmtree(destino)          # idempotente
     destino.mkdir(parents=True, exist_ok=True)
@@ -244,7 +252,7 @@ def empacotar(colecao, incluir_parciais=False):
         # E-mails: a sequencia inteira, nao so o consolidado. A subpasta leva o
         # mesmo nome-base do consolidado para nao competir com ele.
         if tipo == "emails":
-            origem_dir = DIR_OUTPUT / membro["slug"] / "emails"
+            origem_dir = TO.dir_obra(membro["slug"], DIR_OUTPUT) / "emails"
             if origem_dir.exists():
                 sub = pasta / base
                 sub.mkdir(parents=True, exist_ok=True)

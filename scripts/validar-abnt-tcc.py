@@ -28,6 +28,7 @@ import json
 import re
 import sys
 from pathlib import Path
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -43,7 +44,7 @@ def checar_numeracao_sem_saltos(texto):
 
 
 def validar(slug):
-    dir_livro = DIR_OUTPUT / slug
+    dir_livro = TO.dir_obra(slug, DIR_OUTPUT)
     livro_final = dir_livro / "livro_final.md"
     if not livro_final.exists():
         return None, f"livro_final.md nao encontrado em {dir_livro}"
@@ -106,7 +107,7 @@ def main():
         print(f"[ERRO] {erro}")
         return 1
 
-    dir_rev = DIR_OUTPUT / args.slug / "revisao"
+    dir_rev = TO.dir_obra(args.slug, DIR_OUTPUT) / "revisao"
     dir_rev.mkdir(parents=True, exist_ok=True)
     destino = dir_rev / "relatorio_abnt_tcc.json"
     destino.write_text(json.dumps(relatorio, ensure_ascii=False, indent=2), encoding="utf-8")

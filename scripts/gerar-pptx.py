@@ -97,7 +97,7 @@ def aplicar_cor_no_tema(origem, destino, cor_hex):
 
 
 def compilar(slug, recriar_reference=False):
-    dir_deck = DIR_OUTPUT / slug
+    dir_deck = TO.dir_obra(slug, DIR_OUTPUT)
     md = dir_deck / "deck.md"
     if not md.exists():
         print(f"[ERRO] deck.md nao encontrado em {dir_deck}")
@@ -181,7 +181,7 @@ def main():
         return 1
 
     if args.todos:
-        alvos = TO.listar_materiais("deck")
+        alvos = TO.listar_materiais("deck", DIR_OUTPUT)
     elif args.slug:
         alvos = [args.slug]
     else:

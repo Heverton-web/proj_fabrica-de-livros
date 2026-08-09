@@ -21,6 +21,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+import tipos_obra as TO
 
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
@@ -90,7 +91,7 @@ def main():
                     help="formata tambem livro_final.md (compilado)")
     args = ap.parse_args()
 
-    dir_obra = DIR_OUTPUT / args.slug
+    dir_obra = TO.dir_obra(args.slug, DIR_OUTPUT)
     alvos = sorted((dir_obra / "capitulos").glob("cap_*.md"))
 
     if args.tambem_artigos:

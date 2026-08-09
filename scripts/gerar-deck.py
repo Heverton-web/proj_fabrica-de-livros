@@ -73,7 +73,7 @@ def _bullets(cap_meta, card, max_bullets):
 
 
 def gerar(slug, max_bullets=MAX_BULLETS, cta_url=None, cta_texto=None):
-    dir_mae = DIR_OUTPUT / slug
+    dir_mae = TO.dir_obra(slug, DIR_OUTPUT)
     sumario = _ler_json(dir_mae / "sumario_macro.json")
     config = _ler_json(dir_mae / "config_obra.json")
     if not sumario.get("partes"):
@@ -86,14 +86,14 @@ def gerar(slug, max_bullets=MAX_BULLETS, cta_url=None, cta_texto=None):
     # Cards do playbook, se existirem (nao obrigatorios)
     slug_pbk = TO.slug_curto("playbook", ctx["slug_mae_simples"],
                              nome=ctx.get("titulo_obra", ""))
-    dir_passos = DIR_OUTPUT / slug_pbk / "passos"
+    dir_passos = TO.dir_obra(slug_pbk, DIR_OUTPUT) / "passos"
     cards = {c.get("numero"): c for c in
              (_ler_json(p) for p in sorted(dir_passos.glob("passo_*.json")))} \
         if dir_passos.exists() else {}
 
     titulo = sumario.get("titulo_obra", ctx["slug_mae_simples"])
-    slug_deck = TO.slug_curto("deck", ctx["slug_mae_simples"], nome=titulo)
-    dir_deck = DIR_OUTPUT / slug_deck
+    slug_deck = TO.slug_curto("deck", ctx["slug_mae_simples"], nome=titulo, base=DIR_OUTPUT)
+    dir_deck = TO.dir_obra(slug_deck, DIR_OUTPUT)
     (dir_deck / "imagens" / "diagramas").mkdir(parents=True, exist_ok=True)
     (dir_deck / "revisao").mkdir(parents=True, exist_ok=True)
 

@@ -77,13 +77,13 @@ def resolver_fonte(slug):
     extrator = _importar_extrator()
 
     if slug.startswith("playbooks/"):
-        dir_pbk = DIR_OUTPUT / slug
+        dir_pbk = TO.dir_obra(slug, DIR_OUTPUT)
         cards = [_ler_json(p) for p in sorted((dir_pbk / "passos").glob("passo_*.json"))]
         cfg = _ler_json(dir_pbk / "config_obra.json")
         mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae")
         slug_mae = None
         for raiz in ("livros", "tccs"):
-            if mae_simples and (DIR_OUTPUT / raiz / mae_simples).exists():
+            if mae_simples and TO.dir_obra(f"{raiz}/{mae_simples}", DIR_OUTPUT).exists():
                 slug_mae = f"{raiz}/{mae_simples}"
                 break
         contexto = extrator.contexto_da_obra(slug_mae) if slug_mae else {
@@ -102,7 +102,7 @@ def resolver_fonte(slug):
     contexto = extrator.contexto_da_obra(slug)
     slug_pbk = TO.slug_curto("playbook", contexto["slug_mae_simples"],
                              nome=contexto.get("titulo_obra", ""))
-    dir_pbk = DIR_OUTPUT / slug_pbk
+    dir_pbk = TO.dir_obra(slug_pbk, DIR_OUTPUT)
     cards = [_ler_json(p) for p in sorted((dir_pbk / "passos").glob("passo_*.json"))] \
         if (dir_pbk / "passos").exists() else []
     if not cards:
@@ -140,8 +140,8 @@ def _frontmatter(titulo, subtitulo):
             'author: "Heverton Eduardo Peres"', "lang: pt-BR", "---", ""]
 
 
-def montar_checklist(cards, ctx):
-    teto = FORMATOS_LM["checklist"]["max_itens"]
+def montar_checklist(cards, ctx, teto=None):
+    teto = teto or FORMATOS_LM["checklist"]["max_itens"]
     selecionados = _rodizio(cards, "feito_quando", teto)
     por_card = {}
     for num, _titulo, item in selecionados:
@@ -216,8 +216,8 @@ def montar_armadilhas(cards, ctx, teto=None):
     return L, len(todas)
 
 
-def montar_cheatsheet(cards, ctx):
-    teto = FORMATOS_LM["cheatsheet"]["max_itens"]
+def montar_cheatsheet(cards, ctx, teto=None):
+    teto = teto or FORMATOS_LM["cheatsheet"]["max_itens"]
     total = 0
     L = ["# Folha de bancada", "",
          "Todos os comandos, na ordem de execução. Imprima e deixe ao lado do teclado.", ""]
@@ -237,8 +237,8 @@ def montar_cheatsheet(cards, ctx):
     return L, total
 
 
-def montar_entregas(cards, ctx):
-    teto = FORMATOS_LM["entregas"]["max_itens"]
+def montar_entregas(cards, ctx, teto=None):
+    teto = teto or FORMATOS_LM["entregas"]["max_itens"]
     selecionados = _rodizio(cards, "entregas", teto)
     gates = {int(c["numero"]): c.get("gate") for c in cards}
 
@@ -253,7 +253,7 @@ def montar_entregas(cards, ctx):
     return L, len(selecionados)
 
 
-def montar_mapa(cards, ctx):
+def montar_mapa(cards, ctx, teto=None):
     """Uma folha, nao um indice comentado.
 
     A versao com um `##` + paragrafo por capitulo rendia 7 paginas num livro de
@@ -272,7 +272,7 @@ def montar_mapa(cards, ctx):
     # "Objetivo" ocupava 227mm (uma pagina inteira) e fazia o formato estourar o
     # proprio teto — o objetivo de cada etapa ja vive no checklist e no mini-guia.
     # Uma linha por etapa, sem quebra de texto.
-    teto = FORMATOS_LM["mapa"]["max_itens"]
+    teto = teto or FORMATOS_LM["mapa"]["max_itens"]
     L += ["## As etapas", "", "| # | Etapa | Estágio |", "|---|---|---|"]
     for c in cards[:teto]:
         L.append(f"| {int(c['numero'])} | {_truncar(c['titulo'], 58)} "
@@ -281,7 +281,7 @@ def montar_mapa(cards, ctx):
     return L, len(estagios) or len(cards)
 
 
-def montar_mini_guia(cards, ctx):
+def montar_mini_guia(cards, ctx, teto=None):
     c = cards[0]
     L = [f"# {c['titulo']}", "",
          "## Por que esta etapa existe", "",
@@ -322,7 +322,8 @@ def indice_do_formato(formato):
     return sorted(FORMATOS_LM).index(formato) + 1
 
 
-def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None, ctx=None):
+def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None,
+          ctx=None, max_itens=None):
     if formato not in FORMATOS_LM:
         print(f"[ERRO] formato desconhecido: {formato}. "
               f"Validos: {', '.join(FORMATOS_LM)}")
@@ -335,15 +336,15 @@ def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None, 
             return None
 
     spec = FORMATOS_LM[formato]
-    corpo, n_itens = MONTADORES[formato](cards, ctx)
+    corpo, n_itens = MONTADORES[formato](cards, ctx, teto=max_itens)
 
     tema = ctx.get("titulo_obra") or ctx.get("slug_mae_simples", "")
     titulo = spec["titulo_padrao"].format(tema=tema, n=n_itens)
     promessa = spec["promessa"].format(tema=tema, n=n_itens)
 
     mae_simples = ctx["slug_mae_simples"]
-    slug_lm = TO.slug_curto("lead-magnet", mae_simples, sequencia=indice, nome=formato)
-    dir_lm = DIR_OUTPUT / slug_lm
+    slug_lm = TO.slug_curto("lead-magnet", mae_simples, sequencia=indice, nome=formato, base=DIR_OUTPUT)
+    dir_lm = TO.dir_obra(slug_lm, DIR_OUTPUT)
     for sub in ("imagens", "revisao"):
         (dir_lm / sub).mkdir(parents=True, exist_ok=True)
 
@@ -392,6 +393,8 @@ def main():
     ap.add_argument("--todos", action="store_true", help="gera todos os formatos")
     ap.add_argument("--cta-url", default=None)
     ap.add_argument("--cta-texto", default=None)
+    ap.add_argument("--max-itens", type=int, default=None,
+                    help="corta o teto de itens do formato (R-LM-3: ajuste fino de paginas)")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
@@ -406,7 +409,8 @@ def main():
     metas = []
     for formato in formatos:
         meta = gerar(args.slug, formato, cta_url=args.cta_url,
-                     cta_texto=args.cta_texto, cards=cards, ctx=ctx)
+                     cta_texto=args.cta_texto, cards=cards, ctx=ctx,
+                     max_itens=args.max_itens)
         if meta:
             metas.append(meta)
 
