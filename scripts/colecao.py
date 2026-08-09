@@ -34,20 +34,82 @@ DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
 
-def _dir_colecoes():
-    """Dir onde vivem os manifestos de colecao.
+_RAIZES_ESTRUTURAIS = frozenset(
+    {TO.raiz_output(t) for t in TO.tipos_validos()}
+    | {"marketing", "distribuicao", "colecoes"}
+)
 
-    Por obra: reutiliza o primeiro <obra>/colecoes/ existente (a serie analista
-    centralizou os manifestos na reorg). Se nenhuma obra tiver o dir, cria em
-    output/colecoes/ (legado plano)."""
-    for obra in TO._sereis():
-        cand = obra / "colecoes"
-        if cand.exists():
-            return cand
+
+def _dir_colecoes():
+    """Dir padrao (fallback) dos manifestos de colecao.
+
+    Desde a reorg por HUB (V5.2) cada colecao grava o manifesto no hub da
+    propria colecao (ver `_dir_colecoes_da`). Este dir e usado apenas para
+    colecoes sem hub (layout plano `output/<tipo>/<slug>`) e como default
+    monkeypatchavel nos testes."""
     return DIR_OUTPUT / "colecoes"
 
 
 DIR_COLECOES = _dir_colecoes()
+
+
+def _hub_da_colecao(membros):
+    """Slug do hub onde a colecao mora, ou None (layout plano / misto).
+
+    O hub e o primeiro segmento comum dos slugs de membro que nao seja raiz de
+    tipo nem pasta estrutural (ex.: 'analista-financeiro-...-pt/livros/l1'
+    -> hub 'analista-financeiro-...-pt'). Mais de um hub distinto ou nenhum
+    -> None (fallback plano)."""
+    hubs = set()
+    for m in membros:
+        if "/" in m["slug"]:
+            primeira = m["slug"].split("/", 1)[0]
+            if primeira and primeira not in _RAIZES_ESTRUTURAIS:
+                hubs.add(primeira)
+    return next(iter(hubs)) if len(hubs) == 1 else None
+
+
+def _dir_colecoes_da(chave, membros):
+    """Dir dos manifestos da colecao: o hub dela (HUB POR COLEÇÃO) ou o fallback
+    plano `output/colecoes/` quando nao ha hub."""
+    hub = _hub_da_colecao(membros)
+    if hub:
+        return DIR_OUTPUT / hub / "colecoes"
+    return DIR_COLECOES
+
+
+def _todos_dirs_manifestos():
+    """Todos os dirs que podem conter manifestos: fallback plano + hubs.
+
+    Varre `DIR_OUTPUT/*/colecoes` do proprio modulo (monkeypatchavel nos
+    testes) — nao depende do DIR_OUTPUT interno de tipos_obra."""
+    dirs = {DIR_COLECOES}
+    if DIR_OUTPUT.exists():
+        for cand in DIR_OUTPUT.glob("*/colecoes"):
+            if cand.is_dir():
+                dirs.add(cand)
+    return dirs
+
+
+def _metadados_ricos(chave, membros, caminho_atual):
+    """Metadados ricos da colecao a fundir no manifesto, idempotente.
+
+    Fonte 1: <hub>/series.json (artefato legado de metadados — nome/subtitulo/
+    tema/objetivo/livros/metricas — criado fora dos scripts; o series.json da
+    RAIZ de output/ e o registro de cores e nao e tocado). Fonte 2: os
+    metadados ja fundidos no manifesto anterior no disco (idempotencia apos a
+    fusao). Devolve (dados, caminho_legado|None); o legado e apagado pelo
+    chamador DEPOIS de gravar o manifesto com sucesso."""
+    hub = _hub_da_colecao(membros)
+    if hub:
+        legado = DIR_OUTPUT / hub / "series.json"
+        if legado.exists():
+            return _ler_json(legado), legado
+    if caminho_atual.exists():
+        antigo = _ler_json(caminho_atual)
+        if isinstance(antigo, dict) and antigo.get("metadados"):
+            return antigo["metadados"], None
+    return {}, None
 
 
 def _ler_json(caminho, padrao=None):
@@ -115,7 +177,7 @@ def varrer():
     return colecoes
 
 
-def montar_manifesto(chave, membros):
+def montar_manifesto(chave, membros, metadados=None):
     raizes = [m for m in membros if not TO.campo(m["tipo"], "derivado_de", ())]
     nucleo = raizes[0] if raizes else (membros[0] if membros else {})
     motivo = {}
@@ -128,7 +190,7 @@ def montar_manifesto(chave, membros):
     sem_cta = [m["slug"] for m in membros
                if TO.campo(m["tipo"], "exige_cta") and not m["cta_url"]]
 
-    return {
+    manifesto = {
         "colecao": chave,
         "cor_accent": resolver_cor(chave),
         "atualizado_em": date.today().isoformat(),
@@ -146,6 +208,9 @@ def montar_manifesto(chave, membros):
         "derivados_ausentes": faltantes,
         "membros_sem_cta": sem_cta,
     }
+    if metadados:
+        manifesto["metadados"] = metadados
+    return manifesto
 
 
 def sincronizar(slug=None):
@@ -154,20 +219,31 @@ def sincronizar(slug=None):
     if slug:
         alvo = resolver_serie_key(_ler_json(TO.dir_obra(slug, DIR_OUTPUT) / "config_obra.json"), slug)
         colecoes = {k: v for k, v in colecoes.items() if k == alvo}
-    DIR_COLECOES.mkdir(parents=True, exist_ok=True)
-    # Sem limpar, um manifesto de uma chave que deixou de existir (renomeacao de
-    # pasta, mudanca de `serie`) sobrevive no disco e reaparece em `--listar`
-    # como se a colecao ainda existisse.
+
+    # Limpeza global: sem ela, um manifesto de uma chave que deixou de existir
+    # (renomeacao de pasta, mudanca de `serie`) sobrevive no disco e reaparece
+    # em --listar como se a colecao ainda existisse. Varre o fallback plano E
+    # todos os hubs.
     if slug is None:
         vivos = {f"{_slug_arquivo(k)}.json" for k in colecoes}
-        for antigo in DIR_COLECOES.glob("*.json"):
-            if antigo.name not in vivos:
-                antigo.unlink()
+        for dir_manifestos in _todos_dirs_manifestos():
+            if not dir_manifestos.exists():
+                continue
+            for antigo in dir_manifestos.glob("*.json"):
+                if antigo.name not in vivos:
+                    antigo.unlink()
+
     manifestos = []
     for chave, membros in sorted(colecoes.items()):
-        manifesto = montar_manifesto(chave, membros)
-        (DIR_COLECOES / f"{_slug_arquivo(chave)}.json").write_text(
+        destino = _dir_colecoes_da(chave, membros)
+        destino.mkdir(parents=True, exist_ok=True)
+        caminho = destino / f"{_slug_arquivo(chave)}.json"
+        metadados, legado = _metadados_ricos(chave, membros, caminho)
+        manifesto = montar_manifesto(chave, membros, metadados)
+        caminho.write_text(
             json.dumps(manifesto, ensure_ascii=False, indent=2), encoding="utf-8")
+        if legado is not None:
+            legado.unlink()     # fundido no manifesto; series.json do hub nao existe mais
         manifestos.append(manifesto)
     return manifestos
 
@@ -175,10 +251,12 @@ def sincronizar(slug=None):
 def carregar(chave):
     """Manifesto da colecao, ou None se ela ainda nao foi sincronizada."""
     migrar_prefixo_underscore(DIR_COLECOES)
-    caminho = DIR_COLECOES / f"{_slug_arquivo(chave)}.json"
-    if not caminho.exists():
-        return None
-    return _ler_json(caminho)
+    nome = f"{_slug_arquivo(chave)}.json"
+    for dir_manifestos in _todos_dirs_manifestos():
+        caminho = dir_manifestos / nome
+        if caminho.exists():
+            return _ler_json(caminho)
+    return None
 
 
 def _imprimir(manifesto):
@@ -214,18 +292,22 @@ def main():
         if args.json:
             print(json.dumps(manifestos, ensure_ascii=False, indent=2))
             return 0
-        try:
-            onde = DIR_COLECOES.relative_to(DIR_PROJETO)
-        except ValueError:      # output/ fora da arvore do projeto
-            onde = DIR_COLECOES
+        dirs_usados = sorted(
+            {str(p.relative_to(DIR_PROJETO)) for p in _todos_dirs_manifestos()
+             if p.exists() and any(p.glob("*.json"))})
+        onde = ", ".join(dirs_usados) or str(DIR_COLECOES)
         print(f"[OK] {len(manifestos)} colecao(oes) sincronizada(s) em {onde}")
         for m in manifestos:
             print(f"  {m['colecao']:<34} {m['total_membros']:>3} membro(s)  {m['por_tipo']}")
         return 0
 
     if args.listar or (not args.colecao):
-        manifestos = [_ler_json(p) for p in sorted(DIR_COLECOES.glob("*.json"))] \
-            if DIR_COLECOES.exists() else []
+        manifestos = []
+        for dir_manifestos in _todos_dirs_manifestos():
+            if dir_manifestos.exists():
+                manifestos += [_ler_json(p)
+                               for p in sorted(dir_manifestos.glob("*.json"))]
+        manifestos = [m for m in manifestos if isinstance(m, dict)]
         if not manifestos:
             print("[i] Nenhum manifesto. Rode: python scripts/colecao.py --sincronizar")
             return 0
