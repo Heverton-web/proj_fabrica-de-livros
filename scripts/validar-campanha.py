@@ -5,7 +5,8 @@ Validar-Campanha (V5.3) — gates da camada CAMPANHA (R-CP-1 a R-CP-5).
 R-CP-1 estrutura: arvore de pastas do registro existe por material.
 R-CP-2 conteudo: textos nao vazios, sem copy generica (regra 12) e sem molde
     RASCUNHO pendente.
-R-CP-3 artes: PNG valido (assinatura + tamanho minimo); HTML fonte ao lado.
+R-CP-3 artes: PNG valido (assinatura + tamanho minimo), HTML fonte ao lado e
+    quantidade por formato/sequencia suficiente para o cronograma.
 R-CP-4 merito (--estrito): vocabulario condutor da colecao presente na copy.
 R-CP-5 cronogramas: presentes, com datas futuras e PDF ao lado.
 R-CP-C1 (--completo): todo material da colecao tem campanha com status completa.
@@ -90,7 +91,7 @@ def validar_material(slug, estrito=False, base=None):
                                       "detalhe": f"sem PDF ao lado de "
                                                  f"{arquivo.relative_to(raiz)}"})
 
-        # R-CP-3 — artes
+        # R-CP-3 — artes (validez + quantidade que supre o cronograma)
         for png in sorted(raiz.rglob("*.png")):
             try:
                 dados = png.read_bytes()
@@ -101,6 +102,24 @@ def validar_material(slug, estrito=False, base=None):
             if not dados.startswith(b"\x89PNG") or len(dados) < MIN_PNG:
                 violacoes.append({"regra": "R-CP-3",
                                   "detalhe": f"PNG invalido: {png.relative_to(raiz)}"})
+        for rede, dados in CP.REDES_SOCIAIS.items():
+            for formato, n_esperado in CP.n_artes_redes(rede).items():
+                dir_artes = raiz / f"redes-sociais/{rede}/artes/{formato}"
+                n_real = len(list(dir_artes.glob("*.png"))) if dir_artes.exists() else 0
+                if n_real < n_esperado:
+                    violacoes.append({"regra": "R-CP-3",
+                                      "detalhe": f"{rede}/{formato}: {n_real}/{n_esperado} "
+                                                 f"artes (cronograma)"})
+        for sequencia in CP.CANAIS_COMUNICACAO["whatsapp"]["sequencias"]:
+            n_esperado = CP.n_artes_whatsapp(sequencia)
+            if not n_esperado:
+                continue
+            dir_artes = raiz / f"canais-comunicacao/whatsapp/{sequencia}/artes"
+            n_real = len(list(dir_artes.glob("*.png"))) if dir_artes.exists() else 0
+            if n_real < n_esperado:
+                violacoes.append({"regra": "R-CP-3",
+                                  "detalhe": f"whatsapp/{sequencia}: {n_real}/{n_esperado} "
+                                             f"artes (cronograma)"})
 
         # R-CP-5 — cronogramas
         for crono in sorted(raiz.rglob("cronograma-*.md")):

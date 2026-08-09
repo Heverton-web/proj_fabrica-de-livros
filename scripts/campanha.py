@@ -76,6 +76,34 @@ TEMPLATES_ARTE = {
     "whatsapp": "arte-whatsapp.html",
 }
 
+def roteiro_rede(rede, dias=None):
+    """Formato de conteudo por dia (post/feed-story/direct) do cronograma da rede.
+
+    Usa os MESMOS nomes de formato do registro `artes` (ex.: instagram tem
+    'feed-story', nao 'story') para que a contagem de n_artes_redes bata."""
+    dias = dias or REDES_SOCIAIS[rede].get("cronograma_dias", 14)
+    return ["post" if i % 2 == 0 else
+            ("feed-story" if rede == "instagram" else "direct")
+            for i in range(dias)]
+
+
+def n_artes_redes(rede):
+    """Artes necessarias por formato para SUPRE o cronograma da rede.
+
+    Ex.: instagram com 14 dias alterna post/story -> 7 posts e 7 stories;
+    linkedin alterna post/direct -> 7 posts (direct e texto, sem arte).
+    """
+    roteiro = roteiro_rede(rede)
+    return {formato: roteiro.count(formato)
+            for formato in REDES_SOCIAIS[rede].get("artes", {})}
+
+
+def n_artes_whatsapp(sequencia):
+    """Artes da sequencia de WhatsApp = numero de mensagens (envios) dela."""
+    conf = CANAIS_COMUNICACAO["whatsapp"]["sequencias"].get(sequencia, {})
+    return conf.get("textos", 0) or conf.get("artes", 0)
+
+
 # Frases de CTA padrao por tipo de material (usadas quando o manifesto nao tem cta_url)
 CTA_PADRAO = {
     "livro": "Garanta o livro completo",

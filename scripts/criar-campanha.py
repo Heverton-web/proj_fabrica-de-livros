@@ -226,11 +226,13 @@ def _renderizar_png(html, png_path, dim):
 
 
 def gerar_artes(ctx, base, com_artes=True):
-    """Artes PNG (post/story/arte) por material. HTML interpolado fica ao lado
-    como fonte editavel da arte."""
+    """Artes PNG (post/story/arte) por material, na quantidade que SUPRE o
+    cronograma da rede/canal. HTML interpolado fica ao lado como fonte
+    editavel da arte."""
     geradas = []
     for rede, dados in CP.REDES_SOCIAIS.items():
         raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
+        quantidades = CP.n_artes_redes(rede)
         for formato, dim in dados.get("artes", {}).items():
             nome_template = CP.TEMPLATES_ARTE[
                 "post_ig" if (rede, formato) == ("instagram", "post")
@@ -239,7 +241,8 @@ def gerar_artes(ctx, base, com_artes=True):
                 else "post_ig"]
             prefixo = "post" if formato == "post" else "story"
             html = _interpolar_arte(nome_template, ctx)
-            for i in (1,):
+            quantidade = max(1, quantidades.get(formato, 1))
+            for i in range(1, quantidade + 1):
                 destino = raiz / f"artes/{formato}"
                 destino.mkdir(parents=True, exist_ok=True)
                 base_html = destino / f"{prefixo}-{i:02d}.html"
@@ -250,12 +253,12 @@ def gerar_artes(ctx, base, com_artes=True):
                         _renderizar_png(html, png, dim)
                         geradas.append(png)
                     except Exception as exc:  # noqa: BLE001
-                        print(f"[AVISO] arte nao renderizada ({rede}/{formato}): {exc}")
+                        print(f"[AVISO] arte nao renderizada ({rede}/{formato}-{i:02d}): {exc}")
     for canal, dados in CP.CANAIS_COMUNICACAO.items():
         if canal != "whatsapp":
             continue
         for sequencia, conf in dados.get("sequencias", {}).items():
-            quantidade = conf.get("artes", 0)
+            quantidade = CP.n_artes_whatsapp(sequencia)
             if not quantidade:
                 continue
             raiz = (CP.dir_campanha_material(ctx["slug"], base)
@@ -271,7 +274,7 @@ def gerar_artes(ctx, base, com_artes=True):
                         _renderizar_png(html, png, (1080, 1080))
                         geradas.append(png)
                     except Exception as exc:  # noqa: BLE001
-                        print(f"[AVISO] arte nao renderizada (whatsapp/{sequencia}): {exc}")
+                        print(f"[AVISO] arte nao renderizada (whatsapp/{sequencia}-{i:02d}): {exc}")
     return geradas
 
 
@@ -357,12 +360,10 @@ def gerar_cronogramas(ctx, base):
     hoje = date.today()
     for rede, dados in CP.REDES_SOCIAIS.items():
         dias = dados.get("cronograma_dias", 14)
-        roteiro = ["post" if i % 2 == 0 else
-                   ("story" if rede == "instagram" else "direct")
-                   for i in range(dias)]
+        roteiro = CP.roteiro_rede(rede, dias)
         conteudos = {
             "post": f"Post — {ctx['titulo']}",
-            "story": "Story — bastidores e dica rapida",
+            "feed-story": "Story — bastidores e dica rapida",
             "direct": "Resposta Direct — engajamento",
         }
         linhas = [f"- D+{dia} ({data}, {semana}): {conteudos[roteiro[dia - 1]]}"

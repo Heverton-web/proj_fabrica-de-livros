@@ -2,6 +2,7 @@
 
 import json
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -36,6 +37,8 @@ TEM_PANDOC_TYPST = bool(shutil.which("pandoc") and shutil.which("typst"))
 precisa_pandoc_typst = pytest.mark.skipif(
     not TEM_PANDOC_TYPST, reason="pandoc/typst indisponiveis")
 
+MIN_PNG_BYTES = 5 * 1024
+
 
 @pytest.fixture
 def ambiente(livro_falso, monkeypatch):
@@ -64,6 +67,18 @@ def ambiente(livro_falso, monkeypatch):
 
     monkeypatch.setattr(criador, "compilar_markdown_pdf", _pdf_placeholder)
     monkeypatch.setattr(criador, "compilar_cronograma_pdf", _pdf_placeholder)
+
+    # Renderizacao PNG deterministica: placeholder valido sem Chromium (a
+    # quantidade por formato/sequencia e a mesma do registro — o gate R-CP-3
+    # so exige assinatura + tamanho + contagem).
+    def _png_placeholder(html, png_path, dim):
+        png_path = Path(png_path)
+        png_path.parent.mkdir(parents=True, exist_ok=True)
+        png_path.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * (MIN_PNG_BYTES - 8))
+        return png_path
+
+    livro_falso["_renderizar_png_real"] = criador._renderizar_png
+    monkeypatch.setattr(criador, "_renderizar_png", _png_placeholder)
 
     colecao.sincronizar()
     return livro_falso
@@ -223,14 +238,62 @@ class TestGerador:
 
     @precisa_chromium
     def test_artes_renderizam_png_reais(self, ambiente):
-        criador.gerar_material(ambiente["slug"], com_artes=True)
+        """Chromium real renderiza PNGs na quantidade do cronograma."""
+        real = ambiente["_renderizar_png_real"]
+        original = criador._renderizar_png
+        criador._renderizar_png = real
+        try:
+            criador.gerar_material(ambiente["slug"], com_artes=True)
+        finally:
+            criador._renderizar_png = original
         raiz = _raiz(ambiente["slug"])
         png = raiz / "redes-sociais/instagram/artes/post/post-01.png"
         assert png.exists()
         assert png.read_bytes().startswith(b"\x89PNG")
+        assert (raiz / "redes-sociais/instagram/artes/post/post-07.png").exists()
+        assert (raiz / "redes-sociais/instagram/artes/feed-story/story-07.png").exists()
+        assert (raiz / "redes-sociais/linkedin/artes/post/post-07.png").exists()
+        assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-04.png").exists()
+
+    def test_artes_quantidade_supre_cronograma(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        raiz = _raiz(ambiente["slug"])
+        # Instagram 14 dias: 7 posts + 7 stories
+        assert (raiz / "redes-sociais/instagram/artes/post/post-01.png").exists()
+        assert (raiz / "redes-sociais/instagram/artes/post/post-07.png").exists()
         assert (raiz / "redes-sociais/instagram/artes/feed-story/story-01.png").exists()
-        assert (raiz / "redes-sociais/linkedin/artes/post/post-01.png").exists()
-        assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-01.png").exists()
+        assert (raiz / "redes-sociais/instagram/artes/feed-story/story-07.png").exists()
+        assert not (raiz / "redes-sociais/instagram/artes/post/post-08.png").exists()
+        # LinkedIn 14 dias: 7 posts (direct e texto, sem arte)
+        assert (raiz / "redes-sociais/linkedin/artes/post/post-07.png").exists()
+        assert not (raiz / "redes-sociais/linkedin/artes/post/post-08.png").exists()
+        # WhatsApp: 1 arte por mensagem da sequencia (4 e 6)
+        assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-04.png").exists()
+        assert not (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-05.png").exists()
+        assert (raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/artes/arte-06.png").exists()
+
+    def test_reprova_artes_insuficientes_para_cronograma(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        # Deleta posts do IG para ficar abaixo do exigido pelo cronograma
+        raiz = _raiz(ambiente["slug"])
+        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        for png in list(dir_post.glob("post-*.png")):
+            if png.name != "post-01.png":
+                png.unlink()
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-3" in {v["regra"] for v in rel["violacoes"]}
+        assert any("1/7 artes" in v["detalhe"] for v in rel["violacoes"])
+
+    def test_reprova_artes_insuficientes_whatsapp(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        raiz = _raiz(ambiente["slug"])
+        dir_artes = raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes"
+        for png in list(dir_artes.glob("arte-*.png")):
+            if png.name != "arte-01.png":
+                png.unlink()
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-3" in {v["regra"] for v in rel["violacoes"]}
+        assert any("1/4 artes" in v["detalhe"] for v in rel["violacoes"])
 
     def test_material_inexistente_devolve_none(self, ambiente):
         assert criador.gerar_material("livros/nao-existe") is None
@@ -246,7 +309,7 @@ class TestGate:
         assert "R-CP-2" in {v["regra"] for v in rel["violacoes"]}
 
     def test_aprova_copy_final(self, ambiente):
-        criador.gerar_material(ambiente["slug"], com_artes=False)
+        criador.gerar_material(ambiente["slug"], com_artes=True)
         _finalizar_moldes(ambiente["slug"])
         rel = gate.validar_material(ambiente["slug"], estrito=True)
         assert rel["conforme"], rel["violacoes"]
@@ -271,14 +334,18 @@ class TestGate:
         assert "R-CP-1" in {v["regra"] for v in rel["violacoes"]}
 
     def test_reprova_vocabulario_ausente_no_estrito(self, ambiente):
-        criador.gerar_material(ambiente["slug"], com_artes=False)
-        import shutil
+        criador.gerar_material(ambiente["slug"], com_artes=True)
         raiz = _raiz(ambiente["slug"])
+        # Mantem cronogramas (R-CP-5) e apaga so os moldes de texto
         for md in list(raiz.rglob("*.md")):
+            if md.name.startswith("cronograma-"):
+                continue
             md.unlink()
         (raiz / "redes-sociais/instagram/textos/post").mkdir(parents=True, exist_ok=True)
-        (raiz / "redes-sociais/instagram/textos/post/post-01.md").write_text(
-            "Status: FINAL\n\nCopy sem termos da colecao.", encoding="utf-8")
+        texto = raiz / "redes-sociais/instagram/textos/post/post-01.md"
+        texto.write_text("Status: FINAL\n\nCopy sem termos da colecao.",
+                         encoding="utf-8")
+        texto.with_suffix(".pdf").write_bytes(b"%PDF-1.4\nplaceholder\n%%EOF")
         rel = gate.validar_material(ambiente["slug"], estrito=True)
         assert "R-CP-4" in {v["regra"] for v in rel["violacoes"]}
         rel_sem_estrito = gate.validar_material(ambiente["slug"])
@@ -333,7 +400,7 @@ class TestCompleto:
         assert manifesto["identidade"]["nivel"] == "intermediario"
 
     def test_completo_gate_rcp_c1(self, ambiente):
-        criador.gerar_completo(COLECAO, com_artes=False)
+        criador.gerar_completo(COLECAO, com_artes=True)
         rel = gate.validar_completo(COLECAO)
         assert not rel["conforme"]
         assert "R-CP-C1" in {v["regra"] for v in rel["violacoes"]}
