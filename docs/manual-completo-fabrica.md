@@ -522,7 +522,7 @@ a copy do nicho.
 
 ---
 
-## 6. SKILLS (24 skills)
+## 6. SKILLS (26 skills)
 
 ### 6.1 Skills de Criação de Conteúdo
 
@@ -545,6 +545,7 @@ a copy do nicho.
 | Skill | Função | Quando usar |
 |---|---|---|
 | `criar-maquina-vendas` | Gera projeto deployável | Após obra finalizada |
+| `sincronizar-maquina-vendas` | Propaga fix do checkout em máquina existente | Máquina gerada antes do fix (checkout 404/500) |
 
 ### 6.3 Skills de Produtividade
 

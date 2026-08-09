@@ -163,11 +163,18 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
-- **2026-08-09 — Máquina de vendas:** (1) rota `/api/checkout` faltava no template
-  `templates/maquina/frontend/app/api/checkout/` — `checkout/page.tsx` postava para
-  ela e toda máquina nova dava 404; criada com zod + registro em `/api/leads/` +
-  `BACKEND_URL` no `.env.example`. (2) copy genérica do template precisa de
-  personalização por nicho em 8 pontos (configs, page/Hero/PricingCard/layout/admin,
-  e-mails, README). (3) `criar-maquina-vendas.py` quebrava no Windows (cp1252 com
-  emojis) — fix `sys.stdout.reconfigure`; padrão virou regra 11. (4) conteúdo copiado
-  agora inclui PDF/EPUB/capa e derivados da coleção.
+- **2026-08-09 Máquina de vendas — checkout:** causa: rota `/api/checkout`
+  faltava no template (checkout page postava nela → 404 em toda máquina nova) e
+  page antiga usava form urlencoded vazio → 500 no `request.json()`. Fix: rota
+  com zod + `/api/leads/` + `BACKEND_URL`; page client com nome/e-mail + fetch
+  JSON. Prevenção: `produto` default alinhado ao `config/produtos.json`
+  (ex.: `dentista-gestor-livro`); leads de teste vivem em
+  `backend/data/vendas.db` (não `database/maquina.db`) — limpar. Arquivo:
+  `templates/maquina/frontend/app/api/checkout/route.ts`.
+- **2026-08-09 Máquina de vendas — fluxo:** causa: template nascia com copy
+  genérica; `criar-maquina-vendas.py` quebrava no Windows cp1252 (emojis).
+  Fix: personalização por nicho em 8 pontos com gate `grep 'Autor Digital|centenas de pessoas'`
+  vazio (regra 12); `sys.stdout.reconfigure` no corpo de `criar_maquina`
+  (regra 11). Derivados copiados via `output/colecoes/<slug>.json` (nomenclatura
+  V5 não casa com substring — fallback 1ª palavra). Prevenção: máquinas antigas
+  sincronizam copiando rota+page do template — skill `sincronizar-maquina-vendas`.
