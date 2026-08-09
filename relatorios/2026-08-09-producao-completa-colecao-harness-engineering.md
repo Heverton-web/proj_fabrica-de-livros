@@ -176,4 +176,37 @@ Resultado: **13/13 capas conformes** em `validar-capa-texto` + badge
 browser APROVADA (sem cortes, hierarquia clara). 598 testes pytest passando.
 LOTE 01 sincronizado.
 
+## 12. Cronogramas ricos — o que / por que / como / quando
+
+Queixa: cronogramas eram listas secas ("D+N (data): Post — Título") sem
+instrução de uso. Fix: cada dia agora é um bloco com as **4 dimensões**:
+
+- **O quê:** arquivo EXATO a publicar (arte PNG + legenda MD da rede; texto
+  MD do canal — ex.: `artes/post/post-01.png` + `textos/post/post-01.md`)
+- **Por quê:** objetivo do envio no funil, rotativo por fase da janela
+  (`campanha.fase_da_janela`: 0=gancho, 1=aprofundamento, 2=urgência/CTA;
+  `objetivo_do_dia` alterna variações por fase)
+- **Como:** passo a passo do formato (`COMO_FORMATO` interpolado com
+  arte/texto/CTA reais — hashtags, sticker de enquete, pre-header, horário)
+- **Quando:** data + horário sugerido por formato (`HORARIO_FORMATO`: post
+  9h, story 12h/18h30, e-mail 9h, WhatsApp 10-11h)
+
+Cabeçalho ganhou seção **Como usar** + resumo do roteiro. Dias sem envio nos
+canais viram **PAUSA estratégica** (por quê = frequência calculada; como =
+ações concretas de manutenção: responder interações, repostar, preparar o
+próximo envio).
+
+**Bug real corrigido de quebra:** a numeração dos itens dos canais usava a
+POSIÇÃO do dia (email-11/20/30 em janela de 30 dias) — arquivos que nunca
+existiram. Agora usa contador sequencial (email-01..04), batendo com
+`texto_nome` e com as artes do WhatsApp (`arte-NN.png` via `item.split`).
+
+**Gate R-CP-5 estendido:** exige `**O quê:**`/`**Por quê:**`/`**Como:**`/
+`**Quando:**` em todo cronograma (reprova lista seca).
+
+**96/96 cronogramas regenerados** (MD+PDF) na coleção harness-engineering;
+`validar-campanha --completo --estrito` CONFORME; 3 testes novos
+(dimensões por dia, envio+pausa nos canais, gate sem dimensões):
+**601 testes pytest passando**. RTK atualizado no AGENTS.md.
+
 *Relatório gerado em 2026-08-09 — Fábrica Agêntica de Publicações*

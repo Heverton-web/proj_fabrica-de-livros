@@ -195,6 +195,30 @@ class TestGerador:
         assert len(datas) >= 14
         assert all(d >= date.today() for d in datas)
 
+    def test_cronograma_tem_quatro_dimensoes_de_uso(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        raiz = _raiz(ambiente["slug"])
+        cronos = list(raiz.rglob("cronograma-*.md"))
+        assert cronos, "nenhum cronograma gerado"
+        for crono in cronos:
+            texto = crono.read_text(encoding="utf-8")
+            for dim in ("**O quê:**", "**Por quê:**", "**Como:**", "**Quando:**"):
+                assert dim in texto, f"{crono.name} sem {dim}"
+            # O 'o quê' aponta arquivos concretos (arte/texto)
+            assert "artes/" in texto or "textos/" in texto, crono.name
+
+    def test_cronograma_alterna_envio_e_pausa_nos_canais(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        crono = (_raiz(ambiente["slug"])
+                 / "canais-comunicacao/emails/sequencia-nutricao"
+                 / "cronograma-divulgacao"
+                 / "cronograma-30d-emails-sequencia-nutricao.md")
+        texto = crono.read_text(encoding="utf-8")
+        assert texto.count("**O quê:**") == 30  # um bloco por dia
+        assert "PAUSA" in texto  # dias de silencio rotulados
+        assert "email-01-sequencia-nutricao.md" in texto
+        assert "email-04-sequencia-nutricao.md" in texto
+
     def test_cronograma_gera_pdf_ao_lado(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         raiz = _raiz(ambiente["slug"])
@@ -366,6 +390,16 @@ class TestGate:
         crono.write_text("sem data aqui", encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
+
+    def test_reprova_cronograma_sem_dimensoes(self, ambiente):
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        crono = (_raiz(ambiente["slug"])
+                 / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.md")
+        crono.write_text("- D+1 (2026-08-10, segunda-feira): Post — titulo\n",
+                         encoding="utf-8")
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
+        assert any("O quê" in v["detalhe"] for v in rel["violacoes"])
 
     def test_reprova_cronograma_sem_pdf(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)

@@ -351,27 +351,110 @@ def _itens_distribuidos(quantidade, dias):
     return [min(dias, 1 + round(i * passo)) for i in range(quantidade)]
 
 
-def gerar_cronogramas(ctx, base):
-    """Cronogramas de divulgacao com datas reais (janela do registro).
+def _bloco_dia(quando, oque, porque, como):
+    """Bloco markdown de um dia: o que / por que / como / quando."""
+    return (f"**O quê:** {oque}\n\n"
+            f"**Por quê:** {porque}\n\n"
+            f"**Como:** {como}\n\n"
+            f"**Quando:** {quando}\n")
 
-    Cada cronograma sai em .md (fonte editavel) e .pdf (Pandoc->Typst, mesmo
-    nome) para impressao/divulgacao direta."""
+
+def _bloco_pausa(data_quando):
+    """Bloco de dia sem envio (pausa estrategica)."""
+    return _bloco_dia(
+        quando=data_quando,
+        oque="Pausa estrategica — nenhum envio.",
+        porque=CP.PAUSA_PORQUE,
+        como=CP.como_utilizar("pausa"),
+    )
+
+
+def _bloco_rede(rede, dia, data, semana, formato, contadores, dias, cta):
+    """Bloco rico de um dia de rede social, apontando os arquivos exatos."""
+    raiz_rede = f"redes-sociais/{rede}"
+    objetivo = CP.objetivo_do_dia(dia, dias)
+    if formato == "post":
+        n = contadores["post"] = contadores.get("post", 0) + 1
+        arte = f"artes/post/post-{n:02d}.png"
+        legenda = f"textos/post/post-{n:02d}.md"
+        oque = (f"Post do {rede.title()} — arte `{raiz_rede}/{arte}` com a "
+                f"legenda `{raiz_rede}/{legenda}`.")
+        quando = f"D+{dia} — {data} ({semana}), as {CP.horario_utilizar(formato)}."
+        return _bloco_dia(quando, oque, objetivo,
+                          CP.como_utilizar(formato, arte=arte, texto=legenda, cta=cta))
+    if formato == "feed-story":
+        n = contadores["feed-story"] = contadores.get("feed-story", 0) + 1
+        arte = f"artes/feed-story/story-{n:02d}.png"
+        oque = (f"Story do Instagram — arte `{raiz_rede}/{arte}` (dica rapida, "
+                f"bastidor do material).")
+        quando = f"D+{dia} — {data} ({semana}), as {CP.horario_utilizar(formato)}."
+        return _bloco_dia(quando, oque, objetivo,
+                          CP.como_utilizar(formato, arte=arte, cta=cta))
+    # direct (sem arte)
+    texto_direct = "textos/resposta-direct/resposta-direct.md"
+    oque = (f"Resposta Direct — use o texto `{raiz_rede}/{texto_direct}` "
+            f"(engajamento pos-interacao).")
+    quando = f"D+{dia} — {data} ({semana}), {CP.horario_utilizar('direct')}."
+    return _bloco_dia(quando, oque, objetivo,
+                      CP.como_utilizar("direct", texto=texto_direct, cta=cta))
+
+
+def _bloco_canal(canal, sequencia, dia, data, semana, item, dias, cta):
+    """Bloco rico de um dia de canal (email/whatsapp). item='-' = pausa."""
+    raiz = f"canais-comunicacao/{canal}/{sequencia}"
+    quando = f"D+{dia} — {data} ({semana}), as {CP.horario_utilizar('email' if canal == 'emails' else 'msg')}."
+    if item == "-":
+        return _bloco_pausa(f"— (dia de silencio, D+{dia})")
+    objetivo = CP.objetivo_do_dia(dia, dias)
+    rotulo = "E-mail" if canal == "emails" else "Mensagem WhatsApp"
+    arquivo = f"textos/{item}.md"
+    oque = f"{rotulo} — arquivo `{raiz}/{arquivo}` (pasta textos/)."
+    formato = "email" if canal == "emails" else "msg"
+    arte = f"artes/arte-{item.split('-')[1]}.png" if canal == "whatsapp" else None
+    como = CP.como_utilizar(formato, arte=arte, texto=arquivo, cta=cta)
+    return _bloco_dia(quando, oque, objetivo, como)
+
+
+def _cabecalho_cronograma(titulo, ctx, dias, resumo):
+    return (f"# {titulo}\n\n"
+            f"> Colecao: {ctx['colecao']} · Material: {ctx['nome']} "
+            f"({ctx['tipo']}) · Janela: {dias} dias · Gerado em {date.today()}\n\n"
+            f"## Como usar\n\n"
+            f"Cada dia indica **o quê** publicar (arquivo exato da arte/texto), "
+            f"**por quê** (objetivo daquele envio no funil), **como** (passo a "
+            f"passo do formato) e **quando** (data e horario). Os dias sem envio "
+            f"sao pausas estrategicas: nao publique, use para interagir e preparar "
+            f"o proximo envio.\n\n"
+            f"**Roteiro ({dias} dias):** {resumo}\n\n"
+            f"## Agenda\n")
+
+
+def gerar_cronogramas(ctx, base):
+    """Cronogramas ricos (o que/por que/como/quando) com datas reais.
+
+    Cada dia vira um bloco com as 4 dimensoes de uso, apontando os arquivos
+    exatos (arte PNG + texto MD). Cada cronograma sai em .md (fonte editavel)
+    e .pdf (Pandoc->Typst, mesmo nome) para impressao/divulgacao direta."""
     gerados = []
     hoje = date.today()
+    cta = ctx.get("cta") or "Saiba mais"
     for rede, dados in CP.REDES_SOCIAIS.items():
         dias = dados.get("cronograma_dias", 14)
         roteiro = CP.roteiro_rede(rede, dias)
-        conteudos = {
-            "post": f"Post — {ctx['titulo']}",
-            "feed-story": "Story — bastidores e dica rapida",
-            "direct": "Resposta Direct — engajamento",
-        }
-        linhas = [f"- D+{dia} ({data}, {semana}): {conteudos[roteiro[dia - 1]]}"
-                  for dia, data, semana in _datas(hoje, dias)]
-        texto = (f"# Cronograma de divulgacao — {rede} — {ctx['nome']}\n\n"
-                 f"> Colecao: {ctx['colecao']} · Material: {ctx['nome']} "
-                 f"({ctx['tipo']}) · Janela: {dias} dias · Gerado em {hoje}\n\n"
-                 + "\n".join(linhas) + "\n")
+        contadores = {}
+        blocos = []
+        for dia, data, semana in _datas(hoje, dias):
+            bloco = _bloco_rede(rede, dia, data, semana, roteiro[dia - 1],
+                                contadores, dias, cta)
+            blocos.append(f"### D+{dia} — {semana}, {data}\n\n{bloco}")
+        # Ordem fixa de formatos no resumo (post, story...) em vez de alfabetica
+        n_artes = CP.n_artes_redes(rede)
+        ordem = [f for f in ("post", "feed-story", "direct") if f in n_artes]
+        resumo = ", ".join(f"{n_artes[f]} {f}" for f in ordem)
+        texto = (_cabecalho_cronograma(
+                     f"Cronograma de divulgacao — {rede} — {ctx['nome']}",
+                     ctx, dias, resumo)
+                 + "\n\n".join(blocos) + "\n")
         destino = (CP.dir_campanha_material(ctx["slug"], base)
                    / f"redes-sociais/{rede}/cronograma-divulgacao"
                    / CP.cronograma_nome(rede))
@@ -385,17 +468,27 @@ def gerar_cronogramas(ctx, base):
         for sequencia, conf in dados.get("sequencias", {}).items():
             dias = conf.get("cronograma_dias", 14)
             quantidade = conf.get("textos", 0) or conf.get("artes", 0)
-            prefixo = "email" if canal == "emails" else "mensagem"
-            linhas = []
+            prefixo = "email" if canal == "emails" else "msg"
+            num = _itens_distribuidos(quantidade, dias)
+            blocos = []
+            n_envios = 0
             for dia, data, semana in _datas(hoje, dias):
-                num = _itens_distribuidos(quantidade, dias)
-                item = next((f"{prefixo}-{i:02d}-{sequencia}" for i in num
-                             if i == dia), "—")
-                linhas.append(f"- D+{dia} ({data}, {semana}): {item}")
-            texto = (f"# Cronograma — {canal} — {sequencia} — {ctx['nome']}\n\n"
-                     f"> Colecao: {ctx['colecao']} · Material: {ctx['nome']} "
-                     f"({ctx['tipo']}) · Janela: {dias} dias · Gerado em {hoje}\n\n"
-                     + "\n".join(linhas) + "\n")
+                indice = next((i for i in num if i == dia), None)
+                if indice is not None:
+                    n_envios += 1
+                    item = f"{prefixo}-{n_envios:02d}-{sequencia}"
+                else:
+                    item = "-"
+                bloco = _bloco_canal(canal, sequencia, dia, data, semana, item,
+                                     dias, cta)
+                rotulo = (f"D+{dia} — {semana}, {data}" if item != "-"
+                          else f"D+{dia} — {semana}, {data} — PAUSA")
+                blocos.append(f"### {rotulo}\n\n{bloco}")
+            resumo = f"{quantidade} envios ({prefixo}-01..{prefixo}-{quantidade:02d})"
+            texto = (_cabecalho_cronograma(
+                         f"Cronograma — {canal} — {sequencia} — {ctx['nome']}",
+                         ctx, dias, resumo)
+                     + "\n\n".join(blocos) + "\n")
             destino = (CP.dir_campanha_material(ctx["slug"], base)
                        / f"canais-comunicacao/{canal}/{sequencia}"
                        / "cronograma-divulgacao"

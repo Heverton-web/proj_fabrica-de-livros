@@ -228,7 +228,22 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
   bloqueia checagem futura. Achado real do gate: `fin.ai/blog/ai-agent-roi-customer-support`
   404 no cap_1; playbook pbk-1 tem 13 blocos truncados sem elipse (código
   cortado no meio). Arquivo: `scripts/validar-*.py` + `tests/test_validar_*`.
-- **2026-08-09 Capas no padrão do projeto (R5) — HUB e títulos:** causa:
+- **2026-08-09 Cronogramas ricos (o que/por que/como/quando):** causa:
+  cronogramas da campanha eram listas secas ("D+N (data): Post — Título")
+  sem instrução de uso. Fix: cada dia vira bloco com **o quê** (arquivo
+  EXATO: arte PNG + legenda MD da rede / texto MD do canal),
+  **por quê** (`campanha.objetivo_do_dia` — objetivo rotativo por fase do
+  funil: `fase_da_janela` 0=gancho, 1=aprofundamento, 2=urgência/CTA),
+  **como** (`COMO_FORMATO` interpolado com arte/texto/CTA reais) e
+  **quando** (data + horário por formato). Dias sem envio dos canais viram
+  PAUSA estratégica. Bug real corrigido de quebra: a numeração dos itens de
+  canal usava a POSIÇÃO do dia (`email-11/20/30` — arquivos inexistentes);
+  agora contador sequencial `email-01..04` batendo com `texto_nome` e artes
+  WhatsApp (`item.split('-')[1]`). Gate R-CP-5 exige as 4 dimensões
+  (`**O quê:**` etc.) — reprova lista seca. Prevenção: ao numerar artefatos
+  de sequência, usar contador sequencial, NUNCA posição do dia.
+  Arquivos: `scripts/campanha.py`, `scripts/criar-campanha.py`,
+  `scripts/validar-campanha.py`, `tests/test_campanha.py`.
   capas dos materiais divergiam do padrão 2D plano. Três causas reais:
   (1) `ebook_metadados.json` herdou títulos antigos concatenados com "&" de
   gerações anteriores (ex.: "…Por Que o Modelo Não Basta & Anatomia de um

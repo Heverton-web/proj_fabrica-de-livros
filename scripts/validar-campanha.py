@@ -8,7 +8,8 @@ R-CP-2 conteudo: textos nao vazios, sem copy generica (regra 12) e sem molde
 R-CP-3 artes: PNG valido (assinatura + tamanho minimo), HTML fonte ao lado e
     quantidade por formato/sequencia suficiente para o cronograma.
 R-CP-4 merito (--estrito): vocabulario condutor da colecao presente na copy.
-R-CP-5 cronogramas: presentes, com datas futuras e PDF ao lado.
+R-CP-5 cronogramas: presentes, com datas futuras, PDF ao lado e as 4
+    dimensoes de uso por dia (o que/por que/como/quando).
 R-CP-C1 (--completo): todo material da colecao tem campanha com status completa.
 
 Uso:
@@ -31,6 +32,10 @@ DIR_OUTPUT = DIR_PROJETO / "output"
 COPY_GENERICA = re.compile(r"Autor Digital|centenas de pessoas")
 RASCUNHO = re.compile(r"Status:\s*RASCUNHO")
 MIN_PNG = 5 * 1024
+
+# Cronograma rico: cada dia precisa das 4 dimensoes de uso (o que/por que/
+# como/quando) para nao virar lista seca de datas.
+DIMENSOES_CRONOGRAMA = ("**O quê:**", "**Por quê:**", "**Como:**", "**Quando:**")
 
 
 def _cronograma_primeira_data(arquivo):
@@ -134,6 +139,15 @@ def validar_material(slug, estrito=False, base=None):
             if not pdf.exists() or pdf.stat().st_size == 0:
                 violacoes.append({"regra": "R-CP-5",
                                   "detalhe": f"sem PDF ao lado de {crono.relative_to(raiz)}"})
+            try:
+                conteudo_crono = crono.read_text(encoding="utf-8")
+            except OSError:
+                conteudo_crono = ""
+            for dimensao in DIMENSOES_CRONOGRAMA:
+                if dimensao not in conteudo_crono:
+                    violacoes.append({"regra": "R-CP-5",
+                                      "detalhe": f"cronograma sem a dimensao "
+                                                 f"'{dimensao}' em {crono.relative_to(raiz)}"})
 
         # R-CP-4 — merito (vocabulario da colecao na copy)
         if estrito and ctx.get("vocabulario"):

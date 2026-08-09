@@ -104,6 +104,89 @@ def n_artes_whatsapp(sequencia):
     return conf.get("textos", 0) or conf.get("artes", 0)
 
 
+# ── Cronograma rico: o que / por que / como / quando ───────────────────────
+# Objetivos (por que publicar) rotativos por fase do funil na janela:
+# 0 = gancho/curiosidade, 1 = aprofundamento/confianca, 2 = urgencia/CTA.
+OBJETIVOS_FASE = {
+    0: [
+        "Ativar a curiosidade: apresente o gancho central do material em uma frase que provoque o clique e gere reconhecimento imediato.",
+        "Marcar presenca: mostre ao leitor ideal que o tema do material e o problema que ele enfrenta hoje.",
+    ],
+    1: [
+        "Aprofundar a solucao: conecte um caminho pratico do material com a dor do leitor e sustente com um dado ou resultado.",
+        "Educar e gerar confianca: entregue um insight aplicavel do material, provando que o conteudo e denso e pratico.",
+    ],
+    2: [
+        "Urgencia e conversao: feche com o CTA direto e o proximo passo obvio, reaproveitando o que ja foi apresentado na janela.",
+        "Fechamento: lembre o leitor do que ele ainda nao tem (o material completo) e traga o CTA com destaque.",
+    ],
+}
+
+# Instrucao de publicacao (como) por formato. {arte}/{texto}/{cta} interpolados
+# no gerador (criar-campanha.py).
+COMO_FORMATO = {
+    "post": ("Publique a arte {arte} no feed com a legenda {texto} (pasta textos/). "
+              "Coloque o link na bio, use 5-8 hashtags do nicho e finalize com o "
+              "CTA: {cta}."),
+    "feed-story": ("Poste o story {arte} com sticker de enquete/duvida para puxar "
+                    "interacao; responda quem responder e leve a conversa para o "
+                    "direct. CTA: {cta}."),
+    "direct": ("Responda a DM com o texto {texto}, personalize a primeira linha "
+                "com o nome da pessoa e pergunte qual duvida ela quer resolver. "
+                "CTA: {cta}."),
+    "email": ("Envie o e-mail {texto} com o assunto ja definido no arquivo; "
+               "revise pre-header e o link do CTA ({cta}) antes de disparar."),
+    "msg": ("Envie a mensagem {texto} em horario comercial; se houver arte {arte}, "
+             "envie logo depois do texto inicial. CTA: {cta}."),
+    "pausa": ("Use o dia para responder interacoes pendentes, repostar stories "
+               "recebidos e deixar o proximo envio pronto (texto revisado, link "
+               "testado, horario agendado)."),
+}
+
+# Horario sugerido (quando) por formato.
+HORARIO_FORMATO = {
+    "post": "9h (feed, maior alcance em tecnologia)",
+    "feed-story": "12h ou 18h30 (pico de stories)",
+    "direct": "imediato - responda em ate 2h",
+    "email": "9h (segunda a quinta)",
+    "msg": "10h-11h (horario comercial)",
+}
+
+PAUSA_PORQUE = ("Frequencia calculada para nao cansar a audiencia: o proximo envio "
+                 "tera mais impacto se este dia ficar em silencio.")
+
+
+def fase_da_janela(dia, dias):
+    """Fase do funil pela fracao do dia na janela: 0=gancho, 1=aprofundamento, 2=urgencia."""
+    if dias <= 0:
+        return 0
+    fracao = (dia - 1) / dias
+    if fracao < 0.35:
+        return 0
+    if fracao < 0.75:
+        return 1
+    return 2
+
+
+def objetivo_do_dia(dia, dias):
+    """Objetivo (por que publicar) do dia: rotativo dentro da fase do funil."""
+    fase = fase_da_janela(dia, dias)
+    variacoes = OBJETIVOS_FASE[fase]
+    return variacoes[(dia - 1) % len(variacoes)]
+
+
+def como_utilizar(formato, arte=None, texto=None, cta=""):
+    """Instrucao 'como publicar' interpolada para um formato."""
+    molde = COMO_FORMATO.get(formato, COMO_FORMATO["post"])
+    return molde.format(arte=arte or "(sem arte)",
+                        texto=texto or "(sem texto)",
+                        cta=cta or "Saiba mais")
+
+
+def horario_utilizar(formato):
+    return HORARIO_FORMATO.get(formato, "9h")
+
+
 # Frases de CTA padrao por tipo de material (usadas quando o manifesto nao tem cta_url)
 CTA_PADRAO = {
     "livro": "Garanta o livro completo",
