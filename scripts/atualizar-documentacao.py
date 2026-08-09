@@ -54,6 +54,12 @@ MANUAIS = {
         "cor_acento": "#f0933b",
         "badge": "NÍVEL INTERMEDIÁRIO",
     },
+    "guia-execucao-detectar-llms-gratuitas": {
+        "titulo": "GUIA DE EXECUÇÃO",
+        "subtitulo": "DETECTOR UNIVERSAL DE LLMs GRATUITAS — MAPEAMENTO DE HARNESS, PROVEDORES E MODELOS ATIVOS",
+        "cor_acento": "#a855f7",
+        "badge": "NÍVEL INTERMEDIÁRIO",
+    },
 }
 
 
