@@ -1,0 +1,22 @@
+{
+  "capitulo": 10,
+  "titulo": "Projeto e Instalação de Sistemas de Proteção contra Quedas",
+  "estado_execucao": "concluido",
+  "validacao_codigo": {
+    "blocos_analisados": 5,
+    "aprovados": 4,
+    "nao_aplicaveis": 1,
+    "taxa_aprovacao": 100.0
+  },
+  "validacao_diagramas": {
+    "diagramas": 1,
+    "validos": 1,
+    "status": "OK"
+  },
+  "referencias": 16,
+  "pilares_cobertos": [
+    "Avaliação de risco: identificação de perigos e cálculo de queda",
+    "Seleção de PFAS: lifelines, HLLs e dispositivos de desaceleração",
+    "Instalação, inspeção e manutenção periódica"
+  ]
+}

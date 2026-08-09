@@ -1,0 +1,15 @@
+{
+  "capitulo": 13,
+  "titulo": "Alavancagem com IA: LLMs, MCP e o Futuro do Test Harness",
+  "parte": "IV",
+  "estado_execucao": "concluido",
+  "data_conclusao": "2026-08-07",
+  "pilares Cobertos": [
+    "Model Context Protocol (MCP) como frame de alavancagem com IA",
+    "SWE-bench: avaliando capacidades de engenheiros de software AI",
+    "Riscos e limitações da automatização: o que a IA não substitui"
+  ],
+  "referencias": 18,
+  "callback_capitulo_anterior": "Capítulo 12 — casos reais em construção/software/indústria",
+  "senioridade": "iniciante"
+}

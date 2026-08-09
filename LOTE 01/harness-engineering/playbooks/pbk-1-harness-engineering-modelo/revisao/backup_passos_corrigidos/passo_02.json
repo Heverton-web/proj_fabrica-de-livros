@@ -1,0 +1,53 @@
+{
+  "numero": "02",
+  "capitulo_fonte": "02",
+  "titulo": "Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+  "estagio": "Arnês",
+  "estagio_indice": 1,
+  "objetivo": "Dissecar as camadas do harness — ambiente de execução, ferramentas, memória, estado e loops de feedback — mostrando cada peça com exemplo concreto.",
+  "pre_requisito": "Passo 1 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Modelando as Cinco Camadas com Dataclasses",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"As cinco camadas do harness representadas como dataclasses.\"\"\"\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass, field\n\n\n@dataclass\nclass AmbienteExecucao:\n    nome: str\n    diretorio: str\n    isolado: bool = True\n\n    def descrever(self) -> str:\n        nivel = \"isolado\" if self.isolado else \"compartilhado\"\n        return f\"{self.nome} em {self.diretorio} ({nivel})\"\n\n\n@dataclass\nclass Ferramenta:\n    nome: str\n    tipo: str  # terminal | busca | api | mcp\n    acionavel: bool = True\n\n\n@dataclass\nclass Memoria:\n    contexto_max: int = 8_000\n    arquivos: dict[str, str] = field(default_factory=dict)\n\n    def lembrar(self, chave: str) -> str | None:\n        return self.arquivos.get(chave)\n\n    def gravar(self, chave: str, valor: str) -> None:\n        self.arquivos[chave] = valor\n\n\n@dataclass\nclass LoopFeedback:\n    nome: str\n    tipo: str  # deterministico | inferencial\n    resultado: str = \"\"\n\n\n@dataclass\nclass Guardrails:\n    aprovacao_obrigatoria: bool = True\n    acoes_destrutivas: tuple[str, ...] = (\"apagar\", \"deploy\", \"drop\")\n\n    def permitir(self, acao: str) -> bool:\n        return not (self.aprovacao_obrigatoria and acao in self.acoes_destrutivas)\n\n\ndef main() -> None:\n    ambiente = AmbienteExecucao(\"sandbox-dev\", \"/work/agente\")\n    ferramenta = Ferramenta(\"terminal\", \"terminal\")\n    memoria = Memoria()\n    memoria.gravar(\"rota\", \"cume a 200m\")\n\n    feedback = LoopFeedback(\"teste-sintaxe\", \"deterministico\")\n    guardrails = Guardrails()\n\n    print(\"Anatomia do harness:\")\n    print(f\"  1. Ambiente : {ambiente.descrever()}\")\n    print(f\"  2. Fe"
+    },
+    {
+      "titulo": "O Executor de Ferramentas com Registro de Chamadas",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"Executor de ferramentas com trilha de auditoria.\"\"\"\n\nfrom __future__ import annotations\n\nimport time\nfrom dataclasses import dataclass, field\n\n\n@dataclass\nclass Chamada:\n    ferramenta: str\n    argumento: str\n    resultado: str\n    instante: float = field(default_factory=time.time)\n\n\nclass ExecutorDeFerramentas:\n    def __init__(self) -> None:\n        self.trilha: list[Chamada] = []\n\n    def executar(self, ferramenta: str, argumento: str) -> str:\n        # Em producao, despacharia para CLI, API ou servidor MCP.\n        if ferramenta == \"terminal\":\n            resultado = f\"$ {argumento} -> ok\"\n        elif ferramenta == \"busca\":\n            resultado = f\"3 resultados para '{argumento}'\"\n        else:\n            resultado = f\"ferramenta desconhecida: {ferramenta}\"\n        self.trilha.append(Chamada(ferramenta, argumento, resultado))\n        return resultado\n\n    def auditoria(self) -> list[Chamada]:\n        return list(self.trilha)\n\n\ndef main() -> None:\n    executor = ExecutorDeFerramentas()\n    executor.executar(\"terminal\", \"ls -la\")\n    executor.executar(\"busca\", \"sandbox firecracker\")\n    executor.executar(\"terminal\", \"git status\")\n\n    print(\"Trilha de auditoria do harness:\")\n    for chamada in executor.auditoria():\n        print(f\"  {chamada.ferramenta:<10} '{chamada.argumento}' -> {chamada.resultado}\")\n\n\nif __name__ == \"__main__\":\n    main()"
+    },
+    {
+      "titulo": "A Memória do Agente com Persistência",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"Memoria persistente do agente (curto prazo em contexto, longo prazo em JSON).\"\"\"\n\nfrom __future__ import annotations\n\nimport json\nfrom pathlib import Path\n\n\nclass MemoriaPersistente:\n    def __init__(self, caminho: str) -> None:\n        self.caminho = Path(caminho)\n        self.dados: dict[str, str] = {}\n        if self.caminho.exists():\n            self.dados = json.loads(self.caminho.read_text(encoding=\"utf-8\"))\n\n    def gravar(self, chave: str, valor: str) -> None:\n        self.dados[chave] = valor\n        self.caminho.write_text(\n            json.dumps(self.dados, ensure_ascii=False, indent=2),\n            encoding=\"utf-8\",\n        )\n\n    def lembrar(self, chave: str) -> str | None:\n        return self.dados.get(chave)\n\n    def contexto_recente(self, limite: int = 3) -> str:\n        itens = list(self.dados.items())[-limite:]\n        return \"; \".join(f\"{k}={v}\" for k, v in itens)\n\n\ndef main() -> None:\n    memoria = MemoriaPersistente(\"memoria_agente.json\")\n    memoria.gravar(\"rota\", \"cume a 200m\")\n    memoria.gravar(\"ancora\", \"mosquetao em 80m\")\n    memoria.gravar(\"condicao\", \"clima adverso\")\n\n    print(\"Memoria persistente do agente:\")\n    print(f\"  rota: {memoria.lembrar('rota')}\")\n    print(f\"  contexto recente: {memoria.contexto_recente()}\")\n\n\nif __name__ == \"__main__\":\n    main()"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Exercício 1 — Teste a âncora do capítulo.** Escreva testes parametrizados para a função de classificação abaixo",
+    "O teste determinístico é a âncora que impede o agente de \"funcionar\" errando em silêncio",
+    "Exercício 2 — Da observação ao caso de teste.** Pegue uma falha real que você já viu um agente cometer (uma resposta errada",
+    "Transforme-a em três camadas: (a) o caso de teste que teria capturado",
+    "(b) o assert que descreve o contrato",
+    "(c) o gate de CI onde ele roda",
+    "A disciplina de traduzir observação em teste é o que transforma harness em prática contínua"
+  ],
+  "armadilhas": [
+    "Ambiente compartilhado \"para simplificar\"**: rodar o agente com as mesmas permissões do operador transforma qualquer erro em incidente de segurança; o isolamento é a primeira linha [7][17]",
+    "Ferramentas ilimitadas**: cada ferramenta nova é superfície de ataque nova; comece com o mínimo e expanda sob demanda [13][14]",
+    "Memória só no prompt**: se o estado vive apenas na janela de contexto, uma execução interrompida perde tudo; persista o que importa [6][18]",
+    "Feedback só inferencial**: depender apenas de \"o agente disse que funcionou\" é aceitar a palavra do escalador sem conferir o mosquetão; testes determinísticos são a âncora [5][18]",
+    "Guardrails \"por convenção\"**: pedir \"por favor não apague\" no prompt não é guardrail; o bloqueio precisa ser estrutural [16][20]"
+  ],
+  "referencia_cruzada": "Cap. 2 — Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+ "numero": "04",
+ "capitulo_fonte": "04",
+ "titulo": "Safety Harness e Guardrails: A Camada Que Impede a Queda",
+ "estagio": "Arnês",
+ "estagio_indice": 1,
+ "objetivo": "Mostrar como proteger o sistema contra ações destrutivas do agente — aprovações humanas, limites de escopo, bloqueio de tool calls e princípio do menor privilégio.",
+ "pre_requisito": "Passo 3 concluído",
+ "entregas": [
+  "config/guardrails.yaml"
+ ],
+ "execucao": [
+  {
+   "titulo": "Mostrar como proteger o sistema contra ações destr",
+   "linguagem": "python",
+   "comandos": [],
+   "codigo": "\"\"\"Guardrail fail-closed: zona declarada, nao negociada.\"\"\"\n\n\ndef avaliar(tipo, alvo):\n    regras = [(\"ler\", {\"*.md\"}), (\"buscar\", {\"web\"})]\n    for t, alvos in regras:\n        if tipo == t and (alvo in alvos or alvo.endswith(\".md\")):\n            return \"PERMITIDA\"\n    return \"BLOQUEADA (fail-closed)\"\n\nfor acao in [(\"ler\", \"notas.md\"), (\"apagar\", \"dados\")]:\n    print(acao, \"->\", avaliar(*acao))\n"
+  }
+ ],
+ "gate": "python scripts/validar-codigo.py livros/harness-engineering --capitulo 4 --executar",
+ "comandos": [],
+ "feito_quando": [
+  "Exercício 1 — Classificador de ações com fallback seguro.** Implemente um guardrail mínimo com a filosofia fail-closed: se a classificação não reconhecer a ação",
+  "A regra de ouro do safety harness é errar para o lado seguro — nunca \"deixar passar porque não sei\" [20]",
+  "Exercício 2 — Quebra do guardrail.** No Exercício 1",
+  "Adicione uma regra para bloqueá-la",
+  "Esse exercício reproduz a classe de vulnerabilidades de traversal que a OWASP destaca [20]",
+  "Exercício 3 — Política de exceção.** Defina o fluxo de exceção do seu guardrail: quem autoriza uma ação bloqueada",
+  "Sem esse fluxo"
+ ],
+ "armadilhas": [
+  "Segurança no prompt**: \"por favor, não apague nada\" não é guardrail; é sugestão [20]",
+  "Permitir por padrão**: bloquear só o que se conhece deixa o desconhecido livre; inverta para deny by default",
+  "Approval gate sem trilha**: aprovação sem registro é indecifrável depois; registre quem, o quê e quando [16]",
+  "Token global \"por conveniência\"**: o escopo amplo é o vetor favorito de incidentes; escope por tarefa [17]",
+  "Confiar no caminho exibido**: symlinks e caminhos relativos podem mentir; resolva antes de decidir [16]"
+ ],
+ "referencia_cruzada": "Cap. 4 — Safety Harness e Guardrails: A Camada Que Impede a Queda",
+ "lacunas": []
+}

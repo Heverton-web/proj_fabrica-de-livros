@@ -1,0 +1,135 @@
+{
+  "titulo_obra": "Harness Engineering — Alavancagem com Proteção: Do EPI ao Framework de Software",
+  "tipo_obra": "livro",
+  "tamanho_obra": "GG",
+  "motivo_condutor": {
+    "nome": "A Oficina do Engenheiro",
+    "descricao": "A oficina é o espaço onde ferramentas amplificam capacidade humana — mas só funcionam se houver proteção embutida. Cada harness (safety ou test) é uma alavanca que permite fazer mais com menos risco. O Engenheiro de Harness projeta, instala e mantém esses dispositivos de alavancagem em qualquer domínio.",
+    "vocabulario": ["alavanca", "ancora", "proteção", "estrutura", "teste", "validação", "escalabilidade", "resiliência", "fail-safe", "redundância"],
+    "persona_leitor": "Engenheiro de Harness"
+  },
+  "introducao": "Conectar dois mundos que parecem díspares — a corda que salva vidas em obra e o framework que garante qualidade em código — sob um mesmo conceito: harness como dispositivo de alavancagem com proteção. Apresentar o arco do livro e a persona do leitor.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos — O Que É um Harness e Por Que Importa",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "A Metáfora da Alavanca: O Que É um Harness?",
+          "objetivo": "Definir harness como conceito transversal — dispositivo que amplifica capacidade com proteção embutida, do safety harness ao test harness.",
+          "pilares_previstos": ["Origem etimológica e domínios de uso", "Anatomia de um harness: ancora + amplificação + proteção", "Mapeamento entre safety harness e test harness"]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Por Que Alavancagem Sem Proteção É Perigo",
+          "objetivo": "Mostrar que alavancagem desprotegida amplifica tanto ganhos quanto perdas, estabelecendo o custo de não ter um harness.",
+          "pilares_previstos": ["Exemplos de leverage sem proteção (Lehman Brothers, código sem testes)", "O custo humano e econômico da falta de harness", "O princípio ALARA: risco reduzido ao menor nível praticável"]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "A Hierarquia de Controles: Eliminar Antes de Proteger",
+          "objetivo": "Apresentar a hierarquia de controles de perigo como framework universal de decisão — de eliminação (melhor) a EPI (último recurso).",
+          "pilares_previstos": ["Os 5 níveis: eliminação, substituição, engenharia, administrativo, EPI", "Aplicação da hierarquia em segurança industrial e em software", "Quando o harness é a melhor opção e quando não é"]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "O Engenheiro de Harness: Uma Profissão Emergente",
+          "objetivo": "Definir a persona do leitor como alguém que projeta e mantém sistemas de alavancagem em qualquer domínio.",
+          "pilares_previstos": ["Perfil do profissional: visão sistêmica + pensamento de segurança", "Mapa de carreira: safety engineer, SRE, DevOps, QA architect", "Competências do SWEBOK e da NR-35 como bases complementares"]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Mecanismos — Como Funciona Por Dentro",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Anatomia do Safety Harness: PFAS e as ABCDEs",
+          "objetivo": "Detalhar os 5 componentes do sistema pessoal de travamento de queda e como interagem para dissipar energia.",
+          "pilares_previstos": ["ABCDE: Ancoragem, Body harness, Connector, Deceleration device, Emergency plan", "Absorção de energia e o limite de 1.800 lbs (8.000 N)", "Suspension trauma e o risco de resgate tardio"]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Análise de Falhas: FMEA, FTA e Fail-Safe",
+          "objetivo": "Ensinar os métodos de análise de segurança que tornam o harness confiável — de falhas componentes a falhas sistêmicas.",
+          "pilares_previstos": ["FMEA: abordagem bottom-up, modos de falha e efeitos", "FTA: abordagem top-down, árvore de falha e portas lógicas", "Fail-safe e redundância: projetar para a falha"]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "Anatomia do Test Harness: Stubs, Drivers e Infraestrutura de Teste",
+          "objetivo": "Explicar como test harnesses em software criam ambientes controlados que simulam o mundo real para validação.",
+          "pilares_previstos": ["Stubs, mocks e drivers: os componentes do test harness", "JUnit, pytest, xUnit: o ecossistema de frameworks de teste", "Test harness como dívida técnica quando mal projetado"]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Alavancagem Operacional e Financeira: O DNA do Harness",
+          "objetivo": "Conectar o conceito de leverage (DOL, FL) ao padrão de alavancagem que todo harness implementa.",
+          "pilares_previstos": ["Alavancagem operacional: custos fixos vs. variáveis (DOL)", "Alavancagem financeira: dívida vs. patrimônio (FL)", "O harness como alavanca: amplificar resultado com proteção contra queda"]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Construção — Como Implementar na Prática",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Normas e Regulamentações: NR-35, OSHA e ANSI Z359",
+          "objetivo": "Mapear o arcabouço normativo que regula harnesses de segurança no Brasil e no mundo.",
+          "pilares_previstos": ["NR-35 e NR-18: requisitos brasileiros para trabalho em altura", "OSHA 29 CFR 1926 Subpart M: padrão norte-americano", "ANSI Z359.1-2020 e ISO 45001: internacional e gestão"]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "Projeto e Instalação de Sistemas de Proteção contra Quedas",
+          "objetivo": "Ensinar o ciclo completo de projeto: avaliação de risco, seleção de equipamento, instalação e validação.",
+          "pilares_previstos": ["Avaliação de risco: identificação de perigos e cálculo de queda", "Seleção de PFAS: lifelines, HLLs e dispositivos de desaceleração", "Instalação, inspeção e manutenção periódica"]
+        },
+        {
+          "capitulo": "11",
+          "titulo": "CI/CD como Harness: Pipelines de Alavancagem em Software",
+          "objetivo": "Mostrar como pipelines de integração contínua e entrega contínua funcionam como harnesses de software — amplificando velocidade com proteção.",
+          "pilares_previstos": ["O pipeline CI/CD como analogia ao safety harness: ancora, conector, trava", "DORA metrics: Lead Time, Deployment Frequency, Change Failure Rate, Time to Restore", "Rollback automático e feature flags como mecanismos de proteção"]
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Casos Reais: Construção, Software e Indústria",
+          "objetivo": "Apresentar estudos de caso que conectam os dois eixos em situações reais.",
+          "pilares_previstos": ["Construção civil e torres: PFAS em operações de risco", "Big tech: frameworks internos e DevOps como leverage", "Offshore e petróleo: API RP 14C e dupla camada de proteção"]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Mestrado — Domínio, Mercado e Visão Estratégica",
+      "capitulos": [
+        {
+          "capitulo": "13",
+          "titulo": "Alavancagem com IA: LLMs, MCP e o Futuro do Test Harness",
+          "objetivo": "Explorar como IA e LLMs criam uma nova camada de alavancagem — e como harnesses de teste se adaptam a esse cenário.",
+          "pilares_previstos": ["Model Context Protocol (MCP) como frame de alavancagem com IA", "SWE-bench: avaliando capacidades de engenheiros de software AI", "Riscos e limitações da automatização: o que a IA não substitui"]
+        },
+        {
+          "capitulo": "14",
+          "titulo": "Design de Sistemas Resilientes: Redundância e Tolerância a Falhas",
+          "objetivo": "Ensinar princípios de design que tornam sistemas (físicos e de software) tolerantes a falhas.",
+          "pilares_previstos": ["Redundância: quando mais é mais (e quando é desperdício)", "Fail-safe vs. fail-soft: estratégias de projeto para diferentes riscos", "DO-178C e MIL-STD-882D: padrões de resiliência em sistemas críticos"]
+        },
+        {
+          "capitulo": "15",
+          "titulo": "Mercado de Trabalho e Carreira em Harness Engineering",
+          "objetivo": "Mapear oportunidades profissionais, remuneração e tendências de mercado para o Engenheiro de Harness.",
+          "pilares_previstos": ["Mercado de segurança industrial: normas, certificações e demanda", "Mercado de engenheiros de software: projeções BLS e tendências", "Pontos de convergência: SRE, DevOps e safety engineering"]
+        },
+        {
+          "capitulo": "16",
+          "titulo": "O Futuro da Alavancagem: Automação, Ética e Responsabilidade",
+          "objetivo": "Conectar harness engineering com questões éticas e estratégicas do futuro — da automação à responsabilidade profissional.",
+          "pilares_previstos": ["Automação e impacto no emprego: o engenheiro como projetista, não operador", "Ética da alavancagem: quando proteger demais impede inovação", "O Engenheiro de Harness como líder técnico: visão sistêmica e tomada de decisão"]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Sintetizar o arco transformacional: o leitor entrou como iniciante e saiu como Engenheiro de Harness capaz de projetar, implementar e liderar sistemas de alavancagem com proteção em qualquer domínio — do canteiro de obras ao pipeline de deploy."
+}

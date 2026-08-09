@@ -1,0 +1,61 @@
+{
+  "titulo_obra": "A Revolução dos Agentes: Por Que o Modelo Não Basta & Anatomia de um Harness: O Corpo Que Carrega o Cérebro — Um Recorte de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "harness-engineering",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "introducao": "Recorte investigativo sobre: A Revolução dos Agentes: Por Que o Modelo Não Basta, Anatomia de um Harness: O Corpo Que Carrega o Cérebro, Test Harness: A Herança da Engenharia de Software, Safety Harness e Guardrails: A Camada Que Impede a Queda.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "A Revolução dos Agentes: Por Que o Modelo Não Basta",
+            "Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+            "Test Harness: A Herança da Engenharia de Software"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "A Revolução dos Agentes: Por Que o Modelo Não Basta",
+            "Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+            "Test Harness: A Herança da Engenharia de Software"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "A Revolução dos Agentes: Por Que o Modelo Não Basta",
+            "Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+            "Test Harness: A Herança da Engenharia de Software"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "A Revolução dos Agentes: Por Que o Modelo Não Basta",
+            "Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+            "Test Harness: A Herança da Engenharia de Software"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

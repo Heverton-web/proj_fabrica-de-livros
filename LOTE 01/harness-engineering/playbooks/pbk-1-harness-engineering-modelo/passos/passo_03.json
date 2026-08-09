@@ -1,0 +1,40 @@
+{
+ "numero": "03",
+ "capitulo_fonte": "03",
+ "titulo": "Test Harness: A Herança da Engenharia de Software",
+ "estagio": "Arnês",
+ "estagio_indice": 1,
+ "objetivo": "Apresentar o harness de teste — fixtures, execução determinística, linters e CI — como a primeira linha de verificação do trabalho do agente.",
+ "pre_requisito": "Passo 2 concluído",
+ "entregas": [
+  "evals/regua.py"
+ ],
+ "execucao": [
+  {
+   "titulo": "Apresentar o harness de teste — fixtures, execução",
+   "linguagem": "python",
+   "comandos": [],
+   "codigo": "\"\"\"Regua de qualidade: 4 criterios explicita e repetivel.\"\"\"\n\n\ndef pontuar(resposta, contexto):\n    relev = 1.0 if contexto.lower() in resposta.lower() else 0.4\n    compl = min(1.0, len(resposta) / 200.0)\n    seg = 0.0 if \"rm -rf\" in resposta else 1.0\n    rastr = 1.0 if \"[ref]\" in resposta else 0.3\n    return (relev + compl + seg + rastr) / 4\n\nboa = \"O harness isola o agente [ref]. Custo cai, controle sobe.\"\nruim = \"rm -rf /tmp\"\nprint(\"boa:\", round(pontuar(boa, \"harness\"), 2))\nprint(\"ruim:\", round(pontuar(ruim, \"harness\"), 2))\n"
+  }
+ ],
+ "gate": "python scripts/validar-codigo.py livros/harness-engineering --capitulo 3 --executar",
+ "comandos": [],
+ "feito_quando": [
+  "Exercício 1 — Crie sua régua de qualidade.** O capítulo mostrou a régua de referência",
+  "Agora implemente uma versão mínima que pontua uma resposta do agente em quatro critérios: relevância",
+  "O objetivo é tornar o julgamento explícito",
+  "Exercício 2 — Defina seus critérios.** Para sua aplicação",
+  "Liste quatro critérios de qualidade que um julgamento humano usaria",
+  "Se um critério não puder ser automatizado",
+  "Documente por quê — a régua honesta também sabe o que não mede"
+ ],
+ "armadilhas": [
+  "Confiar na autoavaliação do modelo**: \"o agente disse que completou\" não é evidência; é narrativa [18]",
+  "Testar a elegância em vez do contrato**: avaliações de \"qualidade\" subjetivas não substituem asserções verificáveis [2]",
+  "Golden tests frágeis**: esperar a saída exata de um sistema probabilístico quebra o teste; teste propriedades e estruturas, não strings exatas [3]",
+  "Gate não bloqueante**: rodar testes \"para relatório\" sem bloquear a integração é decorativo; o gate precisa falhar o fluxo [1]",
+  "Sem régua de benchmark**: avaliar o agente só em casos próprios esconde regressões; benchmarks públicos dão a régua objetiva [2][3]"
+ ],
+ "referencia_cruzada": "Cap. 3 — Test Harness: A Herança da Engenharia de Software",
+ "lacunas": []
+}

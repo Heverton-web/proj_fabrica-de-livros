@@ -1,0 +1,256 @@
+{
+  "01-a-pilha-agentica-antes-do-prompt": {
+    "cor": "#58a6ff",
+    "membros": []
+  },
+  "02-a-arte-e-a-ciencia-do-prompt-engenharia-de-prompt-na-pratica": {
+    "cor": "#f0b429",
+    "membros": []
+  },
+  "03-engenharia-de-contexto-janelas-memoria-e-o-fim-do-prompt-solto": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "04-mcp-na-pratica-conectando-agentes-ao-mundo-real": {
+    "cor": "#58a6ff",
+    "membros": []
+  },
+  "05-claude-md-agents-md-e-rules-engenharia-da-memoria-e-das-regras-do-projeto": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "06-skills-commands-conhecimento-reutilizavel": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "07-hooks-config-e-governanca-guardrails-para-agentes-autonomos": {
+    "cor": "#37c3d6",
+    "membros": []
+  },
+  "08-spec-driven-development-da-intencao-ao-codigo-verificavel": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "09-harness-engineering-orquestrando-loops-autonomos-em-producao": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "A Pilha AgÃªntica": {
+    "cor": "#f0b429",
+    "membros": []
+  },
+  "A Pilha Agêntica": {
+    "cor": "#2ecc9a",
+    "membros": []
+  },
+  "Colecao Teste": {
+    "cor": "#a855f7",
+    "membros": []
+  },
+  "Fabrica Agentica de Publicacoes - Serie Tecnica": {
+    "cor": "#58a6ff",
+    "membros": []
+  },
+  "O Analista Financeiro do Futuro - Setor Odontológico PT": {
+    "cor": "#e05d5d",
+    "membros": [
+      "analista-financeiro-futuro-odontologia-pt/decks/l1-passe-caro",
+      "analista-financeiro-futuro-odontologia-pt/decks/l2-ia-analise-financeira",
+      "analista-financeiro-futuro-odontologia-pt/decks/l3-dashboards",
+      "analista-financeiro-futuro-odontologia-pt/decks/l4-meticulosidade-analitica",
+      "analista-financeiro-futuro-odontologia-pt/decks/l5-zero-custo",
+      "analista-financeiro-futuro-odontologia-pt/emails/l1-passe-caro",
+      "analista-financeiro-futuro-odontologia-pt/emails/l2-ia-analise-financeira",
+      "analista-financeiro-futuro-odontologia-pt/emails/l3-dashboards",
+      "analista-financeiro-futuro-odontologia-pt/emails/l4-meticulosidade-analitica",
+      "analista-financeiro-futuro-odontologia-pt/emails/l5-zero-custo",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-3-checklist",
+      "analista-financeiro-futuro-odontologia-pt/livros/l1-passe-caro",
+      "analista-financeiro-futuro-odontologia-pt/livros/l2-ia-analise-financeira",
+      "analista-financeiro-futuro-odontologia-pt/livros/l3-dashboards",
+      "analista-financeiro-futuro-odontologia-pt/livros/l4-meticulosidade-analitica",
+      "analista-financeiro-futuro-odontologia-pt/livros/l5-zero-custo",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/l1-passe-caro",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/l2-ia-analise-financeira",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/l3-dashboards",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/l4-meticulosidade-analitica",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/l5-zero-custo"
+    ]
+  },
+  "ai-driven": {
+    "cor": "#a855f7",
+    "membros": []
+  },
+  "ai-driven-development": {
+    "cor": "#2ecc9a",
+    "membros": []
+  },
+  "ai-driven-development-do-zero-ao-deploy": {
+    "cor": "#2ecc9a",
+    "membros": []
+  },
+  "ai-driven-development-do-zero-ao-deploy-v2": {
+    "cor": "#a855f7",
+    "membros": [
+      "ai-driven-development-do-zero-ao-deploy-v2/artigos/ai-driven-development-do-zero-ao-deploy--art-01",
+      "ai-driven-development-do-zero-ao-deploy-v2/artigos/ai-driven-development-do-zero-ao-deploy--art-02",
+      "ai-driven-development-do-zero-ao-deploy-v2/artigos/ai-driven-development-do-zero-ao-deploy--art-03",
+      "ai-driven-development-do-zero-ao-deploy-v2/ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-01-fundamentos-o-terreno-baldio",
+      "ai-driven-development-do-zero-ao-deploy-v2/ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-02-na-pratica-erguendo-a-estrutura",
+      "ai-driven-development-do-zero-ao-deploy-v2/ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-03-avancando-instalacoes-e-ferramentas",
+      "ai-driven-development-do-zero-ao-deploy-v2/ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-04-profissionalizando-acabamento-e-qualidad",
+      "ai-driven-development-do-zero-ao-deploy-v2/ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-05-o-mundo-real-entrega-das-chaves",
+      "ai-driven-development-do-zero-ao-deploy-v2/livros/ai-driven-development-do-zero-ao-deploy-v2",
+      "ai-driven-development-do-zero-ao-deploy-v2/tccs/ai-driven-development-do-zero-ao-deploy-v2"
+    ]
+  },
+  "ai-driven-development-do-zero-ao-deploy-v2--lm-06-mini-guia": {
+    "cor": "#f0b429",
+    "membros": []
+  },
+  "analista-financeiro-futuro-odontologia": {
+    "cor": "#f0933b",
+    "membros": [
+      "analista-financeiro-futuro-odontologia-pt/decks/dck-1-dentista-gestor-financas",
+      "analista-financeiro-futuro-odontologia-pt/ebooks/analista-financeiro-futuro-odontologia--eb-01-o-dentista-que-virou-gestor-os-numeros-d",
+      "analista-financeiro-futuro-odontologia-pt/ebooks/analista-financeiro-futuro-odontologia--eb-02-ia-na-bancada-modelos-gratuitos-e-planil",
+      "analista-financeiro-futuro-odontologia-pt/emails/eml-1-dentista-gestor-financas",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-1-armadilhas",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-2-cheatsheet",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-4-entregas",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-5-mapa",
+      "analista-financeiro-futuro-odontologia-pt/lead-magnets/lm-6-mini-guia",
+      "analista-financeiro-futuro-odontologia-pt/playbooks/pbk-1-dentista-gestor-financas"
+    ]
+  },
+  "code-review-graph": {
+    "cor": "#e05d5d",
+    "membros": []
+  },
+  "code-review-graph-guide": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "configuracao-assertiva-de-harnesses-agenticos": {
+    "cor": "#37c3d6",
+    "membros": []
+  },
+  "do-zero-ao-codigo-assistido": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "do-zero-ao-codigo-assistido-guia-pratico-de-inteligencia-artificial-para-iniciantes": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "do-zero-ao-codigo-assistido-v2": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "engenharia-contexto-janelas-memoria": {
+    "cor": "#f0b429",
+    "membros": []
+  },
+  "engenharia-de-software-e-desenvolvimento-agentico": {
+    "cor": "#37c3d6",
+    "membros": []
+  },
+  "harness-engineering": {
+    "cor": "#e05d5d",
+    "membros": [
+      "harness-engineering/livros/harness-engineering"
+    ]
+  },
+  "ia-agentica-desbloqueada": {
+    "cor": "#f0933b",
+    "membros": [
+      "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-01-o-que-e-ia-agentica-e-o-que-ela-nao-e-o",
+      "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-02-ferramentas-e-function-calling-as-maos-d",
+      "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-03-avaliando-agentes-evals-e-llm-as-a-judge",
+      "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia",
+      "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-02-projetando-o-sistema",
+      "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia",
+      "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-04-governanca-e-qualidade",
+      "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-05-implantacao-e-operacao",
+      "ia-agentica-desbloqueada/lead-magnets/lm-1-armadilhas",
+      "ia-agentica-desbloqueada/lead-magnets/lm-2-cheatsheet",
+      "ia-agentica-desbloqueada/lead-magnets/lm-3-checklist",
+      "ia-agentica-desbloqueada/lead-magnets/lm-4-entregas",
+      "ia-agentica-desbloqueada/lead-magnets/lm-5-mapa",
+      "ia-agentica-desbloqueada/lead-magnets/lm-6-mini-guia",
+      "ia-agentica-desbloqueada/playbooks/pbk-1-ia-agentica-desbloqueada",
+      "livros/ia-agentica-desbloqueada"
+    ]
+  },
+  "ia-analise-financeira": {
+    "cor": "#7c6cf0",
+    "membros": [
+      "ia-analise-financeira/ebooks/ia-analise-financeira--eb-01-fundamentos-o-que-e-e-por-que-importa",
+      "ia-analise-financeira/ebooks/ia-analise-financeira--eb-02-na-pratica-a-ia-na-bancada",
+      "livros/ia-analise-financeira"
+    ]
+  },
+  "lm-1\r-armadilhas": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "lm-2\r-cheatsheet": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "lm-3\r-checklist": {
+    "cor": "#2ecc9a",
+    "membros": []
+  },
+  "lm-4\r-entregas": {
+    "cor": "#58a6ff",
+    "membros": []
+  },
+  "lm-5\r-mapa": {
+    "cor": "#a855f7",
+    "membros": []
+  },
+  "lm-6\r-mini-guia": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "marketing-na-era-digital": {
+    "cor": "#f0933b",
+    "membros": []
+  },
+  "mimocode": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "oh-my-pi-do-zero-ao-phd": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "opencode": {
+    "cor": "#f0b429",
+    "membros": []
+  },
+  "playbook": {
+    "cor": "#7c6cf0",
+    "membros": []
+  },
+  "sdlc-ai-first": {
+    "cor": "#37c3d6",
+    "membros": []
+  },
+  "sistemas-agenticos": {
+    "cor": "#58a6ff",
+    "membros": [
+      "livros/sistemas-agenticos",
+      "sistemas-agenticos/artigos/sistemas-agenticos--art-01",
+      "sistemas-agenticos/artigos/sistemas-agenticos--art-02",
+      "sistemas-agenticos/artigos/sistemas-agenticos--art-03",
+      "sistemas-agenticos/artigos/sistemas-agenticos--art-04",
+      "sistemas-agenticos/ebooks/sistemas-agenticos--eb-01-introducao-aos-sistemas-agenticos-refere",
+      "sistemas-agenticos/ebooks/sistemas-agenticos--eb-02-grandes-modelos-de-linguagem-como-nucleo",
+      "sistemas-agenticos/ebooks/sistemas-agenticos--eb-03-sistemas-de-memoria-ciclo-de-vida-de-des",
+      "sistemas-agenticos/ebooks/sistemas-agenticos--eb-04-testes-e-garantia-de-qualidade-monitoram",
+      "sistemas-agenticos/ebooks/sistemas-agenticos--eb-05-seguranca-e-protecao-desenvolvimento-eti"
+    ]
+  }
+}

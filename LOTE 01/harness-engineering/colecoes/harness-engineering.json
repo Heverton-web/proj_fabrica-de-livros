@@ -1,0 +1,61 @@
+{
+  "colecao": "harness-engineering",
+  "cor_accent": "#e05d5d",
+  "atualizado_em": "2026-08-09",
+  "nucleo": {
+    "slug": "harness-engineering/livros/harness-engineering",
+    "tipo": "livro",
+    "titulo": "Harness Engineering — Alavancagem com Proteção: Do EPI ao Framework de Software",
+    "senioridade": "iniciante",
+    "motivo_condutor": {
+      "nome": "A Oficina do Engenheiro",
+      "descricao": "A oficina é o espaço onde ferramentas amplificam capacidade humana — mas só funcionam se houver proteção embutida. Cada harness (safety ou test) é uma alavanca que permite fazer mais com menos risco. O Engenheiro de Harness projeta, instala e mantém esses dispositivos de alavancagem em qualquer domínio.",
+      "vocabulario": [
+        "alavanca",
+        "ancora",
+        "proteção",
+        "estrutura",
+        "teste",
+        "validação",
+        "escalabilidade",
+        "resiliência",
+        "fail-safe",
+        "redundância"
+      ],
+      "persona_leitor": "Engenheiro de Harness"
+    }
+  },
+  "total_membros": 1,
+  "por_tipo": {
+    "livro": 1
+  },
+  "membros": [
+    {
+      "slug": "harness-engineering/livros/harness-engineering",
+      "tipo": "livro",
+      "rotulo": "Livro",
+      "titulo": "Harness Engineering — Alavancagem com Proteção: Do EPI ao Framework de Software",
+      "obra_mae": null,
+      "natureza": "geracao",
+      "custo_llm": "alto",
+      "senioridade": "iniciante",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "harness-engineering.pdf",
+        "livro_final.pdf"
+      ]
+    }
+  ],
+  "derivados_ausentes": [
+    "artigo",
+    "ebook",
+    "playbook",
+    "lead-magnet",
+    "deck",
+    "emails"
+  ],
+  "membros_sem_cta": [],
+  "maquina": null,
+  "maquinas_legadas": []
+}

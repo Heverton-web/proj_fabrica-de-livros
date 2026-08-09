@@ -1,0 +1,15 @@
+{
+  "capitulo": 5,
+  "titulo": "Anatomia do Safety Harness: PFAS e as ABCDEs",
+  "estado_execucao": "concluido",
+  "parte": "II",
+  "pilares_abordados": [
+    "ABCDE: Ancoragem, Body harness, Connector, Deceleration device, Emergency plan",
+    "Absorção de energia e o limite de 1.800 lbs (8.000 N)",
+    "Suspension trauma e o risco de resgate tardio"
+  ],
+  "validacao_codigo": "aprovado",
+  "validacao_diagramas": "aprovado",
+  "referencias": 16,
+  "secoes_eita": 7
+}

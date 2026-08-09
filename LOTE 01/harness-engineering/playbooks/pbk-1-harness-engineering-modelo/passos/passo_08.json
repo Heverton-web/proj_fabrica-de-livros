@@ -1,0 +1,40 @@
+{
+ "numero": "08",
+ "capitulo_fonte": "08",
+ "titulo": "Harness em Produção: Observabilidade, Evals e o Engenheiro Agêntico",
+ "estagio": "Corda",
+ "estagio_indice": 2,
+ "objetivo": "Fechar a obra com a operação de harnesses em escala — observabilidade, evals como testes de regressão do agente e o novo papel do engenheiro que desenha ambientes.",
+ "pre_requisito": "Passo 7 concluído",
+ "entregas": [
+  "manifesto/harness.json"
+ ],
+ "execucao": [
+  {
+   "titulo": "Fechar a obra com a operação de harnesses em escal",
+   "linguagem": "python",
+   "comandos": [],
+   "codigo": "\"\"\"Manifesto declarativo + kill-switch.\"\"\"\n\nclass Painel:\n    def __init__(self): self.execs = []; self.pausado = False\n    def registrar(self, e): self.execs.append(e)\n    def kill_switch(self):\n        self.pausado = True\n        self.execs = []\n    def status(self):\n        return f\"pausado={self.pausado} ativas={len(self.execs)}\"\n\np = Painel()\np.registrar(\"run-1\"); p.registrar(\"run-2\")\nprint(\"antes:\", p.status())\np.kill_switch()\nprint(\"depois:\", p.status())\n"
+  }
+ ],
+ "gate": "python scripts/validar-codigo.py livros/harness-engineering --capitulo 8 --executar",
+ "comandos": [],
+ "feito_quando": [
+  "Exercício 1 — Runbook de incidente.** Escreva um runbook de 10 passos para um incidente de agente em produção: detecção",
+  "Inclua o comando de kill-switch (pausar execuções)",
+  "Exercício 2 — Custo",
+  "Documente o fluxo: quem aprova",
+  "O limiar transforma o custo em controle — a recomendação de cancelar projetos sem retorno claro que a Gartner publicou é o avesso dessa disciplina [10]",
+  "Exercício 3 — Plano de rollback.** Liste os artefatos que o agente pode modificar (arquivos",
+  "Se um artefato não tiver rollback"
+ ],
+ "armadilhas": [
+  "Observabilidade depois do incidente**: instrumentar a caixa preta quando ela já custou caro é o padrão mais caro do mercado; instrumente no primeiro dia [12]",
+  "Eval de uma vez só**: medir o agente uma vez e nunca mais é tirar foto de quem precisa de exame periódico; eval é monitoramento de tendência [5]",
+  "LLM-as-a-judge sem calibração**: o julgador tem viés; sem conferência humana periódica, o eval mede o viés do julgador [19]",
+  "Deploy sem gate de regressão**: mudança que vai para produção sem check-up é aposta; bloqueie a regressão [12]",
+  "Engenheiro que só escreve código**: no mundo agêntico, quem não desenha ambiente e especifica intenção vira gargalo — o harness é o produto do engenheiro [1]"
+ ],
+ "referencia_cruzada": "Cap. 8 — Harness em Produção: Observabilidade, Evals e o Engenheiro Agêntico",
+ "lacunas": []
+}

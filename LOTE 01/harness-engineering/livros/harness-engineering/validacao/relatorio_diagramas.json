@@ -1,0 +1,13 @@
+{
+  "slug": "livros/harness-engineering",
+  "modo": "livro",
+  "arquivos": [
+    "output\\livros\\harness-engineering\\_livro_render.md"
+  ],
+  "total": 16,
+  "renderizados": 16,
+  "cache": 0,
+  "falhas": [],
+  "ignorados": [],
+  "validos": 0
+}

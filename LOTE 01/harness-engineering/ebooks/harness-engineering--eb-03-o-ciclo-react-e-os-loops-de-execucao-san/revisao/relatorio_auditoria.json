@@ -1,0 +1,58 @@
+{
+  "slug": "ebooks/harness-engineering--eb-03-o-ciclo-react-e-os-loops-de-execucao-san",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 1,
+  "caracteres_obra": 45216,
+  "paginas_estimadas": 18.1,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "45.216 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 6,
+        "esta": 2
+      },
+      "ocorrencias": 8
+    }
+  ],
+  "alertas_estilo": null,
+  "gates_conteudo": {},
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 45216,
+      "palavras": 5303,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " ou o agente desiste cedo demais (registro vazio) ou insiste para sempre (custo infinito).",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

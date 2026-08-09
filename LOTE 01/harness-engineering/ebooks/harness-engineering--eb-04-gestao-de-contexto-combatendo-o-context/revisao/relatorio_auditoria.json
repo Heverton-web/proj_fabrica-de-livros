@@ -1,0 +1,82 @@
+{
+  "slug": "ebooks/harness-engineering--eb-04-gestao-de-contexto-combatendo-o-context",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 1,
+  "caracteres_obra": 45653,
+  "paginas_estimadas": 18.3,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "45.653 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 9,
+        "porquê": 1
+      },
+      "ocorrencias": 10
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "contínua": 4,
+        "continua": 3
+      },
+      "ocorrencias": 7
+    },
+    {
+      "termo_normalizado": "mantem",
+      "variantes": {
+        "mantém": 4,
+        "mantêm": 1
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "opera",
+      "variantes": {
+        "opera": 2,
+        "ópera": 2
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "gates_conteudo": {},
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 45653,
+      "palavras": 5153,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ênticos executáveis, verificáveis e com estado. Disponível em arxiv.org/html/2605.18747v1.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}
