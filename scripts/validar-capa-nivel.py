@@ -60,11 +60,13 @@ def validar_capa_nivel(dir_obra):
         print(f"[REPROVADO] {html_path} nao existe — rode scripts/gerar-capa.py primeiro")
         return 1
     html = html_path.read_text(encoding="utf-8")
-    m = re.search(r'<div class="badge">([^<]+)</div>', html)
+    # Aceita o padrao atual do template (badge-main, com prefixo decorativo
+    # "◆ &nbsp;") e o legado (class="badge")
+    m = re.search(r'<div class="badge(?:-main)?">([^<]+)</div>', html)
     if not m:
         print(f"[REPROVADO] capa.html sem badge de nivel — esperado: {rotulo}")
         return 1
-    badge = m.group(1).strip()
+    badge = re.sub(r"^[^A-ZÀ-Ý]*", "", m.group(1)).strip()
     if badge != rotulo:
         print(f"[REPROVADO] badge '{badge}' divergente do esperado para "
               f"senioridade_obra='{senioridade}': {rotulo}")

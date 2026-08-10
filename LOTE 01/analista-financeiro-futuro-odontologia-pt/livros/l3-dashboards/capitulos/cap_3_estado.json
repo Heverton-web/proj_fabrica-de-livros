@@ -1,9 +1,0 @@
-{
-  "fase_atual": "fase_2_manufatura",
-  "coordenadas": { "parte": "II", "capitulo": "3" },
-  "estado_execucao": "concluido",
-  "arquivo_capitulo": "cap_3.md",
-  "arquivo_draft": "cap_3_draft.json",
-  "validacao_codigo": "aprovado",
-  "timestamp": "2026-08-08T00:00:00"
-}
