@@ -315,7 +315,7 @@ FLUXO 3 — MÁQUINA DE VENDAS (obrigatório):
 
 | Modo | Comando | O que gera | Depende de |
 |------|---------|------------|------------|
-| **Encadeado** | `/produzir-obra-completa <tema>` | Tudo (materiais + campanhas) | Nada (ponto de partida) |
+| **Encadeado (3 fluxos)** | `/produzir-obra-completa <tema>` | **TUDO**: Materiais + Campanhas + Máquina | Nada (ponto de partida) |
 | **Só materiais** | `/criar-livro <slug>` | Livro + derivados | Fase 1 rodada |
 | **Só campanhas** | `/campanha-completa <colecao>` | Campanhas completas | Materiais prontos |
 | **Só máquina** | `/criar-maquina <slug>` | Máquina full-stack | Coleção + campanhas |
