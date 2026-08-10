@@ -1,6 +1,6 @@
 # MANUAL COMPLETO — FÁBRICA AGÊNTICA DE PUBLICAÇÕES
 
-**Criação de Materiais | Criação de Campanhas | Criação da Máquina de Vendas**
+**Criação de Materiais | Criação de Campanha de Marketing Completa | Criação de Máquina de Vendas**
 
 > Manual do usuário — tudo o que é possível criar e fazer com o projeto
 > `fabrica-de-livros`, explicado passo a passo.
