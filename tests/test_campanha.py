@@ -125,7 +125,8 @@ class TestRegistro:
 
     def test_nome_material_pega_ultimo_segmento(self):
         assert CP.nome_material("livros/obra-teste") == "obra-teste"
-        assert CP.nome_material("ebooks/obra-teste--eb") == "obra-teste--eb"
+        # V5.1: nome_material limita a 20 chars para evitar caminhos longos
+        assert CP.nome_material("ebooks/obra-teste--eb") == "obra-teste"
 
 
 # ── Gerador ──────────────────────────────────────────────────────────────────
