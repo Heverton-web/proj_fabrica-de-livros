@@ -612,7 +612,90 @@ Conteúdo mínimo: contexto, bugs descobertos/corrigidos (causa→fix), arquivos
 alterados, validações rodadas, commits feitos, resumo de entregas. Orquestrado pela
 skill `gerar-relatorio-sessao` (relatório → testes → commit → push).
 
-## 16. Troubleshooting — materiais
+## 16. Campanhas de Divulgação (V5.3)
+
+A **camada de campanhas** gera materiais de divulgação completos para cada material
+da coleção: artes, textos, cronogramas e moldes — tudo determinístico (custo ~0 LLM).
+
+### Estrutura
+
+```text
+output/<colecao>/campanhas/<material>/
+├── redes-sociais/
+│   ├── instagram/
+│   │   ├── artes/feed-story/     # artes PNG (1080x1920)
+│   │   ├── artes/post/           # artes PNG (1080x1350)
+│   │   ├── textos/               # textos para copy
+│   │   ├── templates/            # HTML editável das artes
+│   │   └── cronograma-divulgacao/
+│   └── linkedin/
+│       ├── artes/post/           # artes PNG (1200x628)
+│       ├── textos/
+│       ├── templates/
+│       └── cronograma-divulgacao/
+├── canais-comunicacao/
+│   ├── emails/
+│   │   ├── sequencia-mkt/
+│   │   │   ├── textos/           # e-mails (email-01, email-02...)
+│   │   │   ├── templates/
+│   │   │   └── cronograma-divulgacao/
+│   │   └── sequencia-nutricao/
+│   └── whatsapp/
+│       ├── sequencia-divulgacao/
+│       │   ├── artes/            # artes WhatsApp (1080x1080)
+│       │   ├── textos/
+│       │   └── cronograma-divulgacao/
+│       └── sequencia-nutricao/
+└── campanha.json                 # manifesto da campanha
+```
+
+### Comandos
+
+```bash
+# Criar campanha para um material específico
+python scripts/criar-campanha.py --material <slug>
+
+# Criar campanhas para todos os materiais da coleção
+python scripts/criar-campanha.py --completo <slug-colecao>
+
+# Validar campanha (gates R-CP-1..5)
+python scripts/validar-campanha.py --material <slug> --estrito
+
+# Marcar campanha como completa (copy finalizado)
+python scripts/criar-campanha.py --material <slug> --marcar-completa
+```
+
+### Gates de Validação
+
+| Gate | Descrição | O que valida |
+|------|-----------|--------------|
+| R-CP-1 | Artes suficientes | Quantidade de artes ≥ dias do cronograma |
+| R-CP-2 | Textos com PDF | Cada texto tem .pdf ao lado |
+| R-CP-3 | Artes por formato | Contagem correta por formato (IG/LI/WhatsApp) |
+| R-CP-4 | Cronogramas completos | 4 dimensões: O quê, Por quê, Como, Quando |
+| R-CP-5 | Cronogramas com PDF | Cada cronograma tem .pdf ao lado |
+
+### Fluxo
+
+1. `/campanha <material>` — cria estrutura + moldes + artes + cronogramas
+2. **Copywriter** reescreve os moldes (LLM baixo)
+3. `/campanha --marcar-completa` — valida e marca como pronta
+4. **Snapshot** — `criar-maquina-vendas.py` copia para `maquina/campanhas/`
+
+### Personalização
+
+A campanha herda identidade da coleção:
+- `cor_accent` — cor dos botões e destaques
+- `motivo_condutor.vocabulario` — termos usados nos textos
+- `nucleo.senioridade` — tom de voz (iniciante/intermediário/avançado)
+- `cta_url` — link de destino do CTA
+
+**REGRA 12:** Copy genérica ("Autor Digital", "centenas de pessoas") é REPROVADA.
+O gate `grep 'Autor Digital|centenas de pessoas'` deve retornar vazio.
+
+---
+
+## 17. Troubleshooting — materiais
 
 | Sintoma | Causa provável | Fix |
 |---|---|---|
