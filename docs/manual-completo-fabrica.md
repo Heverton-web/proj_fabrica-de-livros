@@ -7,7 +7,7 @@
 >
 > **Autor:** Heverton Eduardo Peres — Especialista em Marketing e Desenvolvimento de Soluções
 > **Versão do projeto:** V5.3 (HUB por coleção + Campanhas + Transmutação)
-> **Atualizado em:** 2026-08-09
+> **Atualizado em:** 2026-08-10
 
 ---
 
@@ -411,7 +411,7 @@ FLUXO 3 — MÁQUINA DE VENDAS (obrigatório):
 
 ---
 
-## 7. Scripts determinísticos (71)
+## 7. Scripts determinísticos (66)
 
 > **🎬 Storytelling: Os robôs da fábrica**
 >
@@ -483,6 +483,7 @@ FLUXO 3 — MÁQUINA DE VENDAS (obrigatório):
 | `validar-capa-texto.py` | Capa | Quebra de linha |
 | `validar-capa-nivel.py` | Capa | Badge obrigatório |
 | `validar-artefatos.py` | Entrega | Arquivos abrem |
+| `validar-campanha.py` | R-CP-1..5 | Campanhas completas |
 | `renderizar-diagramas.py` | Diagramas | Mermaid → PNG |
 
 ### 7.4 Processamento e infraestrutura
