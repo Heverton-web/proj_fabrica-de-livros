@@ -6,8 +6,8 @@
 > `fabrica-de-livros`, explicado passo a passo.
 >
 > **Autor:** Heverton Eduardo Peres — Especialista em Marketing e Desenvolvimento de Soluções
-> **Versão do projeto:** V5 (coleção) / V5.1 (nomes curtos e layout por obra) / V5.2 (relatório de sessão) / V5.3 (REGRA INTOCÁVEL HUB por coleção)
-> **Atualizado em:** 2026-08-09
+> **Versão do projeto:** V5 (coleção) / V5.1 (nomes curtos) / V5.2 (relatório) / V5.3 (HUB por coleção + Campanhas + Transmutação)
+> **Atualizado em:** 2026-08-09 (sessão de correção completa)
 
 ---
 
@@ -405,33 +405,116 @@ A skill `compilador-mega-livro` limpa/cria a pasta, coleta capa do primeiro livr
 unifica sumários, renumera capítulos sequencialmente, gera prefácio + sumário +
 conclusão e compila o PDF via Pandoc+Typst (ABNT).
 
-## 6. Comandos slash (13)
+### 5.11 Transmutação de materiais (`/reescrever-como`)
+
+### 🎬 Storytelling: Quando um livro vira TCC
+
+> **Storytelling:** Imagine que você escreveu um livro técnico completo sobre
+> Inteligência Artificial. De repente, um cliente pede que o mesmo conteúdo vire
+> um TCC acadêmico. Em vez de reescrever do zero, o comando `/reescrever-como`
+> **transmuta** a obra: converte o framework EITA em ACAD, transforma citações
+> numeradas `[N]` em autor-data (NBR 10520), ajusta o tom para impessoal
+> acadêmico, e gera automaticamente resumo, abstract e folha de aprovação.
+> Tudo com backup automático — se algo der errado, o original está em
+> `revisao/backups/`.
+
+**Transmutações suportadas:**
+
+| Origem → Destino | Script | Observação |
+|---|---|---|
+| Livro → TCC | `transmutar-obra.py` | EITA → ACAD, refs numeradas → autor-data |
+| Livro → E-book | `redator-ebook` | Reescrita de tom (compressão) |
+| TCC → Livro | `transmutar-obra.py` | ACAD → EITA, expansão de conteúdo |
+| E-book → Livro | `transmutar-obra.py` | Expansão com novas seções EITA |
+| Playbook → Livro | `transmutar-obra.py` | Cards viram capítulos completos |
+
+**Comandos:**
+
+```bash
+# Transmutar obra inteira
+/reescrever-como <slug-origem> tcc
+/reescrever-como <slug-origem> livro
+
+# Reescrever capítulo individual (com backup)
+/reescrever-capitulo <slug> <numero>
+
+# Reescrever toda a obra (com backup)
+/reescrever <slug>
+
+# Refinar/polir obra existente
+/refinar <slug>
+```
+
+**Fluxo interno:**
+1. `transmutar-obra.py` cria backup em `revisao/backups/<timestamp>/`
+2. Copia dossiê de origem para destino
+3. Grava `derivados.json` com `slug_origem` e `reescrever_de`
+4. Aplica conversão de framework (EITA ↔ ACAD)
+5. Salva em novo slug com sufixo `--liv/--tcc/--ebk/--art`
+
+> **REGRA:** Após toda transmutação, rode os gates do DESTINO (não da origem).
+> Um TCC gerado de livro deve passar em `validar-abnt-tcc.py`, não em
+> `auditar-obra.py`.
+
+## 6. Comandos slash (19)
 
 Todos vivem em `.claude/commands/`:
 
-| Comando | O que faz |
-|---|---|
-| `/esbocar <tema>` | Fase 0: elicitação + pesquisa + arquitetura + fatiamento |
-| `/criar-livro <slug>` | Produz o livro completo (R1-R14) |
-| `/criar-tcc <slug>` | Produz TCC conforme NBR 14724 |
-| `/criar-artigo <slug>` | Produz os artigos do livro-mãe |
-| `/criar-ebook <slug>` | Produz os e-books (reescrita de tom) |
-| `/criar-playbook <slug>` | Extrai o playbook (0 token) |
-| `/criar-lead-magnet <slug> [--formato X \| --todos]` | Gera os lead magnets |
-| `/criar-deck <slug>` | Gera o slide deck HTML+PDF |
-| `/criar-emails <slug>` | Gera a sequência de e-mails |
-| `/criar-maquina <slug> [--tipo completo\|parcial\|landing\|backend]` | Gera a máquina de vendas |
-| `/colecao [<nome>] [--sincronizar]` | Manifesto da coleção |
-| `/compilar-mega-livro <slugs...> \| --todas` | Mega-livro unificado |
-| `/produzir-obra-completa <tema\|slug>` | Tudo encadeado/paralelo de uma vez |
+### 🎬 Como funciona o fluxo de comandos
+
+> **Storytelling:** Imagine que você é o diretor de uma fábrica. Cada comando é uma
+> **estação de trabalho** que recebe matéria-prima (tema/slug) e entrega um produto
+> acabado. O `/produzir-obra-completa` é o **gerente de produção** que orquestra
+> todas as estações na ordem correta, respeitando dependências (playbook antes de
+> lead magnets) e paralelizando o que pode rodar ao mesmo tempo.
+
+| Comando | O que faz | Fase |
+|---|---|---|
+| `/esbocar <tema>` | Fase 0: elicitação + pesquisa + arquitetura + fatiamento | 0 |
+| `/produzir-obra-completa <tema\|slug>` | Tudo encadeado/paralelo de uma vez | 0-4 |
+| `/criar-livro <slug>` | Produz o livro completo (R1-R14) | 1-3 |
+| `/criar-tcc <slug>` | Produz TCC conforme NBR 14724 | 1-3 |
+| `/criar-artigo <slug>` | Produz os artigos do livro-mãe | 2 |
+| `/criar-ebook <slug>` | Produz os e-books (reescrita de tom) | 2 |
+| `/criar-playbook <slug>` | Extrai o playbook (0 token) | 2 |
+| `/criar-lead-magnet <slug> [--formato X \| --todos]` | Gera os lead magnets | 2 |
+| `/criar-deck <slug>` | Gera o slide deck HTML+PDF | 2 |
+| `/criar-emails <slug>` | Gera a sequência de e-mails | 2 |
+| `/criar-maquina <slug> [--tipo completo\|parcial\|landing\|backend]` | Gera a máquina de vendas | 3 |
+| `/colecao [<nome>] [--sincronizar]` | Manifesto da coleção | 4 |
+| `/compilar-mega-livro <slugs...> \| --todas` | Mega-livro unificado | 3 |
+| `/campanha <slug>` | Cria campanha de divulgação para 1 material | 2 |
+| `/campanha-completa [colecao]` | Cria campanhas para TODOS os materiais | 2 |
+| `/reescrever <slug>` | Reescreve toda a obra (backup automático) | 2 |
+| `/reescrever-capitulo <slug> <n>` | Reescreve capítulo individual | 2 |
+| `/reescrever-como <slug> <tipo>` | Transmuta obra para outro tipo | 2 |
+| `/refinar <slug>` | Refina/polir obra existente | 2 |
+
+### 🎬 Storytelling: O ciclo de vida de uma obra
+
+> **Storytelling:** Uma obra nasce com `/esbocar` (pesquisa + arquitetura), cresce
+> com `/criar-livro` (capítulos EITA), amadurece com `/reescrever` (refinamento),
+> e pode ser **transmutada** para outro tipo com `/reescrever-como`. Por exemplo,
+> um livro técnico pode virar TCC acadêmico, ou um e-book pode ser expandido
+> para livro completo. Cada transmutação cria backup em `revisao/backups/` —
+> nada se perde.
 
 **Recomendação:** use `/produzir-obra-completa` quando quiser tudo (livro + artigos +
 ebooks + playbook + lead magnets + deck + e-mails) — ele encadeia as fases
 respeitando as dependências (playbook antes dos LMs) e paraleliza o independente.
 
-## 7. Scripts determinísticos (49)
+## 7. Scripts determinísticos (71)
 
 Tudo em `scripts/` (lista completa em `ls scripts/`). Os principais:
+
+### 🎬 Storytelling: O poder dos scripts determinísticos
+
+> **Storytelling:** Enquanto os subagentes LLM geram conteúdo (capítulos, textos),
+> os scripts determinísticos fazem o **trabalho pesado sem custo de tokens**.
+> É como ter uma equipe de robôs 24/7 que nunca erra: extrair cards de playbook,
+> validar portas de 404, renderizar diagramas Mermaid em PNG, compilar PDFs via
+> Pandoc+Typst. Cada script é uma engrenagem da esteira — quando todos funcionam,
+> a fábrica inteira produz.
 
 ### 7.1 Núcleo e registro
 
@@ -470,11 +553,34 @@ Tudo em `scripts/` (lista completa em `ls scripts/`). Os principais:
 
 ### 7.3 Validação (gates)
 
-| Script | Gate |
-|---|---|
-| `auditar-obra.py` | Auditoria da obra inteira (--estrito) |
-| `validar-codigo.py` | CI de sintaxe dos blocos de código |
-| `validar-playbook.py` | R-PBK-0..8 |
+### 🎬 Storytelling: Os 5 guardiões de qualidade
+
+> **Storytelling:** Antes de um livro ser impresso, ele passa por **5 auditores
+> independentes** que verificam aspectos diferentes: um checa se as referências
+> existem de verdade (não são inventadas), outro se há métricas concretas,
+> outro se os limites de escala estão documentados, outro se dados factuais
+> têm citação, e o último se as fontes são de qualidade (A/B ≥ 70%).
+> Esses são os **gates de mérito F1/F2** — eles garantem que o conteúdo
+> não é apenas bem estruturado, mas **verdadeiro e confiável**.
+
+| Script | Gate | O que valida |
+|---|---|---|
+| `auditar-obra.py` | Auditoria geral | R1-R4, R9-R14, sobreposição, terminologia |
+| `validar-codigo.py` | CI de código | Sintaxe de blocos python/js/bash |
+| `validar-referencias.py` | R-RF | URLs/DOIs reais (4xx/DNS reprova) |
+| `validar-metricas.py` | R-MT | ≥1 métrica com valor+unidade+citação |
+| `validar-escala.py` | R-ES | Limites/contorno na seção Aplica |
+| `validar-afirmacoes.py` | R-AF | Dado factual sem `[N]` no parágrafo |
+| `validar-fontes.py` | R-FT | Hierarquia A/B/C ≥70% A+B |
+| `validar-playbook.py` | R-PBK-0..8 | Cards de bancada |
+| `validar-lead-magnet.py` | R-LM-1..8 | Lead magnets |
+| `validar-deck.py` | R-DK-* | Slide deck |
+| `validar-emails.py` | R-EM-* | Sequência de e-mails |
+| `validar-abnt-tcc.py` | ABNT | Elementos pré-textuais NBR 14724 |
+| `validar-capa-texto.py` | Capa | Quebra de linha de título/subtítulo |
+| `validar-capa-nivel.py` | Capa | Badge de nível obrigatório |
+| `validar-artefatos.py` | Entrega | Arquivos abrem, assinatura, MAX_PATH |
+| `renderizar-diagramas.py` | Diagramas | Sintaxe Mermaid → PNG |
 | `validar-lead-magnet.py` | R-LM-1..8 (--todos --estrito) |
 | `validar-deck.py` | R-DK-* |
 | `validar-emails.py` | R-EM-* |
