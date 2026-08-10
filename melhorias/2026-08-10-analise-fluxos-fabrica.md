@@ -68,3 +68,8 @@ date: 2026-08-10
   - `gerar-lead-magnet.py`
   - `gerar-deck.py`
   - `criar-campanha.py`
+
+### GAP 5: Identidade Visual Desconectada (Materiais -> Campanha -> Máquina)
+- **Causa:** Atualmente, Lead Magnets/Decks (HTML/CSS), Artes de Campanha e o Frontend da Máquina de Vendas definem seus aspectos visuais (cores, tipografia, estrutura gráfica) de forma isolada nos templates.
+- **Risco:** A coleção perde unidade estética perante o lead (ex: descompasso visual entre o PDF, os posts sociais e a landing page), enfraquecendo a percepção de autoridade de marca.
+- **Solução/Implementação:** Consolidar ABSOLUTAMENTE TUDO que for visual (paleta de cores principal/secundária, tipografia base, e grafismos) do manifesto da coleção. Propagar essa identidade de forma unificada e automática injetando-a no CSS de todos os Materiais, nos templates de arte da Campanha, e no tema global (`tailwind.config.ts` e globais) da Máquina de Vendas. Nada deve usar estilo genérico desconectado.

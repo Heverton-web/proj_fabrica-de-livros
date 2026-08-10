@@ -87,15 +87,66 @@
     ]
   },
   "lead-magnets": {
-    "total": 0,
-    "itens": []
+    "total": 6,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Armadilhas Comuns",
+        "slug": "lm-1-armadilhas",
+        "diretorio": "lead-magnets/lm-1-armadilhas"
+      },
+      {
+        "indice": 2,
+        "titulo": "Cheat Sheet",
+        "slug": "lm-2-cheatsheet",
+        "diretorio": "lead-magnets/lm-2-cheatsheet"
+      },
+      {
+        "indice": 3,
+        "titulo": "Checklist",
+        "slug": "lm-3-checklist",
+        "diretorio": "lead-magnets/lm-3-checklist"
+      },
+      {
+        "indice": 4,
+        "titulo": "Entregas",
+        "slug": "lm-4-entregas",
+        "diretorio": "lead-magnets/lm-4-entregas"
+      },
+      {
+        "indice": 5,
+        "titulo": "Mapa",
+        "slug": "lm-5-mapa",
+        "diretorio": "lead-magnets/lm-5-mapa"
+      },
+      {
+        "indice": 6,
+        "titulo": "Mini Guia",
+        "slug": "lm-6-mini-guia",
+        "diretorio": "lead-magnets/lm-6-mini-guia"
+      }
+    ]
   },
   "decks": {
-    "total": 0,
-    "itens": []
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Slide Deck",
+        "slug": "dck-1-harness-modelo",
+        "diretorio": "decks/dck-1-harness-modelo"
+      }
+    ]
   },
   "emails": {
-    "total": 0,
-    "itens": []
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Sequência de E-mails",
+        "slug": "eml-1-harness-modelo",
+        "diretorio": "emails/eml-1-harness-modelo"
+      }
+    ]
   }
 }
