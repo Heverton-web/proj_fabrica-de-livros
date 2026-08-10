@@ -92,10 +92,36 @@ tema (ou slug já esboçado) em `$ARGUMENTS`.
 > **REGRA 12:** Copy genérica ("Autor Digital", "centenas de pessoas") é REPROVADA.
 > O gate `grep 'Autor Digital|centenas de pessoas'` deve retornar vazio.
 
+### ⚠️ Tratamento de Erros nas Campanhas (OPÇÃO C — Warning + Continua)
+
+**Comportamento:** Se as campanhas falharem, a máquina de vendas CONTINUA
+será gerada, mas com um **WARNING explícito** no relatório final.
+
+**Por quê essa opção?**
+1. Máquina PODE funcionar sem campanhas (código já suporta `return None`)
+2. Campanhas são **marketing**, não funcionalidade core da máquina
+3. Bloquear por falha de marketing é **excessivo**
+4. Warning permite que o usuário **decida** se quer corrigir depois
+
+**O que acontece em cada cenário:**
+
+| Cenário | Campanha | Máquina | Snapshot | Relatório |
+|---------|----------|---------|----------|-----------|
+| Tudo OK | ✅ Criadas | ✅ Criada | ✅ Completo | ✅ Limpo |
+| Falha parcial | ⚠️ Algumas | ✅ Criada | ⚠️ Parcial | ⚠️ Warning |
+| Falha total | ❌ Nenhuma | ✅ Criada | ❌ Vazio | ⚠️ Warning |
+
+**Se houver falha, o relatório final (Passo 6) exibirá:**
+```
+⚠️ CAMPANHAS: falha parcial — <N>/<M> materiais criados
+   Máquina criada SEM snapshot de campanhas
+   Para corrigir: /campanha-completa <slug-colecao>
+```
+
 ## Passo 4 — Máquina de Vendas (FLUXO 3: MÁQUINA) ← OBRIGATÓRIO
 
-13. Depois que a coleção e campanhas estiverem prontas (Passos 1-3), gere
-    a máquina de vendas full-stack:
+13. Depois que a coleção estiver pronta (Passos 1-2), gere a máquina de
+    vendas full-stack:
 
     ```bash
     python scripts/criar-maquina-vendas.py <slug-colecao>
@@ -106,7 +132,7 @@ tema (ou slug já esboçado) em `$ARGUMENTS`.
     - Backend FastAPI (APIs de leads, funil, e-mails)
     - Banco SQLite (leads, vendas, campanhas)
     - 4 automações (Lead Hunter, Email Sender, Funnel Monitor, auto_correct)
-    - Snapshot das campanhas da coleção
+    - **Snapshot das campanhas** (SE existirem — ver tratamento de erros)
     - Docker Compose + vercel.json
 
 14. **Personalização OBRIGATÓRIA (Regra 12):**
@@ -123,6 +149,22 @@ tema (ou slug já esboçado) em `$ARGUMENTS`.
     cd output/<slug-colecao>/maquina/frontend && npm run dev
     # POST http://localhost:3000/api/checkout {"nome": "...", "email": "..."}
     ```
+
+### ⚠️ Snapshot de Campanhas (Comportamento Tolerante)
+
+A máquina **SEMPRE será criada**, mesmo sem campanhas. O script
+`criar-maquina-vendas.py` tem esta lógica:
+
+```python
+def vincular_campanhas(destino, slug):
+    if not origem.is_dir():
+        print("(sem campanhas no hub — máquina sem snapshot)")
+        return None  # ← MÁQUINA CONTINUA
+    # ... copia campanhas se existirem
+```
+
+**Resultado:** Máquina funciona com ou sem campanhas. Se as campanhas
+falharem, o snapshot fica vazio mas a máquina continua operacional.
 
 ## Passo 5 — Distribuição
 
@@ -156,12 +198,19 @@ FLUXO 2 — CAMPANHAS:
   LinkedIn    : <N> posts
   E-mails     : <N> sequências de nutrição
   WhatsApp    : <N> mensagens
+  Status      : <ok | parcial | falha>
+
+  ⚠️ SE HOUVER FALHA:
+  "CAMPANHAS: falha parcial — <N>/<M> materiais criados"
+  "Máquina criada SEM snapshot de campanhas"
+  "Para corrigir: /campanha-completa <slug-colecao>"
 
 FLUXO 3 — MÁQUINA DE VENDAS:
   Frontend    : Next.js 14 (landing, checkout, admin)
   Backend     : FastAPI (leads, funil, e-mails)
   Banco       : SQLite
   Deploy      : Docker / Vercel / VPS
+  Snapshot    : <completo | parcial | ausente>
   Status      : <pronta-pendente>
 
 DISTRIBUIÇÃO:
