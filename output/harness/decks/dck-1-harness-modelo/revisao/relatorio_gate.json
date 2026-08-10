@@ -1,0 +1,17 @@
+{
+  "slug": "decks/harness/dck-1-harness-engineering-modelo",
+  "total_slides": 13,
+  "diagramas": 0,
+  "conforme": true,
+  "violacoes": [],
+  "avisos": [
+    "0 diagrama(s) para 13 slides (recomendado >= 2); rode renderizar-diagramas.py no livro-mae"
+  ],
+  "regras": {
+    "R-DK-1": "1 slide por capitulo do livro-mae, sem lacuna",
+    "R-DK-2": "nenhum slide passa de 6 bullets nem de 140 caracteres por bullet",
+    "R-DK-3": "slide final com CTA rastreavel (UTM)",
+    "R-DK-4": "ao menos 1 diagrama a cada 5 slides",
+    "R-DK-5": "badge de nivel herdado da obra-mae (senioridade_obra)"
+  }
+}

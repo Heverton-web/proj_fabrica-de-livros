@@ -1,0 +1,101 @@
+{
+  "slug_livro_mae": "harness",
+  "artigos": {
+    "total": 2,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "A Revolução dos Agentes: Por Que o Modelo Não Basta & Anatomia de um Harness: O Corpo Que Carrega o Cérebro — Um Recorte de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+        "slug": "harness--art-01-a-revolucao-dos-agentes-por-que-o-modelo",
+        "diretorio": "artigos/harness--art-01-a-revolucao-dos-agentes-por-que-o-modelo",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "O Ciclo ReAct e os Loops de Execução & Sandboxes, Permissões e o Controle de Execução — Um Recorte de Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+        "slug": "harness--art-02-o-ciclo-react-e-os-loops-de-execucao-san",
+        "diretorio": "artigos/harness--art-02-o-ciclo-react-e-os-loops-de-execucao-san",
+        "capitulos_fonte_livro_mae": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 4,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "A Revolução dos Agentes: Por Que o Modelo Não Basta & Anatomia de um Harness: O Corpo Que Carrega o Cérebro",
+        "slug": "eb-01-coding-agents",
+        "diretorio": "ebooks/eb-01-coding-agents",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Test Harness: A Herança da Engenharia de Software & Safety Harness e Guardrails: A Camada Que Impede a Queda",
+        "slug": "eb-02-test-harness",
+        "diretorio": "ebooks/eb-02-test-harness",
+        "capitulos_fonte_livro_mae": [
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "O Ciclo ReAct e os Loops de Execução & Sandboxes, Permissões e o Controle de Execução",
+        "slug": "eb-03-ciclo-react",
+        "diretorio": "ebooks/eb-03-ciclo-react",
+        "capitulos_fonte_livro_mae": [
+          "5",
+          "6"
+        ]
+      },
+      {
+        "indice": 4,
+        "titulo": "Gestão de Contexto: Combatendo o Context Rot & Harness em Produção: Observabilidade, Evals e o Engenheiro Agêntico",
+        "slug": "eb-04-contexto",
+        "diretorio": "ebooks/eb-04-contexto",
+        "capitulos_fonte_livro_mae": [
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — Harness Engineering — Do Modelo ao Sistema Autônomo Confiável",
+        "slug": "pbk-1-harness-modelo",
+        "diretorio": "playbooks/harness/pbk-1-harness-modelo",
+        "estagios": 2
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}
