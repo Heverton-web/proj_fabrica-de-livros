@@ -96,6 +96,8 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 
 **V5:** `tipos_obra.py` (registro de tipos), `secoes_eita.py` (parser EITA canônico), `colecao.py`, `extrair-passos-praticos.py`, `validar-playbook.py`, `gerar-lead-magnet.py`, `validar-lead-magnet.py`, `gerar-deck.py`, `validar-deck.py`, `gerar-sequencia-emails.py`, `validar-emails.py`, `gerar-lead-magnet-pdf.py`, `gerar-pptx.py`, `gerar-deck-html.py`, `nomes_curtos.py`, `validar-artefatos.py`, `empacotar-colecao.py`
 
+**V5.4 (pesquisa acadêmica — custo LLM zero):** `fontes_academicas.py` (registro declarativo das bases com API aberta: OpenAlex, Crossref, arXiv, Semantic Scholar, SciELO, PubMed — adicionar fonte = 1 entrada) e `minerar-fontes-academicas.py <tema> --slug <obra>` (mineração determinística via APIs, dedup por DOI, gera `pesquisa/mineracao_academica_<slug>.json/.md` já em ABNT classe (A), cache local + `--sem-rede`).
+
 **Gates de conteúdo (F1/F2 — mérito, além da estrutura R1-R15):** `validar-referencias.py` (R-RF: URL/DOI reais, 4xx/DNS reprova, cache + `--sem-rede`), `validar-metricas.py` (R-MT: ≥1 métrica com valor+unidade+citação por capítulo; `metricas_obrigatorias` no sumário), `validar-escala.py` (R-ES: limites/contorno na seção Aplica), `validar-afirmacoes.py` (R-AF: dado factual sem `[N]` no parágrafo reprova), `validar-fontes.py` (R-FT: hierarquia A/B/C do dossiê ≥70% A+B). `validar-codigo.py --executar` (smoke test real de python/js/bash) e `--playbook` (gate dos cards vira comando executado). Registrados em `tipos_obra.py` → campo `gates_conteudo` do tipo `livro`; `auditar-obra.py --estrito` os encadeia (referências offline).
 
 ### Token Economy Skills
@@ -118,7 +120,7 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
 ## 5. Fluxo Operacional
 
 1. **Input:** operador define tema → `/esbocar <tema>`
-2. **Fase 1:** pesquisador varre → `indexar-dossie.py --indexar` → arquiteto gera sumário macro
+2. **Fase 1:** pesquisador varre → `minerar-fontes-academicas.py "<tema>" --slug <obra>` (custo zero, APIs abertas) → `indexar-dossie.py --indexar` → arquiteto gera sumário macro
 3. **Fase 2:** `pool-capitulos.py --plano --lote 4` → subagentes-redator em lotes (estratégia + redação + diagrama + CI + auto-validação). Retentativa com backoff (máx. 3)
 4. **Fase 2.5:** `auditar-obra.py` (encadeia os gates de conteúdo F1/F2 via `gates_conteudo` no `--estrito`) + `validar-codigo.py --executar` + `renderizar-diagramas.py --validar` → `revisor-tecnico` corrige (inclui conferência por amostra: reabrir 1 fonte por capítulo e conferir o dado citado)
 5. **Fase 3:** `compilador-abnt` merge + pré/pós-textuais + referências ABNT
