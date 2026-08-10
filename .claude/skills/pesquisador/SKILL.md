@@ -27,24 +27,39 @@ ruído e conteúdo superficial, e entregar um dossiê estruturado que alimentar�
    artigos científicos, ferramentas/implementações de referência, casos de uso corporativos,
    dados/estatísticas de mercado, normas/regulação aplicável, controvérsias ou limitações
    conhecidas.
-3. **OBRIGATÓRIO:** execute no mínimo 5 buscas específicas em fontes acadêmicas,
-   cobrindo o máximo de bases distintas possível (não repita a mesma base):
-   - arXiv.org (papers recentes, preprints)
+3. **OBRIGATÓRIO — minerador acadêmico (custo LLM zero):** rode ANTES das buscas
+   manuais o minerador determinístico que consulta as APIs abertas das bases
+   acadêmicas (OpenAlex, Crossref, arXiv, Semantic Scholar, SciELO, PubMed):
+   ```
+   python scripts/minerar-fontes-academicas.py "<tema>" --slug <obra>
+   ```
+   Ele grava em `output/<obra>/pesquisa/`:
+   - `mineracao_academica_<slug>.json` — registros normalizados (título, autores,
+     DOI, resumo, ano, citações) para o arquiteto/pesquisador;
+   - `mineracao_academica_<slug>.md` — fontes já em ABNT com classe (A), no
+     contrato do `validar-fontes.py`.
+   Incorpore integralmente essas fontes na seção "Fontes brutas" do dossiê.
+   Fontes novas entram por registro declarativo: `scripts/fontes_academicas.py`
+   (1 entrada por fonte com API aberta).
+4. **Complemento manual obrigatório:** continue com no mínimo 5 buscas específicas
+   em bases acadêmicas SEM API pública, cobrindo o máximo de bases distintas
+   possível (não repita a mesma base):
    - Google Scholar (varredura ampla, citações)
    - ACM Digital Library
    - IEEE Xplore
    - Springer Link / LNCS
-   - Semantic Scholar (síntese e grafo de citações)
-   - SciELO (produção científica em português/América Latina — obrigatório
-     quando o tema tiver literatura relevante em PT-BR)
-   - PubMed/PMC (quando o tema tocar saúde, biologia ou ciências da vida)
+   - Semantic Scholar (síntese e grafo de citações) — quando o minerador falhou
+     por rate limit
    - base-search.net (agregador multidisciplinar de acesso aberto)
    - Relatórios setoriais/institucionais de referência (ex.: DORA, Gartner,
      McKinsey, órgãos de classe ou reguladores do setor do tema)
-4. Descarte fontes superficiais (marketing raso, conteúdo duplicado, blogs sem
+   - PubMed/PMC (quando o tema tocar saúde, biologia ou ciências da vida)
+   - SciELO (produção científica em português/América Latina — obrigatório
+     quando o tema tiver literatura relevante em PT-BR e o minerador não retornar)
+5. Descarte fontes superficiais (marketing raso, conteúdo duplicado, blogs sem
    substância técnica). Priorize documentação oficial, papers, repositórios de
    referência e fontes técnicas primárias.
-5. Produza um dossiê em Markdown com esta estrutura fixa:
+6. Produza um dossiê em Markdown com esta estrutura fixa:
 
 ```markdown
 # Dossiê de Pesquisa — <tema>
@@ -94,6 +109,6 @@ Cada fonte termina com o marcador de classe `(A)`, `(B)` ou `(C)`:
 
 **Regra crítica:** Toda fonte citada em qualquer seção do dossiê DEVE aparecer na seção "Fontes brutas". Não cite algo no corpo sem incluir a fonte completa abaixo. O `Skill_Compilador_ABNT` no Nó 7 consome esta seção integralmente — se faltar uma fonte, ela não aparecerá nas referências finais do livro.
 
-6. Persista o dossiê em `output/<livro>/pesquisa/dossie_<slug-do-tema>.md`.
-7. Entregue a lista de fontes brutas também de forma isolada e sem duplicatas — ela
+7. Persista o dossiê em `output/<livro>/pesquisa/dossie_<slug-do-tema>.md`.
+8. Entregue a lista de fontes brutas também de forma isolada e sem duplicatas — ela
    será consumida integralmente pelo `Skill_Compilador_ABNT` no Nó 7.
