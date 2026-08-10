@@ -44,7 +44,7 @@ QUALIFICACAO = "Especialista em Marketing e Desenvolvimento de Soluções"
 MANUAIS = {
     "manual-completo-fabrica": {
         "titulo": "MANUAL COMPLETO",
-        "subtitulo": "FÁBRICA AGÊNTICA DE PUBLICAÇÕES — CRIAÇÃO DE MATERIAIS | CRIAÇÃO DE MÁQUINA DE VENDAS",
+        "subtitulo": "FÁBRICA AGÊNTICA DE PUBLICAÇÕES — CRIAÇÃO DE MATERIAIS | CRIAÇÃO DE CAMPANHA DE MARKETING COMPLETA | CRIAÇÃO DE MÁQUINA DE VENDAS",
         "cor_acento": "#58a6ff",
         "badge": "NÍVEL AVANÇADO",
     },
