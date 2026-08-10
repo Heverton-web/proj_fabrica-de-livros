@@ -1,0 +1,61 @@
+{
+  "titulo_obra": "Otimização de Desempenho & Testes e Garantia de Qualidade — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "sistemas-agenticos",
+  "capitulos_fonte_livro_mae": [
+    "9",
+    "10",
+    "11",
+    "12"
+  ],
+  "introducao": "Recorte investigativo sobre: Otimização de Desempenho, Testes e Garantia de Qualidade, Monitoramento e Observabilidade, Estratégias de Implantação.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Otimização de Desempenho",
+            "Testes e Garantia de Qualidade",
+            "Monitoramento e Observabilidade"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Otimização de Desempenho",
+            "Testes e Garantia de Qualidade",
+            "Monitoramento e Observabilidade"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Otimização de Desempenho",
+            "Testes e Garantia de Qualidade",
+            "Monitoramento e Observabilidade"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Otimização de Desempenho",
+            "Testes e Garantia de Qualidade",
+            "Monitoramento e Observabilidade"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

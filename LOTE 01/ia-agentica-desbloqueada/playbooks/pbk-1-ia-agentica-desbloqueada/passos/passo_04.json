@@ -1,0 +1,49 @@
+{
+  "numero": "04",
+  "capitulo_fonte": "04",
+  "titulo": "Fundamentos científicos: ReAct, memória e planejamento",
+  "estagio": "Agente",
+  "estagio_indice": 1,
+  "objetivo": "Ancorar o campo na literatura: ReAct, surveys de agentes, benchmarks e teorias de planejamento.",
+  "pre_requisito": "Passo 3 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Implementando ReAct com Memória de Curto Prazo",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# react_agente.py — ciclo ReAct explícito com trilha interpretável\nclass AgenteReAct:\n    \"\"\"Agente ReAct: pensamento -> acao -> observacao, com trilha.\"\"\"\n    def __init__(self, llm, ferramentas, limite_passos=6):\n        self.llm = llm\n        self.ferramentas = ferramentas\n        self.limite = limite_passos\n        self.trilha = []  # interpretabilidade: pensamentos e acoes\n\n    def executar(self, missao: str) -> str:\n        estado = missao\n        for _ in range(self.limite):\n            # Thought: o modelo raciocina sobre o estado\n            pensamento = self.llm.chamar_simples(\n                \"Pense sobre o estado atual e decida: qual ferramenta usar, \"\n                \"com quais argumentos, ou responda FINAL:<resposta>.\\n\"\n                f\"Ferramentas: {list(self.ferramentas.keys())}\\n\"\n                f\"Estado: {estado}\")\n            self.trilha.append({\"tipo\": \"thought\", \"conteudo\": pensamento})\n            if pensamento.startswith(\"FINAL:\"):\n                return pensamento[6:].strip()\n            # Action: parseia a decisao (formato acao(arg1=..., arg2=...))\n            import re\n            m = re.match(r\"(\\w+)\\((.+)\\)\", pensamento.strip())\n            if not m:\n                self.trilha.append({\"tipo\": \"erro\", \"conteudo\": \"formato invalido\"})\n                estado = f\"Erro de formato na resposta do modelo: {pensamento}\"\n                continue\n            nome, args_txt = m.group(1), m.group(2)\n            args = dict(re.findall(r\"(\\w+)=([^,]+)\", args_txt))\n            # Observation: executa e devolve o resultado\n            try:\n                obser"
+    },
+    {
+      "titulo": "Memória de Longo Prazo com Embeddings",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# memoria_longoprazo.py — memória persistente com recuperação vetorial\nimport sqlite3\n\nclass MemoriaLongoPrazo:\n    \"\"\"Memoria persistente com recuperacao por similaridade de texto.\"\"\"\n    def __init__(self, caminho_db: str, gerar_embedding):\n        self.con = sqlite3.connect(caminho_db)\n        self.con.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS memorias (\n                id INTEGER PRIMARY KEY,\n                texto TEXT, chave TEXT, criado_em TEXT DEFAULT CURRENT_TIMESTAMP\n            )\"\"\")\n        self.con.commit()\n        self.gerar_embedding = gerar_embedding  # funcao que gera vetores\n\n    def lembrar(self, texto: str, chave: str = \"\") -> None:\n        self.con.execute(\"INSERT INTO memorias (texto, chave) VALUES (?, ?)\",\n                         (texto, chave))\n        self.con.commit()\n\n    def recuperar(self, consulta: str, topo: int = 3) -> list:\n        \"\"\"Recuperacao por similaridade (fallback: correspondencia por palavra).\"\"\"\n        vetor_consulta = self.gerar_embedding(consulta)\n        linhas = self.con.execute(\"SELECT texto FROM memorias\").fetchall()\n        # Exemplo simplificado: se voce tem vetores, use cosseno.\n        # Aqui usamos a contagem de termos comuns como proxy pedagogico.\n        def pontuar(texto):\n            return sum(1 for t in consulta.lower().split()\n                       if t in texto.lower())\n        melhores = sorted(linhas, key=lambda r: -pontuar(r[0]))[:topo]\n        return [m[0] for m in melhores]\n\n# Uso:\n# def embed(t): return t  # no real: sentence-transformers / API de embedding\n# memoria = MemoriaLongoPrazo(\"orquest"
+    },
+    {
+      "titulo": "Planejamento com Re-Planejamento",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# planejador.py — planejamento com re-planejamento\nclass PlanejadorReplano:\n    \"\"\"Plano explicito com revisao quando a realidade diverge.\"\"\"\n    def __init__(self, llm, agente):\n        self.llm = llm\n        self.agente = agente\n\n    def planejar(self, missao: str) -> list:\n        plano = self.llm.chamar_simples(\n            \"Decomponha a missao em 3-5 passos objetivos, um por linha:\\n\"\n            f\"Missao: {missao}\")\n        return [p.strip() for p in plano.splitlines() if p.strip()]\n\n    def executar(self, missao: str) -> str:\n        plano = self.planejar(missao)\n        resultados = []\n        for passo in plano:\n            resultado = self.agente.executar(passo)\n            resultados.append((passo, resultado))\n            # Re-planejamento: pergunta ao modelo se o plano segue valido\n            revisar = self.llm.chamar_simples(\n                \"O plano ainda e o melhor caminho? Se sim responda SIM; \"\n                \"se nao, proponha um novo plano, um passo por linha.\\n\"\n                f\"Passo executado: {passo}\\nResultado: {resultado}\\n\"\n                f\"Plano restante: {plano[plano.index(passo)+1:]}\")\n            if revisar.strip().upper() != \"SIM\":\n                plano = [p.strip() for p in revisar.splitlines() if p.strip()]\n        return \"\\n\".join(f\"PASSO: {p}\\nRESULTADO: {r}\" for p, r in resultados)\n\n# Uso:\n# plano = PlanejadorReplano(llm, agente)\n# print(plano.executar(\"Diagnosticar por que o pedido P-7841 atrasou e\"\n#                      \" propor a compensacao ao cliente\"))"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Agente sem trilha**: um ReAct sem registro de pensamentos é um sistema sem memória de si — impossível de depurar e de auditar",
+    "Memória sem recuperação seletiva**: despejar o acervo inteiro na janela de contexto degrada a qualidade e explode o custo",
+    "Plano rígido em tarefas incertas**: o plano explícito sem revisão quebra quando o mundo diverge — sempre calibre o re-planejamento",
+    "Citar teoria sem medir**: \"o ReAct funciona\" não substitui a avaliação do seu caso específico — meça antes e depois"
+  ],
+  "armadilhas": [
+    "Agente sem trilha**: um ReAct sem registro de pensamentos é um sistema sem memória de si — impossível de depurar e de auditar",
+    "Memória sem recuperação seletiva**: despejar o acervo inteiro na janela de contexto degrada a qualidade e explode o custo",
+    "Plano rígido em tarefas incertas**: o plano explícito sem revisão quebra quando o mundo diverge — sempre calibre o re-planejamento",
+    "Citar teoria sem medir**: \"o ReAct funciona\" não substitui a avaliação do seu caso específico — meça antes e depois"
+  ],
+  "referencia_cruzada": "Cap. 4 — Fundamentos científicos: ReAct, memória e planejamento",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

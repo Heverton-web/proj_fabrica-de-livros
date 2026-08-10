@@ -1,0 +1,532 @@
+{
+  "slug": "livros/ia-analise-financeira",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 8,
+  "caracteres_obra": 200113,
+  "paginas_estimadas": 80.0,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 8 capitulos",
+      "conforme": true,
+      "detalhe": "8 capitulo(s) (minimo 8)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 80 paginas (~200.000 caracteres)",
+      "conforme": true,
+      "detalhe": "200.113 caracteres (minimo 200.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "4",
+      "capitulo_b": "5",
+      "similaridade": 0.47,
+      "trecho": "[1] MICROSOFT. *Funções do Excel*. Disponível em: https://support.microsoft.com/pt-br/excel. Acesso em: 8 ago. 2026.\n[2] GOOGLE. *Google Sheets — Lista de funções*. Disponível em: "
+    }
+  ],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "analise",
+      "variantes": {
+        "análise": 120,
+        "Análise": 9,
+        "analise": 1
+      },
+      "ocorrencias": 130
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 37,
+        "esta": 6
+      },
+      "ocorrencias": 43
+    },
+    {
+      "termo_normalizado": "vira",
+      "variantes": {
+        "vira": 38,
+        "virá": 1
+      },
+      "ocorrencias": 39
+    },
+    {
+      "termo_normalizado": "referencia",
+      "variantes": {
+        "referência": 29,
+        "Referência": 5,
+        "referencia": 1
+      },
+      "ocorrencias": 35
+    },
+    {
+      "termo_normalizado": "calculo",
+      "variantes": {
+        "cálculo": 27,
+        "calculo": 1
+      },
+      "ocorrencias": 28
+    },
+    {
+      "termo_normalizado": "pratica",
+      "variantes": {
+        "prática": 24,
+        "pratica": 1
+      },
+      "ocorrencias": 25
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "continua": 17,
+        "contínua": 2
+      },
+      "ocorrencias": 19
+    },
+    {
+      "termo_normalizado": "relatorios",
+      "variantes": {
+        "relatórios": 13,
+        "Relatórios": 4,
+        "relatorios": 1
+      },
+      "ocorrencias": 18
+    },
+    {
+      "termo_normalizado": "analises",
+      "variantes": {
+        "análises": 13,
+        "analises": 1
+      },
+      "ocorrencias": 14
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "publica": 3,
+        "pública": 2
+      },
+      "ocorrencias": 5
+    },
+    {
+      "termo_normalizado": "educacao",
+      "variantes": {
+        "Educação": 2,
+        "educacao": 2,
+        "educação": 1
+      },
+      "ocorrencias": 5
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "mesa de operações",
+      "terminal",
+      "sinal",
+      "praça (mercado)",
+      "bancada",
+      "conferência (dupla checagem)",
+      "ruído",
+      "painel de indicadores",
+      "alucinação",
+      "sala de controle"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "1",
+        "ocorrencias": [
+          "[13][14]",
+          "[8][9][10][11]"
+        ]
+      },
+      {
+        "capitulo": "2",
+        "ocorrencias": [
+          "[20][21]",
+          "[2][10]",
+          "[2][10]",
+          "[4][5][6][7]"
+        ]
+      },
+      {
+        "capitulo": "3",
+        "ocorrencias": [
+          "[5][6]",
+          "[5][6]"
+        ]
+      },
+      {
+        "capitulo": "4",
+        "ocorrencias": [
+          "[1][2]",
+          "[1][2]",
+          "[1][2]",
+          "[1][13]",
+          "[12][13]",
+          "[1][2]",
+          "[1][2]",
+          "[19][20]"
+        ]
+      },
+      {
+        "capitulo": "5",
+        "ocorrencias": [
+          "[14][15]"
+        ]
+      },
+      {
+        "capitulo": "6",
+        "ocorrencias": [
+          "[4][8]",
+          "[20][21]"
+        ]
+      },
+      {
+        "capitulo": "7",
+        "ocorrencias": [
+          "[11][12]",
+          "[19][20]",
+          "[1][2]",
+          "[3][4]",
+          "[3][4]",
+          "[3][4]",
+          "[3][4]",
+          "[3][4]"
+        ]
+      },
+      {
+        "capitulo": "8",
+        "ocorrencias": [
+          "[9][10]",
+          "[12][13]",
+          "[14][15]",
+          "[21][22]",
+          "[8][9]",
+          "[1][7]",
+          "[5][7]",
+          "[8][9]",
+          "[11][16]",
+          "[14][15]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 29607,
+      "palavras": 4613,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 72,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "] ABNT. *Normas técnicas*. Disponível em: https://www.abnt.org.br. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[13][14]",
+        "[8][9][10][11]"
+      ],
+      "vocabulario_fora_ilustra": 25,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.3,
+        "coeficiente_variacao": 0.939
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 25165,
+      "palavras": 3874,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 70,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ros para pequenos negócios*. Disponível em: https://sebrae.com.br. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[20][21]",
+        "[2][10]",
+        "[2][10]",
+        "[4][5][6][7]"
+      ],
+      "vocabulario_fora_ilustra": 57,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.4,
+        "coeficiente_variacao": 0.898
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 24024,
+      "palavras": 3429,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 68,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://python-programming.quantecon.org/pandas.html. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[5][6]",
+        "[5][6]"
+      ],
+      "vocabulario_fora_ilustra": 9,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.2,
+        "coeficiente_variacao": 0.838
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 24483,
+      "palavras": 3712,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 74,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ficial do scikit-learn*. Disponível em: https://scikit-learn.org/. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][2]",
+        "[1][2]",
+        "[1][2]",
+        "[1][13]",
+        "[12][13]",
+        "[1][2]",
+        "[1][2]",
+        "[19][20]"
+      ],
+      "vocabulario_fora_ilustra": 17,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.7,
+        "coeficiente_variacao": 0.791
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 23822,
+      "palavras": 3540,
+      "secoes_faltantes": [],
+      "referencias": 20,
+      "citacoes_inline": 62,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 7,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://python-programming.quantecon.org/pandas.html. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[14][15]"
+      ],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.7,
+        "coeficiente_variacao": 0.763
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 24637,
+      "palavras": 3311,
+      "secoes_faltantes": [],
+      "referencias": 21,
+      "citacoes_inline": 72,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 10,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " BI Desktop*. Disponível em: https://powerbi.microsoft.com/pt-br/. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[4][8]",
+        "[20][21]"
+      ],
+      "vocabulario_fora_ilustra": 3,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.2,
+        "coeficiente_variacao": 0.786
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 23757,
+      "palavras": 3550,
+      "secoes_faltantes": [],
+      "referencias": 21,
+      "citacoes_inline": 76,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "FinAR-Bench)*. Disponível em: https://arxiv.org/html/2506.07315v2. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[11][12]",
+        "[19][20]",
+        "[1][2]",
+        "[3][4]",
+        "[3][4]",
+        "[3][4]",
+        "[3][4]",
+        "[3][4]"
+      ],
+      "vocabulario_fora_ilustra": 3,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.3,
+        "coeficiente_variacao": 0.843
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 24618,
+      "palavras": 3757,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 81,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "nal de Proteção de Dados*. Disponível em: https://www.gov.br/anpd. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        24
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[9][10]",
+        "[12][13]",
+        "[14][15]",
+        "[21][22]",
+        "[8][9]",
+        "[1][7]",
+        "[5][7]",
+        "[8][9]",
+        "[11][16]",
+        "[14][15]"
+      ],
+      "vocabulario_fora_ilustra": 29,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.1,
+        "coeficiente_variacao": 0.882
+      }
+    }
+  ]
+}

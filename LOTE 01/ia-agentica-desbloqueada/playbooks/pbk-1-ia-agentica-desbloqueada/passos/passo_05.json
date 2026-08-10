@@ -1,0 +1,37 @@
+{
+  "numero": "05",
+  "capitulo_fonte": "05",
+  "titulo": "Engenharia de contexto para agentes",
+  "estagio": "Orquestrador",
+  "estagio_indice": 2,
+  "objetivo": "Projetar o contexto do agente: instruções, exemplos, recuperação e o fim do prompt solto.",
+  "pre_requisito": "Passo 4 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "O Construtor de Contexto em Camadas",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# contexto.py — construtor de contexto em camadas com orçamento de tokens\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass ConstrutorContexto:\n    \"\"\"Monta o contexto do agente em camadas, com priorizacao e orcamento.\"\"\"\n    instrucao_sistema: str\n    regras_negocio: str = \"\"\n    exemplos: list = field(default_factory=list)\n    orcamento_max_tokens: int = 4000\n\n    def _contar_tokens(self, texto: str) -> int:\n        # Estimativa simples: 4 caracteres por token (aprox.)\n        return len(texto) // 4\n\n    def _selecionar(self, itens: list, orcamento: int, chave=str) -> list:\n        \"\"\"Seleciona os itens mais relevantes dentro do orcamento.\"\"\"\n        selecionados, total = [], 0\n        for item in sorted(itens, key=chave, reverse=True):\n            custo = self._contar_tokens(item)\n            if total + custo > orcamento:\n                continue\n            selecionados.append(item)\n            total += custo\n        return selecionados\n\n    def montar(self, recuperacao: list, estado: str) -> list:\n        \"\"\"Monta as mensagens finais com priorizacao (importante no inicio/fim).\"\"\"\n        msg_sistema = self.instrucao_sistema\n        if self.regras_negocio:\n            msg_sistema += \"\\n\\n## REGRAS DE NEGOCIO\\n\" + self.regras_negocio\n        if self.exemplos:\n            msg_sistema += \"\\n\\n## EXEMPLOS\\n\" + \"\\n\".join(self.exemplos)\n        # Recuperacao selecionada por relevancia (aqui: ordem de entrada;\n        # no real, a pontuacao vem do RAG — Cap. 6)\n        orcamento_restante = self.orcamento_max_tokens - self._contar_tokens(msg_sistema)\n        recuperaca"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Prompt único gigante**: uma instrução de 3.000 tokens com tudo misturado. Separe instrução, regras, exemplos e recuperação em camadas",
+    "Despejo de recuperação**: colocar 20 documentos recuperados no contexto. Selecione por relevância — o orçamento é parte do design",
+    "Estado no lugar errado**: a observação da ação enterrada no meio do histórico em vez de no fim — o modelo \"não vê\" o que acabou de acontecer",
+    "Contexto versionado como texto solto**: mudar o prompt sem teste A/B é apostar o comportamento do sistema no escuro"
+  ],
+  "armadilhas": [
+    "Prompt único gigante**: uma instrução de 3.000 tokens com tudo misturado. Separe instrução, regras, exemplos e recuperação em camadas",
+    "Despejo de recuperação**: colocar 20 documentos recuperados no contexto. Selecione por relevância — o orçamento é parte do design",
+    "Estado no lugar errado**: a observação da ação enterrada no meio do histórico em vez de no fim — o modelo \"não vê\" o que acabou de acontecer",
+    "Contexto versionado como texto solto**: mudar o prompt sem teste A/B é apostar o comportamento do sistema no escuro"
+  ],
+  "referencia_cruzada": "Cap. 5 — Engenharia de contexto para agentes",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

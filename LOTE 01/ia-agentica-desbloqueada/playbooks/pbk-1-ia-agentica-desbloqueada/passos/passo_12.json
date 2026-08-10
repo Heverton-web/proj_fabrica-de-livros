@@ -1,0 +1,51 @@
+{
+  "numero": "12",
+  "capitulo_fonte": "12",
+  "titulo": "Sistemas multiagentes na prática",
+  "estagio": "Autonomia",
+  "estagio_indice": 3,
+  "objetivo": "Implementar colaboração entre agentes: supervisor, crítico, especialistas e comunicação A2A.",
+  "pre_requisito": "Passo 11 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Padrão Pipeline: O Fluxo de Análise do OrquestraIA",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# pipeline_analise.py — o padrao pipeline aplicado a analise de dados\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass EstagioPipeline:\n    \"\"\"Um estagio do pipeline: transforma a saida do estagio anterior.\"\"\"\n    nome: str\n    funcao: callable\n\nclass PipelineAnalise:\n    \"\"\"Pipeline de analise: coleta -> processa -> gera relatorio.\"\"\"\n    def __init__(self, estagios: list):\n        self.estagios = estagios\n\n    def executar(self, entrada: dict) -> dict:\n        \"\"\"Executa os estagios em sequencia, encadeando a saida.\"\"\"\n        dado = entrada\n        trilha = []\n        for estagio in self.estagios:\n            dado = estagio.funcao(dado)  # a saida vira a entrada do proximo\n            trilha.append({\"estagio\": estagio.nome, \"saida\": str(dado)[:80]})\n        return {\"resultado\": dado, \"trilha\": trilha}\n\n# Os tres estagios do dominio de analise:\ndef estagio_coleta(entrada: dict) -> dict:\n    \"\"\"Estagio 1: coleta as fontes de dados da missao.\"\"\"\n    return {\"fontes\": [\"vendas_2026\", \"suporte_2026\"], \"filtro\": entrada.get(\"filtro\")}\n\ndef estagio_processamento(dados: dict) -> dict:\n    \"\"\"Estagio 2: processa e calcula metricas.\"\"\"\n    # simulacao: agregacao de vendas e tickets\n    return {\"vendas_total\": 482000, \"tickets_abertos\": 127, \"fonte\": dados[\"fontes\"]}\n\ndef estagio_relatorio(metricas: dict) -> dict:\n    \"\"\"Estagio 3: gera o relatorio final em linguagem natural.\"\"\"\n    return {\"relatorio\": (\n        f\"As vendas somam R$ {metricas['vendas_total']:,.0f} com \"\n        f\"{metricas['tickets_abertos']} tickets abertos. \"\n        f\"Fontes: {', '.join(metricas['font"
+    },
+    {
+      "titulo": "Padrão Debate: A Revisão Crítica de Decisões de Alto Impacto",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# debate.py — o padrao debate para decisoes de alto impacto\nclass DebateDecisao:\n    \"\"\"Dois especialistas avaliam a mesma decisao; a sintese decide.\"\"\"\n    def __init__(self, llm, avaliador_a, avaliador_b, criterio_aprovacao):\n        self.llm = llm\n        self.avaliadores = [avaliador_a, avaliador_b]\n        self.criterio = criterio_aprovacao  # ex.: ambos devem aprovar\n\n    def executar(self, decisao_proposta: str, contexto: str) -> dict:\n        \"\"\"Executa o debate e decide pela sintese.\"\"\"\n        pareceres = []\n        for nome, avaliador in self.avaliadores:\n            parecer = avaliador.executar(\n                f\"Avalie criticamente a decisao abaixo. Identifique riscos, \"\n                f\"pontos cegos e condicoes. Contexto: {contexto}\\n\"\n                f\"Decisao proposta: {decisao_proposta}\")\n            pareceres.append((nome, parecer))\n        # Sintese: o criterio decide o desfecho\n        aprovacoes = sum(1 for _, p in pareceres if \"aprovo\" in p.lower())\n        aprovado = aprovacoes >= self.criterio\n        sintese = self.llm.chamar_simples(\n            f\"Sintetize os dois pareceres abaixo em uma recomendacao final \"\n            f\"('aprovar', 'revisar' ou 'recusar') com justificativa:\\n\"\n            f\"Parecer 1: {pareceres[0][1]}\\nParecer 2: {pareceres[1][1]}\")\n        return {\"aprovado\": aprovado, \"pareceres\": pareceres,\n                \"sintese\": sintese}\n\n# Uso (decisao de alto impacto — reembolso acima do limite):\n# debate = DebateDecisao(llm, avaliador_financeiro, avaliador_atendimento, 2)\n# resultado = debate.executar(\n#     \"aprovar reembolso de R$"
+    },
+    {
+      "titulo": "Padrão Hierarquia: Suborquestradores para Domínios em Crescimento",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# hierarquia.py — suborquestrador para o dominio de vendas\nclass SubOrquestrador:\n    \"\"\"Orquestra um dominio com subespecialidades (padrao hierarquico).\"\"\"\n    def __init__(self, dominio: str, subespecialistas: dict):\n        self.dominio = dominio\n        self.subespecialistas = subespecialistas\n\n    def rotear(self, missao: str) -> str:\n        if \"qualifica\" in missao.lower() or \"lead\" in missao.lower():\n            return \"qualificacao\"\n        if \"negocia\" in missao.lower() or \"proposta\" in missao.lower():\n            return \"negociacao\"\n        return \"prospeccao\"\n\n    def executar(self, missao: str) -> str:\n        sub = self.rotear(missao)\n        if sub not in self.subespecialistas:\n            return f\"[{self.dominio}] sem subespecialista para '{sub}'\"\n        return self.subespecialistas[sub].executar(missao)\n\n# O orquestrador raiz passa a ter 'vendas' como suborquestrador:\n# vendas = SubOrquestrador(\"vendas\", {\n#     \"prospeccao\": agente_prospeccao,\n#     \"qualificacao\": agente_qualificacao,\n#     \"negociacao\": agente_negociacao,\n# })\n# orquestra.registrar(\"vendas\", vendas, \"ciclo completo de vendas\")"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Multiagente por estética**: \"meu sistema tem 10 agentes\" como objetivo — cada agente deve justificar o custo com benefício medido",
+    "Sobreposição de papéis**: dois agentes com o mesmo escopo confundem o roteamento e dobram o custo — escopo único por agente",
+    "Pipeline sem trilha**: a cadeia falha sem saber em qual estágio — cada transição registrada",
+    "Debate para tudo**: o debate custa caro — reserve para decisões onde o erro é mais caro que a revisão",
+    "Hierarquia prematura**: suborquestradores antes de o domínio crescer — complexidade sem necessidade"
+  ],
+  "armadilhas": [
+    "Multiagente por estética**: \"meu sistema tem 10 agentes\" como objetivo — cada agente deve justificar o custo com benefício medido",
+    "Sobreposição de papéis**: dois agentes com o mesmo escopo confundem o roteamento e dobram o custo — escopo único por agente",
+    "Pipeline sem trilha**: a cadeia falha sem saber em qual estágio — cada transição registrada",
+    "Debate para tudo**: o debate custa caro — reserve para decisões onde o erro é mais caro que a revisão",
+    "Hierarquia prematura**: suborquestradores antes de o domínio crescer — complexidade sem necessidade"
+  ],
+  "referencia_cruzada": "Cap. 12 — Sistemas multiagentes na prática",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

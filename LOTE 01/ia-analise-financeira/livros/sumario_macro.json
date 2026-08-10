@@ -1,0 +1,119 @@
+{
+  "titulo_obra": "IA no Trabalho Financeiro",
+  "tipo_obra": "livro",
+  "tamanho_obra": "M",
+  "subtitulo": "Planilhas, KPIs e análise de dados com modelos gratuitos",
+  "motivo_condutor": {
+    "nome": "A Mesa de Operações",
+    "descricao": "O leitor é um analista sentado em uma mesa de operações financeira que ganha um novo colega de bancada: a IA gratuita. Cada ferramenta é um terminal da mesa (planilha, chat, dashboard), cada dado é um sinal que chega da praça, e a disciplina do analista (conferir, anonimizar, decidir com critério) é o que separa um sinal real de um ruído — ou de uma alucinação.",
+    "vocabulario": [
+      "mesa de operações",
+      "terminal",
+      "sinal",
+      "praça (mercado)",
+      "bancada",
+      "conferência (dupla checagem)",
+      "ruído",
+      "painel de indicadores",
+      "alucinação",
+      "sala de controle"
+    ],
+    "persona_leitor": "Analista de Inteligência Financeira"
+  },
+  "introducao": "Introdução de impacto que situa o leitor na mesa de operações: o momento em que a IA gratuita deixou de ser curiosidade e virou ferramenta de bancada — e como um analista iniciante pode, sem pagar nada, passar a criar planilhas, calcular KPIs e analisar dados financeiros com velocidade profissional.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos: O Que É e Por Que Importa",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "A IA Chegou à Mesa de Operações",
+          "objetivo": "Apresentar o que é IA generativa e LLM em linguagem acessível, onde essa tecnologia se encaixa na rotina financeira e por que ela importa para um analista iniciante — habilitando o leitor a explicar o tema para terceiros.",
+          "pilares_previstos": [
+            "O que é IA generativa e LLM (sem jargão)",
+            "O que a IA faz bem e o que ela não faz na rotina financeira",
+            "O novo fluxo de trabalho: copiloto, não substituto"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Modelos Gratuitos: Seu Primeiro Terminal",
+          "objetivo": "Mapear as opções gratuitas disponíveis (ChatGPT, Gemini, Copilot, Claude e modelos open-source locais), seus limites e como escolher a ferramenta certa para cada tarefa da mesa.",
+          "pilares_previstos": [
+            "Panorama dos planos gratuitos: capacidades e cotas",
+            "Modelos open-source locais (Ollama, LM Studio) para dados sensíveis",
+            "Critérios de escolha: tarefa, privacidade e volume de dados"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Dados Financeiros: Os Sinais da Praça",
+          "objetivo": "Ensinar o leitor a reconhecer e organizar as principais fontes de dados financeiros do trabalho: DRE, balanço patrimonial, fluxo de caixa e séries temporais — a matéria-prima que alimenta toda análise.",
+          "pilares_previstos": [
+            "Demonstrações financeiras: DRE, balanço e fluxo de caixa",
+            "Séries temporais e dados tabulares no dia a dia",
+            "Qualidade do dado: limpeza, anonimização e rastreabilidade"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Planilhas: A Bancada de Trabalho",
+          "objetivo": "Consolidar os fundamentos de Excel e Google Sheets que a IA vai acelerar: células, referências, funções essenciais, tabelas e boas práticas de modelagem financeira.",
+          "pilares_previstos": [
+            "Fundamentos de Excel e Google Sheets para finanças",
+            "Funções essenciais: soma, se, procv, índice/corresp",
+            "Boas práticas de modelagem: premissas, entradas e saídas separadas"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Na Prática: A IA na Bancada",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Criando Planilhas com IA",
+          "objetivo": "Ensinar o leitor a usar IA para arquitetar, gerar e corrigir planilhas financeiras completas: prompts eficazes, fórmulas geradas por texto e validação do resultado.",
+          "pilares_previstos": [
+            "Prompts que funcionam: arquitetura antes da fórmula",
+            "Text-to-formula: gerando e corrigindo fórmulas com IA",
+            "Validação e auditoria: cross-footing e conferência humana"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Análise de Dados com IA",
+          "objetivo": "Capacitar o leitor a analisar dados financeiros com ferramentas gratuitas: upload de planilhas em chats, Python com pandas via Data Analysis, estatísticas descritivas e leitura crítica dos resultados.",
+          "pilares_previstos": [
+            "Chat com seus dados: CSV, XLSX e PDF nos assistentes gratuitos",
+            "Python e pandas na prática: limpeza, agrupamento e gráficos",
+            "Leitura crítica: o que a IA erra e como conferir"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "KPIs e Dashboards Financeiros",
+          "objetivo": "Ensinar a calcular os principais KPIs financeiros com IA e a montar dashboards gratuitos (Looker Studio e Power BI Desktop) que transformam dados em decisão.",
+          "pilares_previstos": [
+            "KPIs essenciais: margens, liquidez, EBITDA, orçado vs realizado",
+            "Dashboards gratuitos: Looker Studio e Power BI Desktop",
+            "Do KPI à decisão: cenários, análise de sensibilidade e storytelling"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "O Analista Aumentado: Ética, Riscos e o Futuro",
+          "objetivo": "Consolidar o arco da obra: automação de relatórios, riscos (alucinação, viés, privacidade), conformidade e o papel do analista que lidera a mesa — fechando com um plano de ação prático.",
+          "pilares_previstos": [
+            "Automação do dia a dia: relatórios, e-mails e rotinas",
+            "Riscos e ética: alucinação, viés, privacidade e LGPD",
+            "Seu plano de ação: rotina de bancada com IA gratuita"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética que amarra o arco transformacional: o leitor, agora Analista de Inteligência Financeira na Mesa de Operações, enxerga o fluxo completo — entender os dados, organizá-los na bancada, acelerar com IA gratuita, calcular KPIs, decidir com conferência — e está pronto para liderar análises financeiras no seu trabalho."
+}

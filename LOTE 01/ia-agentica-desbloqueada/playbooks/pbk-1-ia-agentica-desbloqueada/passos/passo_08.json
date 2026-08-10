@@ -1,0 +1,37 @@
+{
+  "numero": "08",
+  "capitulo_fonte": "08",
+  "titulo": "Planejamento de tarefas e decomposição",
+  "estagio": "Orquestrador",
+  "estagio_indice": 2,
+  "objetivo": "Ensinar o agente a planejar: decomposição hierárquica, reflexão, autocorreção e o fim dos loops infinitos.",
+  "pre_requisito": "Passo 7 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "O Planejador com Fases, Passos e Verificação",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# planejador.py — decomposicao hierarquica com verificacao e re-planejamento\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass Plano:\n    \"\"\"Um plano com fases, passos e criterios de sucesso.\"\"\"\n    missao: str\n    fases: list = field(default_factory=list)  # [{nome, passos: [...]}]\n    indice_fase: int = 0\n    indice_passo: int = 0\n\n    def passo_atual(self):\n        return self.fases[self.indice_fase][\"passos\"][self.indice_passo]\n\n    def avancar(self) -> bool:\n        \"\"\"Avança para o próximo passo; True se o plano terminou.\"\"\"\n        self.indice_passo += 1\n        if self.indice_passo >= len(self.fases[self.indice_fase][\"passos\"]):\n            self.indice_fase += 1\n            self.indice_passo = 0\n        return self.indice_fase >= len(self.fases)\n\nclass Planejador:\n    \"\"\"Converte missao em plano e executa com verificacao e re-planejamento.\"\"\"\n    def __init__(self, llm, agente):\n        self.llm = llm\n        self.agente = agente\n\n    def planejar(self, missao: str) -> Plano:\n        \"\"\"Decomposicao: fases e passos com criterios verificaveis.\"\"\"\n        saida = self.llm.chamar_simples(\n            \"Decomponha a missao em fases e passos executaveis. \"\n            \"Formato por linha: FASE:<nome> ou PASSO:<acao>|CRITERIO:<verificacao>\\n\"\n            f\"Missao: {missao}\")\n        fases, atual = [], None\n        for linha in saida.splitlines():\n            linha = linha.strip()\n            if linha.startswith(\"FASE:\"):\n                atual = {\"nome\": linha[5:], \"passos\": []}\n                fases.append(atual)\n            elif linha.startswith(\"PASSO:\") and atua"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Missão como passo único**: \"resolver o problema do cliente\" sem decomposição é uma intenção, não um plano — sem critérios verificáveis no meio",
+    "Plano sem verificação**: passos executados sem conferir o critério de sucesso — o agente \"conclui\" missões que não terminou",
+    "Plano rígido**: nunca re-planejar diante da divergência — o imprevisto quebra a missão inteira",
+    "Granularidade errada**: passos grandes demais (sem verificação) ou pequenos demais (custo explosivo) — calibre com a taxa de sucesso e o custo"
+  ],
+  "armadilhas": [
+    "Missão como passo único**: \"resolver o problema do cliente\" sem decomposição é uma intenção, não um plano — sem critérios verificáveis no meio",
+    "Plano sem verificação**: passos executados sem conferir o critério de sucesso — o agente \"conclui\" missões que não terminou",
+    "Plano rígido**: nunca re-planejar diante da divergência — o imprevisto quebra a missão inteira",
+    "Granularidade errada**: passos grandes demais (sem verificação) ou pequenos demais (custo explosivo) — calibre com a taxa de sucesso e o custo"
+  ],
+  "referencia_cruzada": "Cap. 8 — Planejamento de tarefas e decomposição",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

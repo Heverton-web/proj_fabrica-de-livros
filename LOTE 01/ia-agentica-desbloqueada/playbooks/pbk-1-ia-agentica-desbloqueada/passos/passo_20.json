@@ -1,0 +1,45 @@
+{
+  "numero": "20",
+  "capitulo_fonte": "20",
+  "titulo": "O engenheiro de sistemas agênticos",
+  "estagio": "Orquestraia",
+  "estagio_indice": 5,
+  "objetivo": "Consolidar a carreira e a mentalidade: o perfil do engenheiro que projeta, constrói e implanta autonomia.",
+  "pre_requisito": "Passo 19 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "O Portfólio que Prova a Habilidade",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# portfolio.py — a estrutura do portfolio do engenheiro de sistemas agenticos\nPORTFOLIO_ENGENHEIRO = {\n    \"arquitetura\": [\n        \"diagrama do OrquestraIA (orquestrador + especialistas)\",\n        \"ADR da decisao de framework (por que codigo puro, nao LangGraph)\",\n        \"matriz de padroes multiagente por caso de uso\",\n    ],\n    \"engenharia\": [\n        \"repo do OrquestraIA (loop, contexto, memoria, ferramentas)\",\n        \"contratos de ferramentas com validacao e observacao\",\n        \"pipeline de analise com verificacao em cada estagio\",\n    ],\n    \"operacao\": [\n        \"dashboard com metricas reais (taxa de sucesso, custo por missao)\",\n        \"ciclo de operacao: licoes de 30 dias de operacao\",\n        \"otimizacao de custo medida (antes/depois)\",\n    ],\n    \"governanca\": [\n        \"golden set com 20+ casos e taxa de regressao\",\n        \"matriz de autonomia com niveis HITL por acao\",\n        \"post-mortem de incidente com licao e correcao\",\n    ],\n}\n\ndef resumo_portfolio() -> str:\n    \"\"\"O pitch de uma frase: o que o portfolio prova.\"\"\"\n    return (\"Construi, implantei e operei um sistema multiagente (OrquestraIA) \"\n            \"com orquestracao, memoria, ferramentas, evals, seguranca, \"\n            \"supervisao humana e operacao continua — medindo custo, \"\n            \"qualidade e autonomia com evidencia.\")"
+    },
+    {
+      "titulo": "O Roteiro de Evolução",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# roteiro.py — os proximos passos de evolucao\nROTEIRO_EVOLUCAO = [\n    {\n        \"salto\": \"Producao real\",\n        \"acao\": \"Implantar o OrquestraIA com um provedor real (LLM gateway, \"\n                \"fila, banco) e operar 30 dias com metricas.\",\n        \"competencias\": [\"operacao\", \"engenharia\"],\n    },\n    {\n        \"salto\": \"Multiagente avancado\",\n        \"acao\": \"Explorar debate e hierarquia em um dominio com subespecialidades \"\n                \"— medindo o custo-beneficio de cada padrao.\",\n        \"competencias\": [\"arquitetura\"],\n    },\n    {\n        \"salto\": \"Governanca em escala\",\n        \"acao\": \"Projetar a matriz de autonomia e o HITL de um sistema com \"\n                \"regulacao (financeiro, saude) — o perfil mais raro e valorizado.\",\n        \"competencias\": [\"governanca\"],\n    },\n]\n\ndef proximo_salto(indice: int = 0) -> str:\n    \"\"\"O proximo passo concreto do roteiro.\"\"\"\n    s = ROTEIRO_EVOLUCAO[indice]\n    return f\"{s['salto']}: {s['acao']}\""
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Ficar na superfície**: dominar prompts e demos sem o núcleo técnico — o mercado paga pela profundidade, não pela superfície",
+    "Construir sem medir**: sistemas sem evals e painel — protótipos, não produtos",
+    "Autonomia sem governança**: sistemas que agem sem limites e supervisão — a falha mais previsível do mercado",
+    "Portfólio sem evidência**: listas de cursos sem sistemas reais — o portfólio prova com artefatos e métricas",
+    "Parar no deploy**: entregar o sistema e abandonar a operação — o valor está na operação contínua (Capítulo 19)"
+  ],
+  "armadilhas": [
+    "Ficar na superfície**: dominar prompts e demos sem o núcleo técnico — o mercado paga pela profundidade, não pela superfície",
+    "Construir sem medir**: sistemas sem evals e painel — protótipos, não produtos",
+    "Autonomia sem governança**: sistemas que agem sem limites e supervisão — a falha mais previsível do mercado",
+    "Portfólio sem evidência**: listas de cursos sem sistemas reais — o portfólio prova com artefatos e métricas",
+    "Parar no deploy**: entregar o sistema e abandonar a operação — o valor está na operação contínua (Capítulo 19)"
+  ],
+  "referencia_cruzada": "Cap. 20 — O engenheiro de sistemas agênticos",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

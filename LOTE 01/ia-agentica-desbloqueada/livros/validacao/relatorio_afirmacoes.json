@@ -1,0 +1,157 @@
+{
+  "slug": "livros/ia-agentica-desbloqueada",
+  "capitulos": 20,
+  "total_violacoes": 19,
+  "por_capitulo": {
+    "cap_1": 1,
+    "cap_2": 3,
+    "cap_3": 1,
+    "cap_4": 1,
+    "cap_5": 1,
+    "cap_6": 1,
+    "cap_8": 1,
+    "cap_11": 1,
+    "cap_12": 3,
+    "cap_13": 2,
+    "cap_16": 2,
+    "cap_17": 2
+  },
+  "regras": {
+    "R-AF-1": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo"
+  },
+  "violacoes": [
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_1",
+      "secao": 5,
+      "trecho": "1. **Tratar o agente como um chatbot melhor**: conectar um LLM a um prompt mais longo não cria um agente. Sem loop, ferramentas e estado, você tem um conversador eloquente. 2. **Autonomia total desde o primeiro dia**: co"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_2",
+      "secao": 4,
+      "trecho": "Agora vamos fechar o ciclo do Capítulo 1: o esqueleto ganha um LLM real no lugar da decisão fixa. Usamos a API de chat em sua forma mais portátil (interface OpenAI-compatível), que funciona com a maioria dos provedores —"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_2",
+      "secao": 5,
+      "trecho": "O protocolo tem quatro momentos, aplicados a cada ação: **avaliar** (o resultado confirma a hipótese? o objetivo avançou?), **diagnosticar** (se não avançou, por quê? argumentos errados, ferramenta errada, suposição queb"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_2",
+      "secao": 6,
+      "trecho": "Três pontos para levar: **primeiro**, o agent loop é um ciclo de quatro fases — perceber, raciocinar, agir e observar — e a observação é a fase que a maioria das implementações esquece, exatamente a que fecha o ciclo e p"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_3",
+      "secao": 2,
+      "trecho": "**1. Agente simples (single-step / roteador)**: um loop com um LLM e ferramentas, sem subagentes. Ideal para tarefas bem delimitadas: consultar dados, transformar texto, executar uma operação de negócio. É a arquitetura "
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_4",
+      "secao": 5,
+      "trecho": "1. **Agente sem trilha**: um ReAct sem registro de pensamentos é um sistema sem memória de si — impossível de depurar e de auditar. 2. **Memória sem recuperação seletiva**: despejar o acervo inteiro na janela de contexto"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_5",
+      "secao": 5,
+      "trecho": "1. **Prompt único gigante**: uma instrução de 3.000 tokens com tudo misturado. Separe instrução, regras, exemplos e recuperação em camadas. 2. **Despejo de recuperação**: colocar 20 documentos recuperados no contexto. Se"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_6",
+      "secao": 3,
+      "trecho": "A padaria de bairro não usa ficha de clientes — usa a memória da dona. Ela lembra que o Sr. Carlos prefere o pão mais torrado (memória de longo prazo), lembra que hoje ele pediu o pão de forma às 7h (memória episódica da"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_8",
+      "secao": 5,
+      "trecho": "1. **Missão como passo único**: \"resolver o problema do cliente\" sem decomposição é uma intenção, não um plano — sem critérios verificáveis no meio. 2. **Plano sem verificação**: passos executados sem conferir o critério"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_11",
+      "secao": 6,
+      "trecho": "O próximo capítulo completa a Parte III com os **sistemas multiagentes na prática**: os padrões avançados — pipeline, debate, hierarquia — e quando cada um transforma o OrquestraIA em algo maior, com o custo e a complexi"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_12",
+      "secao": 2,
+      "trecho": "**Orquestração (hub-and-spoke)**: o orquestrador coordena especialistas em paralelo ou sequência — o padrão do Capítulo 10. Forças: controle central, roteamento, consolidação. Fraquezas: o orquestrador é o gargalo. Uso: "
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_12",
+      "secao": 4,
+      "trecho": "Quando o domínio de vendas cresce — prospecção, qualificação, negociação, pós-venda — um único especialista não basta. A hierarquia organiza:"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_12",
+      "secao": 5,
+      "trecho": "1. **Multiagente por estética**: \"meu sistema tem 10 agentes\" como objetivo — cada agente deve justificar o custo com benefício medido. 2. **Sobreposição de papéis**: dois agentes com o mesmo escopo confundem o roteament"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_13",
+      "secao": 4,
+      "trecho": "Três decisões de engenharia: **graders ortogonais** (ferramenta, resposta, judge — cada dimensão mede uma coisa; a aprovação exige todas), **baseline de aprovação explícito** (90% no exemplo — o limiar é uma decisão de n"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_13",
+      "secao": 4,
+      "trecho": "- [ ] Golden set fixo e revisado — casos com ferramenta, argumentos e fatos esperados? - [ ] Graders **determinísticos** para as dimensões estruturais (ferramenta, args, término)? - [ ] LLM-as-a-judge com **rubrica** e *"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_16",
+      "secao": 4,
+      "trecho": "A métrica de custo estimado usa uma constante didática (US$ 4 por milhão de tokens de entrada); na produção, o preço real do modelo vem do gateway (Capítulo 17)."
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_16",
+      "secao": 5,
+      "trecho": "1. **Logar sem estruturar**: linhas de log soltas sem as quatro dimensões — impossível resumir, comparar e alertar. 2. **Painel sem trilha**: métricas agregadas sem o detalhe de cada missão — o painel diz que algo está e"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_17",
+      "secao": 5,
+      "trecho": "1. **Sem gateway**: chamadas diretas aos provedores espalhadas — sem fallback, sem cache, sem observação de custo. 2. **Segredo no código**: a chave no repositório é a primeira vulnerabilidade que um atacante procura — a"
+    },
+    {
+      "regra": "R-AF-1",
+      "enunciado": "parágrafo com dado factual (%, unidade, superlativo) exige citação [N] no mesmo parágrafo",
+      "origem": "cap_17",
+      "secao": 6,
+      "trecho": "Três pontos para levar: **primeiro**, o gateway de LLM é a camada central da produção — roteamento por tarefa, fallback, cache, rate limiting, observação e segurança das chaves em um único ponto. **Segundo**, a escalabil"
+    }
+  ]
+}

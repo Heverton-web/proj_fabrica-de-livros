@@ -1,0 +1,43 @@
+{
+  "numero": "03",
+  "capitulo_fonte": "03",
+  "titulo": "Arquiteturas de agente: do simples ao multiagente",
+  "estagio": "Agente",
+  "estagio_indice": 1,
+  "objetivo": "Apresentar os padrões arquiteturais: agente único, roteador, orquestrador-operários, swarm.",
+  "pre_requisito": "Passo 2 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Arquitetura 1: Agente com Rotas (Workflow Agêntico)",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# workflow_agenetico.py — fluxo com rotas: classifica e roteia\nclass WorkflowRoteador:\n    \"\"\"Fluxo fixo com decisões locais em cada etapa.\"\"\"\n    def __init__(self, llm, ferramentas):\n        self.llm = llm\n        self.ferramentas = ferramentas\n\n    def classificar_intencao(self, texto: str) -> str:\n        \"\"\"Etapa 1: decide o caminho (consulta, pedido, reclamacao).\"\"\"\n        prompt = (\n            \"Classifique a intencao do cliente em uma de: \"\n            \"consulta_estoque, registrar_pedido, reclamacao.\\n\"\n            f\"Texto: {texto}\\nResponda apenas com a classe.\"\n        )\n        return self.llm.chamar_simples(prompt).strip().lower()\n\n    def executar(self, texto: str) -> str:\n        \"\"\"Executa o fluxo com roteamento por intencao.\"\"\"\n        intencao = self.classificar_intencao(texto)\n        if intencao == \"consulta_estoque\":\n            # rota A: extrai o produto e consulta\n            produto = self.llm.chamar_simples(\n                f\"Extraia apenas o nome do produto desta frase: {texto}\").strip()\n            return self.ferramentas[\"consultar_estoque\"](produto)\n        if intencao == \"registrar_pedido\":\n            # rota B: extrai cliente/produto e registra\n            dados = self.llm.chamar_simples(\n                f\"Extraia cliente e produto no formato 'cliente|produto': {texto}\")\n            cliente, produto = dados.split(\"|\")\n            return self.ferramentas[\"registrar_pedido\"](cliente, produto)\n        # rota C: reclamacao -> escalar para humano\n        return \"Reclamacao registrada e escalada para um atendente humano.\"\n\n# Uso (llm.chamar_simples "
+    },
+    {
+      "titulo": "Arquitetura 2: Orquestrador com Especialistas",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# orquestrador.py — o padrao orquestrador-empregados\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass Orquestrador:\n    \"\"\"Central de atendimento do shopping: roteia e consolida.\"\"\"\n    nome: str\n    especialistas: dict = field(default_factory=dict)\n    limite_tentativas: int = 3\n\n    def registrar_especialista(self, nome: str, agente) -> None:\n        self.especialistas[nome] = agente\n\n    def rotear(self, missao: str, especialista: str) -> str:\n        \"\"\"Delega a missao a um especialista, com tentativas e fallback.\"\"\"\n        if especialista not in self.especialistas:\n            return f\"Especialista '{especialista}' nao existe\"\n        agente = self.especialistas[especialista]\n        for tentativa in range(1, self.limite_tentativas + 1):\n            try:\n                return agente.executar(missao)\n            except Exception as e:\n                if tentativa == self.limite_tentativas:\n                    return f\"Falha apos {tentativa} tentativas: {e}\"\n                missao = f\"(tentativa {tentativa+1} apos erro {e}) {missao}\"\n        return \"Falha inesperada\"\n\n    def decidir_especialista(self, missao: str) -> str:\n        \"\"\"Decisao do roteador: qual especialista atende esta missao.\"\"\"\n        # No OrquestraIA real, essa decisao usa um LLM (Cap. 10).\n        if any(k in missao.lower() for k in (\"estoque\", \"pedido\", \"cliente\")):\n            return \"atendimento\"\n        if \"venda\" in missao.lower() or \"lead\" in missao.lower():\n            return \"vendas\"\n        return \"analise\"\n\n    def executar(self, missao: str) -> str:\n        especialista = self.d"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Multiagente prematuro**: custo multiplicado sem ganho de qualidade. Estime o custo por missão antes de orquestrar",
+    "Orquestrador gargalo**: todo o tráfego passa pelo central; se ele falha, tudo falha. Adicione fallback e fila",
+    "Especialistas sem escopo**: dois agentes com as mesmas ferramentas confundem o roteador e dobram o custo",
+    "Sem observabilidade entre agentes**: quando um agente recebe a saída de outro, quem audita a cadeia? Registre cada transição (Capítulo 16)"
+  ],
+  "armadilhas": [
+    "Multiagente prematuro**: custo multiplicado sem ganho de qualidade. Estime o custo por missão antes de orquestrar",
+    "Orquestrador gargalo**: todo o tráfego passa pelo central; se ele falha, tudo falha. Adicione fallback e fila",
+    "Especialistas sem escopo**: dois agentes com as mesmas ferramentas confundem o roteador e dobram o custo",
+    "Sem observabilidade entre agentes**: quando um agente recebe a saída de outro, quem audita a cadeia? Registre cada transição (Capítulo 16)"
+  ],
+  "referencia_cruzada": "Cap. 3 — Arquiteturas de agente: do simples ao multiagente",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

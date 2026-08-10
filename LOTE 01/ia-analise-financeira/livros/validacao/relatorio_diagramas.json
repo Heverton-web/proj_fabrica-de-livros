@@ -1,0 +1,13 @@
+{
+  "slug": "livros/ia-analise-financeira",
+  "modo": "livro",
+  "arquivos": [
+    "output\\livros\\ia-analise-financeira\\livro-render.md"
+  ],
+  "total": 8,
+  "renderizados": 8,
+  "cache": 0,
+  "falhas": [],
+  "ignorados": [],
+  "validos": 0
+}

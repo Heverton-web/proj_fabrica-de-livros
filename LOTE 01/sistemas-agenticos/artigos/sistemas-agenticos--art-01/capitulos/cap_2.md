@@ -1,0 +1,41 @@
+# 2 Metodologia
+
+## 2.1 Caracterização da Pesquisa
+
+O estudo caracteriza-se como pesquisa documental qualitativa, com procedimento técnico de recorte seletivo e análise de conteúdo de fonte única estruturada (ARUNKUMAR, 2026). A fonte primária é a obra *Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações*, da qual foram selecionados os quatro capítulos iniciais — Introdução aos Sistemas Agênticos, Referenciais Teóricos da Agência, O Ecossistema Agêntico e Grandes Modelos de Linguagem como Núcleos Cognitivos. A escolha do recorte decorre do objetivo de circunscrever a análise aos fundamentos conceituais e teóricos, sem incursão nas fases de construção, operação e governança, que pertencem a estudos complementares (ABOU ALI, 2025). A abordagem qualitativa justifica-se pela natureza do objeto: definições, taxonomias e referenciais teóricos são construções discursivas que exigem interpretação, e não medição estatística (CHENG, 2024).
+
+A análise de conteúdo foi conduzida em três etapas. Na etapa de pré-análise, os capítulos foram lidos integralmente e segmentados por unidade de registro temática — definições, classificações, referenciais teóricos, protocolos, arquiteturas de modelo e limitações (WANG, 2023). Na etapa de exploração do material, cada unidade foi codificada segundo categorias emergentes, derivadas do referencial teórico dos levantamentos de sistemas agênticos (CHENG, 2023). Na etapa de tratamento dos resultados, as categorias foram confrontadas com a literatura de apoio — levantamentos acadêmicos e relatórios industriais — para validação cruzada das afirmações e identificação de convergências e divergências (DELOITTE, 2025).
+
+## 2.2 Critérios de Inclusão e Protocolo de Extração
+
+Os critérios de inclusão das unidades de registro foram: (a) pertinência direta aos eixos do artigo — ontologia da agência, fundamentos teóricos, ecossistema de suporte e núcleo cognitivo; (b) presença de definição, classificação ou recomendação de engenharia explícita; e (c) rastreabilidade a referência bibliográfica constante no dossiê de pesquisa da obra-fonte (DEROUICHE, 2025). Foram excluídas unidades de caráter exclusivamente ilustrativo ou anedótico, sem sustentação no referencial citado (PARK, 2023). O protocolo de extração registrou, para cada unidade incluída, o capítulo de origem, a categoria temática e as referências associadas, assegurando a rastreabilidade das afirmações apresentadas na seção 3 (WEISS, 2026).
+
+O protocolo de validação das citações seguiu a norma NBR 10520, com citações autor-data no corpo do texto e referências completas em seção própria ao final de cada unidade de análise (SINGH, 2025). As fontes do dossiê da obra-fonte foram complementadas por consulta aos artigos de levantamento que fundamentam a literatura de agentes — de Wang et al. (2023) a Arunkumar et al. (2026) —, o que confere à análise uma cobertura temporal de quatro anos (XIAO, 2024). A opção por fontes públicas e verificáveis, incluindo os repositórios arXiv e as publicações institucionais, atende ao critério de replicabilidade do estudo (LIU, 2024).
+
+## 2.3 Limitações Metodológicas
+
+As limitações do método são reconhecidas de forma explícita. Primeira, a análise de conteúdo de fonte única reduz a generalização dos achados, ainda que a validação cruzada com a literatura de levantamento atenue o viés (HUANG, 2024). Segunda, o recorte temporal da literatura de apoio — de 2023 a 2026 — reflete a velocidade de evolução do campo, e recomendações publicadas podem ser superadas em ciclos curtos (GARTNER, 2026). Terceira, a interpretação qualitativa das categorias depende do referencial do pesquisador, mitigada pela explicitação do protocolo de codificação e pela triangulação com relatórios industriais (EUROPEAN COMMISSION, 2026). Essas limitações não comprometem o objetivo do estudo — a sistematização dos fundamentos — mas devem ser consideradas na leitura dos resultados (MODEL CONTEXT PROTOCOL, 2026).
+
+# Referências
+
+ABOU ALI, Mohamad; DORNAIKA, Fadi; CHARAFEDDINE, Jinan. *Agentic AI: A Comprehensive Survey of Architectures, Applications, and Challenges*. 2025. Disponível em: https://arxiv.org/abs/2510.25445. Acesso em: 07 ago. 2026.
+ARUNKUMAR, V.; GANGADHARAN, G. R.; BUYYA, Rajkumar. *Agentic Artificial Intelligence (AI): Architectures, Taxonomies, and Evaluation of Large Language Model Agents*. 2026. Disponível em: https://arxiv.org/abs/2601.12560. Acesso em: 07 ago. 2026.
+CHENG, Yuheng; ZHANG, Ceyao; ZHANG, Zhengwen. *Exploring Large Language Model based Intelligent Agents: Definitions, Methods, and Prospects*. 2024. Disponível em: https://arxiv.org/html/2401.03428. Acesso em: 07 ago. 2026.
+DELOITTE. *Agentic AI in enterprise: Adoption, risk, and transformation*. 2025. Disponível em: https://www.deloitte.com/content/dam/assets-zone3/us/en/docs/services/consulting/2025/agentic-ai-enterprise-adoption-guide.pdf. Acesso em: 07 ago. 2026.
+DEROUICHE, Hana; BRAHMI, Zaki; MAZENI, Haithem. *Agentic AI Frameworks: Architectures, Protocols, and Design Challenges*. 2025. Disponível em: https://arxiv.org/html/2508.10146. Acesso em: 07 ago. 2026.
+DU, Pengfei. *Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers*. 2026. Disponível em: https://arxiv.org/html/2603.07670. Acesso em: 07 ago. 2026.
+EUROPEAN COMMISSION. *General-purpose AI obligations under the AI Act*. 2026. Disponível em: https://digital-strategy.ec.europa.eu/en/factpages/general-purpose-ai-obligations-under-ai-act. Acesso em: 07 ago. 2026.
+GARTNER. *Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled*. 2025. Disponível em: https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027. Acesso em: 07 ago. 2026.
+GARTNER. *Gartner Predicts 40% of Enterprise Apps Will Feature Task-Specific AI Agents*. 2026. Disponível em: https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025. Acesso em: 07 ago. 2026.
+HUANG, Wenhao; ABUDULAILI, Xin; RONG, Yang. *A Review of Prominent Paradigms for LLM-Based Agents: Tool Use (Including RAG), Planning, and Feedback Learning*. 2024. Disponível em: https://arxiv.org/html/2406.05804. Acesso em: 07 ago. 2026.
+LIU, Xiao; YU, Hao; ZHANG, Hanchen. *AgentBench: Evaluating LLMs as Agents*. 2024. Disponível em: https://arxiv.org/abs/2308.03688. Acesso em: 07 ago. 2026.
+LUO, Junyu; ZHANG, Weizhi; YUAN, Ye. *Large Language Model Agent: A Survey on Methodology, Applications and Challenges*. 2025. Disponível em: https://arxiv.org/abs/2503.21460. Acesso em: 07 ago. 2026.
+MODEL CONTEXT PROTOCOL. *Specification*. 2026. Disponível em: https://modelcontextprotocol.io/specification/2026-07-28. Acesso em: 07 ago. 2026.
+OWASP GEN AI SECURITY PROJECT. *OWASP Top 10 for Agentic Applications*. 2026. Disponível em: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/. Acesso em: 07 ago. 2026.
+PARK, Joon Sung; O'BRIEN, Joseph; CAI, Carrie. *Generative Agents: Interactive Simulacra of Human Behavior*. 2023. Disponível em: https://arxiv.org/abs/2304.03442. Acesso em: 07 ago. 2026.
+SINGH, Aditi; EHTESHAM, Abul; KUMAR, Saket. *Agentic Retrieval-Augmented Generation: A Survey on Agentic RAG*. 2025. Disponível em: https://arxiv.org/abs/2501.09136. Acesso em: 07 ago. 2026.
+WANG, Lei; MA, Chen; FENG, Xueyang. *A Survey on Large Language Model based Autonomous Agents*. 2023. Disponível em: https://arxiv.org/abs/2308.11432. Acesso em: 07 ago. 2026.
+WEISS, Tim. *Memory in the Age of AI Agents*. 2026. Disponível em: https://arxiv.org/abs/2512.13564. Acesso em: 07 ago. 2026.
+ZHANG, Zeyu; CHEN, Yifan; XIAO, Zhiyuan. *A Survey on the Memory Mechanism of Large Language Model based Agents*. 2024. Disponível em: https://arxiv.org/html/2404.13501. Acesso em: 07 ago. 2026.
+ZHAO, Pengyu; JIN, Zijian; CHENG, Ning. *An In-depth Survey of Large Language Model-based Artificial Intelligence Agents*. 2023. Disponível em: https://arxiv.org/html/2309.14365. Acesso em: 07 ago. 2026.
+ZHU, Yuxuan; JIN, Tengjun; PRUKSACHATKUN, Yada. *Establishing Best Practices for Building Rigorous Agentic Benchmarks*. 2025. Disponível em: https://arxiv.org/html/2507.02825. Acesso em: 07 ago. 2026.

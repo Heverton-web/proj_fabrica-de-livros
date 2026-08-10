@@ -1,0 +1,9 @@
+Oi, {{NOME}}! 👋
+
+Vi seu perfil e me identifiquei muito com o que você compartilha sobre {{INTERESSE}}.
+
+Sou da {{EMPRESA_NOME}} e ajudo pessoas como você a transformar conhecimento em livros digitais que geram renda passiva.
+
+Tenho um material gratuito que mostra os 7 passos para publicar seu primeiro livro em até 30 dias. Quer que eu te envie?
+
+Sem compromisso — é só um guia prático que preparei para quem está começando. 😊

@@ -1,0 +1,133 @@
+{
+  "slug_livro_mae": "ia-agentica-desbloqueada",
+  "artigos": {
+    "total": 3,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O que é IA Agêntica (e o que ela não é) & O agent loop: perceber, raciocinar, agir — Um Recorte de IA Agêntica Desbloqueada",
+        "slug": "ia-agentica-desbloqueada--art-01-o-que-e-ia-agentica-e-o-que-ela-nao-e-o",
+        "diretorio": "artigos/ia-agentica-desbloqueada--art-01-o-que-e-ia-agentica-e-o-que-ela-nao-e-o",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Ferramentas e function calling: as mãos do agente & Planejamento de tarefas e decomposição — Um Recorte de IA Agêntica Desbloqueada",
+        "slug": "ia-agentica-desbloqueada--art-02-ferramentas-e-function-calling-as-maos-d",
+        "diretorio": "artigos/ia-agentica-desbloqueada--art-02-ferramentas-e-function-calling-as-maos-d",
+        "capitulos_fonte_livro_mae": [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Avaliando agentes: evals e LLM-as-a-judge & Segurança: prompt injection e tool poisoning — Um Recorte de IA Agêntica Desbloqueada",
+        "slug": "ia-agentica-desbloqueada--art-03-avaliando-agentes-evals-e-llm-as-a-judge",
+        "diretorio": "artigos/ia-agentica-desbloqueada--art-03-avaliando-agentes-evals-e-llm-as-a-judge",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 5,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Fundamentos da Autonomia",
+        "slug": "ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia",
+        "diretorio": "ebooks/ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Projetando o Sistema",
+        "slug": "ia-agentica-desbloqueada--eb-02-projetando-o-sistema",
+        "diretorio": "ebooks/ia-agentica-desbloqueada--eb-02-projetando-o-sistema",
+        "capitulos_fonte_livro_mae": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Construindo o OrquestraIA",
+        "slug": "ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia",
+        "diretorio": "ebooks/ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia",
+        "capitulos_fonte_livro_mae": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 4,
+        "titulo": "Governança e Qualidade",
+        "slug": "ia-agentica-desbloqueada--eb-04-governanca-e-qualidade",
+        "diretorio": "ebooks/ia-agentica-desbloqueada--eb-04-governanca-e-qualidade",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      },
+      {
+        "indice": 5,
+        "titulo": "Implantação e Operação",
+        "slug": "ia-agentica-desbloqueada--eb-05-implantacao-e-operacao",
+        "diretorio": "ebooks/ia-agentica-desbloqueada--eb-05-implantacao-e-operacao",
+        "capitulos_fonte_livro_mae": [
+          "17",
+          "18",
+          "19",
+          "20"
+        ]
+      }
+    ]
+  },
+  "playbooks": {
+    "total": 0,
+    "itens": []
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

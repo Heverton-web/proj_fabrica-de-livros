@@ -1,0 +1,195 @@
+{
+  "slug": "ebooks/ia-agentica-desbloqueada--eb-05-implantacao-e-operacao",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 77050,
+  "paginas_estimadas": 30.8,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "77.050 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Este capítulo faz parte do e-book **Implantação e Operação Contínua**, extraído da obra completa *IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "3",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    },
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "3",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    },
+    {
+      "capitulo_a": "2",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    },
+    {
+      "capitulo_a": "3",
+      "capitulo_b": "4",
+      "similaridade": 1.0,
+      "trecho": "Se este e-book despertou sua atenção para a construção de sistemas de IA autônomos, o próximo passo natural é levar o aprendizado para o seu próprio contexto: escolha um problema p"
+    }
+  ],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "contínua": 21,
+        "Contínua": 8,
+        "continua": 1
+      },
+      "ocorrencias": 30
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 13,
+        "Está": 1,
+        "esta": 1,
+        "Esta": 1
+      },
+      "ocorrencias": 16
+    },
+    {
+      "termo_normalizado": "pratica",
+      "variantes": {
+        "prática": 14,
+        "Prática": 1,
+        "pratica": 1
+      },
+      "ocorrencias": 16
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 19477,
+      "palavras": 2215,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "mes cobrem o desenho do sistema, a construção prática, a governança e a operação contínua.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 20158,
+      "palavras": 2345,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "mes cobrem o desenho do sistema, a construção prática, a governança e a operação contínua.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 18876,
+      "palavras": 2430,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "mes cobrem o desenho do sistema, a construção prática, a governança e a operação contínua.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 18501,
+      "palavras": 2575,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "mes cobrem o desenho do sistema, a construção prática, a governança e a operação contínua.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

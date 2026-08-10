@@ -1,0 +1,211 @@
+{
+  "titulo_obra": "Sistemas Agênticos de IA",
+  "tipo_obra": "livro",
+  "tamanho_obra": "GG",
+  "motivo_condutor": {
+    "nome": "A Torre de Controle",
+    "descricao": "O leitor é o engenheiro de uma torre de controle de tráfego aéreo do mundo agêntico: coordenando voos (agentes) que decolam de runways (ferramentas), seguem planos de voo (planejamento), são monitorados por radar (observabilidade) e precisam de protocolos de segurança a cada aproximação.",
+    "vocabulario": [
+      "torre de controle",
+      "plano de voo",
+      "decolagem",
+      "runway (pista)",
+      "radar",
+      "aproximação final",
+      "torre",
+      "controle de solo",
+      "clima adverso",
+      "pouso seguro"
+    ],
+    "persona_leitor": "Engenheiro Agêntico"
+  },
+  "introducao": "Introdução de impacto que situa o leitor no momento de inflexão dos sistemas agênticos: da era dos assistentes passivos à era dos agentes que percebem, planejam e agem — apresentando a Torre de Controle como o cenário que unifica toda a obra.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos: O Que São e Por Que Importam",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução aos Sistemas Agênticos",
+          "objetivo": "Definir o que é um sistema agêntico, sua ontologia, sua evolução histórica e suas aplicações principais, habilitando o leitor a explicar o tema para terceiros.",
+          "pilares_previstos": [
+            "Agência e ontologia dos sistemas agênticos",
+            "Evolução histórica e fundamentos teóricos",
+            "Aplicações: busca, assistentes, código, suporte e RPA"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Referenciais Teóricos da Agência",
+          "objetivo": "Apresentar as bases teóricas: dedução e indução, arquiteturas de raciocínio (BDI, simbólicas, conexionistas), probabilidade e teoria da decisão — como pilares do comportamento agêntico.",
+          "pilares_previstos": [
+            "Dedução, indução e supervisão humana",
+            "Arquiteturas de raciocínio: BDI, simbólicas, analógicas e conexionistas",
+            "Raciocínio probabilístico, teoria da decisão e alinhamento"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "O Ecossistema Agêntico",
+          "objetivo": "Mapear o ecossistema: frameworks, sistemas multiagente, marketplaces, hospedagem, padrões e protocolos (MCP, A2A) e a pesquisa acadêmica em IA agêntica.",
+          "pilares_previstos": [
+            "Frameworks, multiagentes e marketplaces",
+            "Hospedagem, implantação e monitoramento",
+            "Protocolos MCP e A2A e o cuidado com AI-agent washing"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Grandes Modelos de Linguagem como Núcleos Cognitivos",
+          "objetivo": "Explicar como LLMs atuam como cérebro dos agentes: panorama, modelos base/pós-treinados/raciocínio, seleção, invocação e controle, e as limitações desses núcleos.",
+          "pilares_previstos": [
+            "Panorama dos LLMs: evolução, base, pós-treinados e raciocínio",
+            "Escolha, invocação e controle do comportamento do LLM",
+            "Limitações: memória, grounding, planejamento, segurança e custo"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Design e Construção: Como Projetar Agentes",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Padrões de Agentes e Paradigmas de Design",
+          "objetivo": "Ensinar os padrões arquiteturais fundamentais — do agente único aos grafos de execução (LangGraph) e arquiteturas multiagente — e o comportamento emergente.",
+          "pilares_previstos": [
+            "Agente único e padrões de workflow",
+            "Grafos de execução: estado, nós, arestas e paralelismo (LangGraph)",
+            "Arquiteturas multiagente e comportamento emergente"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Ferramentas e Interfaces",
+          "objetivo": "Capacitar o leitor a conectar agentes ao mundo: chamada de função/ferramenta, protocolo ACP, arquitetura de agentes e padrões práticos de integração.",
+          "pilares_previstos": [
+            "Function calling e chamada de ferramentas",
+            "Protocolo de Comunicação de Agentes (ACP) e ferramentas",
+            "Padrões práticos: design de ferramentas, comunicação e escalabilidade"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "Sistemas de Memória",
+          "objetivo": "Projetar memória de curto e longo prazo, RAG com dados estruturados e não estruturados, variantes (híbrido, temporal, hierárquico) e reranking.",
+          "pilares_previstos": [
+            "Memória de curto prazo: conversacional e de trabalho",
+            "Memória de longo prazo e RAG com dados estruturados",
+            "RAG não estruturado, variantes e reranking"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Ciclo de Vida de Desenvolvimento",
+          "objetivo": "Conduzir o desenvolvimento profissional de agentes: especificação, prototipagem e avaliação iterativa, transição para produção e governança.",
+          "pilares_previstos": [
+            "Especificação e requisitos baseados em personas",
+            "Prototipagem, MVA e redução de débito técnico com avaliação",
+            "Produção, documentação sustentável e governança"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Qualidade e Operação: O Radar Ligado",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Otimização de Desempenho",
+          "objetivo": "Otimizar agentes em três níveis: modelo (quantização, inferência, destilação, batching), sistema (paralelização, latência, custo) e infraestrutura escalável.",
+          "pilares_previstos": [
+            "Otimização em nível de modelo: quantização, destilação e aceleração",
+            "Arquitetura de sistemas: paralelismo, latência e execução preditiva",
+            "Implantação escalável, monitoramento e benchmarking"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "Testes e Garantia de Qualidade",
+          "objetivo": "Garantir qualidade com rastreamento como infraestrutura de testes, testes de componentes/integração, simulação E2E, métricas e CI/CD.",
+          "pilares_previstos": [
+            "Tracing como infraestrutura de testes e testes de componentes",
+            "Validação de sistema: E2E, simulação e métricas",
+            "CI/CD, testes adversariais e modos de falha"
+          ]
+        },
+        {
+          "capitulo": "11",
+          "titulo": "Monitoramento e Observabilidade",
+          "objetivo": "Operar agentes com registro estruturado e trilhas de auditoria, monitoramento de desempenho, detecção de anomalias e loops de feedback contínuo.",
+          "pilares_previstos": [
+            "Logging, trilhas de auditoria e registro estruturado",
+            "Métricas, detecção de anomalias e alertas",
+            "Feedback do usuário, telemetria e melhoria contínua"
+          ]
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Estratégias de Implantação",
+          "objetivo": "Implantar agentes em produção: nuvem e orquestração, borda e ambientes restritos, arquiteturas híbridas, versionamento e degradação suave.",
+          "pilares_previstos": [
+            "Infraestrutura em nuvem, Kubernetes e serverless",
+            "Borda, ambientes restritos e sincronização de estado",
+            "Versionamento, canary, feature flags e autocura"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Governança e Mercado: O Profissional Agêntico",
+      "capitulos": [
+        {
+          "capitulo": "13",
+          "titulo": "Segurança e Proteção",
+          "objetivo": "Defender agentes contra vetores de ataque (injeção de prompt, jailbreak, envenenamento), aplicar estratégias defensivas, autenticação/autorização e auditoria.",
+          "pilares_previstos": [
+            "Vetores de ataque: injeção, jailbreak, envenenamento e engenharia social",
+            "Estratégias defensivas: sanitização, isolamento e menor privilégio",
+            "Autenticação, autorização (RBAC/ABAC) e auditoria"
+          ]
+        },
+        {
+          "capitulo": "14",
+          "titulo": "Desenvolvimento Ético e Responsável",
+          "objetivo": "Construir agentes com alinhamento e transparência, equidade e privacidade, navegando governança, regulação e implantação responsável.",
+          "pilares_previstos": [
+            "Alinhamento, transparência e explicabilidade",
+            "Equidade, prevenção de vieses e privacidade",
+            "Governança, regulação (AI Act) e implantação responsável"
+          ]
+        },
+        {
+          "capitulo": "15",
+          "titulo": "Aplicações em Domínios: Empresa e Consumidor",
+          "objetivo": "Conectar a teoria ao mercado: automação de negócios, ciência, domínios especializados e aplicações para o consumidor — com dados de adoção reais.",
+          "pilares_previstos": [
+            "Automação de processos, suporte e decisão empresarial",
+            "Aplicações científicas e domínios especializados",
+            "Aplicações para o consumidor: assistentes, educação e IoT"
+          ]
+        },
+        {
+          "capitulo": "16",
+          "titulo": "Direções Futuras e Estudo de Caso Prático",
+          "objetivo": "Sintetizar a obra com tendências emergentes, fronteiras de pesquisa e um estudo de caso completo de agente conversacional (assistente de pesquisa clínica).",
+          "pilares_previstos": [
+            "Tendências emergentes: multimodalidade, embodied e inteligência coletiva",
+            "Fronteiras de pesquisa e implicações societárias",
+            "Estudo de caso: assistente de pesquisa clínica com RAG e multiagente"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética que amarra o arco transformacional: o leitor, agora Engenheiro Agêntico na Torre de Controle, enxerga o ecossistema de ponta a ponta — fundamentos, construção, operação e governança — e está pronto para liderar projetos de sistemas agênticos.",
+  "subtitulo": "Fundamentos, Arquiteturas e Aplicações"
+}

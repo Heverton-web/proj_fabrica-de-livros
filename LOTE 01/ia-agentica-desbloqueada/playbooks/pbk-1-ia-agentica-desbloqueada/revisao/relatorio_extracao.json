@@ -1,0 +1,174 @@
+{
+  "slug_mae": "livros/ia-agentica-desbloqueada",
+  "slug_playbook": "playbooks/ia-agentica/pbk-1-ia-agentica-desbloqueada",
+  "total_passos": 20,
+  "passos_com_lacuna": [
+    {
+      "passo": "01",
+      "titulo": "O que é IA Agêntica (e o que ela não é)",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "02",
+      "titulo": "O agent loop: perceber, raciocinar, agir",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "03",
+      "titulo": "Arquiteturas de agente: do simples ao multiagente",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "04",
+      "titulo": "Fundamentos científicos: ReAct, memória e planejamento",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "05",
+      "titulo": "Engenharia de contexto para agentes",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "06",
+      "titulo": "Memória: curto prazo, longo prazo e vetorial",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "07",
+      "titulo": "Ferramentas e function calling: as mãos do agente",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "08",
+      "titulo": "Planejamento de tarefas e decomposição",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "09",
+      "titulo": "Escolhendo o framework: LangGraph, CrewAI e além",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "10",
+      "titulo": "O núcleo do OrquestraIA: o orquestrador",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "11",
+      "titulo": "Conectando ao mundo: MCP e APIs",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "12",
+      "titulo": "Sistemas multiagentes na prática",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "13",
+      "titulo": "Avaliando agentes: evals e LLM-as-a-judge",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "14",
+      "titulo": "Segurança: prompt injection e tool poisoning",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "15",
+      "titulo": "Supervisão humana: human-in-the-loop",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "16",
+      "titulo": "Observabilidade e custos de tokens",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "17",
+      "titulo": "Implantando o OrquestraIA em produção",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "18",
+      "titulo": "Casos de uso reais: suporte, vendas e análise",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "19",
+      "titulo": "Operação contínua: iteração, feedback e evolução",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "20",
+      "titulo": "O engenheiro de sistemas agênticos",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    }
+  ],
+  "lacunas_criticas": [],
+  "cobertura": {
+    "com_entregas": 0,
+    "com_gate": 0,
+    "com_feito_quando": 20,
+    "com_armadilhas": 20
+  }
+}

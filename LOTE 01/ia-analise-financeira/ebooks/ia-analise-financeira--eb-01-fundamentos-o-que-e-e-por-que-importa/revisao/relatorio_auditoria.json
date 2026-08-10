@@ -1,0 +1,160 @@
+{
+  "slug": "ebooks/ia-analise-financeira--eb-01-fundamentos-o-que-e-e-por-que-importa",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 106268,
+  "paginas_estimadas": 42.5,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "106.268 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "analise",
+      "variantes": {
+        "análise": 61,
+        "analise": 1,
+        "Análise": 1
+      },
+      "ocorrencias": 63
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 16,
+        "esta": 5
+      },
+      "ocorrencias": 21
+    },
+    {
+      "termo_normalizado": "pratica",
+      "variantes": {
+        "prática": 19,
+        "pratica": 1
+      },
+      "ocorrencias": 20
+    },
+    {
+      "termo_normalizado": "vira",
+      "variantes": {
+        "vira": 17,
+        "virá": 1
+      },
+      "ocorrencias": 18
+    },
+    {
+      "termo_normalizado": "relatorios",
+      "variantes": {
+        "relatórios": 6,
+        "Relatórios": 3,
+        "relatorios": 1
+      },
+      "ocorrencias": 10
+    },
+    {
+      "termo_normalizado": "analises",
+      "variantes": {
+        "análises": 9,
+        "analises": 1
+      },
+      "ocorrencias": 10
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "continua": 4,
+        "contínua": 2
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "pública": 2,
+        "publica": 2
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 29607,
+      "palavras": 4613,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "] ABNT. *Normas técnicas*. Disponível em: https://www.abnt.org.br. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 25165,
+      "palavras": 3874,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ros para pequenos negócios*. Disponível em: https://sebrae.com.br. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 24024,
+      "palavras": 3429,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sponível em: https://python-programming.quantecon.org/pandas.html. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 24483,
+      "palavras": 3712,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ficial do scikit-learn*. Disponível em: https://scikit-learn.org/. Acesso em: 8 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

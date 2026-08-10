@@ -1,0 +1,117 @@
+{
+  "slug_livro_mae": "sistemas-agenticos",
+  "artigos": {
+    "total": 4,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Introdução aos Sistemas Agênticos & Referenciais Teóricos da Agência — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+        "slug": "sistemas-agenticos--art-01-introducao-aos-sistemas-agenticos-refere",
+        "diretorio": "artigos/sistemas-agenticos--art-01-introducao-aos-sistemas-agenticos-refere",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Padrões de Agentes e Paradigmas de Design & Ferramentas e Interfaces — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+        "slug": "sistemas-agenticos--art-02-padroes-de-agentes-e-paradigmas-de-desig",
+        "diretorio": "artigos/sistemas-agenticos--art-02-padroes-de-agentes-e-paradigmas-de-desig",
+        "capitulos_fonte_livro_mae": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Otimização de Desempenho & Testes e Garantia de Qualidade — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+        "slug": "sistemas-agenticos--art-03-otimizacao-de-desempenho-testes-e-garant",
+        "diretorio": "artigos/sistemas-agenticos--art-03-otimizacao-de-desempenho-testes-e-garant",
+        "capitulos_fonte_livro_mae": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 4,
+        "titulo": "Segurança e Proteção & Desenvolvimento Ético e Responsável — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+        "slug": "sistemas-agenticos--art-04-seguranca-e-protecao-desenvolvimento-eti",
+        "diretorio": "artigos/sistemas-agenticos--art-04-seguranca-e-protecao-desenvolvimento-eti",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 5,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Introdução aos Sistemas Agênticos & Referenciais Teóricos da Agência",
+        "slug": "sistemas-agenticos--eb-01-introducao-aos-sistemas-agenticos-refere",
+        "diretorio": "ebooks/sistemas-agenticos--eb-01-introducao-aos-sistemas-agenticos-refere",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Grandes Modelos de Linguagem como Núcleos Cognitivos & Padrões de Agentes e Paradigmas de Design",
+        "slug": "sistemas-agenticos--eb-02-grandes-modelos-de-linguagem-como-nucleo",
+        "diretorio": "ebooks/sistemas-agenticos--eb-02-grandes-modelos-de-linguagem-como-nucleo",
+        "capitulos_fonte_livro_mae": [
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Sistemas de Memória & Ciclo de Vida de Desenvolvimento",
+        "slug": "sistemas-agenticos--eb-03-sistemas-de-memoria-ciclo-de-vida-de-des",
+        "diretorio": "ebooks/sistemas-agenticos--eb-03-sistemas-de-memoria-ciclo-de-vida-de-des",
+        "capitulos_fonte_livro_mae": [
+          "7",
+          "8",
+          "9"
+        ]
+      },
+      {
+        "indice": 4,
+        "titulo": "Testes e Garantia de Qualidade & Monitoramento e Observabilidade",
+        "slug": "sistemas-agenticos--eb-04-testes-e-garantia-de-qualidade-monitoram",
+        "diretorio": "ebooks/sistemas-agenticos--eb-04-testes-e-garantia-de-qualidade-monitoram",
+        "capitulos_fonte_livro_mae": [
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 5,
+        "titulo": "Segurança e Proteção & Desenvolvimento Ético e Responsável",
+        "slug": "sistemas-agenticos--eb-05-seguranca-e-protecao-desenvolvimento-eti",
+        "diretorio": "ebooks/sistemas-agenticos--eb-05-seguranca-e-protecao-desenvolvimento-eti",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      }
+    ]
+  }
+}

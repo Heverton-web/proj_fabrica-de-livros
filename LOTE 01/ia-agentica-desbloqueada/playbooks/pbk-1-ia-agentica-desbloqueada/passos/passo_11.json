@@ -1,0 +1,51 @@
+{
+  "numero": "11",
+  "capitulo_fonte": "11",
+  "titulo": "Conectando ao mundo: MCP e APIs",
+  "estagio": "Autonomia",
+  "estagio_indice": 3,
+  "objetivo": "Integrar o agente a ferramentas e dados via Model Context Protocol e APIs externas.",
+  "pre_requisito": "Passo 10 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Consumindo uma API REST com Segurança",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# api_cliente.py — consumo de API REST com seguranca e erros estruturados\nimport os, json, time\nimport urllib.request, urllib.error\n\nclass ApiCliente:\n    \"\"\"Cliente de API REST com auth, timeout e observacao estruturada.\"\"\"\n    def __init__(self, base_url: str, token_env: str):\n        self.base_url = base_url.rstrip(\"/\")\n        self.token = os.getenv(token_env, \"\")\n\n    def chamar(self, metodo: str, caminho: str, dados: dict = None) -> str:\n        \"\"\"Executa a chamada e devolve observacao estruturada para o agente.\"\"\"\n        url = f\"{self.base_url}/{caminho}\"\n        corpo = json.dumps(dados).encode() if dados else None\n        req = urllib.request.Request(\n            url, data=corpo, method=metodo,\n            headers={\"Authorization\": f\"Bearer {self.token}\",\n                     \"Content-Type\": \"application/json\"})\n        try:\n            with urllib.request.urlopen(req, timeout=10) as resp:\n                payload = resp.read().decode()\n                return f\"OK({resp.status}): {payload[:300]}\"\n        except urllib.error.HTTPError as e:\n            return f\"ERRO HTTP {e.code}: {e.read().decode()[:200]}\"\n        except urllib.error.URLError as e:\n            return f\"ERRO de rede: {e.reason}\"\n        except Exception as e:\n            return f\"ERRO inesperado: {e}\"\n\n# Uso:\n# transporte = ApiCliente(\"https://api.transportadora.com.br/v1\", \"TRANSP_TOKEN\")\n# observacao = transporte.chamar(\"GET\", \"pedidos/P-7841/rastreio\")"
+    },
+    {
+      "titulo": "Expondo um Servidor MCP com Ferramentas",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# servidor_mcp_orquestraia.py — expoe as ferramentas do OrquestraIA via MCP\n# Instalacao: pip install \"mcp[cli]\"\nfrom mcp.server.fastmcp import FastMCP\n\nmcp = FastMCP(\"orquestraia\")\n\n@mcp.tool()\ndef consultar_pedido(pedido_id: str) -> str:\n    \"\"\"Consulta o status de um pedido pelo ID. Retorna status, data e\n    transportadora. Use quando perguntarem sobre entregas ou rastreio.\"\"\"\n    # a mesma logica do catalogo do Cap. 7\n    status = {\"P-7841\": \"em_transito\", \"P-7842\": \"entregue\"}\n    return json.dumps({\"pedido\": pedido_id,\n                       \"status\": status.get(pedido_id, \"nao_encontrado\")},\n                      ensure_ascii=False)\n\n@mcp.tool()\ndef registrar_preferencia(cliente: str, contato: str) -> str:\n    \"\"\"Registra a preferencia de contato de um cliente.\"\"\"\n    # persistiria na MemoriaVetorial do Cap. 6\n    return json.dumps({\"cliente\": cliente, \"contato\": contato},\n                      ensure_ascii=False)\n\nif __name__ == \"__main__\":\n    mcp.run()  # transporte stdio por padrao"
+    },
+    {
+      "titulo": "Consumindo um Servidor MCP",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# cliente_mcp.py — o OrquestraIA consome um servidor MCP\nfrom mcp import ClientSession, StdioServerParameters\nfrom mcp.client.stdio import stdio_client\n\nasync def usar_mcp(caminho_servidor: str, pedido_id: str) -> str:\n    \"\"\"Conecta ao servidor MCP, lista ferramentas e executa uma.\"\"\"\n    params = StdioServerParameters(command=\"python\", args=[caminho_servidor])\n    async with stdio_client(params) as (read, write):\n        async with ClientSession(read, write) as sessao:\n            await sessao.initialize()\n            # 1. descoberta: o catalogo de ferramentas expostas\n            catalogo = await sessao.list_tools()\n            print(\"Ferramentas expostas:\", [t.name for t in catalogo.tools])\n            # 2. execucao com contrato\n            resultado = await sessao.call_tool(\n                \"consultar_pedido\", {\"pedido_id\": pedido_id})\n            return str(resultado.content[0].text)\n\n# Uso (num script async):\n# import asyncio\n# resp = asyncio.run(usar_mcp(\"servidor_mcp_orquestraia.py\", \"P-7841\"))\n# print(resp)"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "MCP por moda**: adotar MCP para uma integração interna simples — a API direta é mais leve. Decida por critérios, não por hype",
+    "Token em código**: credenciais no código-fonte vazam — variáveis de ambiente e cofres (Capítulo 17) são obrigatórios",
+    "Erro sem observação**: exceção solta em vez de observação estruturada — o agente não sabe o que aconteceu nem o que fazer",
+    "Servidor MCP sem autorização**: expor ferramentas sem política é abrir a porta — cada ferramenta exposta precisa de autorização granular",
+    "Confiança cega no servidor**: confiar no contrato e no resultado do servidor externo sem validação — a fronteira é exatamente onde o atacante age"
+  ],
+  "armadilhas": [
+    "MCP por moda**: adotar MCP para uma integração interna simples — a API direta é mais leve. Decida por critérios, não por hype",
+    "Token em código**: credenciais no código-fonte vazam — variáveis de ambiente e cofres (Capítulo 17) são obrigatórios",
+    "Erro sem observação**: exceção solta em vez de observação estruturada — o agente não sabe o que aconteceu nem o que fazer",
+    "Servidor MCP sem autorização**: expor ferramentas sem política é abrir a porta — cada ferramenta exposta precisa de autorização granular",
+    "Confiança cega no servidor**: confiar no contrato e no resultado do servidor externo sem validação — a fronteira é exatamente onde o atacante age"
+  ],
+  "referencia_cruzada": "Cap. 11 — Conectando ao mundo: MCP e APIs",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

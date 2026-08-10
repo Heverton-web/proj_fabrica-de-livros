@@ -1,0 +1,468 @@
+{
+  "slug": "livros/sistemas-agenticos",
+  "total_blocos": 55,
+  "resumo": {
+    "nao_aplicavel": 16,
+    "ok": 39
+  },
+  "por_linguagem": {
+    "mermaid": {
+      "total": 16,
+      "ok": 0,
+      "falha": 0
+    },
+    "python": {
+      "total": 37,
+      "ok": 37,
+      "falha": 0
+    },
+    "yaml": {
+      "total": 2,
+      "ok": 2,
+      "falha": 0
+    }
+  },
+  "taxa_aprovacao_pct": 100.0,
+  "blocos": [
+    {
+      "origem": "cap_1",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 10,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_1",
+      "linha": 72,
+      "linguagem": "python",
+      "linhas_codigo": 74,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_1",
+      "linha": 152,
+      "linguagem": "yaml",
+      "linhas_codigo": 22,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 43,
+      "linguagem": "mermaid",
+      "linhas_codigo": 15,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_2",
+      "linha": 70,
+      "linguagem": "python",
+      "linhas_codigo": 95,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 171,
+      "linguagem": "python",
+      "linhas_codigo": 64,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 43,
+      "linguagem": "mermaid",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_3",
+      "linha": 71,
+      "linguagem": "python",
+      "linhas_codigo": 86,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 163,
+      "linguagem": "python",
+      "linhas_codigo": 59,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_4",
+      "linha": 59,
+      "linguagem": "python",
+      "linhas_codigo": 69,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 134,
+      "linguagem": "python",
+      "linhas_codigo": 66,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_5",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 9,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_5",
+      "linha": 62,
+      "linguagem": "python",
+      "linhas_codigo": 118,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_5",
+      "linha": 186,
+      "linguagem": "python",
+      "linhas_codigo": 72,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_6",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 16,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_6",
+      "linha": 69,
+      "linguagem": "python",
+      "linhas_codigo": 116,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_6",
+      "linha": 191,
+      "linguagem": "python",
+      "linhas_codigo": 71,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_7",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_7",
+      "linha": 67,
+      "linguagem": "python",
+      "linhas_codigo": 86,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_7",
+      "linha": 159,
+      "linguagem": "python",
+      "linhas_codigo": 61,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 35,
+      "linguagem": "mermaid",
+      "linhas_codigo": 12,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_8",
+      "linha": 59,
+      "linguagem": "python",
+      "linhas_codigo": 85,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 150,
+      "linguagem": "python",
+      "linhas_codigo": 78,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_8",
+      "linha": 234,
+      "linguagem": "python",
+      "linhas_codigo": 73,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_9",
+      "linha": 43,
+      "linguagem": "mermaid",
+      "linhas_codigo": 19,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_9",
+      "linha": 74,
+      "linguagem": "python",
+      "linhas_codigo": 79,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_9",
+      "linha": 159,
+      "linguagem": "python",
+      "linhas_codigo": 59,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_10",
+      "linha": 43,
+      "linguagem": "mermaid",
+      "linhas_codigo": 7,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_10",
+      "linha": 62,
+      "linguagem": "python",
+      "linhas_codigo": 65,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_10",
+      "linha": 133,
+      "linguagem": "python",
+      "linhas_codigo": 73,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_10",
+      "linha": 212,
+      "linguagem": "python",
+      "linhas_codigo": 59,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_11",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_11",
+      "linha": 67,
+      "linguagem": "python",
+      "linhas_codigo": 55,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_11",
+      "linha": 128,
+      "linguagem": "python",
+      "linhas_codigo": 55,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_11",
+      "linha": 189,
+      "linguagem": "python",
+      "linhas_codigo": 68,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_12",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 16,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_12",
+      "linha": 61,
+      "linguagem": "yaml",
+      "linhas_codigo": 64,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_12",
+      "linha": 131,
+      "linguagem": "python",
+      "linhas_codigo": 57,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_12",
+      "linha": 194,
+      "linguagem": "python",
+      "linhas_codigo": 57,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_13",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 16,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_13",
+      "linha": 69,
+      "linguagem": "python",
+      "linhas_codigo": 49,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_13",
+      "linha": 124,
+      "linguagem": "python",
+      "linhas_codigo": 51,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_13",
+      "linha": 181,
+      "linguagem": "python",
+      "linhas_codigo": 65,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_14",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 18,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_14",
+      "linha": 63,
+      "linguagem": "python",
+      "linhas_codigo": 58,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_14",
+      "linha": 127,
+      "linguagem": "python",
+      "linhas_codigo": 61,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_14",
+      "linha": 194,
+      "linguagem": "python",
+      "linhas_codigo": 65,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_15",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 14,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_15",
+      "linha": 59,
+      "linguagem": "python",
+      "linhas_codigo": 76,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_15",
+      "linha": 141,
+      "linguagem": "python",
+      "linhas_codigo": 55,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_16",
+      "linha": 33,
+      "linguagem": "mermaid",
+      "linhas_codigo": 17,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_16",
+      "linha": 62,
+      "linguagem": "python",
+      "linhas_codigo": 57,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_16",
+      "linha": 125,
+      "linguagem": "python",
+      "linhas_codigo": 49,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_16",
+      "linha": 180,
+      "linguagem": "python",
+      "linhas_codigo": 62,
+      "status": "ok",
+      "detalhe": ""
+    }
+  ]
+}

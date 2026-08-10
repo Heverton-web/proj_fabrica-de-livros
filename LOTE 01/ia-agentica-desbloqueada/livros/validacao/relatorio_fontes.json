@@ -1,0 +1,38 @@
+{
+  "dossies": [
+    "dossie_ia-agentica.md"
+  ],
+  "por_dossie": [
+    {
+      "arquivo": "dossie_ia-agentica.md",
+      "classes": {
+        "A": 0,
+        "B": 0,
+        "C": 0
+      },
+      "linhas_fonte": 34
+    }
+  ],
+  "classes": {
+    "A": 0,
+    "B": 0,
+    "C": 0
+  },
+  "linhas_fonte_total": 34,
+  "classificadas": 0,
+  "proporcao_ab": null,
+  "status": "nao_verificado",
+  "violacoes": [
+    {
+      "regra": "R-FT-2",
+      "enunciado": "dossiê sem classificação explícita => nao_verificado (não reprova)",
+      "detalhe": "nenhuma fonte com classificação (A)/(B)/(C) no dossiê — reclassificar com a skill pesquisador V5.3"
+    }
+  ],
+  "regras": {
+    "R-FT-1": ">= 70% das fontes com classificação explícita são A ou B",
+    "R-FT-2": "dossiê sem classificação explícita => nao_verificado (não reprova)",
+    "R-FT-3": "fontes não classificadas não contam na proporção"
+  },
+  "slug": "livros/ia-agentica-desbloqueada"
+}

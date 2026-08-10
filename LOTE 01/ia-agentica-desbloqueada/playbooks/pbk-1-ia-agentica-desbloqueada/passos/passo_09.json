@@ -1,0 +1,37 @@
+{
+  "numero": "09",
+  "capitulo_fonte": "09",
+  "titulo": "Escolhendo o framework: LangGraph, CrewAI e além",
+  "estagio": "Autonomia",
+  "estagio_indice": 3,
+  "objetivo": "Comparar os frameworks de agentes e escolher a base tecnológica do OrquestraIA.",
+  "pre_requisito": "Passo 8 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "O Mesmo Agente em Duas Formas",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# agente_puro.py — o loop completo em código puro (recapitulacao)\ndef executar_agente(missao, llm, ferramentas, limite=5):\n    observacao = missao\n    trilha = []\n    for _ in range(limite):\n        decisao = llm.chamar_simples(\n            f\"Escolha uma ferramenta {list(ferramentas)} com argumentos, \"\n            f\"ou FINAL:<resposta>. Estado: {observacao}\")\n        trilha.append(decisao)\n        if decisao.startswith(\"FINAL:\"):\n            return decisao[6:].strip(), trilha\n        nome, args = _parsear_decisao(decisao)  # ex.: consultar_pedido(pedido_id=P-7841)\n        observacao = ferramentas[nome](**args)\n        trilha.append(observacao)\n    return \"limite atingido\", trilha"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Framework por hype**: escolher LangGraph porque \"todo mundo usa\" sem comparar com o código puro — o fluxo simples paga complexidade desnecessária",
+    "Abstração sem entendimento**: usar o framework sem entender o loop por baixo — quando o trace dá errado, não há como depurar (este livro construiu o entendimento antes do framework, de propósito)",
+    "Framework como substituto de disciplina**: o LangGraph não projeta seu contexto nem sua memória — a engenharia dos capítulos 5-8 continua sua responsabilidade",
+    "Migração tardia**: decidir o framework no meio do projeto, quando o custo de mudança já explodiu"
+  ],
+  "armadilhas": [
+    "Framework por hype**: escolher LangGraph porque \"todo mundo usa\" sem comparar com o código puro — o fluxo simples paga complexidade desnecessária",
+    "Abstração sem entendimento**: usar o framework sem entender o loop por baixo — quando o trace dá errado, não há como depurar (este livro construiu o entendimento antes do framework, de propósito)",
+    "Framework como substituto de disciplina**: o LangGraph não projeta seu contexto nem sua memória — a engenharia dos capítulos 5-8 continua sua responsabilidade",
+    "Migração tardia**: decidir o framework no meio do projeto, quando o custo de mudança já explodiu"
+  ],
+  "referencia_cruzada": "Cap. 9 — Escolhendo o framework: LangGraph, CrewAI e além",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

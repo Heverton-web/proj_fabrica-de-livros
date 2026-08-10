@@ -1,0 +1,37 @@
+{
+  "numero": "01",
+  "capitulo_fonte": "01",
+  "titulo": "O que é IA Agêntica (e o que ela não é)",
+  "estagio": "Agente",
+  "estagio_indice": 1,
+  "objetivo": "Definir IA agêntica com precisão, diferenciar de chatbots e automação tradicional, e mostrar o panorama de adoção em 2026.",
+  "pre_requisito": "Nenhum — este é o ponto de partida",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "O Esqueleto Mínimo de um Agente",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# agente_esqueleto.py — o agent loop puro, sem framework\nimport json\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass AgenteBase:\n    \"\"\"Estrutura mínima de um agente: loop perceber-raciocinar-agir.\"\"\"\n    nome: str\n    modelo: str\n    ferramentas: dict = field(default_factory=dict)\n    memoria: list = field(default_factory=list)\n    limite_passos: int = 5\n\n    def perceber(self, mensagem: str) -> dict:\n        \"\"\"Percepção: converte a entrada do mundo em contexto estruturado.\"\"\"\n        return {\"mensagem\": mensagem, \"historico\": self.memoria[-6:]}\n\n    def raciocinar(self, percepcao: dict) -> dict:\n        \"\"\"Raciocínio: decide o que fazer (substituído pela chamada ao LLM).\"\"\"\n        # Na prática: llm.invoke(prompt + percepcao). A estrutura abaixo\n        # documenta o contrato que o OrquestraIA vai exigir do modelo.\n        return {\"acao\": \"responder\", \"argumentos\": {\"texto\": \"ainda sem LLM\"}}\n\n    def agir(self, decisao: dict) -> str:\n        \"\"\"Ação: executa a ferramenta escolhida e retorna a observação.\"\"\"\n        nome = decisao[\"acao\"]\n        if nome in self.ferramentas:\n            return self.ferramentas[nome](**decisao.get(\"argumentos\", {}))\n        if nome == \"responder\":\n            return decisao[\"argumentos\"][\"texto\"]\n        return f\"ferramenta desconhecida: {nome}\"\n\n    def executar(self, mensagem: str) -> str:\n        \"\"\"O agent loop completo, com limite de passos.\"\"\"\n        resultado = \"\"\n        for _ in range(self.limite_passos):\n            percepcao = self.perceber(mensagem)\n            decisao = self.raciocinar(percepcao)\n            obser"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Tratar o agente como um chatbot melhor**: conectar um LLM a um prompt mais longo não cria um agente. Sem loop, ferramentas e estado, você tem um conversador eloquente",
+    "Autonomia total desde o primeiro dia**: comece com decisões de baixo impacto e supervisão humana; aumente a autonomia com evidência, não com entusiasmo",
+    "Ignorar a observabilidade**: um agente que age sem registrar por quê é uma caixa-preta — o Capítulo 16 mostra o modelo de trilhas de decisão",
+    "Subestimar o custo dos tokens**: loops multiplicam chamadas ao modelo; um único fluxo pode custar 5–20 chamadas. O custo é uma decisão de arquitetura, não uma surpresa (Capítulo 16)"
+  ],
+  "armadilhas": [
+    "Tratar o agente como um chatbot melhor**: conectar um LLM a um prompt mais longo não cria um agente. Sem loop, ferramentas e estado, você tem um conversador eloquente",
+    "Autonomia total desde o primeiro dia**: comece com decisões de baixo impacto e supervisão humana; aumente a autonomia com evidência, não com entusiasmo",
+    "Ignorar a observabilidade**: um agente que age sem registrar por quê é uma caixa-preta — o Capítulo 16 mostra o modelo de trilhas de decisão",
+    "Subestimar o custo dos tokens**: loops multiplicam chamadas ao modelo; um único fluxo pode custar 5–20 chamadas. O custo é uma decisão de arquitetura, não uma surpresa (Capítulo 16)"
+  ],
+  "referencia_cruzada": "Cap. 1 — O que é IA Agêntica (e o que ela não é)",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

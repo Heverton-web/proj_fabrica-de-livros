@@ -1,0 +1,15 @@
+{
+  "tema": "IA Agêntica Desbloqueada: Um guia para projetar, construir e implantar sistemas de IA autônomos (Com um projeto prático do início ao fim)",
+  "titulo_obra": "IA Agêntica Desbloqueada",
+  "subtitulo": "Projetar, construir e implantar sistemas de IA autônomos",
+  "tipo_obra": "livro",
+  "tamanho_obra": "XG",
+  "senioridade_obra": "intermediario",
+  "min_referencias_por_capitulo": 20,
+  "gerar_artigos": true,
+  "qtd_artigos": 3,
+  "gerar_ebooks": true,
+  "qtd_ebooks": 5,
+  "serie": null,
+  "projeto_pratico": "OrquestraIA — plataforma de orquestração de agentes autônomos do design à implantação"
+}

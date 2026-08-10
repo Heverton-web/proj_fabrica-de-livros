@@ -1,0 +1,21 @@
+{
+  "tema": "Como usar a IA no trabalho para análise do setor financeiro: criações e análises de planilhas, KPIs e análise de dados, com foco em modelos gratuitos",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 20,
+  "tamanho_obra": "M",
+  "senioridade_obra": "iniciante",
+  "serie": null,
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": true,
+  "qtd_ebooks": 2,
+  "gerar_playbook": true,
+  "gerar_lead_magnets": true,
+  "formatos_lm": ["checklist", "armadilhas", "cheatsheet", "mapa"],
+  "gerar_deck": true,
+  "gerar_emails": true,
+  "cta_url": "https://exemplo.com/obra",
+  "cta_texto": "Quero a obra completa",
+  "modo_producao": "obra-unica",
+  "obra_raiz": null
+}

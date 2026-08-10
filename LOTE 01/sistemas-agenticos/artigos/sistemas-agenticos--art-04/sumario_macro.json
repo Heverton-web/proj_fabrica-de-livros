@@ -1,0 +1,61 @@
+{
+  "titulo_obra": "Segurança e Proteção & Desenvolvimento Ético e Responsável — Um Recorte de Sistemas Agênticos de IA: Fundamentos, Arquiteturas e Aplicações",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "sistemas-agenticos",
+  "capitulos_fonte_livro_mae": [
+    "13",
+    "14",
+    "15",
+    "16"
+  ],
+  "introducao": "Recorte investigativo sobre: Segurança e Proteção, Desenvolvimento Ético e Responsável, Aplicações em Domínios: Empresa e Consumidor, Direções Futuras e Estudo de Caso Prático.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Segurança e Proteção",
+            "Desenvolvimento Ético e Responsável",
+            "Aplicações em Domínios: Empresa e Consumidor"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Segurança e Proteção",
+            "Desenvolvimento Ético e Responsável",
+            "Aplicações em Domínios: Empresa e Consumidor"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Segurança e Proteção",
+            "Desenvolvimento Ético e Responsável",
+            "Aplicações em Domínios: Empresa e Consumidor"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Segurança e Proteção",
+            "Desenvolvimento Ético e Responsável",
+            "Aplicações em Domínios: Empresa e Consumidor"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}
