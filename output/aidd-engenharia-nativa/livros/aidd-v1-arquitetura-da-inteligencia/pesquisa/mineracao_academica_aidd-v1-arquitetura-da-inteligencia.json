@@ -1,0 +1,241 @@
+{
+  "tema": "AI Driven Development arquitetura camadas harness LLM tools context engineering",
+  "gerado_em": "10 ago. 2026",
+  "fontes_consultadas": [
+    "openalex",
+    "crossref",
+    "arxiv",
+    "semantic_scholar",
+    "scielo",
+    "pubmed"
+  ],
+  "cobertura": {
+    "openalex": {
+      "status": "ok",
+      "erro": null,
+      "n": 2
+    },
+    "crossref": {
+      "status": "ok",
+      "erro": null,
+      "n": 10
+    },
+    "arxiv": {
+      "status": "ok",
+      "erro": null,
+      "n": 0
+    },
+    "semantic_scholar": {
+      "status": "erro",
+      "erro": "https://api.semanticscholar.org/graph/v1/paper/search?query=AI+Driven+Developmen -> HTTP 429",
+      "n": 0
+    },
+    "scielo": {
+      "status": "erro",
+      "erro": "https://search.scielo.org/api.php?q=AI+Driven+Development+arquitetura+camadas+ha -> HTTP 403",
+      "n": 0
+    },
+    "pubmed": {
+      "status": "ok",
+      "erro": null,
+      "n": 0
+    }
+  },
+  "total_unicos": 12,
+  "registros": [
+    {
+      "titulo": "INTELIGÊNCIA ARTIFICIAL NO ENSINO SUPERIOR EM PORTUGAL - Diagnóstico nacional para governação institucional",
+      "autores": [
+        "Nelson Zagalo",
+        "Filipe Barbosa da Silva",
+        "Syeda Khurrum"
+      ],
+      "ano": 2026,
+      "doi": "10.5281/zenodo.19555760",
+      "url": "http://hdl.handle.net/10400.26/63168",
+      "resumo": "Este relatório resulta da integração de trabalho analítico desenvolvido sobre Inteligência Artificial no Ensino Superior, combinando revisão de políticas e enquadramentos internacionais, síntese de evidência empírica recente, leitura interpretativa de tensões públicas e análise de dados nacionais recolhidos junto das instituições de ensino superior portuguesas. O relatório propõe cinco critérios mínimos de maturidade institucional: mediação humana, verificação, transparência, literacia afetiva e decisão baseada em evidências. Propõe ainda que a resposta institucional seja organizada em torno dos Três Pilares da integração da IA no ensino superior— Saber sobre IA, Fazer com IA e Ser sem IA — enquanto quadro orientador para articular literacia, práticas pedagógicas e autorregulação.",
+      "citacoes": 0,
+      "periodico": "Portuguese National Funding Agency for Science, Research and Technology (RCAAP Project by FCT)",
+      "fonte": "openalex",
+      "fonte_nome": "OpenAlex",
+      "classe": "A"
+    },
+    {
+      "titulo": "Modelo preditivo baseado em Machine Learning para riscos de cibersegurança em projetos tecnológicos",
+      "autores": [
+        "Fernando João Piedade"
+      ],
+      "ano": 2025,
+      "doi": null,
+      "url": "http://hdl.handle.net/10071/36801",
+      "resumo": "A crescente digitalização de processos em diferentes setores acentua a exposição de dados sensíveis, sistemas, recursos e ativos a riscos de cibersegurança, especialmente em projetos tecnológicos. Este trabalho propõe um modelo inteligente para previsão de riscos de cibersegurança, resultante da integração entre abordagens tradicionais de gestão de riscos e técnicas de Machine Learning (ML). A investigação segue a metodologia Design Science Research (DSR), estruturada em seis etapas, desde a identificação do problema até à comunicação dos resultados. No âmbito do rigor científico, foi realizada uma Revisão Sistemática da Literatura (SLR), apoiada pela abordagem PRISMA, permitindo identificar lacunas e tendências na aplicação de modelos preditivos em contextos de cibersegurança. O trabalho apresenta um protótipo capaz de consumir e processar dados históricos, organizados num dataset, para o treino de algoritmos de ML, gerando modelos preditivos aplicados à identificação de riscos de cibersegurança. Adicionalmente, compara três algoritmos de ML, avaliando a sua eficácia e utilidade na previsão de riscos cibernéticos. A implementação foi validada por meio da avaliação de métricas de desempenho dos algoritmos num ambiente controlado, com dados sintéticos que replicam cenários operacionais realistas, complementada por um dashboard interativo que apresenta os resultados de forma clara, demonstrando a viabilidade técnica do protótipo e o seu potencial para antecipar riscos. Recomenda-se, contudo, validação em contextos de produção. A proposta contribui para o domínio académico ao demonstrar a aplicabilidade de modelos preditivos sobre riscos cibernéticos e evidencia o potencial de integração de ML",
+      "citacoes": 0,
+      "periodico": "Repositório do ISCTE-IUL",
+      "fonte": "openalex",
+      "fonte_nome": "OpenAlex",
+      "classe": "A"
+    },
+    {
+      "titulo": "Harness Engineering: Deterministic Architectural Governance for AI-Driven Software Development",
+      "autores": [
+        "Kim, Jiun",
+        "Hwang, Hyuntae"
+      ],
+      "ano": 2026,
+      "doi": "10.2139/ssrn.6372119",
+      "url": "https://doi.org/10.2139/ssrn.6372119",
+      "resumo": "<jats:p>The term \"harness engineering\" has recently emerged in industry discourse to describe the practice of building environments, constraints, and feedback loops that govern AI coding agents [Lopopolo, 2026]. However, the concept remains informally defined, discussed exclusively through blog posts and practitioner anecdotes. This paper offers the first structured articulation of harness engineering as a software engineering discipline. We define a harness as the aggregate of machine-enforceable architectural constraints embedded in a development toolchain, and identify three core properties: (1) confluence, where the constraint set converges code to the same structural normal form regardless of decomposition order; (2) partial-stage necessity, the practical impossibility of specifying a complete harness at project inception; and (3) hedging through choice uniformization, a progressive strategy that reduces decision variance from unbounded choice to canonical form. The three properties form a coherent system: partial stages are inevitable (necessity), but safe (confluence), and independently valuable (hedging). We demonstrate that these properties recur across independent practitioners-including OpenAI, Toss, and individual engineers-who converged on strikingly similar practices without shared vocabulary. A longitudinal case study of an industrial ESLint-based harness illustrates the three properties through five evolution phases. We argue that harness engineering represents an emerging shift in software governance: from constraining who writes code to constraining what code is structurally permissible.&amp;nbsp;&amp;nbsp;</jats:p>",
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Harness Resilience: From LLM Availability to Toolchain Continuity in Agentic AI Engineering",
+      "autores": [
+        "Cheung, John"
+      ],
+      "ano": 2026,
+      "doi": "10.33774/coe-2026-4f53g",
+      "url": "https://doi.org/10.33774/coe-2026-4f53g",
+      "resumo": "<jats:p>By early 2026, the practical value of artificial intelligence in software engineering is no longer determined solely by the reliability of the underlying large language model (LLM). Increasingly, productivity depends on an execution harness: the surrounding runtime of prompts, tools, sandboxes, permissions, memory, repositories, connectors, model-routing policies, observability, and user-interface affordances that turn a model into an operational coding or general-purpose agent. Popular systems such as Codex, Claude Code, Gemini CLI, Cursor-like development environments, and general agents such as Manus demonstrate that the “AI product” is not only a model but a socio-technical toolchain. This paper argues that AI resilience must therefore be extended into harness resilience: the ability of an engineering team to continue safe and effective work when a preferred AI agent harness changes behavior, loses access, degrades, is rate-limited, is withdrawn from a plan, suffers a security incident, or becomes unavailable. Using an illustrative X.com post by Peter Gostev about a Claude Code user being humorously shown as opted out after a code-quality review, this paper motivates a broader resilience agenda: portability of context, tool abstraction, reproducible agent workflows, fallback harnesses, audit trails, and human recovery procedures. The paper contributes a reference architecture, a failure-mode taxonomy, measurable resilience objectives, a connector threat model, and an evaluation plan that turns the concept from a practice guide into a testable engineering framework.</jats:p>",
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Domain-specific Language and Tools for Strategic Domain-driven Design, Context Mapping and Bounded Context Modeling",
+      "autores": [
+        "Kapferer, Stefan",
+        "Zimmermann, Olaf"
+      ],
+      "ano": 2020,
+      "doi": "10.5220/0008910502990306",
+      "url": "https://doi.org/10.5220/0008910502990306",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": "Proceedings of the 8th International Conference on Model-Driven Engineering and Software Development",
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Harness Engineering for LLM Agents: A Survey of Harness Component Taxonomy, Evaluation, and Model–Harness Coevolution",
+      "autores": [
+        "Li, Jinzhe",
+        "Wu, Yuan",
+        "Chang, Yi"
+      ],
+      "ano": 2026,
+      "doi": "10.20944/preprints202606.2203.v1",
+      "url": "https://doi.org/10.20944/preprints202606.2203.v1",
+      "resumo": "<jats:p>As large language model-driven autonomous agents are increasingly deployed in real-world long-horizon, open-environment tasks, foundation models expose systematic capability gaps in context retention, reliable tool invocation, persistent state management, and multi-step execution robustness. We understand the agent harness as the external execution support structure built around the model and treat it as a distinct performance lever that complements base model capability, positioning harness engineering as a growing area of research and engineering practice. Grounded in the scaffolding perspective from developmental psychology, we structure the field along three nested levels of analysis. At the structural level, we develop a unified taxonomy of harness components, mapping them to the specific capability gaps they compensate for and to their coupling with the core agent loop. At the fit level, we articulate a two-stage evaluation logic that distinguishes native model capability-gap diagnosis from assessments of compensation effectiveness and net benefit, and unpack the inherent multi-objective tradeoffs shaping harness design. At the dynamic level, we delineate the bidirectional coevolution mechanism between models and harnesses, explaining the shifting functional boundary where routine capability-bearing support migrates inward into model weights while constraint-bearing governance functions remain external. By synthesizing studies that are currently scattered across adjacent areas, we provide an organizing framework for understanding LLM agent harnesses in relation to the capability gaps they address. We further discuss open challenges and future directions in harness design, evaluation, and model--harness coevolution.</jats:p>",
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "CottonBot: An AI-Driven Cotton Farming Assistant and Irrigation Advisor Using LLM-RAG and Agentic AI Tools",
+      "autores": [
+        "Kandamali, Deus  Francis",
+        "Porter, Wesley",
+        "Porter, Erin",
+        "McLemore, Alex",
+        "Rains, Glen  C."
+      ],
+      "ano": 2025,
+      "doi": "10.2139/ssrn.5561799",
+      "url": "https://doi.org/10.2139/ssrn.5561799",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Exploring the Impact of AI-Driven Feedback Tools on the Development of Second Language Writing: Issues and Suggestions in the Context of TESOL",
+      "autores": [
+        "Hou, Yuhang"
+      ],
+      "ano": 2025,
+      "doi": "10.5220/0014508900004931",
+      "url": "https://doi.org/10.5220/0014508900004931",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": "Proceedings of the 1st International Conference on Educational Innovations and Excellence: Exploring Technologies, Policies, and Social Dynamics",
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Modelo de arquitetura em camadas para interconexão de sistemas em SANT",
+      "autores": [
+        "Marconato, Emerson Alberto"
+      ],
+      "ano": null,
+      "doi": "10.11606/t.55.2017.tde-01022017-112311",
+      "url": "https://doi.org/10.11606/t.55.2017.tde-01022017-112311",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "LLM-Centric Threats: Injection and Poisoning",
+      "autores": [
+        "Sekar, Srinivasan"
+      ],
+      "ano": 2026,
+      "doi": "10.1007/979-8-8688-2364-0_12",
+      "url": "https://doi.org/10.1007/979-8-8688-2364-0_12",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": "The MCP Standard",
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "Title: Harness the Generative Ai Tools for Automated Feedback in Eap Writing Assessment",
+      "autores": [
+        "Hu, Mengqi",
+        "XU, Rui"
+      ],
+      "ano": 2025,
+      "doi": "10.2139/ssrn.5295741",
+      "url": "https://doi.org/10.2139/ssrn.5295741",
+      "resumo": null,
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    },
+    {
+      "titulo": "HydroSuite-AI: Facilitating Hydrological Research with LLM-Driven Code Assistance",
+      "autores": [
+        "Pursnani, Vinay",
+        "Erazo Ramirez, Carlos",
+        "Sermet, Muhammed",
+        "Demir, Ibrahim"
+      ],
+      "ano": 2024,
+      "doi": "10.31223/x5rm6q",
+      "url": "https://doi.org/10.31223/x5rm6q",
+      "resumo": "<jats:p>In the hydrology and environmental domains, researchers often encounter complex hydrological models, evolving frameworks and libraries, and complex documentation, which necessitate both domain knowledge and coding expertise. This paper introduces HydroSuite-AI, a large language model-enhanced web application designed to address these challenges by integrating three open-source libraries: HydroLang, HydroCompute, and HydroRTC. HydroSuite-AI assists researchers by generating code snippets, providing an execution environment, and answering factual questions related to these libraries, thereby facilitating seamless integration into existing hydrological workflows. Through natural language processing and generative AI techniques, HydroSuite-AI aims to streamline analysis processes and improve user productivity. The effectiveness of the application is assessed through case studies and user feedback, demonstrating its potential to support hydrological research and education by offering an accessible and comprehensive platform for data analysis, code generation, and knowledge dissemination.</jats:p>",
+      "citacoes": null,
+      "periodico": null,
+      "fonte": "crossref",
+      "fonte_nome": "Crossref",
+      "classe": "A"
+    }
+  ]
+}

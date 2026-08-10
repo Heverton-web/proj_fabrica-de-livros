@@ -1,0 +1,65 @@
+{
+  "titulo_obra": "Definindo o Projeto e o Terreno & Setup das 4 Camadas na Prática — Um Recorte de Volume 4: A Jornada Prática — Do Zero ao Deploy com AIDD",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "aidd-v4-jornada-pratica",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "introducao": "Recorte investigativo sobre: Definindo o Projeto e o Terreno, Setup das 4 Camadas na Prática, As Primeiras Specs do Projeto Real, Memória e Fonte da Verdade do Repositório, Erguendo Funcionalidades com Skills, Conectando o Mundo Real com MCP, Governança em Ação: Gates Antes do Merge, O Deploy Automatizado: o Sino de Inauguração.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Definindo o Projeto e o Terreno",
+            "Setup das 4 Camadas na Prática",
+            "As Primeiras Specs do Projeto Real"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Definindo o Projeto e o Terreno",
+            "Setup das 4 Camadas na Prática",
+            "As Primeiras Specs do Projeto Real"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Definindo o Projeto e o Terreno",
+            "Setup das 4 Camadas na Prática",
+            "As Primeiras Specs do Projeto Real"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Definindo o Projeto e o Terreno",
+            "Setup das 4 Camadas na Prática",
+            "As Primeiras Specs do Projeto Real"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

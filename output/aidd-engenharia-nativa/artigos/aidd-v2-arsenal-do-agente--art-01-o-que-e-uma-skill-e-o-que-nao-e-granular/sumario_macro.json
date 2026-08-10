@@ -1,0 +1,65 @@
+{
+  "titulo_obra": "O que é uma Skill (e o que não é) & Granularidade: o Que a Literatura Comum Omite — Um Recorte de Volume 2: O Arsenal do Agente — Skills e MCP",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "aidd-v2-arsenal-do-agente",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "introducao": "Recorte investigativo sobre: O que é uma Skill (e o que não é), Granularidade: o Que a Literatura Comum Omite, Idempotência: Reexecutar Sem Duplicar Efeitos, Criando Suas Próprias Skills Robusto, Model Context Protocol: a Ponte Definitiva, Primitivos na Prática: Tools, Resources e Prompts, Configurando o Ecossistema para Autonomia Assistida, Segurança e Confiança no Arsenal.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "O que é uma Skill (e o que não é)",
+            "Granularidade: o Que a Literatura Comum Omite",
+            "Idempotência: Reexecutar Sem Duplicar Efeitos"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "O que é uma Skill (e o que não é)",
+            "Granularidade: o Que a Literatura Comum Omite",
+            "Idempotência: Reexecutar Sem Duplicar Efeitos"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "O que é uma Skill (e o que não é)",
+            "Granularidade: o Que a Literatura Comum Omite",
+            "Idempotência: Reexecutar Sem Duplicar Efeitos"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "O que é uma Skill (e o que não é)",
+            "Granularidade: o Que a Literatura Comum Omite",
+            "Idempotência: Reexecutar Sem Duplicar Efeitos"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

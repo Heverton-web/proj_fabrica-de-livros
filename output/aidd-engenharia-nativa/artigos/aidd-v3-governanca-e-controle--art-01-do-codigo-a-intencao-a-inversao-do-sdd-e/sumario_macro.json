@@ -1,0 +1,65 @@
+{
+  "titulo_obra": "Do Código à Intenção: a Inversão do SDD & Escrevendo Specs que Eliminam Alucinação — Um Recorte de Volume 3: Governança e Controle — Spec-Driven Development e a Fonte da Verdade",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "aidd-v3-governanca-e-controle",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "introducao": "Recorte investigativo sobre: Do Código à Intenção: a Inversão do SDD, Escrevendo Specs que Eliminam Alucinação, Ferramentas de Spec-Driven Development, Spec Drift e o Custo do Overhead, Hooks: Loops de Feedback Autônomos, Scripts que Ensinam o Legado do Projeto, A Fonte da Verdade: CLAUDE.md, AGENTS.md e a Memória Persistente, Governança de Qualidade: Gates, Avaliações e Decisões.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Do Código à Intenção: a Inversão do SDD",
+            "Escrevendo Specs que Eliminam Alucinação",
+            "Ferramentas de Spec-Driven Development"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Do Código à Intenção: a Inversão do SDD",
+            "Escrevendo Specs que Eliminam Alucinação",
+            "Ferramentas de Spec-Driven Development"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Do Código à Intenção: a Inversão do SDD",
+            "Escrevendo Specs que Eliminam Alucinação",
+            "Ferramentas de Spec-Driven Development"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Do Código à Intenção: a Inversão do SDD",
+            "Escrevendo Specs que Eliminam Alucinação",
+            "Ferramentas de Spec-Driven Development"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

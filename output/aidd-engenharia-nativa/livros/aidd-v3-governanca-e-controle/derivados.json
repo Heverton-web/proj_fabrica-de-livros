@@ -1,0 +1,69 @@
+{
+  "slug_livro_mae": "aidd-v3-governanca-e-controle",
+  "artigos": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Do Código à Intenção: a Inversão do SDD & Escrevendo Specs que Eliminam Alucinação — Um Recorte de Volume 3: Governança e Controle — Spec-Driven Development e a Fonte da Verdade",
+        "slug": "aidd-v3-governanca-e-controle--art-01-do-codigo-a-intencao-a-inversao-do-sdd-e",
+        "diretorio": "artigos/aidd-v3-governanca-e-controle--art-01-do-codigo-a-intencao-a-inversao-do-sdd-e",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Do Código à Intenção: a Inversão do SDD & Escrevendo Specs que Eliminam Alucinação",
+        "slug": "aidd-v3-governanca-e-controle--eb-01-do-codigo-a-intencao-a-inversao-do-sdd-e",
+        "diretorio": "ebooks/aidd-v3-governanca-e-controle--eb-01-do-codigo-a-intencao-a-inversao-do-sdd-e",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — Volume 3: Governança e Controle — Spec-Driven Development e a Fonte da Verdade",
+        "slug": "pbk-1-volume-3-governanca",
+        "diretorio": "aidd-engenharia-nativa/playbooks/pbk-1-volume-3-governanca",
+        "estagios": 2
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

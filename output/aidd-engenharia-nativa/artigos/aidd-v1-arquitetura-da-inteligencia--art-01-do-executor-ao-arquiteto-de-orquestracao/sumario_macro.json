@@ -1,0 +1,65 @@
+{
+  "titulo_obra": "Do Executor ao Arquiteto de Orquestração & As 4 Camadas de uma Operação: o Painel Completo — Um Recorte de Volume 1: A Arquitetura da Inteligência — As 4 Camadas de uma Operação AIDD",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "aidd-v1-arquitetura-da-inteligencia",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "introducao": "Recorte investigativo sobre: Do Executor ao Arquiteto de Orquestração, As 4 Camadas de uma Operação: o Painel Completo, A Camada Tela: Interfaces e Pontos de Contato, A Camada Harness: A Armadura que Sustenta o Agente, A Camada LLM: O Cérebro da Operação, A Camada Tools: O Arsenal de Interação, Economia Severa de Tokens: Voar Longe com Pouco Combustível, Personalização Cirúrgica das Camadas.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Do Executor ao Arquiteto de Orquestração",
+            "As 4 Camadas de uma Operação: o Painel Completo",
+            "A Camada Tela: Interfaces e Pontos de Contato"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Do Executor ao Arquiteto de Orquestração",
+            "As 4 Camadas de uma Operação: o Painel Completo",
+            "A Camada Tela: Interfaces e Pontos de Contato"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Do Executor ao Arquiteto de Orquestração",
+            "As 4 Camadas de uma Operação: o Painel Completo",
+            "A Camada Tela: Interfaces e Pontos de Contato"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Do Executor ao Arquiteto de Orquestração",
+            "As 4 Camadas de uma Operação: o Painel Completo",
+            "A Camada Tela: Interfaces e Pontos de Contato"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

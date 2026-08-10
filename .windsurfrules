@@ -197,6 +197,7 @@ Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlin
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
+- **2026-08-10 `fatiar-obra.py` grava `obra_mae` mas a coleção lê `serie`/`livro_mae`:** causa: configs de artigos/ebooks derivados nasciam com `obra_mae: <volume>` e sem `serie`/`livro_mae`; `resolver_serie_key` (série ← `serie` → `livro_mae` → nome do slug) então criava 1 coleção fantasma por volume (`aidd-v1-...`, `aidd-v2-...`) em vez de agregar ao hub. Fix: adicionar `livro_mae: <slug-colecao>` (a CHAVE da coleção, não o volume) nos configs de artigos/ebooks e re-rodar `colecao.py --sincronizar` sem `--slug` (a limpeza global remove os manifestos órfãos). Prevenção: derivados fatiados de uma SÉRIE (vários livros no mesmo hub) precisam apontar `livro_mae` para o slug da coleção; playbooks já nascem com `serie`. Arquivos: `scripts/fatiar-obra.py`, `scripts/colecao.py`, `scripts/series_capa.py` (`resolver_serie_key`).
 - **2026-08-09 Reescrita e transmutação de materiais:** causa: a esteira só
   criava novo (-v2) ou retomava; não dava para regravar capítulo/obra nem mudar
   de tipo sem orfanar série/coleção. Fix: `pool-capitulos.py --reescrever <n>`

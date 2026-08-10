@@ -1,0 +1,69 @@
+{
+  "slug_livro_mae": "aidd-v2-arsenal-do-agente",
+  "artigos": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O que é uma Skill (e o que não é) & Granularidade: o Que a Literatura Comum Omite — Um Recorte de Volume 2: O Arsenal do Agente — Skills e MCP",
+        "slug": "aidd-v2-arsenal-do-agente--art-01-o-que-e-uma-skill-e-o-que-nao-e-granular",
+        "diretorio": "artigos/aidd-v2-arsenal-do-agente--art-01-o-que-e-uma-skill-e-o-que-nao-e-granular",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O que é uma Skill (e o que não é) & Granularidade: o Que a Literatura Comum Omite",
+        "slug": "aidd-v2-arsenal-do-agente--eb-01-o-que-e-uma-skill-e-o-que-nao-e-granular",
+        "diretorio": "ebooks/aidd-v2-arsenal-do-agente--eb-01-o-que-e-uma-skill-e-o-que-nao-e-granular",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ]
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — Volume 2: O Arsenal do Agente — Skills e MCP",
+        "slug": "pbk-1-volume-2-arsenal",
+        "diretorio": "aidd-engenharia-nativa/playbooks/pbk-1-volume-2-arsenal",
+        "estagios": 2
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

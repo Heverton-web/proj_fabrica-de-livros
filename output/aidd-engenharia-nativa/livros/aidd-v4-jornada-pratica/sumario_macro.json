@@ -1,0 +1,118 @@
+{
+  "titulo_obra": "Volume 4: A Jornada Prática — Do Zero ao Deploy com AIDD",
+  "tipo_obra": "livro",
+  "tamanho_obra": "M",
+  "motivo_condutor": {
+    "nome": "A Expedição à Obra: da Picada ao Prédio de Pé",
+    "descricao": "Este volume é uma expedição completa: o leitor parte da mata fechada (projeto sem nada) e abre uma picada com as 4 camadas, ergue o acampamento (harness e specs), constrói os cômodos com skills e MCPs, e só considera a expedição concluída quando o prédio está de pé e funcionando — com o deploy automatizado como o sino de inauguração. Cada capítulo é uma etapa da obra que o leitor acompanha em um projeto real.",
+    "vocabulario": [
+      "expedição",
+      "picada",
+      "acampamento",
+      "cômodo",
+      "prédio de pé",
+      "obra",
+      "sino de inauguração",
+      "etapa",
+      "construção",
+      "projeto real"
+    ],
+    "persona_leitor": "Chefe de Expedição de Construção"
+  },
+  "introducao": "Introdução de impacto: o leitor chega cheio de teoria e sem prática; a introdução o convoca a uma expedição real — um projeto completo que começa vazio e termina deployado, mostrando que AIDD não é fórmula mágica, é método executado com as ferramentas dos volumes 1 a 3.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "O Acampamento — Setup e Fundação",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Definindo o Projeto e o Terreno",
+          "objetivo": "O leitor escolhe o projeto real, define escopo, requisitos iniciais e o que 'concluído' significa.",
+          "pilares_previstos": [
+            "Escolha do projeto: complexidade suficiente, escopo claro",
+            "Requisitos iniciais e critérios de pronto",
+            "Planejamento das etapas da expedição"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Setup das 4 Camadas na Prática",
+          "objetivo": "O leitor monta o ambiente real: Tela, Harness, LLM e Tools configurados para o projeto.",
+          "pilares_previstos": [
+            "Configuração da Tela e do harness para o repo",
+            "Seleção do LLM e das tools essenciais",
+            "Primeiro commit da base da expedição"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "As Primeiras Specs do Projeto Real",
+          "objetivo": "O leitor escreve requirements, design e tasks iniciais que guiam a construção.",
+          "pilares_previstos": [
+            "requirements.md com critérios de aceite testáveis",
+            "design.md: arquitetura, dados e contratos de API",
+            "tasks.md: passos numerados para o agente"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Memória e Fonte da Verdade do Repositório",
+          "objetivo": "O leitor cria CLAUDE.md/AGENTS.md e scripts base que persistem o contexto da obra.",
+          "pilares_previstos": [
+            "Configuração dos arquivos de contexto do repo",
+            "Scripts de verificação (lint, testes) desde o início",
+            "Hooks iniciais de feedback"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "A Construção — Funcionalidades e Deploy",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Erguendo Funcionalidades com Skills",
+          "objetivo": "O leitor implementa as primeiras funcionalidades do projeto real usando skills próprias.",
+          "pilares_previstos": [
+            "Do task.md à funcionalidade implementada",
+            "Skills de domínio criadas para o projeto",
+            "Validação com testes a cada funcionalidade"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Conectando o Mundo Real com MCP",
+          "objetivo": "O leitor integra banco de dados e serviços externos via MCP no projeto.",
+          "pilares_previstos": [
+            "Servidor MCP para o banco de dados do projeto",
+            "Autenticação e escopo de acesso",
+            "Autonomia assistida: o agente busca dados e age"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "Governança em Ação: Gates Antes do Merge",
+          "objetivo": "O leitor aplica hooks, testes e gates de qualidade no pipeline do projeto.",
+          "pilares_previstos": [
+            "CI com testes, lint e análise de segurança",
+            "Hooks que checam a spec contra o código",
+            "DevSecOps: SAST/DAST/SCA no pipeline"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "O Deploy Automatizado: o Sino de Inauguração",
+          "objetivo": "O leitor coloca o projeto no ar com deploy automatizado e fecha a expedição.",
+          "pilares_previstos": [
+            "Pipeline de deploy: do merge à produção",
+            "Agentes no pipeline: diagnóstico e correção de falhas",
+            "Selo final: o prédio de pé, com padrão de segurança e manutenibilidade"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética: o leitor fecha a expedição com o projeto real deployado e revisa o caminho percorrido — camadas, specs, skills, MCPs, governança e deploy — consolidando-se como arquiteto de orquestração capaz de liderar projetos AIDD do zero à produção."
+}
