@@ -1,0 +1,28 @@
+{
+  "titulo_obra": "Playbook — O Dentista Gestor: Finanças de Clínica com IA",
+  "tipo_obra": "playbook",
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia",
+  "motivo_condutor": {
+    "persona_leitor": "Gestor de Clínica Odontológica",
+    "vocabulario": [
+      "fim de expediente",
+      "agenda",
+      "caixa da clínica",
+      "consultório"
+    ],
+    "imagem_condutora": "O dentista, jaleco pendurado, senta à bancada quando a agenda fecha — e abre os números da clínica como se examinasse um prontuário financeiro."
+  },
+  "estagios": [
+    {
+      "indice": 1,
+      "nome": "Fim de expediente",
+      "titulo_parte": "Fim de Expediente: O Dentista Gestor",
+      "capitulos": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    }
+  ]
+}

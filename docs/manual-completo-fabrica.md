@@ -6,7 +6,7 @@
 > `fabrica-de-livros`, explicado passo a passo.
 >
 > **Autor:** Heverton Eduardo Peres — Especialista em Marketing e Desenvolvimento de Soluções
-> **Versão do projeto:** V5 (coleção) / V5.1 (nomes curtos e layout por obra) / V5.2 (relatório de sessão)
+> **Versão do projeto:** V5 (coleção) / V5.1 (nomes curtos e layout por obra) / V5.2 (relatório de sessão) / V5.3 (REGRA INTOCÁVEL HUB por coleção)
 > **Atualizado em:** 2026-08-09
 
 ---
@@ -117,14 +117,21 @@ Nomes curtos para materiais derivados: `<pfx>-<seq>-<nome>` (ex.: `lm-1-armadilh
 
 ## 3. Estrutura do output (série-aware)
 
-O layout **série-aware** (decisão V5.1+) organiza tudo por **obra** no topo de
-`output/` — sem junctions, sem pastas estruturais soltas:
+### ⚠️ REGRA INTOCÁVEL — Estrutura HUB por Coleção
+
+**`output/` DEVE organizar por COLEÇÃO. Cada coleção tem sua estrutura própria de pastas.**
+
+> **NUNCA** criar pastas soltas na raiz de `output/` (ex: `output/artigos/`, `output/livros/`).
+> Cada coleção vive em `output/<codigo-curto>/` com subpastas por tipo.
+
+O layout **série-aware** (decisão V5.1+, REGRA INTOCÁVEL V5.3) organiza tudo por
+**coleção** no topo de `output/` — sem junctions, sem pastas estruturais soltas:
 
 ```text
 output/
 ├── series.json                    # cores das coleções (nome legado; persistidas)
-├── <obra-1>/                      # obra única (single-book) ou série
-│   ├── livros/                    #   livro principal (config_obra.json, capitulos/, sumario_macro.json)
+├── <colecao-1>/                   # CADA COLEÇÃO TEM SUA ESTRUTURA
+│   ├── livros/                    #   livro principal (config_obra.json, capitulos/)
 │   ├── artigos/                   #   artigos derivados
 │   ├── ebooks/                    #   e-books derivados
 │   ├── playbooks/                 #   playbooks derivados
@@ -132,23 +139,38 @@ output/
 │   ├── decks/                     #   decks (dck-1-…)
 │   ├── emails/                    #   sequências (eml-1-…)
 │   ├── colecoes/                  #   manifestos de coleção (<nome>.json)
-│   └── distribuicao/              #   pacotes empacotados (empacotar-colecao.py)
-├── <obra-2>/                      # série multi-book: livros/ tem um dir por livro
-│   ├── livros/<livro-1>/ …        #   cada livro com seu config_obra.json
-│   ├── lead-magnets/lm-1-…        #   derivados referenciam o livro pelo prefixo
+│   ├── campanhas/                 #   materiais de divulgação
+│   ├── distribuicao/              #   pacotes empacotados
+│   └── maquina/                   #   máquina de vendas (1 por coleção)
+├── <colecao-2>/                   # outra coleção
+│   ├── livros/
+│   ├── artigos/
 │   └── …
 ```
 
-- **Single-book:** `output/<obra>/livros/` contém o livro (config direto na raiz do tipo).
-- **Multi-book (coleção):** `output/<obra>/livros/<livro>/` — um diretório por livro.
-- Os scripts resolvem qualquer material via `tipos_obra.dir_obra(slug)` — que aceita
-  o layout plano antigo (`output/<tipo>/<slug>`), o por-obra
-  (`output/<obra>/<tipo>/<slug>`) e o raiz single-book (`output/<obra>/<tipo>`).
+**Exemplo real:**
+```text
+output/
+├── harness/                       # Coleção "Harness Engineering"
+│   ├── livros/harness/
+│   ├── artigos/harness--art-01-*/
+│   ├── ebooks/harness--eb-01-*/
+│   └── campanhas/
+├── oh-my/                         # Coleção "Oh My Pi"
+│   ├── livros/oh-my/
+│   ├── artigos/oh-my--art-01-*/
+│   └── ebooks/oh-my--eb-01-*/
+└── series.json
+```
+
+- **Single-book:** `output/<colecao>/livros/` contém o livro (config direto na raiz do tipo).
+- **Multi-book:** `output/<colecao>/livros/<livro>/` — um diretório por livro.
+- Os scripts resolvem qualquer material via `tipos_obra.dir_obra(slug)` — que busca
+  em hubs de coleção primeiro, depois no layout plano antigo.
 - `series.json` guarda a cor de accent de cada coleção (usada em capas e templates).
 
-> **Atenção:** as antigas junctions (`output/livros/`, `output/playbooks/`,
-> `output/lead-magnets/`, …) foram **removidas**. Nada deve assumir o layout plano —
-> sempre passe por `dir_obra()`.
+> **REGRA INTOCÁVEL:** Essa estrutura é INEGOCIÁVEL. Toda sessão deve respeitá-la.
+> Pastas soltas na raiz de `output/` são ERRO e devem ser movidas para a coleção correta.
 
 ## 4. Fluxo completo da esteira (Fases 0-4)
 

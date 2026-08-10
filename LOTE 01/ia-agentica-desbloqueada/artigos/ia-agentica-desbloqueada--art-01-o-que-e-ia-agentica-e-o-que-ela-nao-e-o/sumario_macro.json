@@ -1,0 +1,10 @@
+{
+  "titulo_obra": "O que é IA Agêntica e o agent loop: definição, arquitetura e implicações para sistemas autônomos",
+  "tipo_obra": "artigo",
+  "livro_mae": "ia-agentica-desbloqueada",
+  "capitulos_fonte_livro_mae": [
+    1,
+    2
+  ],
+  "partes": []
+}

@@ -1,0 +1,49 @@
+{
+  "numero": "03",
+  "capitulo_fonte": "03",
+  "titulo": "IA na Bancada: Modelos Gratuitos e Planilhas",
+  "estagio": "Fim de expediente",
+  "estagio_indice": 1,
+  "objetivo": "Capacitar o dentista a usar ChatGPT, Gemini, Copilot e planilhas para montar controles financeiros: prompts de modelagem, fórmulas geradas, upload de dados e anonimização (LGPD).",
+  "pre_requisito": "Passo 2 concluído",
+  "entregas": [
+    "pacientes_faturamento.csv"
+  ],
+  "execucao": [
+    {
+      "titulo": "O prompt mestre de modelagem",
+      "linguagem": "text",
+      "comandos": [],
+      "codigo": "Atue como um consultor financeiro senior de clinicas odontologicas.\nAntes de gerar qualquer formula, descreva a arquitetura da planilha de\n[controle financeiro mensal da clinica] que vou construir no Excel.\nInclua:\n1. As abas necessarias e a funcao de cada uma (ex.: Caixa, DRE, Pacientes, KPIs).\n2. As colunas e linhas de cada aba.\n3. As premissas que devem ficar separadas das formulas (ex.: aliquota do Simples).\n4. As regras de calculo (ex.: ticket medio = receita / pacientes).\nDepois de eu aprovar a arquitetura, gere as formulas uma por uma,\nexplicando o que cada uma faz. Nao pule etapas."
+    },
+    {
+      "titulo": "Gerando fórmulas específicas",
+      "linguagem": "text",
+      "comandos": [],
+      "codigo": "No Excel, quero calcular o ticket medio mensal: a receita total (soma\nda coluna B da aba Caixa, filtrada pelo mes) dividida pelo numero de\npacientes atendidos (contagem na aba Pacientes). Escreva a formula,\nexplique o que ela faz e aponte onde usar referencias absolutas."
+    },
+    {
+      "titulo": "O ciclo de correção dirigida",
+      "linguagem": "text",
+      "comandos": [],
+      "codigo": "A formula da celula F12 do meu DRE esta retornando #VALOR!.\nExplique a cadeia de formulas que alimenta F12, identifique a causa\nmais provavel e proponha a correcao minima, sem alterar as demais\ncelulas. Mostre a formula corrigida e o que ela faz."
+    }
+  ],
+  "gate": "python -c \"print('Gate: confira que pacientes_faturamento.csv tem apenas colunas anonimizadas (codigo, procedimento, valor, mes) antes de qualquer upload')\"",
+  "comandos": [],
+  "feito_quando": [
+    "Abra o assistente gratuito e rode o prompt mestre de modelagem para o seu controle financeiro",
+    "Aprove a arquitetura (ou peça ajustes) e gere a fórmula do ticket médio",
+    "Anonimize uma planilha de pacientes de exemplo com o código do capítulo",
+    "Se tiver um dado confidencial, rode a classificação de lançamentos no modelo local (Ollama)",
+    "Escreva em uma linha: \"o que pode ir à nuvem e o que fica na clínica\" — e cumpra"
+  ],
+  "armadilhas": [
+    "Enviar planilha com nome, CPF e prontuário ao chat sem anonimizar",
+    "Pedir a planilha inteira em um único prompt, sem arquitetura",
+    "Aceitar fórmula com valores fixos embutidos — quebra a sensibilidade",
+    "Tratar a IA como oráculo — ela inventa com confiança (alucinação)"
+  ],
+  "referencia_cruzada": "Cap. 3 — IA na Bancada: Modelos Gratuitos e Planilhas",
+  "lacunas": []
+}

@@ -1,0 +1,295 @@
+{
+  "colecao": "ia-agentica-desbloqueada",
+  "cor_accent": "#f0933b",
+  "atualizado_em": "2026-08-09",
+  "nucleo": {
+    "slug": "livros/ia-agentica-desbloqueada",
+    "tipo": "livro",
+    "titulo": "IA Agêntica Desbloqueada",
+    "senioridade": "intermediario",
+    "motivo_condutor": {
+      "vocabulario": [
+        "agente",
+        "orquestrador",
+        "autonomia",
+        "produção",
+        "OrquestraIA"
+      ]
+    }
+  },
+  "total_membros": 16,
+  "por_tipo": {
+    "artigo": 3,
+    "ebook": 5,
+    "lead-magnet": 6,
+    "livro": 1,
+    "playbook": 1
+  },
+  "membros": [
+    {
+      "slug": "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-01-o-que-e-ia-agentica-e-o-que-ela-nao-e-o",
+      "tipo": "artigo",
+      "rotulo": "Artigo Científico",
+      "titulo": "O que é IA Agêntica e o agent loop: definição, arquitetura e implicações para sistemas autônomos",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--art-01-o-que-e-ia-agentica-e-o-que-ela-nao-e-o.pdf",
+        "livro_final.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-02-ferramentas-e-function-calling-as-maos-d",
+      "tipo": "artigo",
+      "rotulo": "Artigo Científico",
+      "titulo": "Ferramentas, function calling e planejamento de tarefas: as mãos e a bússola dos agentes autônomos",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--art-02-ferramentas-e-function-calling-as-maos-d.pdf",
+        "livro_final.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/artigos/ia-agentica-desbloqueada--art-03-avaliando-agentes-evals-e-llm-as-a-judge",
+      "tipo": "artigo",
+      "rotulo": "Artigo Científico",
+      "titulo": "Avaliação, segurança e supervisão humana: a governança dos sistemas de IA autônomos",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--art-03-avaliando-agentes-evals-e-llm-as-a-judge.pdf",
+        "livro_final.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Fundamentos da Autonomia",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia.epub",
+        "ia-agentica-desbloqueada--eb-01-fundamentos-da-autonomia.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-02-projetando-o-sistema",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Projetando o Sistema",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--eb-02-projetando-o-sistema.epub",
+        "ia-agentica-desbloqueada--eb-02-projetando-o-sistema.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Construindo o OrquestraIA",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia.epub",
+        "ia-agentica-desbloqueada--eb-03-construindo-o-orquestraia.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-04-governanca-e-qualidade",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Governança e Qualidade",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--eb-04-governanca-e-qualidade.epub",
+        "ia-agentica-desbloqueada--eb-04-governanca-e-qualidade.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/ebooks/ia-agentica-desbloqueada--eb-05-implantacao-e-operacao",
+      "tipo": "ebook",
+      "rotulo": "E-book",
+      "titulo": "Implantação e Operação",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "compressao",
+      "custo_llm": "baixo",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada--eb-05-implantacao-e-operacao.epub",
+        "ia-agentica-desbloqueada--eb-05-implantacao-e-operacao.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-1-armadilhas",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "As 25 Armadilhas de IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-1-armadilhas.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-2-cheatsheet",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Cheat Sheet: IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-2-cheatsheet.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-3-checklist",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Checklist Mestre: IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-3-checklist.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-4-entregas",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Mapa de Entregas: IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-4-entregas.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-5-mapa",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "O Mapa de IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-5-mapa.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/lead-magnets/lm-6-mini-guia",
+      "tipo": "lead-magnet",
+      "rotulo": "Lead Magnet",
+      "titulo": "Mini-guia: IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "https://pay.hotmart.com/XXXXX",
+      "estado": "compilado",
+      "artefatos": [
+        "lm-6-mini-guia.pdf"
+      ]
+    },
+    {
+      "slug": "livros/ia-agentica-desbloqueada",
+      "tipo": "livro",
+      "rotulo": "Livro",
+      "titulo": "IA Agêntica Desbloqueada",
+      "obra_mae": null,
+      "natureza": "geracao",
+      "custo_llm": "alto",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "compilado",
+      "artefatos": [
+        "ia-agentica-desbloqueada.pdf",
+        "livro_final.pdf"
+      ]
+    },
+    {
+      "slug": "ia-agentica-desbloqueada/playbooks/pbk-1-ia-agentica-desbloqueada",
+      "tipo": "playbook",
+      "rotulo": "Playbook",
+      "titulo": "Playbook — IA Agêntica Desbloqueada",
+      "obra_mae": "ia-agentica-desbloqueada",
+      "natureza": "extracao",
+      "custo_llm": "zero",
+      "senioridade": "intermediario",
+      "cta_url": "",
+      "estado": "extraido",
+      "artefatos": []
+    }
+  ],
+  "derivados_ausentes": [
+    "deck",
+    "emails"
+  ],
+  "membros_sem_cta": [],
+  "maquina": {
+    "slug": "livros/ia-agentica-desbloqueada",
+    "titulo": "Livros/Ia Agentica Desbloqueada",
+    "status": "criada",
+    "criada_em": "2026-08-09T16:02:04.082017",
+    "obra_origem": "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\output\\ia-agentica-desbloqueada\\livros",
+    "campanhas": {
+      "snapshot": true,
+      "atualizado_em": "2026-08-09",
+      "desatualizada": false
+    }
+  },
+  "maquinas_legadas": []
+}
