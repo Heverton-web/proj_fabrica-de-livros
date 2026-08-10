@@ -66,6 +66,12 @@ MANUAIS = {
         "cor_acento": "#06b6d4",
         "badge": "NÍVEL BÁSICO",
     },
+    "relatorio-outputs-fluxos": {
+        "titulo": "RELATÓRIO DE OUTPUTS",
+        "subtitulo": "FÁBRICA AGÊNTICA — CRIAÇÃO DE MATERIAIS | CAMPANHAS | MÁQUINA DE VENDAS",
+        "cor_acento": "#22c55e",
+        "badge": "REFERÊNCIA V5.3",
+    },
 }
 
 
