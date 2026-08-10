@@ -214,7 +214,115 @@ python scripts/empacotar-colecao.py "<coleção>"
 
 ---
 
-## 5. Tipos de obra e comandos
+## 5. Modos de Execução — Autônomo vs Encadeado
+
+> **🎬 Storytelling: Você é o comandante**
+>
+> Imagine que você é o comandante de uma frota naval. Você pode:
+> - **Lançar a frota inteira** de uma vez (`/produzir-obra-completa`)
+> - **Lançar um navio por vez** (`/criar-livro`, `/criar-artigo`, etc.)
+> - **Enviar só o marketing** de uma coleção já pronta (`/campanha-completa`)
+> - **Ativar só o porto comercial** (`/criar-maquina`)
+>
+> Cada opção é **independente** e funciona sozinha. A única restrição é
+> a **ordem**: não dá para enviar o marketing antes do navio estar pronto,
+> e não dá para ativar o porto antes do marketing existir.
+
+### Modo Encadeado (tudo de uma vez)
+
+```bash
+/produzir-obra-completa "Inteligência Artificial para Iniciantes"
+```
+
+**O que roda:**
+1. Fase 0: Esboço (pesquisa + arquitetura)
+2. Fase 1: Pesquisa e dossiê
+3. Fase 2: Manufatura de capítulos
+4. Fase 2.5: Revisão técnica
+5. Fase 3: Compilação PDF
+6. Fase 4: Coleção + entrega
+7. Campanhas de divulgação (se solicitadas)
+
+### Modo Individual — Só Materiais
+
+```bash
+# Criar só o livro (requer Fase 1 já rodada)
+/criar-livro <slug>
+
+# Criar só os artigos (requer livro-mãe)
+/criar-artigo <slug>
+
+# Criar só os e-books (requer livro compilado)
+/criar-ebook <slug>
+
+# Criar só o playbook (extração determinística)
+/criar-playbook <slug>
+```
+
+### Modo Individual — Só Campanhas
+
+```bash
+# Campanha de 1 material
+/campanha <slug-material>
+
+# Campanhas de TODOS os materiais da coleção
+/campanha-completa <slug-colecao>
+```
+
+### Modo Individual — Só Máquina de Vendas
+
+```bash
+# Gerar máquina (requer coleção + campanhas)
+/criar-maquina <slug>
+```
+
+### Diagrama de Dependências
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    MATERIAIS (Fluxo 1)                       │
+│  /esbocar → /criar-livro → /criar-artigo → /criar-ebook    │
+│                       ↓                                     │
+│              /criar-playbook → /criar-lead-magnet           │
+│                       ↓                                     │
+│              /criar-deck → /criar-emails                    │
+└───────────────────────────────┬─────────────────────────────┘
+                                │
+                                ▼ PRÉ-REQUISITO
+┌─────────────────────────────────────────────────────────────┐
+│                    CAMPANHAS (Fluxo 2)                       │
+│         /campanha <material> ou /campanha-completa          │
+└───────────────────────────────┬─────────────────────────────┘
+                                │
+                                ▼ PRÉ-REQUISITO
+┌─────────────────────────────────────────────────────────────┐
+│                    MÁQUINA (Fluxo 3)                         │
+│                      /criar-maquina                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Tabela Resumo
+
+| Modo | Comando | O que gera | Depende de |
+|------|---------|------------|------------|
+| **Encadeado** | `/produzir-obra-completa <tema>` | Tudo (materiais + campanhas) | Nada (ponto de partida) |
+| **Só materiais** | `/criar-livro <slug>` | Livro + derivados | Fase 1 rodada |
+| **Só campanhas** | `/campanha-completa <colecao>` | Campanhas completas | Materiais prontos |
+| **Só máquina** | `/criar-maquina <slug>` | Máquina full-stack | Coleção + campanhas |
+| **Só artigos** | `/criar-artigo <slug>` | 4 artigos PDF | Livro-mãe com dossiê |
+| **Só ebooks** | `/criar-ebook <slug>` | 8 ebooks EPUB+PDF | Livro compilado |
+| **Só playbook** | `/criar-playbook <slug>` | 16 cards | Livro com capítulos |
+| **Só lead magnets** | `/criar-lead-magnet <slug>` | 4 formatos | Playbook pronto |
+| **Só deck** | `/criar-deck <slug>` | Apresentação 16:9 | Livro compilado |
+| **Só e-mails** | `/criar-emails <slug>` | Sequência 5 e-mails | Livro compilado |
+
+> **REGRA:** Cada comando é **autocontido** — ele verifica internamente se
+> os pré-requisitos existem e avisa se faltar algo. Não é necessário rodar
+> comandos anteriores manualmente.
+
+---
+
+## 6. Tipos de obra e comandos
 
 > **🎬 Storytelling: Os 8 navios da frota**
 >
