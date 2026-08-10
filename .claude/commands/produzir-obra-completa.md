@@ -26,9 +26,13 @@ tema (ou slug já esboçado) em `$ARGUMENTS`.
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Passo 0 — Esboço (Fase 0)
+## Passo 0 — Preparação
 
-1. Se `$ARGUMENTS` já for um slug com `output/<colecao>/config_obra.json`,
+1. Crie a pasta de relatórios:
+   ```bash
+   mkdir -p output/<colecao>/relatorios
+   ```
+2. Se `$ARGUMENTS` já for um slug com `output/<colecao>/config_obra.json`,
    pule para o Passo 1. Caso contrário, execute `/esbocar $ARGUMENTS`
    (elicitação + pesquisa + arquitetura + fatiamento).
 
@@ -62,6 +66,51 @@ tema (ou slug já esboçado) em `$ARGUMENTS`.
    ```bash
    python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>
    ```
+
+### 📄 Relatório do FLUXO 1 — Materiais
+
+Após a conclusão do FLUXO 1, salve o relatório em `output/<colecao>/relatorios/`:
+
+```markdown
+# Relatório FLUXO 1 — Materiais — <data>
+
+## Resumo Executivo
+- **Status:** ✅ CONCLUÍDO | ⚠️ CONCLUÍDO COM RESSALVAS | ❌ FALHA
+- **Duração:** <tempo estimado>
+
+## Itens Criados
+
+| Item | Status | Caminho | Observação |
+|------|--------|---------|------------|
+| Livro/TCC | ✅/❌ | output/<colecao>/livro_final.pdf | <detalhes> |
+| Artigos | ✅/❌ | output/<colecao>/artigos/ | <N> gerados |
+| E-books | ✅/❌ | output/<colecao>/ebooks/ | <N> gerados |
+| Playbook | ✅/❌ | output/<colecao>/playbooks/ | <N> cards |
+| Lead Magnets | ✅/❌ | output/<colecao>/lead-magnets/ | 4 formatos |
+| Deck | ✅/❌ | output/<colecao>/decks/ | 16:9 |
+| E-mails | ✅/❌ | output/<colecao>/emails/ | 5 sequência |
+| Coleção | ✅/❌ | output/<colecao>/colecoes/ | manifesto |
+
+## Itens NÃO Criados (e motivos)
+
+| Item | Motivo | Ação Recomendada |
+|------|--------|------------------|
+| <item> | <motivo> | <ação> |
+
+## Validações Executadas
+
+| Validação | Resultado |
+|-----------|-----------|
+| auditar-obra.py | ✅/❌ |
+| validar-codigo.py | ✅/❌ |
+| validar-referencias.py | ✅/❌ |
+| validar-metricas.py | ✅/❌ |
+
+## Pendências
+- <lista de pendências ou "nenhuma">
+```
+
+Salve como: `output/<colecao>/relatorios/fluxo1-materiais-<AAAA-MM-DD>.md`
 
 ## Passo 3 — Campanhas (FLUXO 2: CAMPANHAS) ← OBRIGATÓRIO
 
@@ -118,6 +167,46 @@ será gerada, mas com um **WARNING explícito** no relatório final.
    Para corrigir: /campanha-completa <slug-colecao>
 ```
 
+### 📄 Relatório do FLUXO 2 — Campanhas
+
+Após a conclusão do FLUXO 2, salve o relatório em `output/<colecao>/relatorios/`:
+
+```markdown
+# Relatório FLUXO 2 — Campanhas — <data>
+
+## Resumo Executivo
+- **Status:** ✅ CONCLUÍDO | ⚠️ FALHA PARCIAL | ❌ FALHA TOTAL
+- **Materiais processados:** <N>/<M>
+
+## Itens Criados
+
+| Material | Instagram | LinkedIn | E-mails | WhatsApp | Status |
+|----------|-----------|----------|---------|----------|--------|
+| <material-1> | ✅ 7 posts + 7 stories | ✅ 7 posts | ✅ 5 e-mails | ✅ 4 msgs | ✅ |
+| <material-2> | ✅ 7 posts + 7 stories | ✅ 7 posts | ✅ 5 e-mails | ✅ 4 msgs | ✅ |
+
+## Itens NÃO Criados (e motivos)
+
+| Material | Motivo | Ação Recomendada |
+|----------|--------|------------------|
+| <material> | <motivo> | <ação> |
+
+## Validações Executadas
+
+| Validação | Resultado |
+|-----------|-----------|
+| R-CP-1 (Artes suficientes) | ✅/❌ |
+| R-CP-2 (Textos completos) | ✅/❌ |
+| R-CP-3 (Artes por formato) | ✅/❌ |
+| R-CP-4 (Cronogramas completos) | ✅/❌ |
+| R-CP-5 (Cronogramas válidos) | ✅/❌ |
+
+## Pendências
+- <lista de pendências ou "nenhuma">
+```
+
+Salve como: `output/<colecao>/relatorios/fluxo2-campanhas-<AAAA-MM-DD>.md`
+
 ## Passo 4 — Máquina de Vendas (FLUXO 3: MÁQUINA) ← OBRIGATÓRIO
 
 13. Depois que a coleção estiver pronta (Passos 1-2), gere a máquina de
@@ -166,6 +255,60 @@ def vincular_campanhas(destino, slug):
 **Resultado:** Máquina funciona com ou sem campanhas. Se as campanhas
 falharem, o snapshot fica vazio mas a máquina continua operacional.
 
+### 📄 Relatório do FLUXO 3 — Máquina de Vendas
+
+Após a conclusão do FLUXO 3, salve o relatório em `output/<colecao>/relatorios/`:
+
+```markdown
+# Relatório FLUXO 3 — Máquina de Vendas — <data>
+
+## Resumo Executivo
+- **Status:** ✅ CONCLUÍDO | ⚠️ CONCLUÍDO COM RESSALVAS | ❌ FALHA
+- **Caminho:** output/<colecao>/maquina/
+
+## Componentes Criados
+
+| Componente | Status | Detalhes |
+|------------|--------|----------|
+| Frontend Next.js | ✅/❌ | landing, checkout, admin |
+| Backend FastAPI | ✅/❌ | leads, funil, e-mails |
+| Banco SQLite | ✅/❌ | schema + seed |
+| Automações | ✅/❌ | Lead Hunter, Email Sender, Funnel Monitor, auto_correct |
+| Snapshot Campanhas | ✅/❌/⚠️ | <completo/parcial/ausente> |
+| Docker Compose | ✅/❌ | pronto para deploy |
+| vercel.json | ✅/❌ | deploy Vercel |
+
+## Itens NÃO Criados (e motivos)
+
+| Componente | Motivo | Ação Recomendada |
+|------------|--------|------------------|
+| <componente> | <motivo> | <ação> |
+
+## Personalização Pendente
+
+| Item | Status | Observação |
+|------|--------|------------|
+| config/produtos.json | ✅/❌ | <detalhes> |
+| config/funis.json | ✅/❌ | <detalhes> |
+| config/personas.json | ✅/❌ | <detalhes> |
+| config/canais.json | ✅/❌ | <detalhes> |
+| frontend/app/page.tsx | ✅/❌ | <detalhes> |
+| templates/ | ✅/❌ | <detalhes> |
+| .env | ✅/❌ | <detalhes> |
+
+## Validações Executadas
+
+| Validação | Resultado |
+|-----------|-----------|
+| Checkout (/api/checkout) | ✅/❌ |
+| Build frontend (npm run build) | ✅/❌ |
+
+## Pendências
+- <lista de pendências ou "nenhuma">
+```
+
+Salve como: `output/<colecao>/relatorios/fluxo3-maquina-<AAAA-MM-DD>.md`
+
 ## Passo 5 — Distribuição
 
 16. Empacote tudo para distribuição:
@@ -175,51 +318,108 @@ falharem, o snapshot fica vazio mas a máquina continua operacional.
 
 ## Passo 6 — Relatório Consolidado Final
 
-17. Exiba relatório completo dos 3 fluxos:
+17. Gere o relatório consolidado em `output/<colecao>/relatorios/`:
 
+```markdown
+# Relatório de Produção Completa — <data>
+
+## Resumo Executivo
+- **Obra:** <título> (<tipo_obra>, tamanho <P/M/G/GG/XG>)
+- **Coleção:** <nome-colecao>
+- **Status Geral:** ✅ CONCLUÍDO | ⚠️ CONCLUÍDO COM RESSALVAS | ❌ FALHA
+
+---
+
+## FLUXO 1 — MATERIAIS
+
+| Item | Status | Caminho | Observação |
+|------|--------|---------|------------|
+| Livro/TCC | ✅/❌ | output/<colecao>/livro_final.pdf | <veredito> |
+| Artigos | ✅/❌ | output/<colecao>/artigos/ | <N> gerados |
+| E-books | ✅/❌ | output/<colecao>/ebooks/ | <N> gerados |
+| Playbook | ✅/❌ | output/<colecao>/playbooks/ | <N> cards |
+| Lead Magnets | ✅/❌ | output/<colecao>/lead-magnets/ | 4 formatos |
+| Deck | ✅/❌ | output/<colecao>/decks/ | 16:9 |
+| E-mails | ✅/❌ | output/<colecao>/emails/ | 5 sequência |
+| Coleção | ✅/❌ | output/<colecao>/colecoes/ | manifesto |
+
+**Relatório detalhado:** `fluxo1-materiais-<AAAA-MM-DD>.md`
+
+---
+
+## FLUXO 2 — CAMPANHAS
+
+| Material | Instagram | LinkedIn | E-mails | WhatsApp | Status |
+|----------|-----------|----------|---------|----------|--------|
+| <mat-1> | ✅ 7+7 | ✅ 7 | ✅ 5 | ✅ 4 | ✅ |
+| <mat-2> | ✅ 7+7 | ✅ 7 | ✅ 5 | ✅ 4 | ✅ |
+
+**Status:** ✅ OK | ⚠️ FALHA PARCIAL | ❌ FALHA TOTAL
+
+⚠️ **SE HOUVER FALHA:**
+- CAMPANHAS: falha parcial — <N>/<M> materiais criados
+- Máquina criada SEM snapshot de campanhas
+- Para corrigir: `/campanha-completa <slug-colecao>`
+
+**Relatório detalhado:** `fluxo2-campanhas-<AAAA-MM-DD>.md`
+
+---
+
+## FLUXO 3 — MÁQUINA DE VENDAS
+
+| Componente | Status | Detalhes |
+|------------|--------|----------|
+| Frontend Next.js | ✅/❌ | landing, checkout, admin |
+| Backend FastAPI | ✅/❌ | leads, funil, e-mails |
+| Banco SQLite | ✅/❌ | schema + seed |
+| Automações | ✅/❌ | 4 subagentes |
+| Snapshot Campanhas | ✅/❌/⚠️ | <completo/parcial/ausente> |
+| Deploy | ✅/❌ | Docker / Vercel / VPS |
+
+**Relatório detalhado:** `fluxo3-maquina-<AAAA-MM-DD>.md`
+
+---
+
+## DISTRIBUIÇÃO
+
+| Item | Caminho |
+|------|---------|
+| Pacote | output/<colecao>/distribuicao/ |
+| README | output/<colecao>/distribuicao/README.md |
+| LICENSE | output/<colecao>/distribuicao/LICENSE |
+
+---
+
+## PENDÊNCIAS
+
+| # | Pendência | Fluxo | Prioridade |
+|---|-----------|-------|------------|
+| 1 | <pendência> | <fluxo> | <alta/média/baixa> |
+
+---
+
+## ARQUIVOS GERADOS
+
+| Arquivo | Descrição |
+|---------|-----------|
+| `relatorios/fluxo1-materiais-<data>.md` | Relatório detalhado do Fluxo 1 |
+| `relatorios/fluxo2-campanhas-<data>.md` | Relatório detalhado do Fluxo 2 |
+| `relatorios/fluxo3-maquina-<data>.md` | Relatório detalhado do Fluxo 3 |
+| `relatorios/relatorio-completo-<data>.md` | Este relatório consolidado |
 ```
-═══════════════════════════════════════════════════════════════
-RELATÓRIO DE PRODUÇÃO COMPLETA — <data>
-═══════════════════════════════════════════════════════════════
 
-FLUXO 1 — MATERIAIS:
-  Livro/TCC   : output/<colecao>/livro_final.pdf — <veredito>
-  Artigos     : <N> gerado(s) — output/<colecao>/artigos/
-  E-books     : <N> gerado(s) — output/<colecao>/ebooks/
-  Playbook    : output/<colecao>/playbooks/
-  Lead Magnets: output/<colecao>/lead-magnets/ (4 formatos)
-  Deck        : output/<colecao>/decks/
-  E-mails     : output/<colecao>/emails/ (5 sequência)
-  Coleção     : output/<colecao>/colecoes/<nome>.json
+18. **Salve os relatórios:**
+    ```bash
+    # Relatório consolidado (este arquivo)
+    # Salve como: output/<colecao>/relatorios/relatorio-completo-<AAAA-MM-DD>.md
 
-FLUXO 2 — CAMPANHAS:
-  Materiais   : <N> campanhas geradas
-  Instagram   : <N> posts + <N> stories
-  LinkedIn    : <N> posts
-  E-mails     : <N> sequências de nutrição
-  WhatsApp    : <N> mensagens
-  Status      : <ok | parcial | falha>
+    # Gere o PDF do relatório consolidado
+    python scripts/gerar-relatorio-sessao.py output/<colecao>/relatorios/relatorio-completo-<AAAA-MM-DD>.md
+    ```
 
-  ⚠️ SE HOUVER FALHA:
-  "CAMPANHAS: falha parcial — <N>/<M> materiais criados"
-  "Máquina criada SEM snapshot de campanhas"
-  "Para corrigir: /campanha-completa <slug-colecao>"
-
-FLUXO 3 — MÁQUINA DE VENDAS:
-  Frontend    : Next.js 14 (landing, checkout, admin)
-  Backend     : FastAPI (leads, funil, e-mails)
-  Banco       : SQLite
-  Deploy      : Docker / Vercel / VPS
-  Snapshot    : <completo | parcial | ausente>
-  Status      : <pronta-pendente>
-
-DISTRIBUIÇÃO:
-  Pacote      : output/<colecao>/distribuicao/
-  Arquivos    : <N> PDFs, <N> EPUBs, <N> PNGs
-
-PENDÊNCIAS   : <lista objetiva, ou "nenhuma">
-═══════════════════════════════════════════════════════════════
-```
+> **IMPORTANTE:** Cada relatório é salvo em `output/<colecao>/relatorios/`
+> e pode ser consultado individualmente. O relatório consolidado referencia
+> os 3 relatórios de fluxo para detalhes completos.
 
 ## Notas de Economia de Tokens
 
