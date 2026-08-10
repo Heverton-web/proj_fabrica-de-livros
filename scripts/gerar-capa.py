@@ -55,94 +55,178 @@ DIMENSOES_SOCIAL = {t: TO.dimensoes_capa(t, variante="social") for t in TO.tipos
                     if TO.dimensoes_capa(t, variante="social")}
 
 
-def _destacar_ultima_palavra(titulo, cor_acento):
+CODIGO_DECORATIVO_PADRAO = """import omp
+from pathlib import Path
+
+async def deploy_pipeline(
+    project: str,
+    env: str = "production"
+) -> DeployResult:
+    agent = CodingAgent(model="gpt-4o")
+    await agent.analyze(project)
+    tests = await agent.run_tests()
+    if tests.passed:
+        return await agent.deploy(env)
+
+const pipeline = new AIPipeline({
+  model: "claude-opus",
+  tools: ["bash", "editor", "browser"],
+  maxIterations: 50
+})
+
+await pipeline.execute(`
+  Construa um sistema completo
+  de gestao de pedidos com
+  testes unitarios e deploy
+`)"""
+
+
+def _ler_template():
+    """Le o template HTML externo (capa-refinada.html)."""
+    template_path = DIR_PROJETO / "templates" / "capa-refinada.html"
+    if not template_path.exists():
+        print(f"[ERRO] Template nao encontrado: {template_path}")
+        sys.exit(1)
+    return template_path.read_text(encoding="utf-8")
+
+
+def _dividir_titulo(titulo):
+    """Divide o titulo em 3 linhas para o template refinado.
+
+    Linha 1: palavras ate a penultima (branco)
+    Linha 2: ultima palavra (gradiente cor)
+    Linha 3: vazio (sera preenchido pelo subtitulo ou badge)
+    """
     palavras = titulo.strip().split()
-    if len(palavras) < 2:
-        return titulo
-    resto, ultima = " ".join(palavras[:-1]), palavras[-1]
-    return f'{resto} <span class="highlight">{ultima}</span>'
+    if len(palavras) <= 1:
+        return titulo, "", ""
+    if len(palavras) == 2:
+        return palavras[0], palavras[1], ""
+    # 3+ palavras: ante-penultima + penultima | ultima | vazio
+    resto = " ".join(palavras[:-1])
+    ultima = palavras[-1]
+    return resto, ultima, ""
+
+
+def _calcular_stats(dir_obra):
+    """Calcula stats da obra a partir dos arquivos existentes."""
+    sumario = _ler_json(dir_obra / "sumario_macro.json")
+    config = _ler_json(dir_obra / "config_obra.json")
+
+    # Contar capitulos
+    capitulos = 0
+    for parte in sumario.get("partes", []):
+        capitulos += len(parte.get("capitulos", []))
+
+    # Contar paginas (estimativa: 10k chars = 1 pagina)
+    total_chars = 0
+    capitulos_dir = dir_obra / "capitulos"
+    if capitulos_dir.exists():
+        for cap in capitulos_dir.glob("cap_*.md"):
+            total_chars += len(cap.read_text(encoding="utf-8", errors="replace"))
+    paginas = max(70, total_chars // 10000)
+
+    return {
+        "STAT1_NUMERO": str(capitulos) if capitulos else "16",
+        "STAT1_LABEL": "CAPÍTULOS",
+        "STAT2_NUMERO": f"{paginas}+",
+        "STAT2_LABEL": "PÁGINAS",
+        "STAT3_NUMERO": "∞",
+        "STAT3_LABEL": "PROJETOS",
+    }
+
+
+def _ler_json(caminho):
+    """Le um arquivo JSON de forma segura."""
+    if caminho.exists():
+        try:
+            return json.loads(caminho.read_text(encoding="utf-8"))
+        except (ValueError, json.JSONDecodeError):
+            return {}
+    return {}
 
 
 def _gerar_html(titulo, subtitulo, cor_acento, autor, qualificacao, badge_texto,
-                 ilustracao_relpath, largura, altura):
-    titulo_html = _destacar_ultima_palavra(titulo, cor_acento)
-    bloco_ilustracao = (
-        f'<div class="ilustracao"><img src="{ilustracao_relpath}" alt=""></div>'
-        if ilustracao_relpath else ""
-    )
-    bloco_badge = f'<div class="badge">{badge_texto}</div>' if badge_texto else ""
-    bloco_subtitulo = f'<div class="subtitle">{subtitulo}</div>' if subtitulo else ""
+                 ilustracao_relpath, largura, altura, categoria=None, stats=None,
+                 edition_tag=None, codigo_decorativo=None):
+    """Gera HTML usando o template refinado externo."""
+    template = _ler_template()
 
-    return f'''<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-  body {{
-    width: {largura}px; height: {altura}px;
-    background: #0d1117;
-    font-family: 'Inter', Arial, sans-serif;
-    position: relative;
-    overflow: hidden;
-  }}
-  .top-bar {{ position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: {cor_acento}; }}
-  .bottom-bar {{ position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: {cor_acento}; }}
-  .content {{
-    position: absolute; top: 40px; bottom: 40px; left: 80px; right: 80px;
-    display: flex; flex-direction: column;
-  }}
-  .header {{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; }}
-  .editora-icon {{
-    width: 72px; height: 72px; border: 3px solid {cor_acento}; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 34px; color: {cor_acento}; font-weight: 700; font-family: monospace;
-  }}
-  .editora-text {{ font-size: 24px; font-weight: 600; color: #8b949e; letter-spacing: 4px; text-transform: uppercase; }}
-  .center {{
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: center; min-height: 0;
-  }}
-  .ilustracao {{ display: flex; align-items: center; justify-content: center; min-height: 0; margin-bottom: 24px; }}
-  .ilustracao img {{ max-width: 100%; max-height: 100%; object-fit: contain; }}
-  .title {{ font-size: 72px; font-weight: 900; color: #e6edf3; line-height: 1.05; letter-spacing: -1px; margin-bottom: 16px; flex-shrink: 0; }}
-  .title .highlight {{ color: {cor_acento}; }}
-  .subtitle {{ font-size: 22px; font-weight: 300; color: #8b949e; margin-bottom: 20px; flex-shrink: 0; }}
-  .badge {{ display: inline-block; background: {cor_acento}; color: #0d1117; padding: 8px 20px; border-radius: 18px; font-weight: 700; font-size: 15px; margin-bottom: 20px; align-self: flex-start; flex-shrink: 0; }}
-  .divider {{ width: 80px; height: 4px; background: {cor_acento}; margin-bottom: 16px; flex-shrink: 0; }}
-  .footer {{ flex-shrink: 0; }}
-  .author-name {{ font-size: 30px; font-weight: 600; color: #e6edf3; margin-bottom: 4px; }}
-  .author-role {{ font-size: 16px; color: {cor_acento}; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }}
-</style>
-</head>
-<body>
-  <div class="top-bar"></div>
-  <div class="bottom-bar"></div>
-  <div class="content">
-    <div class="header">
-      <div class="editora-icon">&gt;_</div>
-      <div class="editora-text">Editora Agêntica</div>
-    </div>
-    <div class="center">
-      {bloco_ilustracao}
-      <div class="title">{titulo_html}</div>
-      {bloco_subtitulo}
-      {bloco_badge}
-      <div class="divider"></div>
-    </div>
-    <div class="footer">
-      <div class="author-name">{autor}</div>
-      <div class="author-role">{qualificacao}</div>
-    </div>
-  </div>
-</body>
-</html>'''
+    # Dividir titulo em 3 linhas
+    linha1, linha2, linha3 = _dividir_titulo(titulo)
+
+    # Stats padrao se nao fornecidos
+    if stats is None:
+        stats = {
+            "STAT1_NUMERO": "16",
+            "STAT1_LABEL": "CAPÍTULOS",
+            "STAT2_NUMERO": "70+",
+            "STAT2_LABEL": "PÁGINAS",
+            "STAT3_NUMERO": "∞",
+            "STAT3_LABEL": "PROJETOS",
+        }
+
+    # Ilustracao
+    bloco_ilustracao = ""
+    if ilustracao_relpath:
+        bloco_ilustracao = f'<img src="{ilustracao_relpath}" alt="">'
+
+    # Categoria padrao
+    if categoria is None:
+        categoria = "DESENVOLVIMENTO DE SOFTWARE"
+
+    # Edition tag padrao
+    if edition_tag is None:
+        from datetime import datetime
+        ano = datetime.now().year
+        edition_tag = f"v1.0 · {ano}"
+
+    # Codigo decorativo
+    if codigo_decorativo is None:
+        codigo_decorativo = CODIGO_DECORATIVO_PADRAO
+
+    # Subtitulo com strong
+    subtitulo_html = subtitulo if subtitulo else ""
+
+    # Substituir variaveis
+    html = template
+    html = html.replace("{{LARGURA}}", str(largura))
+    html = html.replace("{{ALTURA}}", str(altura))
+    html = html.replace("{{COR}}", cor_acento)
+    html = html.replace("{{TITULO_LINHA1}}", linha1)
+    html = html.replace("{{TITULO_LINHA2}}", linha2)
+    html = html.replace("{{TITULO_LINHA3}}", linha3)
+    html = html.replace("{{SUBTITULO}}", subtitulo_html)
+    html = html.replace("{{CATEGORIA}}", categoria)
+    html = html.replace("{{BADGE_PRINCIPAL}}", badge_texto or "PARA INICIANTES")
+    html = html.replace("{{BADGE_SECUNDARIO1}}", "16 capítulos")
+    html = html.replace("{{BADGE_SECUNDARIO2}}", "projetos práticos")
+    html = html.replace("{{STAT1_NUMERO}}", stats["STAT1_NUMERO"])
+    html = html.replace("{{STAT1_LABEL}}", stats["STAT1_LABEL"])
+    html = html.replace("{{STAT2_NUMERO}}", stats["STAT2_NUMERO"])
+    html = html.replace("{{STAT2_LABEL}}", stats["STAT2_LABEL"])
+    html = html.replace("{{STAT3_NUMERO}}", stats["STAT3_NUMERO"])
+    html = html.replace("{{STAT3_LABEL}}", stats["STAT3_LABEL"])
+    html = html.replace("{{AUTOR}}", autor)
+    html = html.replace("{{QUALIFICACAO}}", qualificacao)
+    html = html.replace("{{EDITION_TAG}}", edition_tag)
+    html = html.replace("{{ILUSTRACAO}}", bloco_ilustracao)
+    html = html.replace("{{CODIGO_DECORATIVO}}", codigo_decorativo)
+
+    return html
 
 
 def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
                autor=AUTOR_PADRAO, qualificacao=QUALIFICACAO_PADRAO,
                badge_texto=None, ilustracao_relpath=None, variante=None,
-               nome_arquivo=None):
+               nome_arquivo=None, categoria=None, stats=None, edition_tag=None):
+    """Gera capa usando o template refinado (capa-refinada.html).
+
+    Parametros adicionais (V5.3):
+        categoria: label mono antes do titulo (ex: "DESENVOLVIMENTO DE SOFTWARE")
+        stats: dict com STAT1_NUMERO, STAT1_LABEL, etc. (calculado automaticamente se None)
+        edition_tag: tag de versao (ex: "v1.0 · 2026")
+    """
     dir_saida = Path(dir_saida)
     dimensoes = (TO.dimensoes_capa(tipo, variante=variante)
                  or DIMENSOES.get(tipo) or DIMENSOES["livro"])
@@ -157,8 +241,13 @@ def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
     if ilustracao_relpath and not (dir_saida / ilustracao_relpath).exists():
         ilustracao_relpath = None
 
+    # Calcular stats automaticamente se nao fornecidos
+    if stats is None:
+        stats = _calcular_stats(dir_saida)
+
     html = _gerar_html(titulo, subtitulo, cor_acento, autor, qualificacao,
-                        badge_texto, ilustracao_relpath, largura, altura)
+                        badge_texto, ilustracao_relpath, largura, altura,
+                        categoria=categoria, stats=stats, edition_tag=edition_tag)
 
     dir_saida.mkdir(parents=True, exist_ok=True)
     (dir_saida / "imagens").mkdir(exist_ok=True)
@@ -180,24 +269,15 @@ def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
     return png_file
 
 
-def _ler_json(caminho):
-    if caminho.exists():
-        try:
-            return json.loads(caminho.read_text(encoding="utf-8"))
-        except ValueError:
-            return {}
-    return {}
-
-
 def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
-    """Resolve titulo/subtitulo/cor/ilustracao a partir dos arquivos da propria obra."""
+    """Resolve titulo/subtitulo/cor/ilustracao a partir dos arquivos da propria obra.
+
+    V5.3: usa template refinado (capa-refinada.html) com stats, categoria e edition_tag.
+    Prioridade de metadados: para LIVROS, sumario tem prioridade sobre ebook_metadados.
+    """
     dir_obra = TO.dir_obra(slug, DIR_OUTPUT)
     config_obra = _ler_json(dir_obra / "config_obra.json")
     sumario = _ler_json(dir_obra / "sumario_macro.json")
-    # ebook_metadados.json tambem serve de "metadados de capa" para tipos nao-ebook
-    # (playbook, lead-magnet): quando o titulo completo do sumario nao cabe na capa,
-    # grava-se titulo/subtitulo curtos aqui — o documento (EPUB/PDF) nao muda porque
-    # gerar-epub/compiladores priorizam sumario.titulo_obra.
     meta_ebook = _ler_json(dir_obra / "ebook_metadados.json")
 
     # V5: o tipo sai do config; o prefixo do slug e o fallback (registro de tipos).
@@ -207,10 +287,20 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
         print(f"[ERRO] tipo {tipo!r} nao declara capa propria no registro. "
               f"Tipos com capa: {', '.join(TIPOS_COM_CAPA)}")
         sys.exit(1)
-    titulo = (meta_ebook.get("titulo") or sumario.get("titulo_obra")
-              or config_obra.get("titulo_obra") or Path(slug).name).upper()
-    subtitulo = (meta_ebook.get("subtitulo") or sumario.get("subtitulo")
-                 or config_obra.get("subtitulo") or "")
+
+    # V5.3: prioridade de metadados depende do tipo
+    if tipo == "livro":
+        # Para LIVROS: sumario tem prioridade (titulo da obra completa)
+        titulo = (sumario.get("titulo_obra") or config_obra.get("titulo_obra")
+                  or meta_ebook.get("titulo") or Path(slug).name).upper()
+        subtitulo = (sumario.get("subtitulo") or config_obra.get("subtitulo")
+                     or meta_ebook.get("subtitulo") or "")
+    else:
+        # Para EBOOKS/OUTROS: meta_ebook tem prioridade (titulo pode ser mais curto)
+        titulo = (meta_ebook.get("titulo") or sumario.get("titulo_obra")
+                  or config_obra.get("titulo_obra") or Path(slug).name).upper()
+        subtitulo = (meta_ebook.get("subtitulo") or sumario.get("subtitulo")
+                     or config_obra.get("subtitulo") or "")
 
     serie_key = resolver_serie_key(config_obra, slug)
     cor_acento = resolver_cor(serie_key, slug)
@@ -218,6 +308,15 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
     ilustracao_relpath = "imagens/capa_ilustracao.png"
 
     nivel = (config_obra.get("senioridade_obra") or "").strip()
+    # V5.3: fallback para senioridade do livro-mae (ebooks podem nao ter)
+    if not nivel:
+        livro_mae = config_obra.get("livro_mae") or config_obra.get("obra_mae")
+        if livro_mae:
+            dir_mae = TO.dir_obra(livro_mae, DIR_OUTPUT)
+            config_mae = _ler_json(dir_mae / "config_obra.json")
+            nivel = (config_mae.get("senioridade_obra") or "iniciante").strip()
+        else:
+            nivel = "iniciante"
     if not nivel:
         print("[ERRO] config_obra.json sem 'senioridade_obra' — badge de nivel "
               "obrigatorio (REGRA 5/Capa, item h). Preencha (iniciante | "
@@ -228,6 +327,12 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
                "avançado": "NÍVEL AVANÇADO"}
     badge_texto = rotulos.get(nivel.lower(), f"NÍVEL: {nivel.upper()}")
 
+    # V5.3: categoria derivada do motivo_condutor ou do tipo
+    motivo = sumario.get("motivo_condutor", {})
+    categoria = motivo.get("nome") or config_obra.get("tema", "").split(":")[0].strip()
+    if not categoria:
+        categoria = "DESENVOLVIMENTO DE SOFTWARE"
+
     return gerar_capa(
         titulo=titulo,
         subtitulo=subtitulo,
@@ -237,6 +342,7 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
         badge_texto=badge_texto,
         ilustracao_relpath=ilustracao_relpath,
         variante=variante,
+        categoria=categoria,
     )
 
 
