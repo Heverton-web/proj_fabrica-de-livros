@@ -228,20 +228,30 @@ python scripts/empacotar-colecao.py "<coleção>"
 > a **ordem**: não dá para enviar o marketing antes do navio estar pronto,
 > e não dá para ativar o porto antes do marketing existir.
 
-### Modo Encadeado (tudo de uma vez)
+### Modo Encadeado (tudo de uma vez — 3 fluxos AUTÔNOMOS)
 
 ```bash
 /produzir-obra-completa "Inteligência Artificial para Iniciantes"
 ```
 
-**O que roda:**
-1. Fase 0: Esboço (pesquisa + arquitetura)
-2. Fase 1: Pesquisa e dossiê
-3. Fase 2: Manufatura de capítulos
-4. Fase 2.5: Revisão técnica
-5. Fase 3: Compilação PDF
-6. Fase 4: Coleção + entrega
-7. Campanhas de divulgação (se solicitadas)
+**O que roda (TODOS os 3 fluxos, sem exceção):**
+
+```
+FLUXO 1 — MATERIAIS:
+  1. Fase 0: Esboço (pesquisa + arquitetura)
+  2. Fase 1: Pesquisa e dossiê
+  3. Fase 2: Manufatura de capítulos
+  4. Fase 2.5: Revisão técnica
+  5. Fase 3: Compilação PDF
+  6. Fase 4: Coleção + entrega
+  7. Derivados: artigos, ebooks, playbook, lead magnets, deck, emails
+
+FLUXO 2 — CAMPANHAS (obrigatório):
+  8. /campanha-completa → artes, textos, cronogramas para TODOS os materiais
+
+FLUXO 3 — MÁQUINA DE VENDAS (obrigatório):
+  9. /criar-maquina → Next.js + FastAPI + SQLite + automações
+```
 
 ### Modo Individual — Só Materiais
 

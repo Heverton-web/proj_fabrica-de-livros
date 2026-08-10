@@ -1,30 +1,44 @@
 ---
-description: Fluxo FULL (V4) da Fábrica Agêntica de Publicações — dispara /esbocar e, a partir do esboço, produz o livro/TCC e, se solicitado, N artigos científicos e N e-books derivados, em paralelo controlado. Ponto de entrada recomendado quando o operador quer tudo de uma vez.
+description: Fluxo FULL (V5.3) da Fábrica Agêntica de Publicações — executa os 3 fluxos de forma AUTÔNOMA e COMPLETA: MATERIAIS → CAMPANHAS → MÁQUINA DE VENDAS. Ponto de entrada único para produção completa.
 ---
 
 Você é o Orquestrador Mestre. O operador disparou `/produzir-obra-completa` com o
 tema (ou slug já esboçado) em `$ARGUMENTS`.
 
-## Passo 0 — Esboço
-1. Se `$ARGUMENTS` já for um slug com `output/<slug>/esboco/config_obra.json`,
-   pule para o Passo 1. Caso contrário, execute o procedimento de `/esbocar
-   $ARGUMENTS` (Fase 0 completa: elicitação + pesquisa + arquitetura + estruturas
-   de artigos/ebooks, se solicitadas).
+## Visão Geral dos 3 Fluxos
 
-## Passo 1 — Obra Principal (Livro ou TCC)
-2. Se `config_obra.json.tipo_obra == "livro"`: siga o procedimento de
-   `/criar-livro <slug>` a partir do Passo 2 (Fase 1 já rodou no `/esbocar`).
-3. Se `tipo_obra == "tcc"`: siga o procedimento de `/criar-tcc <slug>` a partir
-   do Passo 2 (idem).
-4. Ao final, você deve ter `output/<slug>/livro_final.pdf` e o veredito da
-   auditoria (Fase 2.5) registrado.
+```
+┌─────────────────────────────────────────────────────────────┐
+│  FLUXO 1: MATERIAIS (Fases 0-4)                             │
+│  /esbocar → /criar-livro → derivados → coleção              │
+└───────────────────────────────┬─────────────────────────────┘
+                                │
+                                ▼ OBRIGATÓRIO
+┌─────────────────────────────────────────────────────────────┐
+│  FLUXO 2: CAMPANHAS (V5.3)                                  │
+│  /campanha-completa → artes, textos, cronogramas             │
+└───────────────────────────────┬─────────────────────────────┘
+                                │
+                                ▼ OBRIGATÓRIO
+┌─────────────────────────────────────────────────────────────┐
+│  FLUXO 3: MÁQUINA DE VENDAS (full-stack)                    │
+│  /criar-maquina → Next.js + FastAPI + SQLite                │
+└─────────────────────────────────────────────────────────────┘
+```
 
-## Passo 2 — Derivados em Paralelo (se solicitados no esboço)
+## Passo 0 — Esboço (Fase 0)
 
-Depois que a obra principal estiver compilada (Passo 1 completo), dispare os
-derivados. Artigos e ebooks **não competem por pesquisa** (reaproveitam o
-dossiê/capítulos já prontos), então podem rodar **ao mesmo tempo** um do outro,
-cada um internamente em lotes de 4:
+1. Se `$ARGUMENTS` já for um slug com `output/<colecao>/config_obra.json`,
+   pule para o Passo 1. Caso contrário, execute `/esbocar $ARGUMENTS`
+   (elicitação + pesquisa + arquitetura + fatiamento).
+
+## Passo 1 — Obra Principal (FLUXO 1: MATERIAIS)
+
+2. Se `tipo_obra == "livro"`: execute `/criar-livro <slug>`.
+3. Se `tipo_obra == "tcc"`: execute `/criar-tcc <slug>`.
+4. Ao final: `output/<colecao>/livro_final.pdf` + veredito da auditoria.
+
+## Passo 2 — Derivados em Paralelo (FLUXO 1: MATERIAIS)
 
 ```
                         [Livro/TCC compilado — Passo 1]
@@ -36,64 +50,131 @@ cada um internamente em lotes de 4:
                                        │
                                        ▼ EXTRAÇÃO
                               /criar-lead-magnet --todos
-                              (agrega campos dos cards, 0 token)
 ```
 
-5. Se `gerar_artigos=true`: execute o procedimento de `/criar-artigo <slug>`.
-6. Se `gerar_ebooks=true`: execute o procedimento de `/criar-ebook <slug>`
-   (pode ser disparado em paralelo ao Passo 5 — não há dependência entre eles,
-   ambos só dependem da obra principal já compilada).
-7. **(V5)** Se `gerar_playbook=true`: execute `/criar-playbook <slug>`.
-   Rode-o **antes** dos lead magnets — os cards do playbook são a fonte deles.
-8. **(V5)** Se `gerar_lead_magnets=true`: `/criar-lead-magnet <slug> --todos`.
-   Se `gerar_deck=true`: `/criar-deck <slug>`. Se `gerar_emails=true`:
-   `/criar-emails <slug>`. Os três são independentes entre si → paralelo.
-9. **(V5)** Sincronize a coleção: `python scripts/colecao.py --sincronizar --slug <slug>`.
-10. Para acompanhar o progresso de cada lote de artigos/ebooks de forma
-    consolidada, use o pool generalizado por manifesto:
+5. Se `gerar_artigos=true`: `/criar-artigo <slug>`.
+6. Se `gerar_ebooks=true`: `/criar-ebook <slug>` (paralelo ao 5).
+7. Se `gerar_playbook=true`: `/criar-playbook <slug>` (ANTES dos LMs).
+8. Se `gerar_lead_magnets=true`: `/criar-lead-magnet <slug> --todos`.
+   Se `gerar_deck=true`: `/criar-deck <slug>`.
+   Se `gerar_emails=true`: `/criar-emails <slug>`.
+9. **(V5)** Sincronize a coleção:
+   ```bash
+   python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>
+   ```
+
+## Passo 3 — Campanhas (FLUXO 2: CAMPANHAS) ← OBRIGATÓRIO
+
+10. Depois que TODOS os materiais estiverem prontos (Passos 1-2), gere as
+    campanhas de divulgação para CADA material da coleção:
+
     ```bash
-    python scripts/pool-capitulos.py <slug> --manifesto artigos/estrutura_artigos.json --status
-    python scripts/pool-capitulos.py <slug> --manifesto ebooks/estrutura_ebooks.json --status
+    python scripts/criar-campanha.py --completo <slug-colecao>
     ```
 
-> **Ordem obrigatória:** playbook antes de lead magnets e e-mails. Sem os cards,
-> os dois caem no modo de extração na hora — funciona, mas perde o polimento já
-> aplicado aos cards e refaz trabalho.
+    Isso cria automaticamente:
+    - Artes PNG para Instagram (feed-story + post) e LinkedIn
+    - Textos para copy (posts, e-mails, WhatsApp)
+    - Cronogramas de divulgação (14-30 dias por material)
+    - Moldes editáveis (HTML)
 
-## Passo 3 — Distribuição (última etapa da esteira, sempre)
+11. Valide as campanhas:
+    ```bash
+    python scripts/validar-campanha.py --completo <slug-colecao> --estrito
+    ```
 
-8. Depois que a obra principal e todos os derivados solicitados estiverem
-   prontos (Passos 1-2), empacote tudo para distribuição — esta é a etapa
-   final obrigatória da fábrica, nunca um passo manual fora do fluxo:
-   ```bash
-   python scripts/empacotar-distribuicao.py <slug>
-   ```
-   Copia `livro_final.pdf` (+ capa/thumbnail), cada `artigos/artigo_<i>.pdf` e
-   cada `ebooks/ebook_<i>.epub` + `ebooks/ebook_<i>.pdf` (+ capa/thumbnail) para
-   `output/<slug>/distribuicao/`, com `README.md` e `LICENSE` gerados. Funciona
-   com qualquer combinação (só livro, livro+artigos, livro+ebooks, tudo) — nunca
-   bloqueia por um derivado que não foi solicitado no esboço.
+12. **(Opcional)** Se quiser personalizar a copy, reescreva os moldes
+    em `output/<colecao>/campanhas/<material>/textos/` e marque como completa:
+    ```bash
+    python scripts/criar-campanha.py --material <slug-material> --marcar-completa
+    ```
 
-## Passo 4 — Relatório Consolidado Final
+> **REGRA 12:** Copy genérica ("Autor Digital", "centenas de pessoas") é REPROVADA.
+> O gate `grep 'Autor Digital|centenas de pessoas'` deve retornar vazio.
 
-9. Exiba, de forma telegráfica (REGRA 2), um relatório único cobrindo tudo o que
-   foi gerado nesta execução:
+## Passo 4 — Máquina de Vendas (FLUXO 3: MÁQUINA) ← OBRIGATÓRIO
+
+13. Depois que a coleção e campanhas estiverem prontas (Passos 1-3), gere
+    a máquina de vendas full-stack:
+
+    ```bash
+    python scripts/criar-maquina-vendas.py <slug-colecao>
+    ```
+
+    Isso cria em `output/<slug-colecao>/maquina/`:
+    - Frontend Next.js 14 (landing, checkout, admin)
+    - Backend FastAPI (APIs de leads, funil, e-mails)
+    - Banco SQLite (leads, vendas, campanhas)
+    - 4 automações (Lead Hunter, Email Sender, Funnel Monitor, auto_correct)
+    - Snapshot das campanhas da coleção
+    - Docker Compose + vercel.json
+
+14. **Personalização OBRIGATÓRIA (Regra 12):**
+    - `config/produtos.json` — produto real, preço
+    - `config/funis.json` — oferta, desconto, steps
+    - `config/personas.json` — persona do nicho
+    - `config/canais.json` — hashtags/localizações
+    - `frontend/app/page.tsx` — headline do nicho
+    - `templates/` — copy dos e-mails
+    - `.env` — credenciais reais
+
+15. Valide o checkout:
+    ```bash
+    cd output/<slug-colecao>/maquina/frontend && npm run dev
+    # POST http://localhost:3000/api/checkout {"nome": "...", "email": "..."}
+    ```
+
+## Passo 5 — Distribuição
+
+16. Empacote tudo para distribuição:
+    ```bash
+    python scripts/empacotar-distribuicao.py <slug>
+    ```
+
+## Passo 6 — Relatório Consolidado Final
+
+17. Exiba relatório completo dos 3 fluxos:
 
 ```
-OBRA: <título> (<tipo_obra>, tamanho <P/M/G/GG/XG ou N/A>)
-  Principal    : output/<slug>/livro_final.pdf — <veredito da auditoria>
-  Artigos      : <N> gerado(s) — output/<slug>/artigos/artigo_<i>/livro_final.pdf (cada um)
-  E-books      : <N> gerado(s) — output/<slug>/ebooks/ebook_<i>/ebook_<i>.epub + .pdf (cada um)
-  Distribuicao : output/<slug>/distribuicao/ (README.md, LICENSE, PDFs, EPUBs, capas, thumbnails)
-  Pendencias   : <lista objetiva, ou "nenhuma">
+═══════════════════════════════════════════════════════════════
+RELATÓRIO DE PRODUÇÃO COMPLETA — <data>
+═══════════════════════════════════════════════════════════════
+
+FLUXO 1 — MATERIAIS:
+  Livro/TCC   : output/<colecao>/livro_final.pdf — <veredito>
+  Artigos     : <N> gerado(s) — output/<colecao>/artigos/
+  E-books     : <N> gerado(s) — output/<colecao>/ebooks/
+  Playbook    : output/<colecao>/playbooks/
+  Lead Magnets: output/<colecao>/lead-magnets/ (4 formatos)
+  Deck        : output/<colecao>/decks/
+  E-mails     : output/<colecao>/emails/ (5 sequência)
+  Coleção     : output/<colecao>/colecoes/<nome>.json
+
+FLUXO 2 — CAMPANHAS:
+  Materiais   : <N> campanhas geradas
+  Instagram   : <N> posts + <N> stories
+  LinkedIn    : <N> posts
+  E-mails     : <N> sequências de nutrição
+  WhatsApp    : <N> mensagens
+
+FLUXO 3 — MÁQUINA DE VENDAS:
+  Frontend    : Next.js 14 (landing, checkout, admin)
+  Backend     : FastAPI (leads, funil, e-mails)
+  Banco       : SQLite
+  Deploy      : Docker / Vercel / VPS
+  Status      : <pronta-pendente>
+
+DISTRIBUIÇÃO:
+  Pacote      : output/<colecao>/distribuicao/
+  Arquivos    : <N> PDFs, <N> EPUBs, <N> PNGs
+
+PENDÊNCIAS   : <lista objetiva, ou "nenhuma">
+═══════════════════════════════════════════════════════════════
 ```
 
 ## Notas de Economia de Tokens
 
-- A Fase 1 (pesquisa) roda **uma única vez**, no `/esbocar`. Artigos e ebooks
-  nunca a repetem.
-- Cada lote (livro/TCC, artigos, ebooks) respeita o máximo de 4 subagentes
-  simultâneos — nunca despache tudo de uma vez.
-- Se o operador só quer o livro/TCC (sem artigos/ebooks), este comando se
-  comporta exatamente como `/criar-livro` ou `/criar-tcc` sozinho — os Passos 2
-  são pulados silenciosamente conforme `config_obra.json`.
+- A Fase 1 (pesquisa) roda **uma única vez**, no `/esbocar`.
+- Cada lote respeita máximo de 4 subagentes simultâneos.
+- Campanhas e Máquina são **determinísticas** (~0 LLM) — custo baixo.
+- Se o operador só quer materiais, use `/criar-livro` (não este comando).
