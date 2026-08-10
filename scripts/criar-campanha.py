@@ -18,9 +18,10 @@ import argparse
 import functools
 import json
 import re
+import shutil
 import string
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import campanha as CP
@@ -158,6 +159,21 @@ def _pdf_atualizado(arquivo):
     return pdf
 
 
+def _backup_arquivo(arquivo):
+    """Cria backup do arquivo antes de sobrescrever (regra contra perda de copy)."""
+    if not arquivo.exists():
+        return
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    dir_backups = arquivo.parent / "revisao" / "backups" / ts
+    dir_backups.mkdir(parents=True, exist_ok=True)
+    destino = dir_backups / arquivo.name
+    shutil.copy2(arquivo, destino)
+    # Copiar PDF correspondente se existir
+    pdf = arquivo.with_suffix(".pdf")
+    if pdf.exists():
+        shutil.copy2(pdf, dir_backups / pdf.name)
+
+
 def escrever_moldes(ctx, base):
     """Moldes de texto para redes sociais e canais (nao sobrescreve edits).
 
@@ -171,6 +187,9 @@ def escrever_moldes(ctx, base):
                 arquivo = raiz / CP.pasta_de_texto(pasta, None) / CP.texto_nome(pasta, i)
                 escreveu = False
                 if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    # Backup antes de sobrescrever (GAP 1: proteção contra perda de copy)
+                    if ctx.get("__regenerar__") and arquivo.exists():
+                        _backup_arquivo(arquivo)
                     formato = "feed-story" if pasta == "feed-story" else pasta
                     corpo = ("# Post {i} — {titulo}\n\n" if pasta == "post"
                              else "# Story {i} — {titulo}\n\n" if pasta == "feed-story"
@@ -195,6 +214,9 @@ def escrever_moldes(ctx, base):
                 arquivo = raiz / CP.texto_nome(prefixo, i, sequencia)
                 escreveu = False
                 if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    # Backup antes de sobrescrever (GAP 1: proteção contra perda de copy)
+                    if ctx.get("__regenerar__") and arquivo.exists():
+                        _backup_arquivo(arquivo)
                     arquivo.parent.mkdir(parents=True, exist_ok=True)
                     arquivo.write_text(
                         _molde_cabecalho(ctx, f"{canal}/{sequencia}") +

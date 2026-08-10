@@ -121,6 +121,92 @@ def copiar_template(src: Path, dst: Path, replacements: dict):
         dst.write_text(content, encoding="utf-8")
 
 
+def _validar_pos_replace(destino: Path) -> list:
+    """Valida se placeholders foram substituidos corretamente (GAP 3).
+
+    Retorna lista de problemas encontrados. Lista vazia = tudo OK.
+    """
+    problemas = []
+    padroes_genericos = [
+        "Autor Digital",
+        "centenas de pessoas",
+        "{{SLUG}}",
+        "{{TITULO}}",
+        "{{PRECO}}",
+        "{{EMAIL_CONTATO}}",
+    ]
+    # Arquivos para validar (frontend apenas)
+    arquivos_validar = []
+    frontend = destino / "frontend"
+    if frontend.exists():
+        for ext in ("*.tsx", "*.ts", "*.jsx", "*.js", "*.html"):
+            arquivos_validar.extend(frontend.rglob(ext))
+    for arq in arquivos_validar:
+        try:
+            conteudo = arq.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+        for padrao in padroes_genericos:
+            if padrao in conteudo:
+                problemas.append(f"{arq.relative_to(destino)}: contem '{padrao}'")
+    return problemas
+
+
+def _hex_para_rgb(hex_cor):
+    """Converte hex (#rrggbb) para tuple (r, g, b)."""
+    hex_cor = str(hex_cor or "").strip().lstrip("#")
+    if len(hex_cor) != 6 or not all(c in "0123456789abcdefABCDEF" for c in hex_cor):
+        return (59, 130, 246)  # fallback azul
+    return tuple(int(hex_cor[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def _gerar_shades(hex_cor):
+    """Gera 10 shades (50-950) a partir de uma cor hex."""
+    r, g, b = _hex_para_rgb(hex_cor)
+    shades = {}
+    # Shades 50-400 (mais claros)
+    for i, pct in enumerate([0.95, 0.90, 0.80, 0.65, 0.50]):
+        shade = 50 + i * 100
+        sr = int(r + (255 - r) * pct)
+        sg = int(g + (255 - g) * pct)
+        sb = int(b + (255 - b) * pct)
+        shades[shade] = f"#{sr:02x}{sg:02x}{sb:02x}"
+    # Shade 500 (original)
+    shades[500] = f"#{r:02x}{g:02x}{b:02x}"
+    # Shades 600-900 (mais escuros)
+    for i, pct in enumerate([0.15, 0.30, 0.45, 0.60]):
+        shade = 600 + i * 100
+        sr = int(r * (1 - pct))
+        sg = int(g * (1 - pct))
+        sb = int(b * (1 - pct))
+        shades[shade] = f"#{sr:02x}{sg:02x}{sb:02x}"
+    return shades
+
+
+def _aplicar_identidade_visual(destino: Path, cor_acento: str):
+    """Propaga cor_acento do manifesto para tailwind.config.ts (GAP 5)."""
+    tailwind_path = destino / "frontend" / "tailwind.config.ts"
+    if not tailwind_path.exists():
+        return
+    try:
+        content = tailwind_path.read_text(encoding="utf-8")
+        shades = _gerar_shades(cor_acento)
+        # Gerar bloco de cores primary baseado na cor_acento
+        primary_lines = []
+        for shade in sorted(shades.keys()):
+            primary_lines.append(f'          {shade}: "{shades[shade]}"')
+        primary_block = "primary: {\n" + ",\n".join(primary_lines) + ",\n        }"
+        # Substituir o bloco primary existente
+        import re
+        pattern = r"primary:\s*\{[^}]+\}"
+        replacement = "primary: {\n" + ",\n".join(primary_lines) + ",\n        }"
+        content = re.sub(pattern, replacement, content)
+        tailwind_path.write_text(content, encoding="utf-8")
+        print(f"    ✅ Identidade visual propagada: cor {cor_acento}")
+    except Exception as e:
+        print(f"    ⚠️  Erro ao propagar identidade visual: {e}")
+
+
 def gerar_manifesto(slug: str, titulo: str, obra_info: dict, tipo: str,
                     snapshot=None) -> dict:
     """Gera manifesto da máquina de vendas (regra 1:1 por coleção)."""
@@ -251,6 +337,30 @@ def criar_maquina(slug: str, tipo: str = "completo"):
     # 1. Copiar template completo
     print("  [1/7] Copiando estrutura de templates...")
     copiar_template(TEMPLATE_DIR, destino, replacements)
+
+    # 1.1 Validar se placeholders foram substituidos (GAP 3)
+    problemas = _validar_pos_replace(destino)
+    if problemas:
+        print(f"  ⚠️  [GAP 3] Problemas de personalizacao encontrados:")
+        for p in problemas[:5]:  # Mostrar max 5
+            print(f"     - {p}")
+        if len(problemas) > 5:
+            print(f"     ... e mais {len(problemas) - 5} problemas")
+        print("  (A maquina pode ter copy generica - revise manualmente)")
+
+    # 1.2 Propagar identidade visual do manifesto (GAP 5)
+    config_obra = obra_info.get("meta", {})
+    cor_acento = config_obra.get("cor_acento")
+    if not cor_acento:
+        # Tentar resolver via series_capa
+        try:
+            from series_capa import resolver_cor
+            from tipos_obra import resolver_serie_key
+            serie_key = resolver_serie_key(config_obra, slug)
+            cor_acento = resolver_cor(serie_key, slug)
+        except Exception:
+            cor_acento = "#3b82f6"  # fallback azul
+    _aplicar_identidade_visual(destino, cor_acento)
 
     # 2. Copiar conteúdo da obra (se existir)
     if obra_info.get("path"):

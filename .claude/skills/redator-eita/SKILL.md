@@ -40,6 +40,20 @@ capítulo. Citações [N] obrigatórias.)
 ## 5. Aplica
 (Cenário corporativo real, métricas, armadilhas. Conexão com o mercado.)
 
+### OBRIGATÓRIO: Exercício em formato de checklist (GAP 2)
+A subseção "Feito Quando" / "Exercício" / "Pratique" / "Mão na Massa" DEVE ser
+escrita como lista demarcada com `- [ ]`. Formatos alternativos (prosa, parágrafos,
+listas numeradas) causam falha no extrator do playbook (`itens_binarios`) e geram
+lacuna `feito_quando_insuficiente`. Exemplo válido:
+
+```markdown
+### Exercício
+- [ ] Identifique 3 pontos do seu código que poderiam ser automatizados
+- [ ] Crie um script Python que execute a automação escolhida
+- [ ] Valide o resultado com um teste unitário
+- [ ] Documente o fluxo no seu repositório
+```
+
 ## 6. Conclusão
 (Recap dos 3 pontos principais, desafio final, ponte p/ próximo capítulo.)
 
