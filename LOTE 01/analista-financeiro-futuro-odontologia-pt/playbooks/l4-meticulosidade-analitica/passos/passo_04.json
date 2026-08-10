@@ -1,0 +1,49 @@
+{
+  "numero": "04",
+  "capitulo_fonte": "04",
+  "titulo": "O Relatório de Recuperação de Lucro",
+  "estagio": "Vestígio",
+  "estagio_indice": 2,
+  "objetivo": "Transformar anomalias encontradas pela IA em um relatório executivo de uma página focado na recuperação de margem de lucro.",
+  "pre_requisito": "Passo 3 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Implementação do Isolation Forest",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "import pandas as pd\nimport numpy as np\nfrom sklearn.ensemble import IsolationForest\nfrom sklearn.preprocessing import StandardScaler, LabelEncoder\nfrom sklearn.metrics import classification_report, confusion_matrix\nimport warnings\nwarnings.filterwarnings('ignore')\n\n# ========================================\n# MÓDULO 1: ISOLATION FOREST PARA FATURAMENTO\n# ========================================\n\ndef gerar_dados_faturamento_odontologico(n_transacoes=5000):\n    \"\"\"\n    Gera dados de faturamento odontológico com anomalias植入adas.\n    \n    Dimensões: preço, quantidade, desconto, margem, frequência de compra.\n    Anomalias: preços abaixo do custo, descontos excessivos, quantidades atípicas.\n    \"\"\"\n    np.random.seed(42)\n    \n    # Base de dados normais\n    dados = []\n    \n    for i in range(n_transacoes):\n        # Determinar se é anomalia (10% da base)\n        is_anomalia = np.random.random() < 0.10\n        \n        if is_anomalia:\n            # Tipo de anomalia\n            tipo_anomalia = np.random.choice([\n                'preco_baixo', 'desconto_excessivo', \n                'quantidade_atipica', 'margem_negativa'\n            ])\n            \n            if tipo_anomalia == 'preco_baixo':\n                preco = np.random.uniform(5, 30)  # Muito abaixo do normal\n                quantidade = np.random.randint(1, 10)\n                desconto = np.random.uniform(5, 15)\n            elif tipo_anomalia == 'desconto_excessivo':\n                preco = np.random.uniform(100, 400)\n                quantidade = np.random.randint(1, 20)\n                desconto = np.random.uniform(20, 35)"
+    },
+    {
+      "titulo": "Implementação do Autoencoder",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# ========================================\n# MÓDULO 2: AUTOENCODER PARA ANOMALIAS\n# ========================================\n\n# Nota: Implementação com numpy puro para evitar dependência de TensorFlow\n# Em produção, use keras/tensorflow\n\nclass AutoencoderSimples:\n    \"\"\"\n    Autoencoder simplificado implementado com numpy.\n    Treina para reconstruir dados normais; anomalias têm erro alto.\n    \"\"\"\n    \n    def __init__(self, input_dim, encoding_dim=3, learning_rate=0.01):\n        self.input_dim = input_dim\n        self.encoding_dim = encoding_dim\n        self.lr = learning_rate\n        \n        # Inicializar pesos aleatoriamente\n        np.random.seed(42)\n        self.W_encode = np.random.randn(input_dim, encoding_dim) * 0.1\n        self.b_encode = np.zeros(encoding_dim)\n        self.W_decode = np.random.randn(encoding_dim, input_dim) * 0.1\n        self.b_decode = np.zeros(input_dim)\n    \n    def sigmoid(self, x):\n        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))\n    \n    def forward(self, X):\n        \"\"\"Forward pass: encode → decode.\"\"\"\n        # Encode\n        self.encoded = self.sigmoid(X @ self.W_encode + self.b_encode)\n        # Decode\n        self.decoded = self.sigmoid(self.encoded @ self.W_decode + self.b_decode)\n        return self.decoded\n    \n    def backward(self, X):\n        \"\"\"Backward pass: atualizar pesos via gradiente descendente.\"\"\"\n        m = X.shape[0]\n        \n        # Erro de reconstrução\n        error = self.decoded - X\n        \n        # Gradientes do decoder\n        dW_decode = self.encoded.T @ error / m\n        db_decode = np.mean(error, ax"
+    },
+    {
+      "titulo": "Consolidação dos Dois Métodos",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# ========================================\n# MÓDULO 3: CONSOLIDAÇÃO E RANKING\n# ========================================\n\ndef consolidar_anomalias(df, threshold_iso=0.5, threshold_ae_percentil=90):\n    \"\"\"\n    Consolida anomalias do Isolation Forest e Autoencoder.\n    \n    Estratégia: se pelo menos um método detecta, marca como suspeita.\n    Prioriza por score combinado.\n    \"\"\"\n    \n    df_consol = df.copy()\n    \n    # Score combinado (normalizado 0-1)\n    score_iso_norm = (\n        df_consol['score_anomalia'] - df_consol['score_anomalia'].min()\n    ) / (df_consol['score_anomalia'].max() - df_consol['score_anomalia'].min())\n    \n    score_ae_norm = (\n        df_consol['score_reconstrucao'] - df_consol['score_reconstrucao'].min()\n    ) / (df_consol['score_reconstrucao'].max() - df_consol['score_reconstrucao'].min())\n    \n    df_consol['score_combinado'] = (score_iso_norm * 0.5 + score_ae_norm * 0.5)\n    \n    # Detecção consolidada\n    df_consol['anomalia_consolidada'] = (\n        (df_consol['anomalia_iso'] == 1) | (df_consol['anomalia_ae'] == 1)\n    ).astype(int)\n    \n    # Classificação por severidade\n    df_consol['severidade'] = pd.cut(\n        df_consol['score_combinado'],\n        bins=[0, 0.3, 0.6, 0.8, 1.0],\n        labels=['Baixa', 'Média', 'Alta', 'Crítica']\n    )\n    \n    # Ranking por impacto financeiro\n    df_consol['impacto_financeiro'] = np.where(\n        df_consol['anomalia_consolidada'] == 1,\n        df_consol['valor_total'] * df_consol['desconto_pct'] / 100,\n        0\n    )\n    \n    return df_consol\n\n# Consolidar\ndf_consolidado = consolidar_anomalias(df_fatu"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Começar pelo método em vez do problema**: Executivos querem saber O QUE está errado, não COMO você descobriu. Comece pelo problema, depois pela evidência",
+    "Não projetar para 12 meses**: O impacto de 3 meses parece pequeno. Projetar para um ano dá a dimensão real do problema",
+    "Esquecer o ROI**: Se a correção custa €5.000 e recupera €108.000, o ROI é de 2.060%. Sempre inclua essa métrica",
+    "Não incluir responsáveis e prazos**: \"Implementar automação\" não é uma ação — é uma ideia. \"O TI implementa na semana 1-2\" é uma ação [3]"
+  ],
+  "armadilhas": [
+    "Começar pelo método em vez do problema**: Executivos querem saber O QUE está errado, não COMO você descobriu. Comece pelo problema, depois pela evidência",
+    "Não projetar para 12 meses**: O impacto de 3 meses parece pequeno. Projetar para um ano dá a dimensão real do problema",
+    "Esquecer o ROI**: Se a correção custa €5.000 e recupera €108.000, o ROI é de 2.060%. Sempre inclua essa métrica",
+    "Não incluir responsáveis e prazos**: \"Implementar automação\" não é uma ação — é uma ideia. \"O TI implementa na semana 1-2\" é uma ação [3]"
+  ],
+  "referencia_cruzada": "Cap. 4 — O Relatório de Recuperação de Lucro",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate"
+  ]
+}

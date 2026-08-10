@@ -1,0 +1,28 @@
+{
+  "capitulo": 1,
+  "titulo": "O Copiloto Digital Chega à Odontologia: Por Que a IA Vai Redefinir a Análise Financeira",
+  "parte": "Parte I",
+  "slug": "cap_1",
+  "objetivo": "Estabelecer o contexto da revolução IA no setor odontológico, mostrando por que o analista financeiro que dominar essa tecnologia terá vantagem competitiva.",
+  "pilares": [
+    "O cenário financeiro atual da odontologia: gargalos, desperdícios e decisões no escuro",
+    "A promessa da IA como copiloto: o que muda na rotina do analista financeiro",
+    "O profissional do futuro: quem será o Analista Financeiro com Copiloto IA"
+  ],
+  "callback_cap1": null,
+  "persona": "Analista com Copiloto IA",
+  "senioridade": "intermediario",
+  "motivo_condutor": "O Copiloto Digital",
+  "motivo_condutor_descricao": "Metáfora de voo: o analista financeiro é o piloto, a IA é o copiloto que monitora painéis, sugere rotas e alerta sobre turbulência — mas a decisão final é sempre humana.",
+  "vocabulario_condutor": ["piloto", "copiloto", "painel", "altitude", "rota", "referência", "pouso", "decisão", "turbulência", "instrumentos", "checklist", "manobra"],
+  "persona_leitor": "Analista com Copiloto IA",
+  "conceito_denso": false,
+  "referencias": [
+    "McKinsey (2024) - The State of AI in Healthcare: dental sector AI adoption projections",
+    "IBGE (2023) - Pesquisa Nacional de Saúde Bucal: dados sobre clínicas odontológicas",
+    "ABCD (2024) - Análise do mercado odontológico brasileiro: faturamento e custos",
+    "Gartner (2025) - AI-Driven Financial Analysis: market trends and ROI projections",
+    "CFA Institute (2024) - AI in Financial Planning: professional readiness survey"
+  ],
+  "estado_execucao": "pendente"
+}

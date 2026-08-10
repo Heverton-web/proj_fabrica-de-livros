@@ -1,0 +1,27 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "concluido_autonomo",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Definicao e fronteiras conceituais do AIDD",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Vibe coding vs agentic coding vs AIDD",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Panorama de adocao e dados DORA/Gartner",
+        "conceito_denso": false
+      }
+    ]
+  },
+  "arquivo": "output/livros/ai-driven-development-do-zero-ao-deploy-v2/capitulos/cap_1.md",
+  "caracteres": 14500,
+  "referencias": 24,
+  "diagramas": 1,
+  "blocos_codigo": 2
+}

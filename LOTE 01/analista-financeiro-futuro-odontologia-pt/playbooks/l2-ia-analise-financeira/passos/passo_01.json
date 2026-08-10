@@ -1,0 +1,54 @@
+{
+  "numero": "01",
+  "capitulo_fonte": "01",
+  "titulo": "Preparando o Terreno Seguro",
+  "estagio": "Copiloto",
+  "estagio_indice": 1,
+  "objetivo": "Ensinar o leitor a anonimizar e limpar dados financeiros antes de subir para ferramentas de IA pública, garantindo conformidade com RGPD.",
+  "pre_requisito": "Nenhum — este é o ponto de partida",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "4.1 Arquitetura Básica de um Sistema de Análise Financeira com IA",
+      "linguagem": "text",
+      "comandos": [],
+      "codigo": "┌─────────────────────────────────────────────────┐\n│              CAMADA DE APRESENTAÇÃO              │\n│    (Dashboard, Relatórios, Alertas, Chat IA)     │\n├─────────────────────────────────────────────────┤\n│              CAMADA DE INTELIGÊNCIA              │\n│   (Modelos de ML, LLM para análise, Regras)     │\n├─────────────────────────────────────────────────┤\n│              CAMADA DE PROCESSAMENTO             │\n│    (ETL, Validação, Normalização, Cache)         │\n├─────────────────────────────────────────────────┤\n│              CAMADA DE DADOS                     │\n│   (ERP Clínica, Bancos, Planilhas, APIs)         │\n└─────────────────────────────────────────────────┘"
+    },
+    {
+      "titulo": "4.2 Camada de Dados: Conectando às Fontes",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# camada_dados.py — Conector multi-fonte para dados financeiros da clínica\nimport pandas as pd\nfrom datetime import datetime, timedelta\nfrom typing import Dict, List, Optional\nimport json\nimport hashlib\n\n\nclass ConectorDadosFinanceiros:\n    \"\"\"\n    Coleta dados de múltiplas fontes da clínica odontológica\n    e os normaliza para processamento pelo copiloto IA.\n    \"\"\"\n    \n    def __init__(self, config_path: str):\n        \"\"\"\n        Inicializa o conector com configuração de fontes.\n        \n        Args:\n            config_path: Caminho para JSON de configuração das fontes\n        \"\"\"\n        with open(config_path, 'r', encoding='utf-8') as f:\n            self.config = json.load(f)\n        \n        self.fontes = self.config.get('fontes', [])\n        self.cache = {}\n        self.ultima_sincronizacao = None\n    \n    def coletar_dados(self, periodo_dias: int = 30) -> Dict[str, pd.DataFrame]:\n        \"\"\"\n        Coleta dados de todas as fontes configuradas para o período especificado.\n        \n        Args:\n            periodo_dias: Número de dias para retroceder na coleta\n            \n        Returns:\n            Dicionário com DataFrames normalizados por categoria\n        \"\"\"\n        data_inicio = datetime.now() - timedelta(days=periodo_dias)\n        dados_brutos = {}\n        \n        for fonte in self.fontes:\n            tipo = fonte['tipo']\n            nome = fonte['nome']\n            \n            print(f\"[COLETA] Processando fonte: {nome} (tipo: {tipo})\")\n            \n            if tipo == 'csv':\n                dados_brutos[nome] = self._ler_csv(fonte, data_inicio)\n     "
+    },
+    {
+      "titulo": "4.3 Camada de Processamento: ETL Inteligente",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# processamento_etl.py — Pipeline de processamento com validação de qualidade\nimport pandas as pd\nimport numpy as np\nfrom typing import Dict, Tuple, List\nfrom dataclasses import dataclass, field\nfrom datetime import datetime\nimport logging\n\nlogging.basicConfig(level=logging.INFO)\nlogger = logging.getLogger(\"ETL_Clinica\")\n\n\n@dataclass\nclass ResultadoQualidade:\n    \"\"\" Armazena resultados da validação de qualidade dos dados. \"\"\"\n    fonte: str\n    total_registros: int\n    registros_validos: int\n    registros_com_erro: int\n    alertas: List[str] = field(default_factory=list)\n    score_qualidade: float = 0.0\n\n\nclass ProcessadorETL:\n    \"\"\"\n    Pipeline de ETL com validação de qualidade e detecção de anomalias.\n    Cada etapa gera logs detalhados para rastreabilidade.\n    \"\"\"\n    \n    # Regras de validação por tipo de dado\n    REGRAS_VALIDACAO = {\n        'valor': {\n            'minimo': -1000000,  # Crédito pode ser negativo (estorno)\n            'maximo': 5000000,\n            'tipo': 'numerico'\n        },\n        'data': {\n            'minimo': '2020-01-01',\n            'tipo': 'data'\n        },\n        'categoria': {\n            'permitidos': [\n                'consultas', 'proteses', 'ortodontia', 'cirurgia',\n                'implantes', 'estetica', 'preventiva', 'laboratorio',\n                'aluguel', 'salarios', 'insumos', 'equipamentos',\n                'marketing', 'administrativo', 'impostos', 'outros'\n            ]\n        },\n        'natureza': {\n            'permitidos': ['receita', 'despesa', 'investimento']\n        }\n    }\n    \n    def __init__(self):\n        sel"
+    },
+    {
+      "titulo": "4.4 Camada de Inteligência: O Copiloto em Ação",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# copiloto_ia.py — Motor de análise inteligente para clínica odontológica\nimport pandas as pd\nimport numpy as np\nfrom typing import Dict, List, Optional\nfrom dataclasses import dataclass\nfrom datetime import datetime, timedelta\nfrom enum import Enum\n\n\nclass NivelAlerta(Enum):\n    \"\"\" Níveis de severidade dos alertas do copiloto. \"\"\"\n    INFO = \"info\"\n    ALERTA = \"alerta\"\n    CRITICO = \"critico\"\n\n\n@dataclass\nclass InsightFinanceiro:\n    \"\"\" Representa um insight gerado pelo copiloto IA. \"\"\"\n    titulo: str\n    descricao: str\n    nivel: NivelAlerta\n    metrica: str\n    valor_atual: float\n    valor_esperado: Optional[float]\n    recomendacao: str\n    impacto_estimado: str\n    confianca: float  # 0.0 a 1.0\n\n\nclass CopilotoFinanceiro:\n    \"\"\"\n    Motor de análise financeira inteligente.\n    Monitora indicadores e gera insights automáticos.\n    \"\"\"\n    \n    # Benchmarks do setor odontológico (fonte: ABCD 2024)\n    BENCHMARKS = {\n        'margem_operacional': {'minimo': 0.15, 'ideal': 0.25, 'excelente': 0.35},\n        'inadimplencia': {'maximo': 0.08, 'ideal': 0.03, 'critico': 0.15},\n        'custo_por_procedimento': {'maximo': 0.60, 'ideal': 0.45},\n        'ticket_medio': {'minimo': 250, 'ideal': 400, 'excelente': 600},\n        'taxa_ocupacao': {'minimo': 0.60, 'ideal': 0.80, 'excelente': 0.90},\n        'prazo_recebimento': {'maximo': 30, 'ideal': 15},\n    }\n    \n    def __init__(self, dados: pd.DataFrame):\n        \"\"\"\n        Inicializa o copiloto com dados processados.\n        \n        Args:\n            dados: DataFrame consolidado com colunas padronizadas\n        \"\"\"\n        s"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "O Analista com Copiloto Você está na segunda-feira de manhã",
+    "Ele abre a planilha do contador",
+    "\"Faturamos R$ 180 mil este mês",
+    "Quem me explicar onde foi o dinheiro?\" O contador",
+    "Não consigo saber se isso é normal ou se estou gastando demais",
+    "Ninguém me dá um número de referência.\" Agora muda a cena",
+    "Você senta na cadeira do analista financeiro — mas agora tem um copiloto digital"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 1 — Preparando o Terreno Seguro",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

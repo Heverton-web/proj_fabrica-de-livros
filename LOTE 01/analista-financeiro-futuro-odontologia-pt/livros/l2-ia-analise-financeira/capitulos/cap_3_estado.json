@@ -1,0 +1,26 @@
+{
+  "capitulo": 3,
+  "estado_execucao": "concluido",
+  "data_conclusao": "2026-08-08T00:00:00",
+  "versao": "1.0",
+  "secoes_completas": [
+    "Introdução",
+    "Explica",
+    "Ilustra",
+    "Técnica",
+    "Aplica",
+    "Conclusão",
+    "Referências Bibliográficas"
+  ],
+  "requisitos_cumpridos": {
+    "secoes_eita_v2": true,
+    "codigo_com_linguagem": true,
+    "diagrama_mermaid": true,
+    "minimo_5_refs": true,
+    "citacoes_inline": true,
+    "motivo_condutor": true,
+    "callback_nomeado": true,
+    "cena_contraste_aplica": true
+  },
+  "observacoes": "Capítulo 3 inclui callbacks para Cap 1 (anonimização de dados) e Cap 2 (engenharia de prompts)."
+}

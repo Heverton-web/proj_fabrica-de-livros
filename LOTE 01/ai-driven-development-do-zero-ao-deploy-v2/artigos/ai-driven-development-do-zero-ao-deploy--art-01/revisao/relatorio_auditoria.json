@@ -1,0 +1,145 @@
+{
+  "slug": "artigos/ai-driven-development-do-zero-ao-deploy-v2--art-01-o-que-e-ai-driven-development-e-o-que-el",
+  "tipo_obra": "artigo",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 33053,
+  "paginas_estimadas": 13.2,
+  "requisitos": [
+    {
+      "id": "ARTIGO-NUM",
+      "nome": "Numeracao progressiva de secoes (NBR 6024)",
+      "conforme": true,
+      "detalhe": "secoes sem numeracao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-REF",
+      "nome": "Minimo 20 referencias por secao (NBR 6023)",
+      "conforme": true,
+      "detalhe": "secoes abaixo: nenhuma"
+    },
+    {
+      "id": "ARTIGO-CIT",
+      "nome": "Citacoes autor-data presentes (NBR 10520)",
+      "conforme": true,
+      "detalhe": "secoes sem citacao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "ARTIGO-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    },
+    {
+      "id": "ARTIGO-RASTRO",
+      "nome": "Rastreabilidade citacao <-> referencias",
+      "conforme": true,
+      "detalhe": "secoes com citacao orfa: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 9199,
+      "palavras": 1170,
+      "numeracao_progressiva": true,
+      "referencias": 26,
+      "citacoes_inline": 26,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "odebases*. 2025. Disponível em: https://arxiv.org/abs/2512.10398. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 7836,
+      "palavras": 942,
+      "numeracao_progressiva": true,
+      "referencias": 26,
+      "citacoes_inline": 16,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "odebases*. 2025. Disponível em: https://arxiv.org/abs/2512.10398. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "deng (2025)",
+        "dora (2026)",
+        "explainx (2026)",
+        "jin (2024)",
+        "mckinsey (2026)",
+        "softjourn (2026)",
+        "tawosi (2025)",
+        "termdock (2026)",
+        "value (2026)",
+        "wong (2025)"
+      ]
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 8446,
+      "palavras": 1066,
+      "numeracao_progressiva": true,
+      "referencias": 26,
+      "citacoes_inline": 14,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "odebases*. 2025. Disponível em: https://arxiv.org/abs/2512.10398. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "deng (2025)",
+        "dora (2026)",
+        "dx (2026)",
+        "explainx (2026)",
+        "jin (2024)",
+        "mckinsey (2026)",
+        "sourcegraph (2026)",
+        "taskade (2026)",
+        "tawosi (2025)",
+        "termdock (2026)",
+        "unbuilt (2026)",
+        "wong (2025)"
+      ]
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 7572,
+      "palavras": 934,
+      "numeracao_progressiva": true,
+      "referencias": 26,
+      "citacoes_inline": 17,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "odebases*. 2025. Disponível em: https://arxiv.org/abs/2512.10398. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "deng (2025)",
+        "dora (2026)",
+        "explainx (2026)",
+        "jin (2024)",
+        "mckinsey (2026)",
+        "softjourn (2026)",
+        "tawosi (2025)",
+        "value (2026)",
+        "wong (2025)"
+      ]
+    }
+  ]
+}

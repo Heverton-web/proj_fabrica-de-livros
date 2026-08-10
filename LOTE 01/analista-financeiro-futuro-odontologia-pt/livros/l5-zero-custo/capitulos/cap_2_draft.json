@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "2" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 1: o Google AI Studio e a API key gratuita, agora conectados via webhooks ao restante da oficina",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Lógica de transmissão: escuta e disparo",
+        "escopo": "Conceito fundamental de webhook: quando algo acontece (evento), um sistema notifica outro. Webhook receiver (escuta) vs webhook sender (disparo). Payload JSON, headers de autenticação. O que entra: conceito, fluxo básico. O que fica: segurança avançada, retry logic.",
+        "ancora_visual": "flowchart LR mostrando o fluxo: Planilha detecta mudança → envia POST para webhook → N8N recebe → processa → envia resultado",
+        "entrega_tecnica": "JavaScript/Node.js: mini-servidor Express que recebe um webhook POST e retorna status 200, plus teste com curl",
+        "evolucao_leitor": "de 'webhook é aquela coisa misteriosa' para 'consigo criar um endpoint que recebe dados e dispara ações automaticamente'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "N8N como orquestrador de engrenagens",
+        "escopo": "N8N como o coração da oficina: nodes de trigger (Schedule Trigger, Webhook), nodes de ação (HTTP Request, Google Sheets, IF/switch). Construção visual de workflows. O que entra: configuração prática, 3 workflows essenciais. O que fica: troubleshooting avançado, custom nodes.",
+        "ancora_visual": "flowchart TD de um workflow N8N com 5 nodes: Trigger → Google Sheets → IF → HTTP Request (API Gemini) → Google Sheets (resultado), mostrando a lógica condicional",
+        "entrega_tecnica": "JSON: workflow exportado do N8N que lê dados de uma planilha, processa com Gemini API, e escreve resultados de volta",
+        "evolucao_leitor": "de 'N8N parece um labirinto' para 'consigo montar workflows visuais que conectam planilhas a serviços de IA sem escrever uma linha de código'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Google Sheets como banco de dados leve",
+        "escopo": "Transformar Google Sheets em banco de dados operacional: estrutura de abas, validação de dados, formatação condicional como dashboard, integração com N8N via API. O que entra: arquitetura de planilhas para automação. O que fica: pivot tables avançadas, Apps Script.",
+        "ancora_visual": "flowchart TD mostrando a estrutura de abas de uma planilha financeira conectada ao N8N: Aba 'Dados Brutos' → Aba 'Processados' → Aba 'Alertas'",
+        "entrega_tecnica": "Google Sheets: estrutura completa de planilha com abas preparadas para automação, incluindo formatação condicional e dados de exemplo",
+        "evolucao_leitor": "de 'minha planilha é só uma tabela' para 'minha planilha é o banco de dados da minha oficina, com dados fluindo automaticamente para onde precisam'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

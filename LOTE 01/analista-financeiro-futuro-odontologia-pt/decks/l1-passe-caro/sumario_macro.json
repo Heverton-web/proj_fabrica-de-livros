@@ -1,0 +1,21 @@
+{
+  "titulo_obra": "Passe Caro - Como ser um profissional desejado do setor",
+  "tipo_obra": "deck",
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "motivo_condutor": {
+    "nome": "O Passe VIP",
+    "descricao": "No mundo corporativo, existe um passe invisível que dá acesso às salas onde as decisões realmente acontecem. Quem tem esse passe não é o que mais digita dados — é o que traduz números em direções estratégicas. Esta série é o seu passe VIP.",
+    "vocabulario": [
+      "passe",
+      "acesso",
+      "sala de decisões",
+      "porta-fechadura",
+      "moeda de troca",
+      "valor percebido",
+      "guardião",
+      "liberação"
+    ],
+    "persona_leitor": "Analista Estratégico"
+  },
+  "total_slides": 9
+}

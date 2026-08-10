@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Google AI Studio: o motor gratuito do analista",
+        "escopo": "Configuração completa do Google AI Studio, obtenção de API key, rate limits do modelo Gemini 1.5 Flash (15 RPM) e 1.5 Pro (2 RPM), casos de uso para análise financeira. O que entra: setup, limites, prompts essenciais. O que fica de fora: fine-tuning avançado, modelos customizados.",
+        "ancora_visual": "flowchart TD do caminho da obtenção da API key Google AI Studio até o primeiro prompt de análise financeira, mostrando os gates de autenticação e rate limit",
+        "entrega_tecnica": "Python: script que conecta na API do Gemini via REST, envia um prompt de análise de dados financeiros e recebe resposta estruturada",
+        "evolucao_leitor": "de 'não sei nem o que é Google AI Studio' para 'consigo enviar dados financeiros para um LLM gratuito e receber análise estruturada'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Hugging Face: a estante de modelos open-source",
+        "escopo": "Navegação no Hugging Face, seleção de modelos para classificação de texto (sentiment analysis de feedbacks), extração de informações (NER para dados financeiros), e resumo automático. Pipeline de inferência via API gratuita. O que entra: modelos gratuitos, uso prático. O que fica: treinamento de modelos, hardware local.",
+        "ancora_visual": "sequenceDiagram mostrando o fluxo de uma requisição do analista enviando texto para o Hugging Face API, recebendo classificação, e salvando resultado em planilha",
+        "entrega_tecnica": "Python: script usando a biblioteca transformers que chama a API do Hugging Face para classificar feedbacks de clientes em positivo/neutro/negativo",
+        "evolucao_leitor": "de 'Hugging Face parece assustador' para 'consigo usar modelos de classificação gratuitos para automatizar análise de feedbacks'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "A Oficina Completa: stack zero custo montada",
+        "escopo": "Integração de todas as peças: Google Sheets (banco de dados), N8N (orquestrador), Evolution API (mensageria), Google AI Studio (cérebro de IA). Diagrama completo da arquitetura. Fluxo de dados ponta a ponta.",
+        "ancora_visual": "flowchart LR da oficina completa mostrando Google Sheets ↔ N8N ↔ Google AI Studio ↔ Evolution API ↔ WhatsApp, com o analista no centro",
+        "entrega_tecnica": "YAML/JSON: configuração de um workflow N8N que conecta Google Sheets ao Google AI Studio e salva resultados de volta",
+        "evolucao_leitor": "de 'peças soltas' para 'uma oficina completa onde cada ferramenta se conecta e funciona como um motor integrado'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

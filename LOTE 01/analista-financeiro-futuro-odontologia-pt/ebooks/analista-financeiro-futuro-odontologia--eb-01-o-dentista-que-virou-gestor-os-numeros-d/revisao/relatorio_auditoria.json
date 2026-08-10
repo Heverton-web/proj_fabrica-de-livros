@@ -1,0 +1,114 @@
+{
+  "slug": "ebooks/analista-financeiro-futuro-odontologia--eb-01-o-dentista-que-virou-gestor-os-numeros-d",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 2,
+  "caracteres_obra": 56652,
+  "paginas_estimadas": 22.7,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "56.652 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [
+    {
+      "capitulo_a": "1",
+      "capitulo_b": "2",
+      "similaridade": 0.465,
+      "trecho": "[1] Purcino, G. A. J. et al. A importância da gestão financeira e plano de negócios em clínicas e consultórios odontológicos. E-Acadêmica, 2022. Disponível em: https://eacademica.o"
+    }
+  ],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 27,
+        "esta": 1
+      },
+      "ocorrencias": 28
+    },
+    {
+      "termo_normalizado": "saude",
+      "variantes": {
+        "saúde": 7,
+        "Saúde": 7,
+        "saude": 2
+      },
+      "ocorrencias": 16
+    },
+    {
+      "termo_normalizado": "servicos",
+      "variantes": {
+        "serviços": 9,
+        "Serviços": 4,
+        "servicos": 1
+      },
+      "ocorrencias": 14
+    },
+    {
+      "termo_normalizado": "referencia",
+      "variantes": {
+        "referência": 3,
+        "Referência": 2,
+        "referencia": 1
+      },
+      "ocorrencias": 6
+    },
+    {
+      "termo_normalizado": "eacademica",
+      "variantes": {
+        "E-Acadêmica": 2,
+        "eacademica": 2
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 27378,
+      "palavras": 3940,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ude-e-ibge-iniciam-terceira-edicao-da-pesquisa-nacional-de-saude. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 26217,
+      "palavras": 3652,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "isponível em: https://eacademica.org/eacademica/article/view/176. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "slug": "analista-financeiro-futuro-odontologia-pt/livros/l3-dashboards",
+  "tipo_obra": "livro",
+  "veredito": "NAO CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 64982,
+  "paginas_estimadas": 26.0,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 4 capitulos",
+      "conforme": true,
+      "detalhe": "4 capitulo(s) (minimo 4)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 40 paginas (~100.000 caracteres)",
+      "conforme": false,
+      "detalhe": "64.982 caracteres (minimo 100.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 5 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 28,
+        "esta": 1,
+        "Esta": 1
+      },
+      "ocorrencias": 30
+    },
+    {
+      "termo_normalizado": "formulas",
+      "variantes": {
+        "fórmulas": 10,
+        "Fórmulas": 4,
+        "Formulas": 3
+      },
+      "ocorrencias": 17
+    },
+    {
+      "termo_normalizado": "media",
+      "variantes": {
+        "Media": 4,
+        "média": 2,
+        "media": 1
+      },
+      "ocorrencias": 7
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "painel",
+      "instrumento",
+      "velocímetro",
+      "altitude",
+      "ponte de comando",
+      "indicador",
+      "claridade",
+      "decisão"
+    ],
+    "capitulos_com_citacao_empilhada": [
+      {
+        "capitulo": "3",
+        "ocorrencias": [
+          "[1][2]",
+          "[1][3]"
+        ]
+      }
+    ],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 15409,
+      "palavras": 1711,
+      "secoes_faltantes": [],
+      "referencias": 5,
+      "citacoes_inline": 7,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 2,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "orytelling with Data: A Data Visualization Guide for Business Professionals*. Wiley, 2015.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 13,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.1,
+        "coeficiente_variacao": 0.584
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 14065,
+      "palavras": 1418,
+      "secoes_faltantes": [],
+      "referencias": 5,
+      "citacoes_inline": 7,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 2,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ssistance*. 2024. Disponível em: https://support.google.com/docs. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        5
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 14,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 16.8,
+        "coeficiente_variacao": 0.548
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 15917,
+      "palavras": 1530,
+      "secoes_faltantes": [],
+      "referencias": 5,
+      "citacoes_inline": 10,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 7,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "orytelling with Data: A Data Visualization Guide for Business Professionals*. Wiley, 2015.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        5
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [
+        "[1][2]",
+        "[1][3]"
+      ],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.2,
+        "coeficiente_variacao": 0.486
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 17909,
+      "palavras": 1954,
+      "secoes_faltantes": [],
+      "referencias": 6,
+      "citacoes_inline": 9,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "de to Visualizing Data. *Journal of Economic Perspectives*, v. 28, n. 1, p. 209-234, 2014.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 21,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.5,
+        "coeficiente_variacao": 0.922
+      }
+    }
+  ]
+}

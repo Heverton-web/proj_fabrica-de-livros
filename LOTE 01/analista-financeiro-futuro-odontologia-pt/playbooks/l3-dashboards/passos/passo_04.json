@@ -1,0 +1,51 @@
+{
+  "numero": "04",
+  "capitulo_fonte": "04",
+  "titulo": "Seu Primeiro Painel de Saúde do Cliente B2B",
+  "estagio": "Instrumento",
+  "estagio_indice": 2,
+  "objetivo": "Montar um painel de KPIs (Ticket Médio, CAC, Taxa de Recompra) conectando os blocos criados nos capítulos anteriores.",
+  "pre_requisito": "Passo 3 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Passo 1: QUERY de Consolidação de Dados",
+      "linguagem": "excel",
+      "comandos": [],
+      "codigo": "=QUERY(Pedidos!A:G;\n  \"SELECT B, SUM(G), COUNT(A), MIN(A), MAX(A) \n   WHERE A >= date '\"&TEXT(TODAY()-365;\"yyyy-mm-dd\")&\"' \n   GROUP BY B \n   ORDER BY SUM(G) DESC \n   LABEL B 'Cliente', \n         SUM(G) 'Faturação Total (€)', \n         COUNT(A) 'Nº Pedidos', \n         MIN(A) 'Primeiro Pedido', \n         MAX(A) 'Último Pedido'\"; 1)"
+    },
+    {
+      "titulo": "Passo 2: Fórmulas dos 5 KPIs no Google Sheets",
+      "linguagem": "excel",
+      "comandos": [],
+      "codigo": "// Ticket Médio (coluna F)\n=IFERROR(E2/D2; \"N/A\")\n\n// CAC — precisa de uma aba \"Marketing\" com coluna B = investimento e C = novos clientes\n// Na aba \"Resumo\", coluna G:\n=IFERROR(\n  SUM(Marketing!B:B) / SUM(Marketing!C:C);\n  \"N/A\"\n)\n\n// LTV — precisa de dados históricos\n// Ticket Médio × Frequência (pedidos/mês) × Vida Média (meses)\n=IFERROR(\n  (E2/D2) * (D2/12) * 36;\n  \"N/A\"\n)\n// Nota: 36 meses = 3 anos de vida média (ajuste conforme seu setor)\n\n// Taxa de Recompra (coluna H)\n// Precisa de uma aba \"Clientes\" com coluna A = cliente, B = total de pedidos\n=IFERROR(\n  COUNTIF(Clientes!B:B; \">=\"&2) / COUNTA(Clientes!A:A) * 100;\n  \"N/A\"\n)\n\n// NPS — precisa de uma aba \"Pesquisa NPS\" com coluna A = cliente, B = nota (0-10)\n=IFERROR(\n  (COUNTIF(Pesquisa_NPS!B:B; \">=9\") / COUNTA(Pesquisa_NPS!A:A) * 100) -\n  (COUNTIF(Pesquisa_NPS!B:B; \"<=6\") / COUNTA(Pesquisa_NPS!A:A) * 100);\n  \"N/A\"\n)"
+    },
+    {
+      "titulo": "Passo 4: Validação com MisVisFix (Prompt para IA)",
+      "linguagem": "markdown",
+      "comandos": [],
+      "codigo": "# Prompt: Validação de Dashboard contra Visualizações Enganosas\n\nVocê é um auditor de visualização de dados. Analise o dashboard abaixo\ne verifique os seguintes pontos:\n\n## Checklist de Validação (MisVisFix)\n1. EIXO TRUNCADO: O eixo Y começa em zero? Se não, o gráfico distorce magnitudes.\n2. ESCALA INCONSISTENTE: Grandezas diferentes estão sendo comparadas no mesmo eixo?\n3. CORES ENGANOSAS: Cores estão sendo usadas para manipular percepção (ex.: vermelho para queda pequena)?\n4. DESTAQUE SELETIVO: Apenas dados que confirmam a narrativa estão sendo mostrados?\n5. PROPORÇÃO CORRETA: Barras e áreas representam proporcionalmente os valores?\n\n## Dashboard Analisado\n[Descreva seu dashboard aqui: tipo de gráfico, valores, eixos, cores]\n\n## Saída Esperada\nPara cada ponto do checklist:\n- Status: OK / ALERTA / ERRO\n- Justificativa: por que passou ou falhou\n- Sugestão de correção (se aplicável)"
+    },
+    {
+      "titulo": "Script Completo: Dashboard HTML com KPI Cards",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "import json\nfrom datetime import datetime\n\n# === KPIs CALCULADOS (simulando output das QUERYs) ===\nkpis = {\n    \"ticket_medio\": {\"valor\": 3450, \"moeda\": \"EUR\", \"trend\": \"+8%\", \"status\": \"verde\"},\n    \"cac\": {\"valor\": 1800, \"moeda\": \"EUR\", \"trend\": \"-12%\", \"status\": \"verde\"},\n    \"ltv\": {\"valor\": 41400, \"moeda\": \"EUR\", \"trend\": \"+15%\", \"status\": \"verde\"},\n    \"taxa_recompra\": {\"valor\": 72, \"unidade\": \"%\", \"trend\": \"+3%\", \"status\": \"verde\"},\n    \"nps\": {\"valor\": 58, \"unidade\": \"pts\", \"trend\": \"+5\", \"status\": \"verde\"},\n}\n\ndef gerar_dashboard_html(kpis):\n    \"\"\"Gera dashboard HTML com KPI Cards em formato lista.\"\"\"\n    \n    cores_status = {\n        \"verde\": \"#2ecc71\",\n        \"amarelo\": \"#f39c12\",\n        \"vermelho\": \"#e74c3c\"\n    }\n    \n    html = \"\"\"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Painel de Saúde do Cliente B2B</title>\n    <style>\n        * { margin: 0; padding: 0; box-sizing: border-box; }\n        body { \n            font-family: 'Segoe UI', sans-serif; \n            background: #1a1a2e; \n            color: #fff; \n            padding: 20px;\n        }\n        .dashboard { max-width: 600px; margin: 0 auto; }\n        .header { text-align: center; margin-bottom: 30px; }\n        .header h1 { font-size: 1.5em; color: #eee; }\n        .header p { color: #888; font-size: 0.9em; }\n        .kpi-card {\n            background: #16213e;\n            border-radius: 12px;\n            padding: 20px;\n            margin-bottom: 15px;\n            border-left: 5px solid;\n    "
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Calcular os 5 KPIs sem contextualizar.** Um Ticket Médio de €3.000 é bom ou ruim? Depende do setor. No odontológico B2B, é saudável. Em outro setor, pode ser baixo. Sempre compare com benchmarks do seu mercado",
+    "Ignorar a validação MisVisFix.** Um dashboard com eixo truncado pode fazer uma queda de 3% parecer uma catastrofe. Sempre verifique se as escalas são honestas",
+    "Entregar o dashboard sem teste de 5 segundos.** Mostre para alguém que não participou da criação e cronometre. Se em 5 segundos a pessoa não entender o status do negócio, volte e simplifique",
+    "Esquecer de atualizar.** Um dashboard que não se atualiza automaticamente vira um relatório estático. Use as QUERYs reativas do Google Sheets para manter tudo em tempo real"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 4 — Seu Primeiro Painel de Saúde do Cliente B2B",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "emails/analista/eml-1-passe-caro-como",
+  "total_emails": 6,
+  "intervalo_dias": 2,
+  "duracao_dias": 10,
+  "cta_configurado": false,
+  "plano": [
+    {
+      "indice": 1,
+      "tipo": "abertura",
+      "dia": 0
+    },
+    {
+      "indice": 2,
+      "tipo": "nutricao",
+      "dia": 2,
+      "passo_fonte": "01"
+    },
+    {
+      "indice": 3,
+      "tipo": "nutricao",
+      "dia": 4,
+      "passo_fonte": "02"
+    },
+    {
+      "indice": 4,
+      "tipo": "nutricao",
+      "dia": 6,
+      "passo_fonte": "03"
+    },
+    {
+      "indice": 5,
+      "tipo": "nutricao",
+      "dia": 8,
+      "passo_fonte": "04"
+    },
+    {
+      "indice": 6,
+      "tipo": "fechamento",
+      "dia": 10
+    }
+  ]
+}

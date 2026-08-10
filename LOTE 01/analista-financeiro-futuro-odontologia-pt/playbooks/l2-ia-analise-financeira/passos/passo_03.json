@@ -1,0 +1,42 @@
+{
+  "numero": "03",
+  "capitulo_fonte": "03",
+  "titulo": "Identificando Sinais de Inadimplência",
+  "estagio": "Comando",
+  "estagio_indice": 2,
+  "objetivo": "Usar IA para detectar padrões de comportamento de clínicas prestes a se tornar inadimplentes, transformando alertas em ações preventivas.",
+  "pre_requisito": "Passo 2 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "4.1 Estrutura de Dados para Dashboard Financeiro",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# modelo_kpis.py — Definição dos KPIs do dashboard financeiro\nimport pandas as pd\nimport numpy as np\nfrom typing import Dict, List, Optional, Tuple\nfrom dataclasses import dataclass, field\nfrom datetime import datetime, timedelta\nfrom enum import Enum\nimport json\n\n\nclass StatusKPI(Enum):\n    \"\"\" Status visual de um KPI no dashboard. \"\"\"\n    OTIMO = \"otimo\"        # Verde escuro: acima do ideal\n    BOM = \"bom\"            # Verde: dentro do esperado\n    ATENCAO = \"atencao\"    # Amarelo: abaixo do ideal\n    CRITICO = \"critico\"    # Vermelho: requer ação imediata\n    SEM_DADOS = \"sem_dados\"\n\n\n@dataclass\nclass KPI:\n    \"\"\" Define um Indicador-Chave de Desempenho. \"\"\"\n    nome: str\n    descricao: str\n    valor_atual: float\n    unidade: str  # 'R$', '%', 'dias', 'unidade'\n    meta: float\n    minimo_aceitavel: float\n    maximo_aceitavel: Optional[float] = None\n    tendencia: str = \"estavel\"  # 'crescendo', 'caindo', 'estavel'\n    variacao_percentual: float = 0.0\n    status: StatusKPI = StatusKPI.SEM_DADOS\n    fonte_dados: str = \"\"\n    ultima_atualizacao: str = \"\"\n    comparativo_setor: Optional[float] = None\n    recomendacao_ia: str = \"\"\n\n\n@dataclass\nclass AlertaDashboard:\n    \"\"\" Define um alerta gerado pelo copiloto IA. \"\"\"\n    titulo: str\n    mensagem: str\n    nivel: str  # 'info', 'alerta', 'critico'\n    kpi_origem: str\n    acao_sugerida: str\n    prazo_sugerido: str\n    impacto_estimado: str\n    timestamp: str = field(default_factory=lambda: datetime.now().isoformat())\n\n\nclass GeradorKPIs:\n    \"\"\"\n    Gera KPIs financeiros a partir de dados processados.\n    Cada KPI é calculado"
+    },
+    {
+      "titulo": "4.2 Motor de Recomendações da IA",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# motor_recomendacoes.py — Gerador de recomendações estratégicas para clínica\nimport pandas as pd\nimport numpy as np\nfrom typing import Dict, List, Optional\nfrom dataclasses import dataclass, field\nfrom datetime import datetime\nfrom enum import Enum\n\n\nclass PrioridadeRecomendacao(Enum):\n    \"\"\" Prioridade da recomendação. \"\"\"\n    URGENTE = 1      # Ação necessária em 24h\n    ALTA = 2         # Ação necessária em 7 dias\n    MEDIA = 3        # Ação necessária em 30 dias\n    BAIXA = 4        # Ação opcional, melhorias contínuas\n\n\n@dataclass\nclass RecomendacaoIA:\n    \"\"\" Uma recomendação gerada pelo motor de IA. \"\"\"\n    titulo: str\n    descricao: str\n    prioridade: PrioridadeRecomendacao\n    categoria: str  # 'receita', 'custo', 'processo', 'paciente'\n    acao_especifica: str\n    kpi_impactado: str\n    impacto_estimado: str\n    prazo_implementacao: str\n    nivel_dificuldade: str  # 'facil', 'medio', 'dificil'\n    evidencia: str\n\n\nclass MotorRecomendacoes:\n    \"\"\"\n    Gera recomendações estratégicas baseadas nos KPIs e dados da clínica.\n    Cada recomendação tem ação específica, impacto estimado e prioridade.\n    \"\"\"\n    \n    def __init__(self, kpis: List, dados: pd.DataFrame):\n        \"\"\"\n        Args:\n            kpis: Lista de objetos KPI calculados\n            dados: DataFrame consolidado da clínica\n        \"\"\"\n        self.kpis = {kpi.nome: kpi for kpi in kpis}\n        self.dados = dados\n        self.recomendacoes: List[RecomendacaoIA] = []\n    \n    def gerar_recomendacoes(self) -> List[RecomendacaoIA]:\n        \"\"\" Gera todas as recomendações baseadas no estado atual. \"\"\"\n"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "O Dashboard que Muda Decisões Sexta-feira",
+    "É o relatório mensal: 12 páginas de tabelas Excel impressas em PDF",
+    "Ela olha as primeiras linhas",
+    "\"Pelo menos não foi prejuízo.\" Fecha o PDF",
+    "Na segunda-feira seguinte",
+    "Tivemos lucro!\" Dra",
+    "Fernanda não entende"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 3 — Identificando Sinais de Inadimplência",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

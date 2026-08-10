@@ -1,0 +1,122 @@
+{
+  "slug": "artigos/ai-driven-development-do-zero-ao-deploy-v2--art-02-modelando-o-dominio-especificando-antes",
+  "tipo_obra": "artigo",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 22133,
+  "paginas_estimadas": 8.9,
+  "requisitos": [
+    {
+      "id": "ARTIGO-NUM",
+      "nome": "Numeracao progressiva de secoes (NBR 6024)",
+      "conforme": true,
+      "detalhe": "secoes sem numeracao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-REF",
+      "nome": "Minimo 20 referencias por secao (NBR 6023)",
+      "conforme": true,
+      "detalhe": "secoes abaixo: nenhuma"
+    },
+    {
+      "id": "ARTIGO-CIT",
+      "nome": "Citacoes autor-data presentes (NBR 10520)",
+      "conforme": true,
+      "detalhe": "secoes sem citacao: nenhuma"
+    },
+    {
+      "id": "ARTIGO-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "ARTIGO-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    },
+    {
+      "id": "ARTIGO-RASTRO",
+      "nome": "Rastreabilidade citacao <-> referencias",
+      "conforme": true,
+      "detalhe": "secoes com citacao orfa: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 6361,
+      "palavras": 819,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 20,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "i.substack.com/p/context-engineering-product-builders-guide-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 5086,
+      "palavras": 612,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 18,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "i.substack.com/p/context-engineering-product-builders-guide-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "connell (2026)",
+        "zieminski (2026)"
+      ]
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 5675,
+      "palavras": 704,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 19,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "i.substack.com/p/context-engineering-product-builders-guide-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "zieminski (2026)"
+      ]
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 5011,
+      "palavras": 614,
+      "numeracao_progressiva": true,
+      "referencias": 20,
+      "citacoes_inline": 15,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "i.substack.com/p/context-engineering-product-builders-guide-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        "augment (2026)",
+        "bui (2026)",
+        "databricks (2026)",
+        "wong (2025)",
+        "zieminski (2026)"
+      ]
+    }
+  ]
+}

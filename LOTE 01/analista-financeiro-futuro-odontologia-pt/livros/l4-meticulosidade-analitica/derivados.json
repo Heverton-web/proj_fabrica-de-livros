@@ -1,0 +1,35 @@
+{
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l4-meticulosidade-analitica",
+  "artigos": {
+    "total": 0,
+    "itens": []
+  },
+  "ebooks": {
+    "total": 0,
+    "itens": []
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — Meticulosidade Analítica - O que só as IAs enxergam",
+        "slug": "pbk-1-meticulosidade-analitica",
+        "diretorio": "playbooks/analista/pbk-1-meticulosidade-analitica",
+        "estagios": 2
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

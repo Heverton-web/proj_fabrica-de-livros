@@ -1,0 +1,35 @@
+{
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "artigos": {
+    "total": 0,
+    "itens": []
+  },
+  "ebooks": {
+    "total": 0,
+    "itens": []
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — Passe Caro - Como ser um profissional desejado do setor",
+        "slug": "pbk-1-passe-caro-como",
+        "diretorio": "playbooks/analista/pbk-1-passe-caro-como",
+        "estagios": 2
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

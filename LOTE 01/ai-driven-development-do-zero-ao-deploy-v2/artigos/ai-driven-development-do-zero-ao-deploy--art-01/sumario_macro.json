@@ -1,0 +1,63 @@
+{
+  "titulo_obra": "O que é AI Driven Development (e o que ele não é) & As quatro camadas: Tela, Harness, LLM e Tools — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy-v2",
+  "capitulos_fonte_livro_mae": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "introducao": "Recorte investigativo sobre: O que é AI Driven Development (e o que ele não é), As quatro camadas: Tela, Harness, LLM e Tools, Instalando seu canteiro: preparando o ambiente, O primeiro diálogo: escrevendo seu primeiro prompt de engenharia, Engenharia de contexto: a fundação invisível, CLAUDE.md e AGENTS.md: o manual de bordo do agente.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "O que é AI Driven Development (e o que ele não é)",
+            "As quatro camadas: Tela, Harness, LLM e Tools",
+            "Instalando seu canteiro: preparando o ambiente"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "O que é AI Driven Development (e o que ele não é)",
+            "As quatro camadas: Tela, Harness, LLM e Tools",
+            "Instalando seu canteiro: preparando o ambiente"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "O que é AI Driven Development (e o que ele não é)",
+            "As quatro camadas: Tela, Harness, LLM e Tools",
+            "Instalando seu canteiro: preparando o ambiente"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "O que é AI Driven Development (e o que ele não é)",
+            "As quatro camadas: Tela, Harness, LLM e Tools",
+            "Instalando seu canteiro: preparando o ambiente"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

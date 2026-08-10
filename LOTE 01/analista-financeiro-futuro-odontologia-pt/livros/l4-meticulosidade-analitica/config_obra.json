@@ -1,0 +1,60 @@
+{
+  "tema": "Meticulosidade Analítica - O que só as IAs enxergam. Auditoria profunda e higienização de dados usando o poder computacional da IA. Capacitar o profissional a cruzar milhares de linhas de faturamento para encontrar erros comerciais que o olho humano jamais veria.",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 5,
+  "tamanho_obra": "P",
+  "senioridade_obra": "intermediario",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": null,
+  "cta_texto": null,
+  "modo_producao": "obra-unica",
+  "obra_raiz": null,
+  "sumario_macro": {
+    "titulo": "Meticulosidade Analítica - O que só as IAs enxergam",
+    "partes": [
+      {
+        "titulo": "Parte 1 — Auditoria e Limpeza",
+        "capitulos": [
+          {
+            "numero": 1,
+            "titulo": "Caçando Descontos Ocultos",
+            "subtitulo": "Cruzamento de bases de dados para auditar descontos não autorizados",
+            "tema_central": "Auditoria de descontos aplicados pela equipe comercial na venda de materiais de consumo"
+          },
+          {
+            "numero": 2,
+            "titulo": "Limpeza e Higienização de Dados (Regex)",
+            "subtitulo": "Expressões regulares para padronizar cadastros e telefones de clínicas portuguesas",
+            "tema_central": "Uso de Regex via IA para limpeza massiva de dados desorganizados"
+          }
+        ]
+      },
+      {
+        "titulo": "Parte 2 — Análise e Recuperação",
+        "capitulos": [
+          {
+            "numero": 3,
+            "titulo": "A Análise da Cesta de Compras",
+            "subtitulo": "Correlações invisíveis entre produtos comprados por clínicas",
+            "tema_central": "Descoberta de padrões de compra e correlações entre produtos do setor odontológico"
+          },
+          {
+            "numero": 4,
+            "titulo": "O Relatório de Recuperação de Lucro",
+            "subtitulo": "Transformação de anomalias em relatório executivo de uma página",
+            "tema_central": "Comunicação executiva focada na recuperação de margem de lucro"
+          }
+        ]
+      }
+    ]
+  }
+}

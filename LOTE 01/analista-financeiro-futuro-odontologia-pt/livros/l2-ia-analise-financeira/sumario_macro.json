@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "O Uso de IA em Análise Financeira no Setor Odontológico",
+  "tipo_obra": "livro",
+  "tamanho_obra": "P",
+  "motivo_condutor": {
+    "nome": "O Copiloto Digital",
+    "descricao": "Assim como um copiloto de avião divide a carga de trabalho com o piloto sem substituí-lo, a IA financeira é sua parceira de analyze — ela processa, cruza e sinaliza, mas quem toma a decisão final é você. Esta série ensina a comandar esse copiloto.",
+    "vocabulario": ["copiloto", "comando", "painel", "altitude", "rota", "referência", "pouso", "decisão"],
+    "persona_leitor": "Analista com Copiloto IA"
+  },
+  "introducao": "Apresentar a IA não como ameaça, mas como copiloto que amplifica a capacidade analítica do profissional financeiro do setor odontológico.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Preparação e Fundamentos",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Preparando o Terreno Seguro",
+          "objetivo": "Ensinar o leitor a anonimizar e limpar dados financeiros antes de subir para ferramentas de IA pública, garantindo conformidade com RGPD.",
+          "pilares_previstos": [
+            "Riscos de dados em LLMs: 72% dos apps com vazamento de API keys não remedaram em 3 meses",
+            "Técnicas de anonimização: mascaramento, generalização, distorção k-anônima",
+            "Checklist de segurança: antes de colar qualquer dado na IA"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Engenharia de Prompts Financeiros (Copie e Cole)",
+          "objetivo": "Entregar comandos estruturados prontos que fazem a IA atuar como um Diretor Financeiro (CFO) analisando tabelas de despesas e receitas.",
+          "pilares_previstos": [
+            "PoT (Program-of-Thought) vs. CoT: por que PoT supera CoT em raciocínio financeiro numérico",
+            "Templates de prompts prontos: análise de despesas, previsão de receita, relatório executivo",
+            "FORCE-Bench: por que prompts genéricos falham — a necessidade de comandos específicos"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Aplicações Práticas",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Identificando Sinais de Inadimplência",
+          "objetivo": "Usar IA para detectar padrões de comportamento de clínicas prestes a se tornar inadimplentes, transformando alertas em ações preventivas.",
+          "pilares_previstos": [
+            "Padrões de comportamento: atrasos progressivos, mudanças de volume,histórico de pedidos",
+            "Prompt estruturado para análise de inadimplência: como instruir a IA",
+            "Do alerta à ação: fluxo de cobrança preventiva baseado em dados"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Extração de Dados de Notas e Contratos",
+          "objetivo": "Extrair valores, taxas de IVA e prazos de pagamento de documentos PDF de forma automatizada usando comandos simples de IA.",
+          "pilares_previstos": [
+            "VLMs modernos: ~87% de precisão em extração de campos de PDFs com 300x de ganho sobre manual",
+            "Prompt de extração estruturada: como pedir à IA que leia um PDF e retorne dados em tabela",
+            "Do PDF à planilha: pipeline completo de extração e validação"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Consolidar o domínio do leitor sobre IA como copiloto financeiro — ele agora tem os comandos, a segurança e as aplicações práticas. Ponte para o Livro 3: como transformar essas análises em dashboards visuais."
+}

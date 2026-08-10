@@ -1,0 +1,759 @@
+{
+  "slug": "livros/ai-driven-development-do-zero-ao-deploy-v2",
+  "tipo_obra": "livro",
+  "veredito": "CONFORME",
+  "total_capitulos": 20,
+  "caracteres_obra": 500026,
+  "paginas_estimadas": 200.0,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 20 capitulos",
+      "conforme": true,
+      "detalhe": "20 capitulo(s) (minimo 20)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 200 paginas (~500.000 caracteres)",
+      "conforme": true,
+      "detalhe": "500.026 caracteres (minimo 500.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 20 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "voce",
+      "variantes": {
+        "você": 287,
+        "Você": 27,
+        "voce": 1
+      },
+      "ocorrencias": 315
+    },
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 171,
+        "Esta": 6,
+        "esta": 5,
+        "Está": 2
+      },
+      "ocorrencias": 184
+    },
+    {
+      "termo_normalizado": "porque",
+      "variantes": {
+        "porque": 53,
+        "porquê": 3
+      },
+      "ocorrencias": 56
+    },
+    {
+      "termo_normalizado": "dominio",
+      "variantes": {
+        "domínio": 42,
+        "Domínio": 4,
+        "dominio": 1
+      },
+      "ocorrencias": 47
+    },
+    {
+      "termo_normalizado": "decisoes",
+      "variantes": {
+        "decisões": 37,
+        "decisoes": 1,
+        "Decisões": 1
+      },
+      "ocorrencias": 39
+    },
+    {
+      "termo_normalizado": "fundacao",
+      "variantes": {
+        "fundação": 33,
+        "Fundação": 3,
+        "fundacao": 1
+      },
+      "ocorrencias": 37
+    },
+    {
+      "termo_normalizado": "continua",
+      "variantes": {
+        "contínua": 13,
+        "continua": 8,
+        "Contínua": 3
+      },
+      "ocorrencias": 24
+    },
+    {
+      "termo_normalizado": "suite",
+      "variantes": {
+        "suíte": 17,
+        "suite": 1,
+        "Suíte": 1
+      },
+      "ocorrencias": 19
+    },
+    {
+      "termo_normalizado": "mantem",
+      "variantes": {
+        "mantém": 17,
+        "mantêm": 1
+      },
+      "ocorrencias": 18
+    },
+    {
+      "termo_normalizado": "especifica",
+      "variantes": {
+        "específica": 9,
+        "especifica": 2
+      },
+      "ocorrencias": 11
+    },
+    {
+      "termo_normalizado": "concluida",
+      "variantes": {
+        "concluída": 7,
+        "concluida": 2,
+        "Concluída": 1
+      },
+      "ocorrencias": 10
+    },
+    {
+      "termo_normalizado": "divida",
+      "variantes": {
+        "dívida": 3,
+        "divida": 1
+      },
+      "ocorrencias": 4
+    },
+    {
+      "termo_normalizado": "publica",
+      "variantes": {
+        "pública": 3,
+        "publica": 1
+      },
+      "ocorrencias": 4
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "canteiro de obras",
+      "fundação",
+      "andares",
+      "estrutura",
+      "instalações",
+      "acabamento",
+      "entrega das chaves",
+      "mestre de obras",
+      "plantas",
+      "inspeção"
+    ],
+    "capitulos_com_citacao_empilhada": [],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 25170,
+      "palavras": 3700,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 26,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 1,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ring Framework*. Disponível em: https://arxiv.org/abs/2510.03463. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 17,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 23.7,
+        "coeficiente_variacao": 0.969
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 26594,
+      "palavras": 3624,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 24,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 2,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sue Resolution*. Disponível em: https://arxiv.org/abs/2603.01327. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        25
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 5,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.9,
+        "coeficiente_variacao": 0.95
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 25318,
+      "palavras": 3084,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 21,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 7,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "-gartner-identifies-the-top-strategic-technology-trends-for-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        22
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 29,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.5,
+        "coeficiente_variacao": 1.063
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 24814,
+      "palavras": 3058,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 22,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "insey.com/capabilities/quantumblack/our-insights/the-state-of-ai. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 14,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.7,
+        "coeficiente_variacao": 0.799
+      }
+    },
+    {
+      "capitulo": "5",
+      "arquivo": "cap_5.md",
+      "caracteres": 24698,
+      "palavras": 3360,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 23,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "e-2025-dora-report-reveals-your-organizations-true-capabilities/. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 11,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.9,
+        "coeficiente_variacao": 0.766
+      }
+    },
+    {
+      "capitulo": "6",
+      "arquivo": "cap_6.md",
+      "caracteres": 24613,
+      "palavras": 2913,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 20,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "-study-data-what-metr-mckinsey-and-github-actually-found-in-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        20,
+        21,
+        22
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 9,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.4,
+        "coeficiente_variacao": 0.848
+      }
+    },
+    {
+      "capitulo": "7",
+      "arquivo": "cap_7.md",
+      "caracteres": 24998,
+      "palavras": 3035,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 22,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 2,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "i.substack.com/p/context-engineering-product-builders-guide-2026. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.8,
+        "coeficiente_variacao": 1.072
+      }
+    },
+    {
+      "capitulo": "8",
+      "arquivo": "cap_8.md",
+      "caracteres": 24597,
+      "palavras": 3009,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 20,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "insey.com/capabilities/quantumblack/our-insights/the-state-of-ai. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        21,
+        22
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 27,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.5,
+        "coeficiente_variacao": 1.129
+      }
+    },
+    {
+      "capitulo": "9",
+      "arquivo": "cap_9.md",
+      "caracteres": 24137,
+      "palavras": 2804,
+      "secoes_faltantes": [],
+      "referencias": 22,
+      "citacoes_inline": 18,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ponível em: https://softjourn.com/insights/ai-software-dev-stats. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        19,
+        20,
+        21,
+        22
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.0,
+        "coeficiente_variacao": 0.725
+      }
+    },
+    {
+      "capitulo": "10",
+      "arquivo": "cap_10.md",
+      "caracteres": 24090,
+      "palavras": 3087,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 23,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ring Framework*. Disponível em: https://arxiv.org/abs/2510.03463. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        24,
+        25
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 23.1,
+        "coeficiente_variacao": 1.152
+      }
+    },
+    {
+      "capitulo": "11",
+      "arquivo": "cap_11.md",
+      "caracteres": 25469,
+      "palavras": 2757,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 23,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "haus.com/news/ai-developer-productivity-data-engineering-leaders. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.2,
+        "coeficiente_variacao": 0.945
+      }
+    },
+    {
+      "capitulo": "12",
+      "arquivo": "cap_12.md",
+      "caracteres": 23789,
+      "palavras": 2500,
+      "secoes_faltantes": [],
+      "referencias": 23,
+      "citacoes_inline": 23,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "insey.com/capabilities/quantumblack/our-insights/the-state-of-ai. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 8,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.8,
+        "coeficiente_variacao": 0.701
+      }
+    },
+    {
+      "capitulo": "13",
+      "arquivo": "cap_13.md",
+      "caracteres": 24655,
+      "palavras": 3042,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 24,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ring Framework*. Disponível em: https://arxiv.org/abs/2510.03463. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        25
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.8,
+        "coeficiente_variacao": 0.742
+      }
+    },
+    {
+      "capitulo": "14",
+      "arquivo": "cap_14.md",
+      "caracteres": 23222,
+      "palavras": 2741,
+      "secoes_faltantes": [],
+      "referencias": 24,
+      "citacoes_inline": 24,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ness?* Disponível em: https://www.databricks.com/blog/ai-harness. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.4,
+        "coeficiente_variacao": 0.787
+      }
+    },
+    {
+      "capitulo": "15",
+      "arquivo": "cap_15.md",
+      "caracteres": 25153,
+      "palavras": 2692,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ness?* Disponível em: https://www.databricks.com/blog/ai-harness. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 7,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 20.1,
+        "coeficiente_variacao": 0.889
+      }
+    },
+    {
+      "capitulo": "16",
+      "arquivo": "cap_16.md",
+      "caracteres": 24513,
+      "palavras": 2870,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "vel em: https://modelcontextprotocol.io/specification/2026-07-28. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 19.6,
+        "coeficiente_variacao": 0.869
+      }
+    },
+    {
+      "capitulo": "17",
+      "arquivo": "cap_17.md",
+      "caracteres": 24751,
+      "palavras": 3069,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ness?* Disponível em: https://www.databricks.com/blog/ai-harness. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.4,
+        "coeficiente_variacao": 0.823
+      }
+    },
+    {
+      "capitulo": "18",
+      "arquivo": "cap_18.md",
+      "caracteres": 27251,
+      "palavras": 3019,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 21,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "https://www.termdock.com/blog/skill-md-vs-claude-md-vs-agents-md. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        22,
+        23,
+        24,
+        25
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 9,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 22.0,
+        "coeficiente_variacao": 0.92
+      }
+    },
+    {
+      "capitulo": "19",
+      "arquivo": "cap_19.md",
+      "caracteres": 26930,
+      "palavras": 2931,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ring Framework*. Disponível em: https://arxiv.org/abs/2510.03463. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 18,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.5,
+        "coeficiente_variacao": 0.904
+      }
+    },
+    {
+      "capitulo": "20",
+      "arquivo": "cap_20.md",
+      "caracteres": 25264,
+      "palavras": 3002,
+      "secoes_faltantes": [],
+      "referencias": 25,
+      "citacoes_inline": 25,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ness?* Disponível em: https://www.databricks.com/blog/ai-harness. Acesso em: 07 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 6,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 21.2,
+        "coeficiente_variacao": 0.775
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "numero": "02",
+  "capitulo_fonte": "02",
+  "titulo": "Os Números da Clínica: Fluxo de Caixa, Ticket Médio e Custos",
+  "estagio": "Fim de expediente",
+  "estagio_indice": 1,
+  "objetivo": "Ensinar o dentista a reconhecer e organizar as fontes de dados financeiros da clínica: fluxo de caixa, DRE simplificado, ticket médio, custos fixos e variáveis, com padrões de mercado do setor.",
+  "pre_requisito": "Passo 1 concluído",
+  "entregas": [
+    "caixa_clinica.csv",
+    "kpis_mensais.csv"
+  ],
+  "execucao": [
+    {
+      "titulo": "Montando o DRE simplificado na planilha",
+      "linguagem": "text",
+      "comandos": [],
+      "codigo": "Monte uma planilha de DRE simplificado para uma clinica odontologica\ncom as seguintes linhas e formulas:\n1. Receita bruta (soma das entradas de Procedimento e Plano).\n2. Deducoes: 8% de impostos sobre a receita bruta (simulacao de Simples Nacional).\n3. Receita liquida = Receita bruta - Deducoes.\n4. Custos variaveis (Suprimento).\n5. Custos fixos (Custo fixo + Pessoal + Equipamento).\n6. Resultado = Receita liquida - Custos variaveis - Custos fixos.\n7. Margem = Resultado / Receita liquida, em percentual.\nExplique cada linha em uma frase."
+    },
+    {
+      "titulo": "Automatizando a apuração com Python",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "import pandas as pd\n\ndf = pd.read_csv(\"caixa_clinica.csv\")\n\n# Receita bruta: procedimentos + planos\nreceita_bruta = df[df[\"Categoria\"].isin([\"Procedimento\", \"Plano\"])][\"Entrada\"].fillna(0).sum()\n\n# Custos\ncustos_variaveis = df[df[\"Categoria\"] == \"Suprimento\"][\"Saida\"].fillna(0).sum()\ncustos_fixos = df[df[\"Categoria\"].isin([\"Custo fixo\", \"Pessoal\", \"Equipamento\"])][\"Saida\"].fillna(0).sum()\n"
+    }
+  ],
+  "gate": "python -c \"import pandas as pd; df = pd.read_csv('kpis_mensais.csv'); print(df[['mes','margem','inadimplencia']].to_string(index=False))\"",
+  "comandos": [],
+  "feito_quando": [
+    "Calcule o seu ticket médio dos últimos três meses e compare com o padrão do setor",
+    "Monte o DRE do mês (receita bruta, deduções, custos, resultado, margem) na planilha",
+    "Calcule o custo por sessão da sua cadeira",
+    "Responda com o assistente de IA: \"qual a minha necessidade de capital de giro se meu custo fixo mensal é R$ X e meus recebimentos de convênio levam 45 dias?\"",
+    "Registre tudo no `kpis_mensais.csv` — o Capítulo 4 vai transformar esses números em um painel"
+  ],
+  "armadilhas": [
+    "Precificar sem o custo real por sessão — preço do concorrente ignora sua estrutura",
+    "Decidir com um mês isolado — a sazonalidade engana",
+    "Tratar fluxo de caixa como lucro — parcelamentos presos no caixa",
+    "Ignorar o capital de giro — atraso de convênio vira emergência"
+  ],
+  "referencia_cruzada": "Cap. 2 — Os Números da Clínica: Fluxo de Caixa, Ticket Médio e Custos",
+  "lacunas": []
+}

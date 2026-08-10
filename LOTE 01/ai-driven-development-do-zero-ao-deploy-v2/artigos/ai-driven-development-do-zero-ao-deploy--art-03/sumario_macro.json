@@ -1,0 +1,65 @@
+{
+  "titulo_obra": "Hooks e governança: as regras de segurança do canteiro & Testes dirigidos por IA: provando que o prédio aguenta — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+  "tipo_obra": "artigo",
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy-v2",
+  "capitulos_fonte_livro_mae": [
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+  ],
+  "introducao": "Recorte investigativo sobre: Hooks e governança: as regras de segurança do canteiro, Testes dirigidos por IA: provando que o prédio aguenta, Revisão de código autônoma: a inspeção de obra, Economia de tokens: gerenciando o orçamento da obra, Preparando a entrega: build, CI/CD e pipelines, Do código à nuvem: deploy do projeto prático, Monitoramento, observabilidade e iteração, O engenheiro do futuro: carreira e mentalidade AIDD.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Artigo",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Seção IMRaD 'Introdução' do artigo",
+          "pilares_previstos": [
+            "Hooks e governança: as regras de segurança do canteiro",
+            "Testes dirigidos por IA: provando que o prédio aguenta",
+            "Revisão de código autônoma: a inspeção de obra"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Metodologia",
+          "objetivo": "Seção IMRaD 'Metodologia' do artigo",
+          "pilares_previstos": [
+            "Hooks e governança: as regras de segurança do canteiro",
+            "Testes dirigidos por IA: provando que o prédio aguenta",
+            "Revisão de código autônoma: a inspeção de obra"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Resultados e Discussão",
+          "objetivo": "Seção IMRaD 'Resultados e Discussão' do artigo",
+          "pilares_previstos": [
+            "Hooks e governança: as regras de segurança do canteiro",
+            "Testes dirigidos por IA: provando que o prédio aguenta",
+            "Revisão de código autônoma: a inspeção de obra"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Conclusão",
+          "objetivo": "Seção IMRaD 'Conclusão' do artigo",
+          "pilares_previstos": [
+            "Hooks e governança: as regras de segurança do canteiro",
+            "Testes dirigidos por IA: provando que o prédio aguenta",
+            "Revisão de código autônoma: a inspeção de obra"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Síntese do recorte investigativo."
+}

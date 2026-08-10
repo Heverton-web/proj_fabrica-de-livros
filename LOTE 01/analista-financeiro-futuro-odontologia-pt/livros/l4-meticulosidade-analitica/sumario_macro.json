@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "Meticulosidade Analítica - O que só as IAs enxergam",
+  "tipo_obra": "livro",
+  "tamanho_obra": "P",
+  "motivo_condutor": {
+    "nome": "O Detetive de Dados",
+    "descricao": "No mundo dos dados financeiros, existem pistas escondidas em milhares de linhas que o olho humano jamais enxerga. O Analista Estratégico é o detetive que usa a IA como lupa de aumento — cruzando, comparando e revelando o que está por trás dos números.",
+    "vocabulario": ["pista", "vestígio", "cruzamento", "indício", "laudo", "prova", "investigação", "revelação"],
+    "persona_leitor": "Detetive de Dados Financeiros"
+  },
+  "introducao": "Apresentar o poder da IA para cruzar milhares de linhas de faturamento e encontrar erros que o olho humano jamais veria — a promessa da meticulosidade analítica.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Auditoria e Limpeza",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Caçando Descontos Ocultos",
+          "objetivo": "Ensinar o leitor a cruzar duas grandes bases de dados para auditar descontos não autorizados pela equipe comercial.",
+          "pilares_previstos": [
+            "O problema dos descontos não autorizados: €45.000 em margem recuperável em distribuidoras odontológicas",
+            "Técnica de cruzamento: join de duas tabelas por SKU + cliente + período",
+            "Prompt para IA: como instruir o cruzamento e interpretar as anomalias"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Limpeza e Higienização de Dados (Regex)",
+          "objetivo": "Usar IA para criar expressões regulares que padronizam instantaneamente milhares de cadastros e telefones de clínicas portuguesas.",
+          "pilares_previstos": [
+            "Regex para telefones PT: ^(\\+351)?\\s?[29]\\d{8}$ e NIFs: ^\\d{9}$",
+            "Prompt para IA: como pedir regex que limpa dados odontológicos específicos",
+            "Antes/depois: demonstração visual do impacto da limpeza em milhares de registros"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Análise e Recuperação",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "A Análise da Cesta de Compras",
+          "objetivo": "Instruir a IA a analisar históricos de compras para descobrir correlações invisíveis entre produtos odontológicos.",
+          "pilares_previstos": [
+            "Algoritmo Apriori vs. FPGrowth: qual usar para catálogos B2B odontológicos",
+            "Padrão descoberto: 67% das clínicas que compram implantes tipo A levam resinas de impressão 3D",
+            "Prompt para market basket analysis: como estruturar o pedido para a IA"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "O Relatório de Recuperação de Lucro",
+          "objetivo": "Transformar anomalias encontradas pela IA em um relatório executivo de uma página focado na recuperação de margem de lucro.",
+          "pilares_previstos": [
+            "Estrutura do relatório executivo de 1 página: problema → evidência → impacto → ação",
+            "Isolation Forest + Autoencoders: como a IA detecta anomalias em faturamento multidimensional",
+            "Do achado à recomendação: traduzir descobertas técnicas em linguagem de negócios"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "O leitor agora é um Detetive de Dados capacitado a encontrar e recuperar margem de lucro escondida. Ponte para o Livro 5: como fazer tudo isso com custo zero."
+}

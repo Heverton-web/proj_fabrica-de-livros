@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "4" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 3: o pipeline NPS automatizado no N8N, agora com uma camada final de alertas executivos via WhatsApp",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Evolution API: o WhatsApp como ferramenta de gestão",
+        "escopo": "Evolution API completa: deploy via Docker, dois modos (Baileys gratuito vs Cloud API paga), configuração de instância, envio/recebimento de mensagens, webhooks. LGPD e compliance.",
+        "ancora_visual": "flowchart TD mostrando a arquitetura: N8N → Evolution API (Docker) → WhatsApp Cloud/Baileys → Diretoria, com as decisões de compliance",
+        "entrega_tecnica": "Docker Compose + shell script: setup completo da Evolution API com configuração de instância WhatsApp e teste de envio",
+        "evolucao_leitor": "de 'WhatsApp é só pra falar com cliente' para 'consigo usar WhatsApp como canal de alertas executivos automatizados e profissionais'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Alerta de grande venda: trigger inteligente",
+        "escopo": "Construção do workflow de alerta: monitoramento de planilha (Google Sheets) via N8N, detecção de faturamento acima do limiar, formatação da mensagem com IA (Gemini), envio via Evolution API. Lógica de throttle (não spammar).",
+        "ancora_visual": "flowchart TD com 6 nodes: Schedule Trigger → Google Sheets → IF (faturamento > limiar) → Gemini (formatar mensagem) → Evolution API → WhatsApp Diretoria",
+        "entrega_tecnica": "JSON: workflow N8N completo do alerta de grande venda, com lógica condicional, formatação via IA e envio via WhatsApp",
+        "evolucao_leitor": "de 'fico sabendo de vendas grandes quando someone me conta' para 'recebo alerta no WhatsApp em tempo real quando uma venda grande acontece, formatado pela IA'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Plano B: quando a Meta bloqueia",
+        "escopo": "Riscos reais: WhatsApp Baileys pode ser bloqueado pela Meta. Mitigações: Cloud API (pago por mensagem, ~$0.005/msg), cache de mensagens, fallback por email. Tomada de decisão: quando vale a pena pagar vs quando o gratuito basta.",
+        "ancora_visual": "stateDiagram-v2 mostrando os estados: Gratuito (Baileys) → Bloqueado? → Sim: Cloud API (pago) / Não: mantém Gratuito",
+        "entrega_tecnica": "YAML: configuração de fallback no N8N que tenta Baileys primeiro e cai para Cloud API se receber erro 403",
+        "evolucao_leitor": "de 'e se parar de funcionar?' para 'tenho um plano B documentado e testado — minha oficina não para por causa de um bloqueio'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

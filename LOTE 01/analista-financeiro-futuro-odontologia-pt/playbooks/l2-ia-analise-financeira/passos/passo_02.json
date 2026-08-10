@@ -1,0 +1,54 @@
+{
+  "numero": "02",
+  "capitulo_fonte": "02",
+  "titulo": "Engenharia de Prompts Financeiros (Copie e Cole)",
+  "estagio": "Copiloto",
+  "estagio_indice": 1,
+  "objetivo": "Entregar comandos estruturados prontos que fazem a IA atuar como um Diretor Financeiro (CFO) analisando tabelas de despesas e receitas.",
+  "pre_requisito": "Passo 1 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Template 1: Análise de Despesas Odontológicas",
+      "linguagem": "markdown",
+      "comandos": [],
+      "codigo": "**PAPEL:** Você é um CFO especialista em clínicas odontológicas com 20 anos de experiência em gestão financeira.\n\n**CONTEXTO:** Recebi o extrato financeiro da clínica [NOME DA CLÍNICA] referente ao período [MÊS/ANO]. As principais categorias de despesas são:\n- Materiais odontológicos: R$ [VALOR]\n- Equipamentos: R$ [VALOR]\n- Pessoal técnico: R$ [VALOR]\n- Marketing: R$ [VALOR]\n- Aluguel e infraestrutura: R$ [VALOR]\n\n**TAREFA:** Analise essas despesas e identifique:\n1. As três maiores categorias em termos percentuais\n2. Comparação com benchmarks do setor (15-20% materiais, 25-30% pessoal)\n3. Recomendações específicas para otimização de custos\n\n**FORMATO:** Apresente em tabela comparativa com colunas: Categoria | Valor | % Total | Benchmark | Status | Recomendação\n\n**RESTRIÇÕES:**\n- Considere sazonalidade da odontologia (alta em janeiro e agosto)\n- Mantenha anonimização de dados sensíveis\n- Foque em ações implementáveis em 30 dias\n\n**RACIOCÍNIO (PoT):** Primeiro, calcule os percentuais de cada categoria. Depois, compare com benchmarks. Por fim, priorize recomendações por impacto financeiro."
+    },
+    {
+      "titulo": "Template 2: Previsão de Receita Mensal",
+      "linguagem": "markdown",
+      "comandos": [],
+      "codigo": "**PAPEL:** Você é um analista financeiro sênior especializado em projeções para clínicas odontológicas.\n\n**CONTEXTO:** Histórico de receita dos últimos 6 meses:\n- Janeiro: R$ [VALOR]\n- Fevereiro: R$ [VALOR]\n- Março: R$ [VALOR]\n- Abril: R$ [VALOR]\n- Maio: R$ [VALOR]\n- Junho: R$ [VALOR]\n\nFatores que impactam a receita:\n- Campanha de implantes em andamento\n- Novo ortodontista contratado em março\n- Sazonalidade típica do setor\n\n**TAREFA:** Gere uma previsão para os próximos 3 meses (julho, agosto, setembro) considerando:\n1. Tendência histórica\n2. Impacto das novidades\n3. Sazonalidade do setor\n\n**FORMATO:**\n- Tabela com: Mês | Previsão | Cenário Otimista | Cenário Pessimista\n- Gráfico de tendência (solicite representação visual)\n- Resumo executivo em 3 parágrafos\n\n**RESTRIÇÕES:**\n- Use intervalos de confiança de 80%\n- Considere retenção de clientes de 85%\n- Não ultrapasse capacidade instalada atual\n\n**RACIOCÍNIO (PoT):** Calcule média móvel, aplique fator sazonal, ajuste por eventos específicos, gere intervalos."
+    },
+    {
+      "titulo": "Template 3: Relatório Executivo Mensal",
+      "linguagem": "markdown",
+      "comandos": [],
+      "codigo": "**PAPEL:** Você é o Diretor Financeiro que prepara relatórios para o conselho de administração de uma rede de clínicas odontológicas.\n\n**CONTEXTO:** Dados consolidados do mês de [MÊS]:\n- Receita total: R$ [VALOR]\n- Despesas operacionais: R$ [VALOR]\n- Lucro líquido: R$ [VALOR]\n- Número de atendimentos: [NÚMERO]\n- Ticket médio: R$ [VALOR]\n- Inadimplência: [PERCENTUAL]\n\n**TAREFA:** Elabore um relatório executivo que inclua:\n1. Resumo performático (KPIs principais)\n2. Análise de variação vs. mês anterior e vs. meta\n3. Pontos de atenção e riscos\n4. Recomendações estratégicas para o próximo mês\n\n**FORMATO:**\n- Estrutura: 1. Resumo Executivo | 2. Performance Financeira | 3. Análise de Resultados | 4. Recomendações\n- Use linguagem executiva, objetiva\n- Inclua indicadores visuais (▲ para crescimento, ▼ para queda, → para estabilidade)\n\n**RESTRIÇÕES:**\n- Máximo 2 páginas\n- Dados anonimizados conforme LGPD\n- Foco em informações acionáveis\n- Tom profissional para investidores\n\n**RACIOCÍNIO (CoT):** Primeiro, organize os KPIs. Depois, calcule variações. Em seguida, identifique padrões. Por fim, formule recomendações baseadas em evidências."
+    },
+    {
+      "titulo": "Template 4: Análise de Custos por Procedimento",
+      "linguagem": "markdown",
+      "comandos": [],
+      "codigo": "**PAPEL:** Você é um consultor financeiro especializado em odontologia, com foco em precificação de procedimentos.\n\n**CONTEXTO:** A clínica [NOME] realiza mensalmente os seguintes procedimentos:\n- Limpeza: [QUANTIDADE] unidades\n- Restauração: [QUANTIDADE] unidades\n- Implante: [QUANTIDADE] unidades\n- Clareamento: [QUANTIDADE] unidades\n- Prótese: [QUANTIDADE] unidades\n\nCusto médio por procedimento (materiais + mão de obra):\n- Limpeza: R$ [VALOR]\n- Restauração: R$ [VALOR]\n- Implante: R$ [VALOR]\n- Clareamento: R$ [VALOR]\n- Prótese: R$ [VALOR]\n\nPreço cobrado ao paciente:\n- Limpeza: R$ [VALOR]\n- Restauração: R$ [VALOR]\n- Implante: R$ [VALOR]\n- Clareamento: R$ [VALOR]\n- Prótese: R$ [VALOR]\n\n**TAREFA:** Calcule a margem de lucro por procedimento e identifique:\n1. Quais procedimentos têm margem acima de 60% (alta lucratividade)\n2. Quais procedimentos têm margem abaixo de 40% (revisar precificação)\n3. Impacto financeiro de realocar 20% da capacidade do baixo para o alto margem\n\n**FORMATO:** Tabela com: Procedimento | Custo | Preço | Margem% | Classificação | Recomendação\n\n**RACIOCÍNIO (PoT):** Calcule margens, classifique por faixa, projete impacto de realocação."
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Imagine a situação: você é o analista financeiro da Clínica OdontoPrime",
+    "O proprietário pede uma análise de despesas do primeiro trimestre até o fim do dia",
+    "Você abre a planilha",
+    "O erro que acontece primeiro:** você cola na IA um prompt genérico: \"Analise minhas despesas",
+    "Você perde 15 minutos",
+    "O proprietário pergunta se está pronto",
+    "Você diz \"quase\""
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 2 — Engenharia de Prompts Financeiros (Copie e Cole)",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

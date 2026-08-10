@@ -1,0 +1,11 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "2" },
+  "estado_execucao": "concluido",
+  "validacao": {
+    "codigo": "aprovado",
+    "diagramas": "aprovado",
+    "taxa_aprovacao_codigo": 100.0,
+    "diagramas_validos": 1
+  }
+}

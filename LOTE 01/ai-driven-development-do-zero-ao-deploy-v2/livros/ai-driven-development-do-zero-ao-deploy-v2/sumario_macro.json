@@ -1,0 +1,258 @@
+{
+  "titulo_obra": "AI Driven Development",
+  "subtitulo_obra": "Com um projeto prático do início ao fim",
+  "tipo_obra": "livro",
+  "tamanho_obra": "XG",
+  "motivo_condutor": {
+    "nome": "A Obra em Construção",
+    "descricao": "O leitor é o Mestre de Obras de um projeto real — um aplicativo de gestão de tarefas chamado TorreDeControle — que começa como um terreno baldio (ideia em branco) e termina como um prédio em produção (deploy concluído). Cada capítulo ergue um andar: fundação, estrutura, instalações elétricas, acabamento e entrega das chaves. O mesmo canteiro reaparece do início ao fim da obra.",
+    "vocabulario": [
+      "canteiro de obras",
+      "fundação",
+      "andares",
+      "estrutura",
+      "instalações",
+      "acabamento",
+      "entrega das chaves",
+      "mestre de obras",
+      "plantas",
+      "inspeção"
+    ],
+    "persona_leitor": "Mestre de Obras"
+  },
+  "introducao": "Introdução de impacto que apresenta o canteiro de obras: o que é AI Driven Development, por que é a maior mudança no ofício de programar desde os compiladores, e o mapa da jornada do terreno baldio à entrega das chaves — com o projeto TorreDeControle como fio condutor.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Fundamentos — O Terreno Baldio",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O que é AI Driven Development (e o que ele não é)",
+          "objetivo": "Definir AIDD com precisão, diferenciar de vibe coding e autocomplete, e mostrar o panorama da adoção em 2026.",
+          "pilares_previstos": [
+            "Definição e fronteiras conceituais",
+            "Vibe coding vs agentic coding vs AIDD",
+            "Panorama de adoção e dados DORA/Gartner"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "As quatro camadas: Tela, Harness, LLM e Tools",
+          "objetivo": "Apresentar a arquitetura em camadas do desenvolvimento agêntico e onde cada peça encaixa no fluxo real.",
+          "pilares_previstos": [
+            "Arquitetura das 4 camadas",
+            "Papel do harness no loop perceive-reason-act",
+            "Mapa das ferramentas do ecossistema 2026"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Instalando seu canteiro: preparando o ambiente",
+          "objetivo": "Guia iniciante de instalação e configuração mínima do harness (CLI do agente), editor e repositório git.",
+          "pilares_previstos": [
+            "Instalação do harness e verificação",
+            "Configuração mínima do ambiente",
+            "Primeiro repositório git e estrutura de pastas"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "O primeiro diálogo: escrevendo seu primeiro prompt de engenharia",
+          "objetivo": "Ensinar a escrever prompts eficazes para agentes de código, com exemplos bons e ruins aplicados ao projeto inicial.",
+          "pilares_previstos": [
+            "Estrutura de um prompt de engenharia",
+            "Erros comuns de iniciantes",
+            "Prompt inicial do projeto TorreDeControle"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Na Prática — Erguendo a Estrutura",
+      "capitulos": [
+        {
+          "capitulo": "5",
+          "titulo": "Engenharia de contexto: a fundação invisível",
+          "objetivo": "Explicar context engineering, janelas de contexto, contexto rot e como arquitetar o contexto do agente antes de programar.",
+          "pilares_previstos": [
+            "Janelas de contexto e seus limites",
+            "Context rot e Lost in the Middle",
+            "Arquitetura de contexto para um projeto real"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "CLAUDE.md e AGENTS.md: o manual de bordo do agente",
+          "objetivo": "Ensinar a criar os arquivos de diretrizes persistentes que todo projeto agêntico precisa, com exemplos prontos.",
+          "pilares_previstos": [
+            "Papel do CLAUDE.md e AGENTS.md",
+            "Regra de ouro: o que entra e o que fica fora",
+            "Escrevendo o manual do TorreDeControle"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "Modelando o domínio: especificando antes de codar",
+          "objetivo": "Introduzir spec-driven development: transformar a ideia em especificação verificável antes de escrever uma linha.",
+          "pilares_previstos": [
+            "Spec como contrato humano-agente",
+            "Modelagem de domínio do TorreDeControle",
+            "Do esboço à spec verificável"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "O primeiro andar: gerando o esqueleto do projeto",
+          "objetivo": "Usar o agente para scaffoldar o projeto real (backend + frontend), revisando e entendendo cada arquivo gerado.",
+          "pilares_previstos": [
+            "Scaffolding com agente",
+            "Revisão crítica do código gerado",
+            "Estrutura final do TorreDeControle"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "III",
+      "titulo_parte": "Avançando — Instalações e Ferramentas",
+      "capitulos": [
+        {
+          "capitulo": "9",
+          "titulo": "Skills: conhecimento reutilizável do canteiro",
+          "objetivo": "Criar e usar skills (instruções modulares carregadas sob demanda) para padronizar fluxos repetitivos do projeto.",
+          "pilares_previstos": [
+            "O que é uma skill e quando usar",
+            "Criando skills do projeto",
+            "Skills vs prompts avulsos"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "MCP: conectando o agente ao mundo real",
+          "objetivo": "Explicar o Model Context Protocol e conectar ferramentas externas (banco, APIs) ao agente no projeto prático.",
+          "pilares_previstos": [
+            "MCP na prática: resources, prompts e tools",
+            "Configurando servidores MCP",
+            "Ferramentas do TorreDeControle via MCP"
+          ]
+        },
+        {
+          "capitulo": "11",
+          "titulo": "Criando ferramentas próprias: suas mãos estendidas",
+          "objetivo": "Ensinar a construir tools e servidores MCP customizados, com schemas bem definidos e blindagem contra tool poisoning.",
+          "pilares_previstos": [
+            "Design de tool schemas",
+            "Construindo um servidor MCP simples",
+            "Segurança: blindagem contra tool poisoning"
+          ]
+        },
+        {
+          "capitulo": "12",
+          "titulo": "Subagentes: a equipe de obra",
+          "objetivo": "Orquestrar subagentes especializados (pesquisador, redator, revisor) para tarefas paralelas dentro do projeto.",
+          "pilares_previstos": [
+            "Quando usar subagentes",
+            "Definindo escopos e prompts de subagentes",
+            "Orquestração e resultados paralelos"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "IV",
+      "titulo_parte": "Profissionalizando — Acabamento e Qualidade",
+      "capitulos": [
+        {
+          "capitulo": "13",
+          "titulo": "Hooks e governança: as regras de segurança do canteiro",
+          "objetivo": "Configurar hooks, permissões e guardrails para que o agente aja com autonomia segura no projeto real.",
+          "pilares_previstos": [
+            "Hooks e gatilhos de eventos",
+            "Permissões e aprovações",
+            "Governança de agentes autônomos"
+          ]
+        },
+        {
+          "capitulo": "14",
+          "titulo": "Testes dirigidos por IA: provando que o prédio aguenta",
+          "objetivo": "Gerar e manter testes automatizados com o agente, com CI de sintaxe e testes de regressão no projeto.",
+          "pilares_previstos": [
+            "Estratégia de testes do projeto",
+            "Agente gerando testes",
+            "CI de sintaxe e testes de regressão"
+          ]
+        },
+        {
+          "capitulo": "15",
+          "titulo": "Revisão de código autônoma: a inspeção de obra",
+          "objetivo": "Usar agentes revisores e auditorias determinísticas para revisar o código gerado antes de integrar.",
+          "pilares_previstos": [
+            "Peer review com agente",
+            "Auditorias determinísticas",
+            "Ciclo de revisão do TorreDeControle"
+          ]
+        },
+        {
+          "capitulo": "16",
+          "titulo": "Economia de tokens: gerenciando o orçamento da obra",
+          "objetivo": "Técnicas severas de economia de contexto e tokens (caveman, rtk, lean-ctx, headroom) para projetos longos.",
+          "pilares_previstos": [
+            "Por que tokens importam em projetos longos",
+            "Técnicas de compressão de contexto",
+            "Orçamento de tokens do projeto prático"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "V",
+      "titulo_parte": "O Mundo Real — Entrega das Chaves",
+      "capitulos": [
+        {
+          "capitulo": "17",
+          "titulo": "Preparando a entrega: build, CI/CD e pipelines",
+          "objetivo": "Configurar integração contínua e pipelines de entrega para o projeto, com gates automatizados de qualidade.",
+          "pilares_previstos": [
+            "Build reproduzível",
+            "CI/CD e gates automatizados",
+            "Pipeline do TorreDeControle"
+          ]
+        },
+        {
+          "capitulo": "18",
+          "titulo": "Do código à nuvem: deploy do projeto prático",
+          "objetivo": "Fazer o deploy real do TorreDeControle em ambiente de nuvem, com variáveis de ambiente e migrações.",
+          "pilares_previstos": [
+            "Deploy em plataforma de nuvem",
+            "Variáveis de ambiente e segredos",
+            "Migrações e banco em produção"
+          ]
+        },
+        {
+          "capitulo": "19",
+          "titulo": "Monitoramento, observabilidade e iteração",
+          "objetivo": "Instrumentar o projeto em produção, acompanhar métricas e iterar com o agente após o deploy.",
+          "pilares_previstos": [
+            "Observabilidade e logs",
+            "Métricas de engenharia (DORA)",
+            "Loop de iteração pós-deploy"
+          ]
+        },
+        {
+          "capitulo": "20",
+          "titulo": "O engenheiro do futuro: carreira e mentalidade AIDD",
+          "objetivo": "Fechar a jornada: como o Mestre de Obras se posiciona no mercado, portfólio e ética do desenvolvimento dirigido por IA.",
+          "pilares_previstos": [
+            "Competências do engenheiro AIDD",
+            "Portfólio e posicionamento no mercado 2026",
+            "Ética e responsabilidade profissional"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Conclusão sintética que devolve o leitor ao canteiro de obras concluído: o TorreDeControle está em produção, e o Mestre de Obras agora enxerga qualquer projeto como uma jornada do terreno baldio à entrega das chaves — resumindo o método completo em um check-list acionável.",
+  "subtitulo": "Do Zero ao Deploy: um projeto prático do início ao fim"
+}

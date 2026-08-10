@@ -1,0 +1,116 @@
+{
+  "titulo_obra": "AI Driven Development: Engenharia de Software Dirigida por Agentes de Inteligência Artificial",
+  "tipo_obra": "tcc",
+  "tamanho_obra": null,
+  "motivo_condutor": null,
+  "introducao": "Contextualizar a transição do desenvolvimento de software tradicional para o paradigma dirigido por IA, apresentar o problema de pesquisa (como avaliar e governar a adoção de LLMs e agentes), os objetivos, a justificativa e a metodologia.",
+  "partes": [
+    {
+      "parte": "Único",
+      "titulo_parte": "Corpo do Trabalho",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "Introdução",
+          "objetivo": "Delimitar o problema, os objetivos geral e específicos, a justificativa e o percurso metodológico da pesquisa sobre desenvolvimento de software dirigido por IA.",
+          "pilares_previstos": [
+            "Contextualização da problemática",
+            "Objetivos e justificativa",
+            "Metodologia da pesquisa"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Fundamentos da Engenharia de Software Dirigida por IA",
+          "objetivo": "Estabelecer a base conceitual: definição de AI Driven Development, taxonomia dos paradigmas LLM (prompt-based, fine-tune-based, agent-based) e o ciclo de vida do software impactado.",
+          "pilares_previstos": [
+            "Definições e taxonomia do paradigma",
+            "LLMs aplicados ao ciclo de vida do software",
+            "Síntese do estado da arte em fundamentos"
+          ]
+        },
+        {
+          "capitulo": "3",
+          "titulo": "Modelos de Linguagem e Geração de Código",
+          "objetivo": "Analisar a evolução dos LLMs de código (Codex original a modelos agênticos), os benchmarks funcionais (HumanEval, MBPP, MultiPL-E) e os limites da geração autônoma de código.",
+          "pilares_previstos": [
+            "Evolução dos modelos de código",
+            "Benchmarks de geração funcional",
+            "Análise de capacidades e limitações"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Agentes de Software Autônomos",
+          "objetivo": "Examinar a arquitetura dos agentes de engenharia de software: interfaces agente-computador (ACI), loops de raciocínio-ação (ReAct, Reflexion), memória e uso de ferramentas, com os sistemas de referência SWE-agent, OpenHands e Devin.",
+          "pilares_previstos": [
+            "Arquitetura de agentes e ACI",
+            "Loops de raciocínio, memória e ferramentas",
+            "Sistemas de referência e comparação"
+          ]
+        },
+        {
+          "capitulo": "5",
+          "titulo": "Sistemas Multiagentes e Protocolos de Interoperabilidade",
+          "objetivo": "Investigar a orquestração de múltiplos agentes especializados (MetaGPT, SOPs, feedback executável) e os protocolos de padronização (MCP, ACP, A2A, ANP) como base da infraestrutura de desenvolvimento agêntico.",
+          "pilares_previstos": [
+            "Colaboração multiagente e SOPs",
+            "Model Context Protocol como padrão",
+            "Análise de interoperabilidade e desafios"
+          ]
+        },
+        {
+          "capitulo": "6",
+          "titulo": "Ecossistema de Ferramentas e Práticas de Mercado",
+          "objetivo": "Mapear o ecossistema comercial (GitHub Copilot, OpenAI Codex, Claude Code, Cursor, Devin, prompt-to-app) e as práticas emergentes como specification-driven development e revisão assistida por IA.",
+          "pilares_previstos": [
+            "Panorama das ferramentas comerciais",
+            "Modelos de interação: terminal, IDE, nuvem",
+            "Práticas emergentes de adoção"
+          ]
+        },
+        {
+          "capitulo": "7",
+          "titulo": "Avaliação de Agentes: Benchmarks e Lacunas de Medição",
+          "objetivo": "Analisar os benchmarks de agentes (SWE-bench, SWE-bench Verified, Terminal-Bench, WebArena) e suas limitações metodológicas: overfitting, leakage, especificação excessiva e o gap benchmark-produção.",
+          "pilares_previstos": [
+            "Benchmarks de resolução de issues",
+            "Critérios de qualidade dos benchmarks",
+            "Análise do gap benchmark-produção"
+          ]
+        },
+        {
+          "capitulo": "8",
+          "titulo": "Qualidade, Segurança e Dívida Técnica do Código Gerado",
+          "objetivo": "Sintetizar as evidências sobre defeitos, vulnerabilidades e code smells em código gerado por LLMs e agentes, e discutir guardrails (SAST/SCA, revisão humana, TDD governado) para mitigação.",
+          "pilares_previstos": [
+            "Vulnerabilidades e código inseguro",
+            "Dívida técnica e assinatura de máquina",
+            "Guardrails e governança de qualidade"
+          ]
+        },
+        {
+          "capitulo": "9",
+          "titulo": "Produtividade e Impacto Organizacional da Adoção de IA",
+          "objetivo": "Analisar as evidências empíricas de produtividade (RCTs, estudos de campo) e o modelo organizacional do DORA 2025, incluindo o paradoxo da confiança e os riscos de adoção sem estratégia de sistemas.",
+          "pilares_previstos": [
+            "Evidências empíricas de produtividade",
+            "Modelo de amplificação do DORA",
+            "Análise de riscos e estratégias de adoção"
+          ]
+        },
+        {
+          "capitulo": "10",
+          "titulo": "Considerações Finais",
+          "objetivo": "Consolidar as contribuições da pesquisa, responder aos objetivos, apresentar limitações do estudo e apontar direções futuras para a engenharia de software dirigida por IA.",
+          "pilares_previstos": [
+            "Síntese das contribuições",
+            "Resposta aos objetivos de pesquisa",
+            "Limitações e trabalhos futuros"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "Sintetizar as contribuições da pesquisa, responder aos objetivos propostos, apresentar as limitações do estudo e indicar direções futuras de pesquisa e prática."
+}

@@ -1,0 +1,71 @@
+{
+  "capitulo": 4,
+  "titulo": "O Seu Plano de Ação Imediato",
+  "parte": "Parte II",
+  "objetivo": "Entregar ao leitor um template de apresentação enxuta para mostrar seus primeiros achados estratégicos à diretoria no final do mês.",
+  "motivo_condutor": "O Passe VIP — no mundo corporativo, existe um passe invisível que dá acesso às salas onde decisões acontecem",
+  "vocabulario_chave": ["passe", "acesso", "sala de decisões", "porta-fechadura", "moeda de troca", "valor percebido", "guardião", "liberação"],
+  "persona_leitor": "Analista Estratégico",
+  "senioridade_obra": "intermediario",
+  "callback_capitulo_anterior": "Capítulo 3: a matriz comercial-financeiro — agora como insumo para o relatório executivo",
+  "pilares": [
+    {
+      "nome": "Template de 5 slides para apresentação executiva",
+      "escopo": "Estrutura enxuta de 5 slides que cabe em 10 minutos: abertura com frase de impacto, contexto do negócio, achado-chave, recomendação e próximos passos. O que entra e o que fica de fora em cada slide.",
+      "ancora_visual": "flowchart TD com os 5 slides e o tempo estimado de cada um, mostrando o fluxo de uma apresentação executiva de 10 minutos",
+      "entrega_tecnica": "Template Markdown dos 5 slides com placeholders para dados reais + checklist de revisão antes da apresentação",
+      "evolucao_leitor": "De quem tem dados mas não sabe apresentá-lo para quem entra na sala de decisões com um plano claro",
+      "conceito_denso": false
+    },
+    {
+      "nome": "Traduzir dados em narrativa: a regra dos 3 achados",
+      "escopo": "Como selecionar exatamente 3 insights dos seus dados e transformá-los em uma narrativa com começo, meio e fim. A hierarquia de impacto: achado > contexto > evidência. Erros comuns de sobrecarga informacional.",
+      "ancora_visual": "flowchart LR mostrando o fluxo de transformação: Dados brutos → Filtro de impacto → 3 achados → Narrativa executiva → Decisão",
+      "entrega_tecnica": "Função Python que recebe DataFrame de vendas e retorna os 3 achados com maior variação percentual, prontos para slide",
+      "evolucao_leitor": "De quem apresenta planilhas para quem conta histórias com números",
+      "conceito_denso": true
+    },
+    {
+      "nome": "Primeiro relatório estratégico: do achado à recomendação",
+      "escopo": "Montagem do primeiro relatório usando a matriz comercial-financeiro como insumo. Estrutura: achado → implicação → recomendação → métrica de acompanhamento. Como transformar um cruzamento de dados em uma ação concreta que a diretoria pode aprovar.",
+      "ancora_visual": "sequenceDiagram entre Analista e Diretoria mostrando o fluxo de apresentação: Dados → Achado → Recomendação → Aprovação → Ação",
+      "entrega_tecnica": "Template JSON do relatório estratégico com seções: achado, implicacao, recomendacao, metrica, prazo, responsavel",
+      "evolucao_leitor": "De quem gera relatórios para quem gera decisões",
+      "conceito_denso": false
+    }
+  ],
+  "referencias": [
+    {
+      "id": 1,
+      "tipo": "relatorio",
+      "titulo": "Dental Trade Association Market Report",
+      "autores": "Dental Trade Association",
+      "ano": 2024,
+      "url": "https://www.dentaltradeassociation.org"
+    },
+    {
+      "id": 2,
+      "tipo": "relatorio",
+      "titulo": "Gartner Analytics and Business Intelligence Platforms Market Guide",
+      "autores": "Gartner",
+      "ano": 2024,
+      "url": "https://www.gartner.com/en/documents/5194085"
+    },
+    {
+      "id": 3,
+      "tipo": "caso",
+      "titulo": "Microsoft Customer Stories - Dashboard estratégico em distribuidora dental",
+      "autores": "Microsoft",
+      "ano": 2024,
+      "url": "https://customers.microsoft.com"
+    },
+    {
+      "id": 4,
+      "tipo": "artigo",
+      "titulo": "Activity-Based Costing: a back seat driver to your dashboards",
+      "autores": "Kaplan, R. S.; Anderson, S. R.",
+      "ano": 2007,
+      "url": "https://hbr.org/2007/11/activity-based-costing-a-back-seat-driver-to-your-dashboards"
+    }
+  ]
+}

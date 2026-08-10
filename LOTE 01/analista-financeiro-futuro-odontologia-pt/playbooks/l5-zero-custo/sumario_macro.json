@@ -1,0 +1,40 @@
+{
+  "titulo_obra": "Playbook — Zero Custo! Como fazer isso utilizando LLMs gratuitas ou de baixíssimo custo",
+  "tipo_obra": "playbook",
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l5-zero-custo",
+  "motivo_condutor": {
+    "nome": "A Oficina do Improvisador",
+    "descricao": "Um grande relojoeiro não precisa de uma fábrica inteira — precisa de uma bancada organizada e ferramentas afiadas. Da mesma forma, o analista financeiro pode construir um motor de inteligência com ferramentas gratuitas, sem depender de TI, sem orçamento, apenas com criatividade e conhecimento.",
+    "vocabulario": [
+      "bancada",
+      "ferramenta",
+      "engrenagem",
+      "motor",
+      "improviso",
+      "oficina",
+      "pecas",
+      "calibração"
+    ],
+    "persona_leitor": "Engenheiro de Automação Financeira"
+  },
+  "estagios": [
+    {
+      "indice": 1,
+      "nome": "Bancada",
+      "titulo_parte": "Arsenal e Fundamentos",
+      "capitulos": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "indice": 2,
+      "nome": "Ferramenta",
+      "titulo_parte": "Automação na Prática",
+      "capitulos": [
+        "3",
+        "4"
+      ]
+    }
+  ]
+}

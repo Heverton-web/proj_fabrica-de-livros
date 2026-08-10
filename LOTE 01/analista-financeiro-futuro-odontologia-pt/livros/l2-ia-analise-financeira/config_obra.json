@@ -1,0 +1,60 @@
+{
+  "tema": "O Uso de IA em Análise Financeira no Setor Odontológico. Comandos estruturados (Prompts) para analisar dados financeiros reais. Fazer o leitor abrir o ChatGPT, Claude ou Gemini, colar comandos específicos e extrair análises imediatas de suas tabelas de Excel.",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 5,
+  "tamanho_obra": "P",
+  "senioridade_obra": "intermediario",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": null,
+  "cta_texto": null,
+  "modo_producao": "obra-unica",
+  "obra_raiz": null,
+  "sumario_macro": {
+    "titulo": "O Uso de IA em Análise Financeira no Setor Odontológico",
+    "partes": [
+      {
+        "titulo": "Parte 1 — Preparação e Fundamentos",
+        "capitulos": [
+          {
+            "numero": 1,
+            "titulo": "Preparando o Terreno Seguro",
+            "subtitulo": "Anonimização e limpeza de dados financeiros antes de usar ferramentas de IA",
+            "tema_central": "Proteção de dados sensíveis e boas práticas de segurança ao usar LLMs com dados financeiros"
+          },
+          {
+            "numero": 2,
+            "titulo": "Engenharia de Prompts Financeiros (Copie e Cole)",
+            "subtitulo": "Comandos estruturados prontos para análise de despesas e receitas",
+            "tema_central": "Criação de prompts que fazem a IA atuar como um Diretor Financeiro (CFO)"
+          }
+        ]
+      },
+      {
+        "titulo": "Parte 2 — Aplicações Práticas",
+        "capitulos": [
+          {
+            "numero": 3,
+            "titulo": "Identificando Sinais de Inadimplência",
+            "subtitulo": "Padrões de comportamento de clínicas prestes a se tornar inadimplentes",
+            "tema_central": "Uso de IA para detectar sinais precoces de inadimplência no setor odontológico B2B"
+          },
+          {
+            "numero": 4,
+            "titulo": "Extração de Dados de Notas e Contratos",
+            "subtitulo": "Extração automatizada de valores, IVA e prazos de PDFs",
+            "tema_central": "OCR + LLM para extração estruturada de documentos financeiros"
+          }
+        ]
+      }
+    ]
+  }
+}

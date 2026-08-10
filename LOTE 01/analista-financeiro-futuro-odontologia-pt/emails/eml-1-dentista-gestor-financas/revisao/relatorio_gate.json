@@ -1,0 +1,15 @@
+{
+  "slug": "emails/analista/eml-1-dentista-gestor-financas",
+  "total_emails": 6,
+  "conforme": true,
+  "violacoes": [],
+  "avisos": [
+    "6 marcador(es) de polimento pendente(s)"
+  ],
+  "regras": {
+    "R-EM-1": "assunto presente e com no maximo 60 caracteres",
+    "R-EM-2": "exatamente 1 CTA rastreavel (UTM) por e-mail",
+    "R-EM-3": "sequencia tem abertura (entrega) + nutricao + fechamento (oferta)",
+    "R-EM-4": "nenhum e-mail passa de 250 palavras"
+  }
+}

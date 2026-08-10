@@ -1,0 +1,12 @@
+{
+  "tema": "AI Driven Development: Do Zero ao Deploy (Com um projeto prático do início ao fim)",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 20,
+  "tamanho_obra": "XG",
+  "senioridade_obra": "iniciante",
+  "serie": null,
+  "gerar_artigos": true,
+  "qtd_artigos": 3,
+  "gerar_ebooks": true,
+  "qtd_ebooks": 5
+}

@@ -1,0 +1,50 @@
+{
+  "slug_mae": "livros/analista-financeiro-futuro-odontologia-pt-l2-ia-analise-financeira",
+  "slug_playbook": "playbooks/analista/pbk-1-uso-ia-analise",
+  "total_passos": 4,
+  "passos_com_lacuna": [
+    {
+      "passo": "01",
+      "titulo": "Preparando o Terreno Seguro",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "02",
+      "titulo": "Engenharia de Prompts Financeiros (Copie e Cole)",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "03",
+      "titulo": "Identificando Sinais de Inadimplência",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "04",
+      "titulo": "Extração de Dados de Notas e Contratos",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    }
+  ],
+  "lacunas_criticas": [],
+  "cobertura": {
+    "com_entregas": 0,
+    "com_gate": 0,
+    "com_feito_quando": 4,
+    "com_armadilhas": 0
+  }
+}

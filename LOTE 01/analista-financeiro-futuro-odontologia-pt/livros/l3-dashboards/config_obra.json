@@ -1,0 +1,60 @@
+{
+  "tema": "Dashboards Impressionantes - Utilizando Cérebros Criativos (LLMs). Construção de painéis financeiros visualmente claros, sem poluição de dados. Mostrar como estruturar relatórios financeiros que a diretoria consegue ler em 5 segundos.",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 5,
+  "tamanho_obra": "P",
+  "senioridade_obra": "intermediario",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": null,
+  "cta_texto": null,
+  "modo_producao": "obra-unica",
+  "obra_raiz": null,
+  "sumario_macro": {
+    "titulo": "Dashboards Impressionantes - Utilizando Cérebros Criativos (LLMs)",
+    "partes": [
+      {
+        "titulo": "Parte 1 — Design e Estrutura",
+        "capitulos": [
+          {
+            "numero": 1,
+            "titulo": "O Design da Clareza Analítica",
+            "subtitulo": "Como pedir para a IA desenhar o esqueleto perfeito do dashboard",
+            "tema_central": "Estruturação de dados em formato de lista para leitura rápida, eliminando confusão visual"
+          },
+          {
+            "numero": 2,
+            "titulo": "Substituindo a Complexidade pela Praticidade",
+            "subtitulo": "Cartões visuais diretos mostrando data do primeiro e último pedido",
+            "tema_central": "Eliminação de cálculos temporais complexos em favor de indicadores visuais diretos"
+          }
+        ]
+      },
+      {
+        "titulo": "Parte 2 — Implementação e KPIs",
+        "capitulos": [
+          {
+            "numero": 3,
+            "titulo": "Fórmulas Complexas em Segundos",
+            "subtitulo": "Rotinas VBA e fórmulas de Google Sheets (QUERY, VLOOKUP) geradas por IA",
+            "tema_central": "Automação de fórmulas complexas de planilha usando LLMs"
+          },
+          {
+            "numero": 4,
+            "titulo": "Seu Primeiro Painel de Saúde do Cliente B2B",
+            "subtitulo": "KPIs: Ticket Médio, CAC e Taxa de Recompra conectados",
+            "tema_central": "Montagem prática de painel de indicadores conectando os blocos dos capítulos anteriores"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "3" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 2: o conceito de KPI Cards com dados brutos (primeiro pedido, último pedido, volume total), agora aplicado à automação — onde a IA gera as fórmulas que alimentam esses cartões.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "VBA e Google Sheets: O que a IA Faz Bem e Onde o Humano Valida",
+        "escopo": "Capacidades reais de LLMs para gerar código de planilha: VBA para Excel, fórmulas nativas do Google Sheets. O que a IA gera com alta confiabilidade vs. o que precisa de revisão humana. Entra: exemplos de prompts e resultados. Sai: frameworks de IA avançados como LangChain.",
+        "ancora_visual": "flowchart TD mostrando a divisão de responsabilidades: IA gera (fórmulas, estrutura, validação sintática) vs. Humano valida (lógica de negócio, dados sensíveis, edge cases). Marcar com cores o que é seguro delegar vs. o que exige supervisão.",
+        "entrega_tecnica": "Dois prompts prontos: um para VBA (macro de consolidação) e um para Google Sheets (QUERY de vendas por período).",
+        "evolucao_leitor": "De 'escrevo fórmulas do zero' para 'delego à IA e valido com critério' — produtividade com governança.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Fórmulas QUERY e VLOOKUP: Templates Prontos Adaptados por IA",
+        "escopo": "As duas fórmulas mais poderosas do Google Sheets para dashboards financeiros: QUERY (consultas SQL em planilhas) e VLOOKUP/INDEX/MATCH (busca entre abas). Entra: como pedir à IA para adaptar essas fórmulas ao seu caso. Sai: fórmulas genéricas sem contexto.",
+        "ancora_visual": "sequenceDiagram mostrando a interação: Analista (descreve necessidade) → IA (gera QUERY/VLOOKUP) → Analista (testa com dados reais) → Ajuste → Produção. O diagrama deve destacar os 3 pontos onde a IA pode errar.",
+        "entrega_tecnica": "Script Google Apps Script que consolida dados de múltiplas abas usando QUERY gerada por IA, com validação de integridade.",
+        "evolucao_leitor": "De 'copio fórmulas de tutorials' para 'customizo fórmulas com IA para meu caso específico' — autonomia técnica.",
+        "conceito_denso": true
+      },
+      {
+        "nome": "NL2Dashboard: Dashboards Gerados por Linguagem Natural",
+        "escopo": "Frameworks que conectam linguagem natural a dashboards prontos: NL2Dashboard, DashChat, Data-to-Dashboard. Entra: como funcionam, quando usar, limitações reais. Sai: construção do zero desses frameworks.",
+        "ancora_visual": "flowchart LR mostrando o pipeline completo: Dados (CSV/Planilha) → Prompt Natural → IA Gera Dashboard → Validação Humana → Publicação. Marcar o ponto onde o framework NL2Dashboard se encaixa no fluxo.",
+        "entrega_tecnica": "Exemplo de prompt para NL2Dashboard gerar um painel de vendas por período a partir de dados CSV.",
+        "evolucao_leitor": "De 'construo dashboard manualmente' para 'descrevo o que quero e a IA constrói' — visão de futuro aplicável hoje.",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

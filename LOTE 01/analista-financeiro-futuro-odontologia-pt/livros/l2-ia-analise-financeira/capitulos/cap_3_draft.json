@@ -1,0 +1,29 @@
+{
+  "capitulo": 3,
+  "titulo": "Dashboards Inteligentes: Construindo Painéis de Controle que Pensam por Você",
+  "parte": "Parte I",
+  "slug": "cap_3",
+  "objetivo": "Ensinar a construir dashboards financeiros com IA integrada, onde os dados não apenas são exibidos mas interpretados automaticamente.",
+  "pilares": [
+    "Arquitetura de um dashboard inteligente: do Excel estático ao painel vivente",
+    "Componentes essenciais: KPIs, alertas automáticos e recomendações da IA",
+    "Implementação prática: ferramentas, integrações e automações para clínicas odontológicas"
+  ],
+  "callback_cap1": "Retome 'anonimização de dados' do Capítulo 1 — dados limpos e estruturados agora alimentam o dashboard.",
+  "callback_cap_anterior": "No Capítulo 2, você dominou a engenharia de prompts financeiros — agora verá como esses prompts se transformam em painéis inteligentes que operam autonomamente.",
+  "persona": "Analista com Copiloto IA",
+  "senioridade": "intermediario",
+  "motivo_condutor": "O Copiloto Digital",
+  "motivo_condutor_descricao": "Metáfora de voo: o dashboard é o painel de instrumentos do avião — mas agora com um copiloto IA que destaca os indicadores críticos, sugere ajustes de rota e emite alertas antes da turbulência.",
+  "vocabulario_condutor": ["piloto", "copiloto", "painel", "altitude", "rota", "referência", "pouso", "decisão", "turbulência", "instrumentos", "checklist", "manobra", "horizonte", "velocidade", "combustível"],
+  "persona_leitor": "Analista com Copiloto IA",
+  "conceito_denso": false,
+  "referencias": [
+    "Tableau (2024) - Best Practices in Financial Dashboard Design for Healthcare",
+    "Power BI (2025) - AI-Powered Financial Reporting in Dental Practices",
+    "McKinsey (2024) - Data-Driven Decision Making in Healthcare Operations",
+    "ABCD (2024) - Benchmark Financeiro de Clínicas Odontológicas Brasileiras",
+    "Harvard Business Review (2024) - The Rise of Augmented Analytics"
+  ],
+  "estado_execucao": "pendente"
+}

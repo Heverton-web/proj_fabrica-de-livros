@@ -1,0 +1,60 @@
+{
+  "tema": "Zero Custo! Como fazer isso utilizando LLMs gratuitas ou de baixíssimo custo. Orquestração de ferramentas no-code gratuitas para automatizar rotinas inteiras. Construir um verdadeiro motor de inteligência financeira utilizando webhooks e integrações de baixíssimo custo, sem depender de TI.",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 5,
+  "tamanho_obra": "P",
+  "senioridade_obra": "intermediario",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": null,
+  "cta_texto": null,
+  "modo_producao": "obra-unica",
+  "obra_raiz": null,
+  "sumario_macro": {
+    "titulo": "Zero Custo! Como fazer isso utilizando LLMs gratuitas ou de baixíssimo custo",
+    "partes": [
+      {
+        "titulo": "Parte 1 — Arsenal e Fundamentos",
+        "capitulos": [
+          {
+            "numero": 1,
+            "titulo": "O Arsenal Gratuito do Analista",
+            "subtitulo": "Criando contas em plataformas de IA gratuitas (Google AI Studio e alternativas)",
+            "tema_central": "Mapeamento de ferramentas de IA gratuitas ou de baixo custo para análise financeira"
+          },
+          {
+            "numero": 2,
+            "titulo": "O Poder dos Webhooks",
+            "subtitulo": "Conectando planilhas financeiras a serviços externos sem programar",
+            "tema_central": "Lógica de transmissão de dados (escuta e disparo) para integrações no-code"
+          }
+        ]
+      },
+      {
+        "titulo": "Parte 2 — Automação na Prática",
+        "capitulos": [
+          {
+            "numero": 3,
+            "titulo": "Automação Pós-Venda na Prática",
+            "subtitulo": "Fluxo visual com N8N para pesquisa de satisfação e tabulação automática",
+            "tema_central": "Criação de fluxos de automação para NPS e controle de feedback de clientes"
+          },
+          {
+            "numero": 4,
+            "titulo": "Alertas Executivos",
+            "subtitulo": "Integração com WhatsApp (Evolution API) para alertas de grandes vendas",
+            "tema_central": "Mensageria automática para alertas executivos baseados em eventos de faturamento"
+          }
+        ]
+      }
+    ]
+  }
+}

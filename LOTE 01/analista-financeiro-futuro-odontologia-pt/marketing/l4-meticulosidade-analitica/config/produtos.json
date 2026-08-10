@@ -1,0 +1,82 @@
+{
+  "produtos": [
+    {
+      "slug": "livro-autor-digital",
+      "nome": "Meticulosidade Analítica - O que só as IAs enxergam",
+      "descricao": "Auditoria profunda e higienização de dados com IA",
+      "tipo": "ebook",
+      "preco": 137,
+      "preco_original": 97.0,
+      "moeda": "EUR",
+      "link_checkout": "https://pay.hotmart.com/XXXXX",
+      "link_affiliate": "https://pay.hotmart.com/XXXXX?off=YYYYY",
+      "comissao_afiliado": 50,
+      "garantia_dias": 30,
+      "formato": "PDF + EPUB",
+      "entrega": "digital_instantanea",
+      "upgrades": [
+        {
+          "slug": "mentor-autor-digital",
+          "nome": "Mentoria Autor Digital",
+          "preco": 497.0,
+          "tipo": "mentoria_grupo"
+        }
+      ],
+      "tags": [
+        "livro",
+        "digital",
+        "publicacao",
+        "autor"
+      ],
+      "ativo": true
+    },
+    {
+      "slug": "funil-masterclass",
+      "nome": "Funil Masterclass",
+      "descricao": "Curso completo de criação de funis de vendas automatizados",
+      "tipo": "curso",
+      "preco": 197.0,
+      "preco_original": 497.0,
+      "moeda": "BRL",
+      "link_checkout": "https://pay.hotmart.com/ZZZZZ",
+      "comissao_afiliado": 40,
+      "garantia_dias": 7,
+      "formato": "Video + Templates",
+      "entrega": "acesso_plataforma",
+      "tags": [
+        "funil",
+        "curso",
+        "automacao",
+        "vendas"
+      ],
+      "ativo": true
+    },
+    {
+      "slug": "bundle-marketing-digital",
+      "nome": "Bundle Marketing Digital Completo",
+      "descricao": "Pacote com livros, templates e checklists de marketing",
+      "tipo": "bundle",
+      "preco": 67.0,
+      "preco_original": 197.0,
+      "moeda": "BRL",
+      "link_checkout": "https://pay.hotmart.com/AAAAA",
+      "comissao_afiliado": 50,
+      "garantia_dias": 30,
+      "formato": "PDF + Templates + Checklists",
+      "entrega": "digital_instantanea",
+      "tags": [
+        "bundle",
+        "marketing",
+        "templates"
+      ],
+      "ativo": true
+    }
+  ],
+  "configuracoes": {
+    "moeda_padrao": "BRL",
+    "plataforma_pagamento": "hotmart",
+    "webhook_pagamento": "/api/webhooks/pagamento",
+    "pixel_tracking": true,
+    "cupons_ativos": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "titulo_obra": "O Uso de IA em Análise Financeira no Setor Odontológico",
+  "tipo_obra": "deck",
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l2-ia-analise-financeira",
+  "motivo_condutor": {
+    "nome": "O Copiloto Digital",
+    "descricao": "Assim como um copiloto de avião divide a carga de trabalho com o piloto sem substituí-lo, a IA financeira é sua parceira de analyze — ela processa, cruza e sinaliza, mas quem toma a decisão final é você. Esta série ensina a comandar esse copiloto.",
+    "vocabulario": [
+      "copiloto",
+      "comando",
+      "painel",
+      "altitude",
+      "rota",
+      "referência",
+      "pouso",
+      "decisão"
+    ],
+    "persona_leitor": "Analista com Copiloto IA"
+  },
+  "total_slides": 9
+}

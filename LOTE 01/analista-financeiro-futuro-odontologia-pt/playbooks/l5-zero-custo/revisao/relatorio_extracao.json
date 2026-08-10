@@ -1,0 +1,46 @@
+{
+  "slug_mae": "livros/analista-financeiro-futuro-odontologia-pt-l5-zero-custo",
+  "slug_playbook": "playbooks/analista/pbk-1-custo-como-fazer",
+  "total_passos": 4,
+  "passos_com_lacuna": [
+    {
+      "passo": "01",
+      "titulo": "O Arsenal Gratuito do Analista",
+      "lacunas": [
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "02",
+      "titulo": "O Poder dos Webhooks",
+      "lacunas": [
+        "sem_entregas",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "03",
+      "titulo": "Automação Pós-Venda na Prática",
+      "lacunas": [
+        "sem_entregas",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "04",
+      "titulo": "Alertas Executivos",
+      "lacunas": [
+        "sem_entregas",
+        "sem_armadilhas"
+      ]
+    }
+  ],
+  "lacunas_criticas": [],
+  "cobertura": {
+    "com_entregas": 1,
+    "com_gate": 3,
+    "com_feito_quando": 4,
+    "com_armadilhas": 0
+  }
+}

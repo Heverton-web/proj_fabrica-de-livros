@@ -1,0 +1,49 @@
+{
+  "numero": "01",
+  "capitulo_fonte": "01",
+  "titulo": "O Arsenal Gratuito do Analista",
+  "estagio": "Bancada",
+  "estagio_indice": 1,
+  "objetivo": "Mapear e configurar as ferramentas de IA gratuitas disponíveis (Google AI Studio, Hugging Face) para análise financeira.",
+  "pre_requisito": "Nenhum — este é o ponto de partida",
+  "entregas": [
+    "nlptown/bert-base-multilingual-uncased-sentiment"
+  ],
+  "execucao": [
+    {
+      "titulo": "Configurando o Google AI Studio",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# configuração_inicial.py\n# Script para testar a conexão com o Google AI Studio\n\nimport requests\nimport json\n\n# Sua chave de API (substitua pela sua)\nAPI_KEY = \"<sua-chave-api-gemini>\"\nBASE_URL = \"https://generativelanguage.googleapis.com/v1beta/models\"\n\ndef listar_modelos_disponiveis():\n    \"\"\"Lista os modelos Gemini disponíveis no tier gratuito\"\"\"\n    url = f\"{BASE_URL}?key={API_KEY}\"\n    resposta = requests.get(url)\n\n    if resposta.status_code == 200:\n        modelos = resposta.json().get(\"models\", [])\n        print(\"Modelos disponíveis:\")\n        for modelo in modelos:\n            nome = modelo.get(\"name\", \"N/A\")\n            capacidades = modelo.get(\"supportedGenerationMethods\", [])\n            print(f\"  - {nome}: {capacidades}\")\n        return modelos\n    else:\n        print(f\"Erro {resposta.status_code}: {resposta.text}\")\n        return None\n\ndef analisar_faturamento(dados_financeiros):\n    \"\"\"Envia dados de faturamento para o Gemini e recebe análise\"\"\"\n    modelo = \"gemini-1.5-flash\"  # Tier gratuito: 15 RPM\n    url = f\"{BASE_URL}/{modelo}:generateContent?key={API_KEY}\"\n\n    prompt = f\"\"\"\n    Analise os seguintes dados de faturamento de clínica odontológica e retorne:\n    1. Total faturado no período\n    2. Ticket médio por procedimento\n    3. Procedimento mais lucrativo\n    4. Sugestão de otimização\n\n    Dados: {json.dumps(dados_financeiros, ensure_ascii=False)}\n    \"\"\"\n\n    payload = {\n        \"contents\": [{\"parts\": [{\"text\": prompt}]}],\n        \"generationConfig\": {\n            \"temperature\": 0.3,\n            \"maxOutputTokens\": 1024\n        }\n    }\n\n    headers ="
+    },
+    {
+      "titulo": "Configurando o Hugging Face para classificação de feedbacks",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# classificador_feedbacks.py\n# Script para classificar feedbacks de clientes usando Hugging Face\n\nimport requests\nimport json\nimport csv\nfrom datetime import datetime\n\n# Configuração do Hugging Face\nHF_API_URL = \"https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment\"\nHF_TOKEN = \"<seu-huggingface-token>\"  # Opcional para modelos gratuitos\n\ndef classificar_feedback(texto_feedback):\n    \"\"\"Classifica um feedback em sentimento (1-5 estrelas)\"\"\"\n    headers = {\"Authorization\": f\"Bearer {HF_TOKEN}\"} if HF_TOKEN else {}\n\n    payload = {\"inputs\": texto_feedback}\n    resposta = requests.post(HF_API_URL, headers=headers, json=payload)\n\n    if resposta.status_code == 200:\n        resultado = resposta.json()\n        # O modelo retorna array de labels com scores\n        if isinstance(resultado, list) and len(resultado) > 0:\n            scores = resultado[0]\n            # Encontra o label com maior score\n            melhor = max(scores, key=lambda x: x[\"score\"])\n            label = melhor[\"label\"]  # Ex: \"5 stars\", \"1 star\"\n            score = melhor[\"score\"]\n\n            # Mapeia para classificação simplificada\n            estrelas = int(label.split()[0])\n            if estrelas >= 4:\n                classificacao = \"promotor\"\n            elif estrelas == 3:\n                classificacao = \"passivo\"\n            else:\n                classificacao = \"detrator\"\n\n            return {\n                \"texto\": texto_feedback,\n                \"estrelas\": estrelas,\n                \"classificacao\": classificacao,\n                \"confianca\": round(score, 3"
+    },
+    {
+      "titulo": "A stack completa em ação: workflow N8N de exemplo",
+      "linguagem": "yaml",
+      "comandos": [],
+      "codigo": "# workflow_exemplo.json\n# Workflow N8N que conecta Google Sheets ao Google AI Studio\n{\n  \"name\": \"Análise Financeira Automatizada\",\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"pollTimes\": {\n          \"item\": [{\"mode\": \"everyMinute\"}]\n        },\n        \"documentId\": {\"__rl\": true, \"value\": \"SUA_PLANILHA_ID\"},\n        \"sheetName\": {\"__rl\": true, \"value\": \"Dados Brutos\"}\n      },\n      \"name\": \"Google Sheets - Ler Dados\",\n      \"type\": \"n8n-nodes-base.googleSheets\",\n      \"typeVersion\": 4,\n      \"position\": [250, 300]\n    },\n    {\n      \"parameters\": {\n        \"conditions\": {\n          \"options\": {\"caseSensitive\": true, \"leftValue\": \"\", \"typeValidation\": \"strict\"},\n          \"conditions\": [\n            {\n              \"id\": \"condicao-faturamento\",\n              \"leftValue\": \"={{ $json.faturamento }}\",\n              \"rightValue\": \"10000\",\n              \"operator\": {\"type\": \"number\", \"operation\": \"gt\"}\n            }\n          ]\n        }\n      },\n      \"name\": \"IF - Faturamento > 10k\",\n      \"type\": \"n8n-nodes-base.if\",\n      \"typeVersion\": 2,\n      \"position\": [480, 300]\n    },\n    {\n      \"parameters\": {\n        \"method\": \"POST\",\n        \"url\": \"=https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={{ $env.GEMINI_API_KEY }}\",\n        \"sendBody\": true,\n        \"bodyParameters\": {\n          \"parameters\": [\n            {\n              \"name\": \"contents\",\n              \"value\": \"=[{\\\"parts\\\":[{\\\"text\\\":\\\"Analise este dado financeiro e retorne um resumo executivo em 3 linhas: {{ JSON.stringify($json) }}\\\"}]}]\"\n            }\n          ]"
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Você acabou de montar sua bancada",
+    "As ferramentas estão afiadas",
+    "Mas antes de sair ligando tudo",
+    "Imagione que você é o responsável financeiro de uma rede de 3 clínicas odontológicas",
+    "O dono pede um relatório consolidado de faturamento do trimestre",
+    "A armadilha aqui é sutil: a tentação de automatizar tudo de uma vez",
+    "Você vê o potencial"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 1 — O Arsenal Gratuito do Analista",
+  "lacunas": [
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

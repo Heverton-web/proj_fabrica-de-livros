@@ -1,0 +1,50 @@
+{
+  "modelo_padrao": "gpt-4o-mini",
+  "modelos": {
+    "gerar_email": {
+      "modelo": "gpt-4o-mini",
+      "temperatura": 0.7,
+      "max_tokens": 2000,
+      "uso": "Geração de copy de e-mails"
+    },
+    "gerar_post": {
+      "modelo": "gpt-4o-mini",
+      "temperatura": 0.8,
+      "max_tokens": 500,
+      "uso": "Geração de posts para redes sociais"
+    },
+    "gerar_dm": {
+      "modelo": "gpt-4o-mini",
+      "temperatura": 0.6,
+      "max_tokens": 300,
+      "uso": "Geração de mensagens diretas"
+    },
+    "analisar_lead": {
+      "modelo": "gpt-4o-mini",
+      "temperatura": 0.2,
+      "max_tokens": 500,
+      "uso": "Análise e scoring de leads"
+    },
+    "otimizar_assunto": {
+      "modelo": "gpt-4o-mini",
+      "temperatura": 0.9,
+      "max_tokens": 200,
+      "uso": "Geração de assuntos de e-mail (A/B)"
+    },
+    "responder_objecao": {
+      "modelo": "gpt-4o",
+      "temperatura": 0.4,
+      "max_tokens": 800,
+      "uso": "Resposta a objeções de vendas"
+    }
+  },
+  "fallback": {
+    "modelo": "gpt-4o-mini",
+    "temperatura": 0.5,
+    "max_tokens": 1000
+  },
+  "rate_limit": {
+    "max_requests_minuto": 60,
+    "max_tokens_dia": 500000
+  }
+}

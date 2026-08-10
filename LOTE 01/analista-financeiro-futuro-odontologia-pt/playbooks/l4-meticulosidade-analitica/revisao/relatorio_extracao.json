@@ -1,0 +1,53 @@
+{
+  "slug_mae": "livros/analista-financeiro-futuro-odontologia-pt-l4-meticulosidade-analitica",
+  "slug_playbook": "playbooks/analista/pbk-1-meticulosidade-analitica",
+  "total_passos": 4,
+  "passos_com_lacuna": [
+    {
+      "passo": "01",
+      "titulo": "Caçando Descontos Ocultos",
+      "lacunas": [
+        "sem_secao_tecnica",
+        "sem_entregas",
+        "sem_execucao",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "02",
+      "titulo": "Limpeza e Higienização de Dados (Regex)",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "03",
+      "titulo": "A Análise da Cesta de Compras",
+      "lacunas": [
+        "sem_secao_tecnica",
+        "sem_entregas",
+        "sem_execucao",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "04",
+      "titulo": "O Relatório de Recuperação de Lucro",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    }
+  ],
+  "lacunas_criticas": [
+    "sem_execucao",
+    "sem_secao_tecnica"
+  ],
+  "cobertura": {
+    "com_entregas": 0,
+    "com_gate": 0,
+    "com_feito_quando": 4,
+    "com_armadilhas": 4
+  }
+}

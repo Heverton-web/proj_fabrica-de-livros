@@ -1,0 +1,110 @@
+{
+  "slug": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-04-profissionalizando-acabamento-e-qualidad",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 78334,
+  "paginas_estimadas": 31.3,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "78.334 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 26,
+        "Esta": 3
+      },
+      "ocorrencias": 29
+    },
+    {
+      "termo_normalizado": "mantem",
+      "variantes": {
+        "mantém": 4,
+        "mantêm": 1
+      },
+      "ocorrencias": 5
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 19453,
+      "palavras": 2497,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ração e o CI de sintaxe que garante que todo código que entra no canteiro compila e passa.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 18295,
+      "palavras": 2205,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "es revisores e auditorias determinísticas que examinam a obra inteira antes da integração.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 19531,
+      "palavras": 2141,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " tokens — técnicas de compressão de contexto que mantêm projetos longos viáveis e baratos.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 19170,
+      "palavras": 2315,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l, CI/CD e pipelines — o caminho do código ao deploy com gates automatizados de qualidade.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

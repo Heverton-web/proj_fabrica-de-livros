@@ -1,0 +1,60 @@
+{
+  "capitulo": 1,
+  "titulo": "O Fim do Digitador de Faturas",
+  "parte": "Parte I",
+  "objetivo": "Mapear a semana de trabalho e identificar gargalos operacionais substituídos por IA",
+  "motivo_condutor": "O Passe VIP — no mundo corporativo, existe um passe invisível que dá acesso às salas onde decisões acontecem",
+  "vocabulario_chave": ["passe", "acesso", "sala de decisões", "porta-fechadura", "moeda de troca", "valor percebido"],
+  "pilares": [
+    {
+      "nome": "Mapeamento de tarefas operacionais",
+      "escopo": "O que consome tempo vs. agrega valor na rotina do analista financeiro",
+      "ancora_visual": "Matriz de Pareto 80/20 aplicada a tarefas de escritório",
+      "entrega_tecnica": "Framework de classificação de tarefas em 4 quadrantes (rotineira/estratégica x manual/automatizável)",
+      "evolucao_leitor": "Do digitador que executa para o analista que decide",
+      "conceito_denso": "A armadilha da produtividade: ser bom em tarefa operacional é recompensado com mais tarefa operacional"
+    },
+    {
+      "nome": "Automação RPA/AI",
+      "escopo": "Redução de erros 60-80% via automação de processos financeiros",
+      "ancora_visual": "Fluxo antes/depois de uma fatura processada manualmente vs. automatizada",
+      "entrega_tecnica": "Checklist de 5 critérios para identificar tarefas automatizáveis",
+      "evolucao_leitor": "De digitador de dados a curador de exceções",
+      "conceito_denso": "O robô não substitui o analista — libera o analista para ser analista"
+    },
+    {
+      "nome": "Framework 6 passos para adoção de LLM em B2B",
+      "escopo": "Processo estruturado para implementar ferramentas de IA no fluxo financeiro",
+      "ancora_visual": "Pipeline visual de 6 estágios com feedback loop",
+      "entrega_tecnica": "Framework PASSO (Planejar, Avaliar, Selecionar, Sinalizar, Otimizar, Operar)",
+      "evolucao_leitor": "De espectador da transformação a protagonista da adoção",
+      "conceito_denso": "A adoção de IA não é compra de ferramenta — é mudança de cultura operacional"
+    }
+  ],
+  "referencias": [
+    {
+      "id": 1,
+      "tipo": "relatorio",
+      "titulo": "McKinsey Global Institute Report on Automation in Finance",
+      "autores": "McKinsey Global Institute",
+      "ano": 2024,
+      "url": "https://www.mckinsey.com/mgi/overview"
+    },
+    {
+      "id": 2,
+      "tipo": "artigo",
+      "titulo": "RPA in Financial Services: A Comprehensive Review",
+      "autores": "Deloitte",
+      "ano": 2024,
+      "url": "https://www2.deloitte.com/us/en/pages/consulting/articles/intelligent-automation.html"
+    },
+    {
+      "id": 3,
+      "tipo": "documento",
+      "titulo": "IMA Statement on Management Accounting - Financial Planning & Analysis",
+      "autores": "IMA (Institute of Management Accountants)",
+      "ano": 2024,
+      "url": "https://www.imanet.org/career-resources/management-accounting-competencies"
+    }
+  ]
+}

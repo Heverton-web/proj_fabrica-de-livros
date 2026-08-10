@@ -1,0 +1,57 @@
+{
+  "numero": "02",
+  "capitulo_fonte": "02",
+  "titulo": "O Poder dos Webhooks",
+  "estagio": "Bancada",
+  "estagio_indice": 1,
+  "objetivo": "Ensinar o leitor a entender e configurar webhooks para conectar planilhas financeiras a serviços externos sem programar.",
+  "pre_requisito": "Passo 1 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Construindo um webhook receiver com Express (Node.js)",
+      "linguagem": "javascript",
+      "comandos": [],
+      "codigo": "// webhook_receiver.js\n// Mini-servidor que recebe webhooks POST e retorna status 200\n\nconst express = require('express');\nconst app = express();\nconst PORT = 3000;\n\n// Middleware para parsear JSON\napp.use(express.json());\n\n// Banco de dados em memória (para demonstração)\nconst webhookLog = [];\n\n// Endpoint principal - recebe webhooks\napp.post('/webhook/recebido', (req, res) => {\n  const timestamp = new Date().toISOString();\n  const dados = req.body;\n  const headers = req.headers;\n\n  // Registra o webhook recebido\n  const registro = {\n    id: webhookLog.length + 1,\n    timestamp: timestamp,\n    origem: headers['x-webhook-source'] || 'desconhecido',\n    dados: dados,\n    processado: false\n  };\n\n  webhookLog.push(registro);\n\n  console.log(`[${timestamp}] Webhook recebido de: ${registro.origem}`);\n  console.log(`  Dados: ${JSON.stringify(dados, null, 2)}`);\n\n  // Retorna status 200 para o disparador saber que deu certo\n  res.status(200).json({\n    status: 'sucesso',\n    mensagem: 'Webhook recebido e registrado',\n    id: registro.id,\n    timestamp: timestamp\n  });\n});\n\n// Endpoint para consultar webhooks recebidos\napp.get('/webhook/log', (req, res) => {\n  res.json({\n    total: webhookLog.length,\n    registros: webhookLog.slice(-10) // Últimos 10\n  });\n});\n\n// Endpoint de health check\napp.get('/health', (req, res) => {\n  res.json({ status: 'ok', uptime: process.uptime() });\n});\n\n// Inicia o servidor\napp.listen(PORT, () => {\n  console.log(`\\n=== WEBHOOK RECEIVER RODANDO ===`);\n  console.log(`Porta: ${PORT}`);\n  console.log(`Endpoint: http://localhost:${PORT}/webhook/recebido`);\n "
+    },
+    {
+      "titulo": "Testando com curl",
+      "linguagem": "bash",
+      "comandos": [
+        "curl http://localhost:3000/webhook/log"
+      ],
+      "codigo": "# Teste 1: Enviar um webhook simulando dados de faturamento\ncurl -X POST http://localhost:3000/webhook/recebido \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-Webhook-Source: google-sheets\" \\\n  -d '{\n    \"evento\": \"nova_venda\",\n    \"clinica\": \"Odonto Premium\",\n    \"valor\": 7500.00,\n    \"procedimento\": \"Clareamento + Facetas\",\n    \"dentista\": \"Dr. Carlos\",\n    \"data\": \"2026-08-08\"\n  }'\n\n# Teste 2: Enviar dados de pagamento\ncurl -X POST http://localhost:3000/webhook/recebido \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-Webhook-Source: sistema-pagamento\" \\\n  -d '{\n    \"evento\": \"pagamento_recebido\",\n    \"cliente\": \"Maria Silva\",\n    \"valor\": 2800.00,\n    \"forma\": \"PIX\",\n    \"referencia\": \"FAT-2026-0847\"\n  }'\n\n# Teste 3: Consultar log de webhooks recebidos\ncurl http://localhost:3000/webhook/log"
+    },
+    {
+      "titulo": "Configurando o N8N para receber e processar webhooks",
+      "linguagem": "json",
+      "comandos": [],
+      "codigo": "{\n  \"name\": \"Webhook Financeiro - Processamento Automatizado\",\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"httpMethod\": \"POST\",\n        \"path\": \"financeiro\",\n        \"responseMode\": \"responseNode\",\n        \"options\": {}\n      },\n      \"name\": \"Webhook - Receber Dados\",\n      \"type\": \"n8n-nodes-base.webhook\",\n      \"typeVersion\": 2,\n      \"position\": [250, 300],\n      \"webhookId\": \"webhook-financeiro-001\"\n    },\n    {\n      \"parameters\": {\n        \"conditions\": {\n          \"options\": {\"caseSensitive\": true, \"leftValue\": \"\", \"typeValidation\": \"strict\"},\n          \"conditions\": [\n            {\n              \"id\": \"condicao-venda\",\n              \"leftValue\": \"={{ $json.body.evento }}\",\n              \"rightValue\": \"nova_venda\",\n              \"operator\": {\"type\": \"string\", \"operation\": \"equals\"}\n            }\n          ]\n        }\n      },\n      \"name\": \"IF - É Venda?\",\n      \"type\": \"n8n-nodes-base.if\",\n      \"typeVersion\": 2,\n      \"position\": [480, 300]\n    },\n    {\n      \"parameters\": {\n        \"conditions\": {\n          \"options\": {\"caseSensitive\": true, \"leftValue\": \"\", \"typeValidation\": \"strict\"},\n          \"conditions\": [\n            {\n              \"id\": \"condicao-valor\",\n              \"leftValue\": \"={{ $json.body.valor }}\",\n              \"rightValue\": \"5000\",\n              \"operator\": {\"type\": \"number\", \"operation\": \"gt\"}\n            }\n          ]\n        }\n      },\n      \"name\": \"IF - Venda > 5k?\",\n      \"type\": \"n8n-nodes-base.if\",\n      \"typeVersion\": 2,\n      \"position\": [710, 250]\n    },\n    {\n      \"parameters\": {\n        \"method\": \"POST\",\n        \"url\": \"=ht"
+    },
+    {
+      "titulo": "Estrutura de planilha para automação",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "# setup_planilha.py\n# Script para criar a estrutura de abas no Google Sheets via API\n\nfrom google.oauth2 import service_account\nfrom googleapiclient.discovery import build\nimport json\n\n# Configuração de autenticação\nSCOPES = ['https://www.googleapis.com/auth/spreadsheets']\nSERVICE_ACCOUNT_FILE = 'credenciais-gsheets.json'  # Baixe do Google Cloud\n\ndef criar_estrutura_planilha(spreadsheet_id):\n    \"\"\"Cria as abas necessárias para automação\"\"\"\n    creds = service_account.Credentials.from_service_account_file(\n        SERVICE_ACCOUNT_FILE, scopes=SCOPES\n    )\n    service = build('sheets', 'v4', credentials=creds)\n    sheets = service.spreadsheets()\n\n    # Estrutura das abas\n    abas_config = [\n        {\n            \"titulo\": \"Dados Brutos\",\n            \"headers\": [\"Data\", \"Clinica\", \"Procedimento\", \"Dentista\", \"Valor\", \"Status\"]\n        },\n        {\n            \"titulo\": \"Processados\",\n            \"headers\": [\"Data\", \"Tipo\", \"Descricao\", \"Resultado\", \"Confianca\"]\n        },\n        {\n            \"titulo\": \"Alertas\",\n            \"headers\": [\"Data\", \"Tipo Alerta\", \"Mensagem\", \"Destinatario\", \"Enviado\"]\n        },\n        {\n            \"titulo\": \"Config\",\n            \"headers\": [\"Parametro\", \"Valor\", \"Descricao\"],\n            \"dados\": [\n                [\"limiar_venda_grande\", \"5000\", \"Valor em R$ que dispara alerta\"],\n                [\"limiar_estoque_baixo\", \"10\", \"Quantidade mínima em estoque\"],\n                [\"frequencia_alerta\", \"diario\", \"Frequência de relatórios\"],\n                [\"whatsapp_destinatario\", \"+5511999999999\", \"Número do diretor\"]\n            ]\n        }\n    "
+    }
+  ],
+  "gate": "curl http://localhost:3000/webhook/log",
+  "comandos": [
+    "curl http://localhost:3000/webhook/log"
+  ],
+  "feito_quando": [
+    "Você configurou o webhook receiver",
+    "Agora vamos ver o que acontece quando a teoria encontra a prática —",
+    "Imagine que você é o analista de uma clínica odontológica que fatura R$ 180 mil por mês",
+    "O dono quer ser alertado no WhatsApp sempre que uma venda de R$ 5 mil ou mais acontecer",
+    "Você monta o workflow: planilha alimenta webhook",
+    "O primeiro dia em produção revela a verdade",
+    "A recepcionista cadastra 3 vendas simultâneas"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 2 — O Poder dos Webhooks",
+  "lacunas": [
+    "sem_entregas",
+    "sem_armadilhas"
+  ]
+}

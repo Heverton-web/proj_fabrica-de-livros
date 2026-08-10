@@ -1,0 +1,103 @@
+{
+  "slug": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-03-avancando-instalacoes-e-ferramentas",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 79524,
+  "paginas_estimadas": 31.8,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "79.524 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 16,
+        "Esta": 1,
+        "esta": 1
+      },
+      "ocorrencias": 18
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 19565,
+      "palavras": 2312,
+      "numeracao_progressiva": true,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "figurar servidores MCP e como conectar banco e APIs externas ao agente da TorreDeControle.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 18889,
+      "palavras": 2571,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "omizado do zero e a blindagem contra o tool poisoning que você acabou de aprender a temer.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 20326,
+      "palavras": 1567,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "as com escopos e prompts próprios que trabalham em paralelo sob a orquestração do harness.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 18865,
+      "palavras": 1988,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ça do canteiro em produção: hooks, permissões e governança — a autonomia segura do agente.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

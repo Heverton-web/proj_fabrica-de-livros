@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "3" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 2: a lógica de webhooks e o Google Sheets como banco de dados, agora aplicados ao fluxo real de pós-venda",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "N8N: a plataforma que torna tudo possível",
+        "escopo": "Deep dive no N8N: instalação self-hospedada (Docker), interface visual, 11.190+ templates, 400+ integrações. Diferença entre N8N Cloud (pago) e self-hospedado (gratuito). Motivo pelo qual é a escolha certa para a oficina.",
+        "ancora_visual": "flowchart TD mostrando as 3 formas de instalar N8N (Docker, npm, cloud) e os nodes principais disponíveis para integração",
+        "entrega_tecnica": "Docker Compose: configuração completa para self-hospedagem do N8N com persistência de dados e integração com Google Sheets",
+        "evolucao_leitor": "de 'vi que o N8N existe' para 'consigo instalar e configurar meu próprio N8N gratuito em minutos'",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Pipeline NPS completo: do disparo à tabulação",
+        "escopo": "Construção passo a passo de um workflow NPS: envio de pesquisa via WhatsApp (Evolution API), recebimento de respostas, tabulação automática com IA (Gemini), classificação em promotores/passivos/detratores, registro em Google Sheets, alerta para equipe.",
+        "ancora_visual": "sequenceDiagram detalhado mostrando: N8N → WhatsApp (Evolution API) → Cliente → WhatsApp → N8N → Gemini API (classificação) → Google Sheets → Alerta",
+        "entrega_tecnica": "JSON: workflow N8N completo e funcional do pipeline NPS, com todos os nodes configurados e comentários explicativos",
+        "evolucao_leitor": "de 'NPS manual é dor de cabeça' para 'tenho um pipeline automatizado que coleta, classifica e tabula feedbacks sem eu mexer um dedo'",
+        "conceito_denso": true
+      },
+      {
+        "nome": "Casos reais que provam o valor",
+        "escopo": "Cases documentados: Vodafone economizou £2.2M com automação N8N, Huel economizou 1.000h/mês, Bordr (solo founder) economizou $100K. Análise do que funcionou, custos antes vs depois, métricas de impacto.",
+        "ancora_visual": "tabela comparativa Mermaid mostrando antes/depois de 3 cases reais com métricas de economia",
+        "entrega_tecnica": "Markdown: análise estruturada de 3 cases reais com métricas, lições aprendidas e adaptação para contexto odontológico",
+        "evolucao_leitor": "de 'parece bom demais para ser verdade' para 'empresas reais já provaram que funciona — e agora sei replicar no meu contexto'",
+        "conceito_denso": false
+      }
+    ]
+  }
+}

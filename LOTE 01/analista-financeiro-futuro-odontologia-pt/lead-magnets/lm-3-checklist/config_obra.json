@@ -1,0 +1,22 @@
+{
+  "tipo_obra": "lead-magnet",
+  "min_referencias_por_capitulo": 0,
+  "tamanho_obra": null,
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "livro_mae": "analista-financeiro-futuro-odontologia-pt-l5-zero-custo",
+  "obra_mae": "analista-financeiro-futuro-odontologia-pt-l5-zero-custo",
+  "tema": "Checklist Mestre: Zero Custo! Como fazer isso utilizando LLMs gratuitas ou de baixíssimo custo",
+  "formato_lm": "checklist",
+  "senioridade_obra": "intermediario",
+  "cta_url": "https://seu-site.com.br/ia",
+  "cta_texto": "",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT"
+}

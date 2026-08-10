@@ -1,0 +1,60 @@
+{
+  "tema": "Passe Caro - Como ser um profissional desejado do setor. O reposicionamento do analista na prática, saindo do operacional para o estratégico. Fazer o leitor auditar sua própria rotina, mapear o fluxo de dinheiro da clínica odontológica e construir seu primeiro relatório estratégico de alto valor.",
+  "tipo_obra": "livro",
+  "min_referencias_por_capitulo": 5,
+  "tamanho_obra": "P",
+  "senioridade_obra": "intermediario",
+  "serie": "O Analista Financeiro do Futuro - Setor Odontológico PT",
+  "gerar_artigos": false,
+  "qtd_artigos": 0,
+  "gerar_ebooks": false,
+  "qtd_ebooks": 0,
+  "gerar_playbook": false,
+  "gerar_lead_magnets": false,
+  "formatos_lm": [],
+  "gerar_deck": false,
+  "gerar_emails": false,
+  "cta_url": null,
+  "cta_texto": null,
+  "modo_producao": "obra-unica",
+  "obra_raiz": null,
+  "sumario_macro": {
+    "titulo": "Passe Caro - Como ser um profissional desejado do setor",
+    "partes": [
+      {
+        "titulo": "Parte 1 — O Novo Papel do Analista",
+        "capitulos": [
+          {
+            "numero": 1,
+            "titulo": "O Fim do Digitador de Faturas",
+            "subtitulo": "Auditoria da própria semana de trabalho para identificar gargalos operacionais",
+            "tema_central": "Mapeamento de tarefas operacionais repetitivas que consomem tempo e serão substituídas por IA"
+          },
+          {
+            "numero": 2,
+            "titulo": "Entendendo a Dinâmica de Compras do Dentista Português",
+            "subtitulo": "Ciclo de vida dos produtos e impacto no fluxo de caixa do fornecedor",
+            "tema_central": "Diferença entre equipamentos de capital e materiais de consumo, e como isso afeta a previsibilidade financeira"
+          }
+        ]
+      },
+      {
+        "titulo": "Parte 2 — Da Observação à Ação",
+        "capitulos": [
+          {
+            "numero": 3,
+            "titulo": "Criando a Ponte Comercial-Financeiro",
+            "subtitulo": "Matriz que cruza dados do funil de vendas com previsões de faturamento",
+            "tema_central": "Integração entre dados comerciais e financeiros para previsões mais acuradas"
+          },
+          {
+            "numero": 4,
+            "titulo": "O Seu Plano de Ação Imediato",
+            "subtitulo": "Template de apresentação enxuta para mostrar achados estratégicos à diretoria",
+            "tema_central": "Comunicação estratégica e apresentação de resultados executivos"
+          }
+        ]
+      }
+    ]
+  }
+}

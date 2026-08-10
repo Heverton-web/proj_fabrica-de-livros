@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "II", "capitulo": "4" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": "Capítulo 3: o conceito de QUERY e VLOOKUP como ferramentas de consolidação, agora aplicado ao cálculo dos KPIs essenciais de saúde do cliente B2B — Ticket Médio, CAC e Taxa de Recompra são Query results, não cálculos manuais.",
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "KPIs Essenciais de Saúde B2B: Fórmulas Prontas",
+        "escopo": "As 5 métricas que definem a saúde de um cliente B2B no setor odontológico: Ticket Médio, CAC, LTV, Taxa de Recompra, NPS. Entra: fórmula de cada uma, contextualizada com dados do setor. Sai: métricas genéricas de SaaS que não se aplicam a B2B odontológico.",
+        "ancora_visual": "flowchart TD mostrando as 5 métricas como instrumentos do painel de comando: Ticket Médio (velocímetro), CAC (altímetro), LTV (horímetro), Taxa de Recompra (combustível), NPS ( bússola). Cada instrumento com sua função na ponte de comando.",
+        "entrega_tecnica": "Google Sheets: 5 fórmulas prontas para calcular cada KPI, com QUERY para agrupamento por cliente.",
+        "evolucao_leitor": "De 'sei que preciso de KPIs' para 'calculei os 5 KPIs essenciais do meu negócio' — do conceito à implementação.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Conexão dos Blocos: Do Dado Bruto ao KPI ao Dashboard",
+        "escopo": "O fluxo completo de ponta a ponta: dado bruto (export ERP) → QUERY de consolidação (Cap 3) → KPI Card (Cap 2) → Dashboard final (Cap 1). Entra: passo a passo da integração. Sai: dashboards isolados sem conexão com dados reais.",
+        "ancora_visual": "sequenceDiagram mostrando a integração completa: ERP (exporta dados) → IA (gera QUERY) → Google Sheets (consolida) → KPI Cards (renderiza) → Dashboard (apresenta) → Diretoria (decide). O diagrama deve usar vocabulário do motivo condutor: painel, instrumento, decisão.",
+        "entrega_tecnica": "Script completo que conecta todos os blocos: dados brutos → QUERY → KPI Cards → Dashboard HTML.",
+        "evolucao_leitor": "De 'tenho peças soltas' para 'montei o painel de comando completo' — integração e visão sistêmica.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "MisVisFix: Validação de Visualizações Enganosas",
+        "escopo": "Como ferramentas com IA detectam visualizações que enganam o leitor (eixos truncados, escalas inconsistentes, gráficos manipulados). Entra: conceito de MisVisFix, 96% de acurácia, exemplos reais. Sai: implementação do framework do zero.",
+        "ancora_visual": "flowchart LR mostrando o pipeline de validação: Dashboard Final → IA Analisa Visualização → Detecta Anomalias (eixo truncado, escala inconsistente) → Relatório de Alertas → Correção → Dashboard Validado. Marcar os 4% de falso negativo.",
+        "entrega_tecnica": "Prompt para IA validar um dashboard contra visualizações enganosas, com checklist de 5 pontos.",
+        "evolucao_leitor": "De 'confio no que vejo' para 'verifico antes de confiar' — pensamento crítico aplicado a dados visuais.",
+        "conceito_denso": true
+      }
+    ]
+  }
+}

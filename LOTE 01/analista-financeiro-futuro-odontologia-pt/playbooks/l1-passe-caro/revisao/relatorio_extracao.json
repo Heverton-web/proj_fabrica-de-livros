@@ -1,0 +1,48 @@
+{
+  "slug_mae": "livros/analista-financeiro-futuro-odontologia-pt-l1-passe-caro",
+  "slug_playbook": "playbooks/analista/pbk-1-passe-caro-como",
+  "total_passos": 4,
+  "passos_com_lacuna": [
+    {
+      "passo": "01",
+      "titulo": "O Fim do Digitador de Faturas",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "02",
+      "titulo": "Entendendo a Dinâmica de Compras do Dentista Português",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate"
+      ]
+    },
+    {
+      "passo": "03",
+      "titulo": "Criando a Ponte Comercial-Financeiro",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    },
+    {
+      "passo": "04",
+      "titulo": "O Seu Plano de Ação Imediato",
+      "lacunas": [
+        "sem_entregas",
+        "sem_gate",
+        "sem_armadilhas"
+      ]
+    }
+  ],
+  "lacunas_criticas": [],
+  "cobertura": {
+    "com_entregas": 0,
+    "com_gate": 0,
+    "com_feito_quando": 4,
+    "com_armadilhas": 2
+  }
+}

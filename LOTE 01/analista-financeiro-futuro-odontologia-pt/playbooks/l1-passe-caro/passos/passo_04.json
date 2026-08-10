@@ -1,0 +1,46 @@
+{
+  "numero": "04",
+  "capitulo_fonte": "04",
+  "titulo": "O Seu Plano de Ação Imediato",
+  "estagio": "Acesso",
+  "estagio_indice": 2,
+  "objetivo": "Entregar ao leitor um template de apresentação enxuta para mostrar seus primeiros achados estratégicos à diretoria no final do mês.",
+  "pre_requisito": "Passo 3 concluído",
+  "entregas": [],
+  "execucao": [
+    {
+      "titulo": "Template Python Completo: Gerador de Relatório Executivo",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"\nGerador de Relatório Executivo — Capítulo 4\nTransforma dados da matriz comercial-financeiro em apresentação de 5 slides.\n\"\"\"\n\nfrom dataclasses import dataclass\nfrom datetime import datetime\nfrom typing import Optional\nimport json\n\n\n@dataclass\nclass AchadoEstrategico:\n    \"\"\"Representa um achado selecionado para o Slide 3.\"\"\"\n    titulo: str\n    categoria: str\n    valor_atual: float\n    valor_anterior: float\n    variacao_pct: float\n    impacto_financeiro: float\n    unidade: str = \"R$\"\n\n\n@dataclass\nclass Recomendacao:\n    \"\"\"Representa uma recomendação para o Slide 4.\"\"\"\n    acao: str\n    responsavel: str\n    prazo: str\n    impacto: str\n    metrica_sucesso: str\n\n\n@dataclass\nclass ProximoPasso:\n    \"\"\"Representa um próximo passo para o Slide 5.\"\"\"\n    acao: str\n    responsavel: str\n    prazo: str\n    dependencia: Optional[str] = None\n\n\nclass GeradorRelatorioExecutivo:\n    \"\"\"Gera relatório executivo de 5 slides para diretoria.\"\"\"\n\n    def __init__(\n        self,\n        empresa: str,\n        trimestre: str,\n        dados_pipeline: dict,\n    ):\n        self.empresa = empresa\n        self.trimestre = trimestre\n        self.dados_pipeline = dados_pipeline\n\n    def selecionar_achados(\n        self, top: int = 3\n    ) -> list[AchadoEstrategico]:\n        \"\"\"\n        Seleciona os 3 achados com maior variação percentual\n        entre categorias de produto.\n        \"\"\"\n        categorias = self.dados_pipeline.get(\"por_categoria\", {})\n        achados = []\n\n        for cat, dados in categorias.items():\n            bruto = dados.get(\"bruto\", 0)\n            ponderado = dados.get(\"ponde"
+    },
+    {
+      "titulo": "Script de Automação: Gerador de Slides Markdown",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"\nGerador de Slides Markdown — Capítulo 4\nConecta ao ERP e gera apresentação executiva automaticamente.\n\"\"\"\n\nimport sqlite3\nfrom datetime import datetime, timedelta\nfrom pathlib import Path\n\n\nclass GeradorSlidesMarkdown:\n    \"\"\"Gera slides Markdown a partir dos dados do ERP.\"\"\"\n\n    def __init__(self, caminho_banco: str):\n        self.conn = sqlite3.connect(caminho_banco)\n        self.conn.row_factory = sqlite3.Row\n        self.output_dir = Path(\"./output/apresentacoes/\")\n        self.output_dir.mkdir(parents=True, exist_ok=True)\n\n    def buscar_pipeline_por_categoria(self) -> list[dict]:\n        \"\"\"Busca o pipeline agrupado por categoria de produto.\"\"\"\n        query = \"\"\"\n        SELECT \n            c.nome as categoria,\n            COUNT(d.id) as qtd_deals,\n            SUM(d.valor) as valor_bruto,\n            SUM(d.valor * e.probabilidade) as valor_ponderado,\n            AVG(d.dias_no_estagio) as dias_medios\n        FROM deals d\n        JOIN categorias c ON d.categoria_id = c.id\n        JOIN estagios e ON d.estagio_id = e.id\n        WHERE d.status = 'ativo'\n        GROUP BY c.nome\n        ORDER BY valor_ponderado DESC\n        \"\"\"\n        cursor = self.conn.execute(query)\n        return [dict(row) for row in cursor.fetchall()]\n\n    def buscar_top_clientes(\n        self, limite: int = 50\n    ) -> list[dict]:\n        \"\"\"Busca os maiores clientes por valor de pipeline.\"\"\"\n        query = \"\"\"\n        SELECT \n            cl.nome,\n            cl.tipo,\n            COUNT(d.id) as qtd_deals,\n            SUM(d.valor) as valor_total,\n            SUM(d.valor * e.probabilidade) as val"
+    },
+    {
+      "titulo": "Checklist Automatizado: Validação Pré-Apresentação",
+      "linguagem": "python",
+      "comandos": [],
+      "codigo": "\"\"\"\nValidador de Apresentação Executiva — Capítulo 4\nVerifica se a apresentação atende aos critérios de qualidade.\n\"\"\"\n\nfrom dataclasses import dataclass\n\n\n@dataclass\nclass ResultadoValidacao:\n    \"\"\"Resultado de uma verificação do checklist.\"\"\"\n    item: str\n    status: bool  # True = aprovado, False = problema\n    detalhe: str\n\n\ndef validar_apresentacao(\n    achados: list[dict],\n    recomendacao: str,\n    proximos_passos: list[dict],\n    tempo_total_min: float,\n) -> list[ResultadoValidacao]:\n    \"\"\"\n    Valida a apresentação executiva contra os critérios de qualidade.\n    Retorna lista de resultados com status de cada verificação.\n    \"\"\"\n    resultados = []\n\n    # 1. Máximo 3 achados\n    qtd_achados = len(achados)\n    resultados.append(\n        ResultadoValidacao(\n            item=\"Máximo 3 achados\",\n            status=qtd_achados <= 3,\n            detalhe=(\n                f\"{qtd_achados} achados selecionados \"\n                f\"(máximo: 3)\"\n            ),\n        )\n    )\n\n    # 2. Recomendação tem número específico\n    tem_numero = any(\n        c.isdigit() or \"%\" in recomendacao\n        for c in recomendacao\n    )\n    resultados.append(\n        ResultadoValidacao(\n            item=\"Recomendação com número específico\",\n            status=tem_numero,\n            detalhe=(\n                \"Recomendação contém quantificador\"\n                if tem_numero\n                else \"Recomendação genérica — adicionar números\"\n            ),\n        )\n    )\n\n    # 3. Recomendação tem prazo\n    tem_prazo = any(\n        palavra in recomendacao.lower()\n        for palavra in [\"até\", \""
+    }
+  ],
+  "gate": "",
+  "comandos": [],
+  "feito_quando": [
+    "Sobrecarga informacional.** Mais de 3 achados por apresentação dilui o impacto. O executivo não consegue reter mais do que isso em uma reunião. Se você tem 10 achados, selecione os 3 com maior impacto financeiro e guarde o resto para o relatório completo",
+    "Dados sem contexto.** Um número sozinho não significa nada. \"Receita caiu 12%\" é diferente de \"Receita caiu 12% enquanto o mercado cresceu 8%.\" Sem o comparativo, o dado é ruído — e ruído não gera decisão",
+    "Recomendação vaga.** \"Melhorar a eficiência\" não é uma recomendação. É um desejo. A diretoria precisa de ação: quem, o quê, quando. Se sua recomendação não cabe em uma frase com responsável e prazo, ela não está pronta para a sala de decisões",
+    "Esquecer o Slide 5.** Muitos analistas param na recomendação. Mas sem os próximos passos com responsável e prazo, a reunião termina com \"vamos pensar nisso\" — que é o epitáfio de milhares de boas ideias. O Slide 5 é o que transforma uma apresentação em uma decisão executável",
+    "Não praticar o tempo.** 10 minutos é pouco. Se você não ensaiou, vai passar do tempo — e o CEO vai cortar sua fala antes de você chegar na recomendação. Pratique com cronômetro. Cada slide deve caber exatamente no tempo designado"
+  ],
+  "armadilhas": [],
+  "referencia_cruzada": "Cap. 4 — O Seu Plano de Ação Imediato",
+  "lacunas": [
+    "sem_entregas",
+    "sem_gate",
+    "sem_armadilhas"
+  ]
+}

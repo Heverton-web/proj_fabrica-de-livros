@@ -1,0 +1,34 @@
+{
+  "fase_atual": "fase_2_manufatura",
+  "coordenadas": { "parte": "I", "capitulo": "1" },
+  "estado_execucao": "draft_pronto_para_redacao",
+  "callback_capitulo_anterior": null,
+  "payload_estrategico": {
+    "pilares": [
+      {
+        "nome": "Princípio da Representação Intermediária Estruturada (IR)",
+        "escopo": "Separar a análise da LLM da renderização determinística. Por que o dashboard final não deve ser gerado direto pelo modelo — mas sim uma estrutura de dados intermediária que depois vira visual. Entra: conceito de IR, fluxo de dados. Sai: detalhes de implementação de ferramentas específicas.",
+        "ancora_visual": "flowchart LR mostrando o caminho: Dados Brutos → Prompt IA → Representação Intermediária (JSON/estrutura) → Renderização Determinística (dashboard visual). Incluir o ponto de decisão: onde o humano valida.",
+        "entrega_tecnica": "Python: script que recebe dados em JSON e gera estrutura de dashboard em formato intermediário (dict Python) pronto para renderização.",
+        "evolucao_leitor": "De 'peço para a IA fazer o dashboard direto' para 'uso a IA como analista e a renderização como etapa separada' — ganho de controle e reprodutibilidade.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Anti-padrões em Design de Dashboards",
+        "escopo": "Os 5 erros visuais que matam a clareza: 3D desnecessário, cores sem semântica, legendas complexas, dados não normalizados, excesso de gráficos. Entra: cada anti-padrão com exemplo visual do errado vs. certo. Sai: teoria avançada de design gráfico.",
+        "ancora_visual": "sequenceDiagram mostrando a comunicação entre Diretoria (usuario final), Dashboard (interface) e Dados (fonte). O diagrama deve destacar os 5 pontos de falha onde a informação se perde no caminho.",
+        "entrega_tecnica": "Prompt template em Markdown para pedir à IA a criação de um esqueleto de dashboard com dados em formato lista, incluindo instruções de anti-padrões a evitar.",
+        "evolucao_leitor": "De 'faço gráfico bonito' para 'seleciono com intenção cada elemento visual' — discernimento profissional.",
+        "conceito_denso": false
+      },
+      {
+        "nome": "Formato Lista vs. Lado a Lado",
+        "escopo": "Por que dados em lista (empilhados verticalmente) são mais rápidos para o olhar humano que layouts lado a lado. Entra: comparação visual, regra dos 5 segundos, hierarquia de leitura. Sai: layout responsivo mobile.",
+        "ancora_visual": "flowchart TD mostrando o fluxo de leitura do olhar humano em formato lista (seta vertical, 1→2→3→4) vs. formato lado a lado (seta em zigue-zague, mais lento). Marcar os pontos onde o olhar perde foco.",
+        "entrega_tecnica": "Exemplo completo de prompt para IA gerar dashboard em formato lista com dados reais de clínica odontológica (vendas por produto, ticket médio, período).",
+        "evolucao_leitor": "De 'organizo dados na tela' para 'projetou a leitura do olhar do decisor' — mastery de UX analítica.",
+        "conceito_denso": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "capitulo": 4,
+  "titulo": "O Seu Plano de Ação Imediato",
+  "fase_atual": "fase_2_manufatura",
+  "estado_execucao": "concluido",
+  "timestamp": "2026-08-08",
+  "validacoes": {
+    "codigo": "aprovado",
+    "diagramas": "aprovado",
+    "citacoes": 4,
+    "secoes_eita": 7
+  }
+}

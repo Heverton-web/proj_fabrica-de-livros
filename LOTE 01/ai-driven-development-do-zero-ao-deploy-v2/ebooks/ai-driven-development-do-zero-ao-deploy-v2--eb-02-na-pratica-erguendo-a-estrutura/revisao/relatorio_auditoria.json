@@ -1,0 +1,137 @@
+{
+  "slug": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-02-na-pratica-erguendo-a-estrutura",
+  "tipo_obra": "ebook",
+  "veredito": "CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 81993,
+  "paginas_estimadas": 32.8,
+  "requisitos": [
+    {
+      "id": "EBOOK-LEN",
+      "nome": "Minimo 18 paginas (~45.000 caracteres)",
+      "conforme": true,
+      "detalhe": "81.993 caracteres (minimo 45.000) — ebook raso. sem valor comercial"
+    },
+    {
+      "id": "EBOOK-HR",
+      "nome": "Ausencia de horizontal rules nas secoes",
+      "conforme": true,
+      "detalhe": "secoes com ---: nenhuma"
+    },
+    {
+      "id": "EBOOK-TRUNC",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "secoes suspeitas: nenhuma"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "esta",
+      "variantes": {
+        "está": 34,
+        "Esta": 2
+      },
+      "ocorrencias": 36
+    },
+    {
+      "termo_normalizado": "dominio",
+      "variantes": {
+        "domínio": 28,
+        "Domínio": 4,
+        "dominio": 1
+      },
+      "ocorrencias": 33
+    },
+    {
+      "termo_normalizado": "fundacao",
+      "variantes": {
+        "fundação": 19,
+        "Fundação": 3,
+        "fundacao": 1
+      },
+      "ocorrencias": 23
+    },
+    {
+      "termo_normalizado": "decisoes",
+      "variantes": {
+        "decisões": 17,
+        "decisoes": 1
+      },
+      "ocorrencias": 18
+    },
+    {
+      "termo_normalizado": "concluida",
+      "variantes": {
+        "concluída": 7,
+        "concluida": 1,
+        "Concluída": 1
+      },
+      "ocorrencias": 9
+    }
+  ],
+  "alertas_estilo": null,
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 19914,
+      "palavras": 2832,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "S.md, a regra de ouro do que entra e do que fica fora, e o manual real da TorreDeControle.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 19948,
+      "palavras": 2338,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "sformando a ideia da TorreDeControle em um contrato verificável que guia todos os agentes.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 20441,
+      "palavras": 2465,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "— o scaffolding completo — revisando e entendendo cada arquivo gerado antes de integrá-lo.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 19815,
+      "palavras": 2500,
+      "numeracao_progressiva": false,
+      "referencias": 0,
+      "citacoes_inline": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "regadas sob demanda que padronizam os fluxos repetitivos do projeto e economizam contexto.",
+      "refs_orfas": [],
+      "refs_nao_citadas": []
+    }
+  ]
+}

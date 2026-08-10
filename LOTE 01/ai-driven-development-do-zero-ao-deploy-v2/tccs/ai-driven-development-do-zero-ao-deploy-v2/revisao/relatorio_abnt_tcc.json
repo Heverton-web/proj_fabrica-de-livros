@@ -1,0 +1,48 @@
+{
+  "slug": "tccs/ai-driven-development",
+  "veredito": "CONFORME",
+  "requisitos": [
+    {
+      "id": "TCC-PRE-METADADOS",
+      "nome": "tcc_metadados.json existe (aciona template_tcc.typ)",
+      "conforme": true,
+      "detalhe": "arquivo encontrado"
+    },
+    {
+      "id": "TCC-PRE-RESUMO",
+      "nome": "Resumo em português presente (NBR 6028)",
+      "conforme": true,
+      "detalhe": "campo 'resumo' preenchido"
+    },
+    {
+      "id": "TCC-PRE-PALAVRAS",
+      "nome": "Palavras-chave presentes",
+      "conforme": true,
+      "detalhe": "campo 'palavras_chave' preenchido"
+    },
+    {
+      "id": "TCC-PRE-ABSTRACT",
+      "nome": "Abstract em inglês presente",
+      "conforme": true,
+      "detalhe": "campo 'abstract_en' preenchido"
+    },
+    {
+      "id": "TCC-PRE-KEYWORDS",
+      "nome": "Keywords presentes",
+      "conforme": true,
+      "detalhe": "campo 'keywords_en' preenchido"
+    },
+    {
+      "id": "TCC-PRE-PDF",
+      "nome": "PDF final gerado (folha de aprovação/sumário são estruturais do template)",
+      "conforme": true,
+      "detalhe": "livro_final.pdf encontrado"
+    },
+    {
+      "id": "TCC-NUM-GLOBAL",
+      "nome": "Numeração progressiva sem saltos (NBR 6024)",
+      "conforme": true,
+      "detalhe": "sequência de seções nível 1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+    }
+  ]
+}

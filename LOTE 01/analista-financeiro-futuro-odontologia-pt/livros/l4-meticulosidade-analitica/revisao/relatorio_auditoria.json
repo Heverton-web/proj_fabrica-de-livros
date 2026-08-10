@@ -1,0 +1,230 @@
+{
+  "slug": "analista-financeiro-futuro-odontologia-pt/livros/l4-meticulosidade-analitica",
+  "tipo_obra": "livro",
+  "veredito": "NAO CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 122296,
+  "paginas_estimadas": 48.9,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 4 capitulos",
+      "conforme": true,
+      "detalhe": "4 capitulo(s) (minimo 4)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 40 paginas (~100.000 caracteres)",
+      "conforme": true,
+      "detalhe": "122.296 caracteres (minimo 100.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": false,
+      "detalhe": "capitulos incompletos: 1, 3"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 5 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": false,
+      "detalhe": "capitulos sem diagrama: 1, 3"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": false,
+      "detalhe": "capitulos sem codigo: 1, 3"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": false,
+      "detalhe": "capitulos com citacao orfa: 2"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [
+    {
+      "termo_normalizado": "media",
+      "variantes": {
+        "Media": 5,
+        "média": 1
+      },
+      "ocorrencias": 6
+    }
+  ],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "pista",
+      "vestígio",
+      "cruzamento",
+      "indício",
+      "laudo",
+      "prova",
+      "investigação",
+      "revelação"
+    ],
+    "capitulos_com_citacao_empilhada": [],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 25477,
+      "palavras": 1679,
+      "secoes_faltantes": [
+        "1. Introdução",
+        "2. Explica",
+        "3. Ilustra",
+        "4. Técnica"
+      ],
+      "referencias": 6,
+      "citacoes_inline": 21,
+      "diagramas_ilustra": 0,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ceedings of the 8th IEEE International Conference on Data Mining (ICDM), p. 413-422, 2008.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        6
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 12,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 17.7,
+        "coeficiente_variacao": 0.571
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 30556,
+      "palavras": 1392,
+      "secoes_faltantes": [],
+      "referencias": 6,
+      "citacoes_inline": 19,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 6,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "nce. Disponível em: https://www.w3schools.com/jsref/jsref_obj_regexp.asp. Acesso em: 2026.",
+      "refs_orfas": [
+        29
+      ],
+      "refs_nao_citadas": [
+        6
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 11,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 17.5,
+        "coeficiente_variacao": 0.667
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 32639,
+      "palavras": 1568,
+      "secoes_faltantes": [
+        "1. Introdução",
+        "2. Explica",
+        "3. Ilustra",
+        "4. Técnica"
+      ],
+      "referencias": 6,
+      "citacoes_inline": 20,
+      "diagramas_ilustra": 0,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 0,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "N.; STEINBACH, M.; KUMAR, V. Introduction to Data Mining. Boston: Pearson Education, 2016.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        6
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 1,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 18.7,
+        "coeficiente_variacao": 0.564
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 30726,
+      "palavras": 1450,
+      "secoes_faltantes": [],
+      "referencias": 6,
+      "citacoes_inline": 14,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "[6] AGGARWAL, C. C. Outlier Analysis. 2nd ed. Cham: Springer, 2017.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        6
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 44,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 15.8,
+        "coeficiente_variacao": 0.651
+      }
+    }
+  ]
+}

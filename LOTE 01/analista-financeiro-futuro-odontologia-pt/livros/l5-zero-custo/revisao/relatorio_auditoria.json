@@ -1,0 +1,208 @@
+{
+  "slug": "analista-financeiro-futuro-odontologia-pt/livros/l5-zero-custo",
+  "tipo_obra": "livro",
+  "veredito": "NAO CONFORME",
+  "total_capitulos": 4,
+  "caracteres_obra": 90096,
+  "paginas_estimadas": 36.0,
+  "requisitos": [
+    {
+      "id": "R1",
+      "nome": "Minimo 4 capitulos",
+      "conforme": true,
+      "detalhe": "4 capitulo(s) (minimo 4)"
+    },
+    {
+      "id": "R2",
+      "nome": "Minimo 40 paginas (~100.000 caracteres)",
+      "conforme": false,
+      "detalhe": "90.096 caracteres (minimo 100.000)"
+    },
+    {
+      "id": "R3",
+      "nome": "7 secoes EITA-V2 por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos incompletos: nenhum"
+    },
+    {
+      "id": "R4",
+      "nome": "Minimo 5 referencias ABNT por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R9",
+      "nome": "Ausencia de horizontal rules nos capitulos",
+      "conforme": true,
+      "detalhe": "capitulos com ---: nenhum"
+    },
+    {
+      "id": "R10",
+      "nome": "Minimo 3 citacoes inline [N] por capitulo",
+      "conforme": true,
+      "detalhe": "capitulos abaixo: nenhum"
+    },
+    {
+      "id": "R11",
+      "nome": "Minimo 1 diagrama Mermaid na secao Ilustra",
+      "conforme": true,
+      "detalhe": "capitulos sem diagrama: nenhum"
+    },
+    {
+      "id": "R12",
+      "nome": "Bloco de codigo na secao Tecnica",
+      "conforme": true,
+      "detalhe": "capitulos sem codigo: nenhum"
+    },
+    {
+      "id": "R13",
+      "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
+      "conforme": true,
+      "detalhe": "capitulos suspeitos: nenhum"
+    },
+    {
+      "id": "R14",
+      "nome": "Rastreabilidade [N] texto <-> referencias",
+      "conforme": true,
+      "detalhe": "capitulos com citacao orfa: nenhum"
+    },
+    {
+      "id": "R15",
+      "nome": "Referencias em ordem numerica ascendente na secao 7 (NBR 6023)",
+      "conforme": true,
+      "detalhe": "capitulos fora de ordem: nenhum"
+    }
+  ],
+  "sobreposicao_entre_capitulos": [],
+  "inconsistencia_terminologica": [],
+  "alertas_estilo": {
+    "motivo_condutor_avaliado": true,
+    "vocabulario_motivo_condutor": [
+      "bancada",
+      "ferramenta",
+      "engrenagem",
+      "motor",
+      "improviso",
+      "oficina",
+      "pecas",
+      "calibração"
+    ],
+    "capitulos_com_citacao_empilhada": [],
+    "capitulos_sem_recorrencia_motivo_condutor": [],
+    "capitulos_sem_callback_capitulo_anterior": [],
+    "capitulos_ritmo_monotono": []
+  },
+  "capitulos": [
+    {
+      "capitulo": "1",
+      "arquivo": "cap_1.md",
+      "caracteres": 18644,
+      "palavras": 1370,
+      "secoes_faltantes": [],
+      "referencias": 6,
+      "citacoes_inline": 8,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 3,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "rm — 11,190+ Templates*. Disponível em: https://n8n.io/workflows. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 33,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 16.2,
+        "coeficiente_variacao": 0.662
+      }
+    },
+    {
+      "capitulo": "2",
+      "arquivo": "cap_2.md",
+      "caracteres": 17956,
+      "palavras": 1239,
+      "secoes_faltantes": [],
+      "referencias": 5,
+      "citacoes_inline": 3,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "l em: https://developers.google.com/sheets/api/quickstart/python. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        4,
+        5
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 12,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 15.4,
+        "coeficiente_variacao": 0.554
+      }
+    },
+    {
+      "capitulo": "3",
+      "arquivo": "cap_3.md",
+      "caracteres": 24287,
+      "palavras": 1345,
+      "secoes_faltantes": [],
+      "referencias": 6,
+      "citacoes_inline": 6,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 4,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": "ntation*. Disponível em: https://docs.evolutionfoundation.com.br. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        6
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 32,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 16.7,
+        "coeficiente_variacao": 0.531
+      }
+    },
+    {
+      "capitulo": "4",
+      "arquivo": "cap_4.md",
+      "caracteres": 25692,
+      "palavras": 1582,
+      "secoes_faltantes": [],
+      "referencias": 5,
+      "citacoes_inline": 6,
+      "diagramas_ilustra": 1,
+      "diagramas_total": 1,
+      "blocos_codigo_tecnica": 5,
+      "horizontal_rules": 0,
+      "pendencias": [],
+      "truncado": false,
+      "ultima_linha": " https://developers.facebook.com/docs/whatsapp/cloud-api/pricing. Acesso em: 08 ago. 2026.",
+      "refs_orfas": [],
+      "refs_nao_citadas": [
+        5
+      ],
+      "refs_ordem_correta": true,
+      "citacoes_empilhadas": [],
+      "vocabulario_fora_ilustra": 29,
+      "callback_presente": true,
+      "ritmo_frase": {
+        "media_palavras_por_frase": 16.7,
+        "coeficiente_variacao": 0.559
+      }
+    }
+  ]
+}

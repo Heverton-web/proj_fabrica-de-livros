@@ -1,0 +1,141 @@
+{
+  "slug_livro_mae": "ai-driven-development-do-zero-ao-deploy-v2",
+  "artigos": {
+    "total": 3,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "O que é AI Driven Development (e o que ele não é) & As quatro camadas: Tela, Harness, LLM e Tools — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--art-01-o-que-e-ai-driven-development-e-o-que-el",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy-v2--art-01-o-que-e-ai-driven-development-e-o-que-el",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Modelando o domínio: especificando antes de codar & O primeiro andar: gerando o esqueleto do projeto — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--art-02-modelando-o-dominio-especificando-antes",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy-v2--art-02-modelando-o-dominio-especificando-antes",
+        "capitulos_fonte_livro_mae": [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Hooks e governança: as regras de segurança do canteiro & Testes dirigidos por IA: provando que o prédio aguenta — Um Recorte de AI Driven Development: Do Zero ao Deploy",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--art-03-hooks-e-governanca-as-regras-de-seguranc",
+        "diretorio": "artigos/ai-driven-development-do-zero-ao-deploy-v2--art-03-hooks-e-governanca-as-regras-de-seguranc",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ]
+      }
+    ]
+  },
+  "ebooks": {
+    "total": 5,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Fundamentos — O Terreno Baldio",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--eb-01-fundamentos-o-terreno-baldio",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-01-fundamentos-o-terreno-baldio",
+        "capitulos_fonte_livro_mae": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      {
+        "indice": 2,
+        "titulo": "Na Prática — Erguendo a Estrutura",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--eb-02-na-pratica-erguendo-a-estrutura",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-02-na-pratica-erguendo-a-estrutura",
+        "capitulos_fonte_livro_mae": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      {
+        "indice": 3,
+        "titulo": "Avançando — Instalações e Ferramentas",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--eb-03-avancando-instalacoes-e-ferramentas",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-03-avancando-instalacoes-e-ferramentas",
+        "capitulos_fonte_livro_mae": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      },
+      {
+        "indice": 4,
+        "titulo": "Profissionalizando — Acabamento e Qualidade",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--eb-04-profissionalizando-acabamento-e-qualidad",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-04-profissionalizando-acabamento-e-qualidad",
+        "capitulos_fonte_livro_mae": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      },
+      {
+        "indice": 5,
+        "titulo": "O Mundo Real — Entrega das Chaves",
+        "slug": "ai-driven-development-do-zero-ao-deploy-v2--eb-05-o-mundo-real-entrega-das-chaves",
+        "diretorio": "ebooks/ai-driven-development-do-zero-ao-deploy-v2--eb-05-o-mundo-real-entrega-das-chaves",
+        "capitulos_fonte_livro_mae": [
+          "17",
+          "18",
+          "19",
+          "20"
+        ]
+      }
+    ]
+  },
+  "playbooks": {
+    "total": 1,
+    "itens": [
+      {
+        "indice": 1,
+        "titulo": "Playbook — AI Driven Development",
+        "slug": "pbk-1-ai-driven-development",
+        "diretorio": "playbooks/ai-driven/pbk-1-ai-driven-development",
+        "estagios": 5
+      }
+    ]
+  },
+  "lead-magnets": {
+    "total": 0,
+    "itens": []
+  },
+  "decks": {
+    "total": 0,
+    "itens": []
+  },
+  "emails": {
+    "total": 0,
+    "itens": []
+  }
+}

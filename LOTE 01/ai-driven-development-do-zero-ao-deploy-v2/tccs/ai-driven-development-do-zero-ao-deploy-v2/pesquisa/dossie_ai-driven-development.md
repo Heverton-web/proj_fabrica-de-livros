@@ -1,0 +1,179 @@
+# Dossiê de Pesquisa — AI Driven Development
+
+## Conceitos-chave
+- **AI Driven Development (ADD)**: paradigma em que modelos de linguagem de grande escala (LLMs) e agentes de IA participam ativamente de todas as fases do ciclo de vida do software — especificação, arquitetura, codificação, testes, revisão, deploy e manutenção — atuando de reativo a proativo/autônomo (Teqnovos, 2025; Baytech Consulting, 2026).
+- **LLM-empowered software engineering**: aplicação de LLMs a tarefas de engenharia de software (geração de código, reparo, testes, documentação, refatoração), classificada em três paradigmas: prompt-based, fine-tune-based e agent-based (GUO et al., 2025).
+- **Agente de software (SWE agent)**: sistema LLM que planeja, navega em repositórios, edita arquivos, executa comandos e valida resultados de forma iterativa para resolver tarefas reais de engenharia (YANG et al., 2024).
+- **ACI (Agent-Computer Interface)**: interfaces desenhadas especificamente para agentes de linguagem interagirem com computadores (editor, shell, navegador); o design da ACI impacta mais o desempenho do que o modelo subjacente (YANG et al., 2024; CodeSOTA, 2026).
+- **Model Context Protocol (MCP)**: protocolo aberto (JSON-RPC) que padroniza a integração de LLMs com ferramentas, recursos e prompts externos — análogo a um "USB-C para aplicações de IA"; primitivas: resources, prompts, tools, sampling, roots (ANTHROPIC; Model Context Protocol, 2025).
+- **SWE-bench / SWE-bench Verified**: benchmark de 2.294 issues reais de GitHub (Django, matplotlib, scikit-learn, PyTorch); Verified é o subconjunto de 500 instâncias validadas por humanos em parceria OpenAI — hoje o padrão da indústria para agentes de código (JIMENEZ et al., 2024; OpenAI).
+- **Agentic coding / agentic workflows**: padrões em que o modelo decide próximas ações (planejamento, uso de ferramentas, reflexão, multiagentes), em oposição a sugestões pontuais; 2026 marca a transição de "autocomplete" para "agentes autônomos" (oflight, 2026; MindStudio, 2026).
+- **AI-Assisted Development (AIAD)**: princípio de colaboração humano-máquina em que a IA atua como copiloto inteligente, amplificando capacidades humanas (Vinicius3W, 2025).
+- **Especificação-dirigida por IA**: com IA, o "superpoder" do dev desloca-se do código para a especificação precisa (requisitos, critérios de aceite, schemas) — a IA implementa a partir do spec (Baytech Consulting, 2026; Kiro).
+- **Benchmark-to-production gap**: pontuação alta em benchmark não garante desempenho em backlog real; SWE-bench testa patch isolado, não manutenção multi-semana, coordenação com revisores ou decisões de produto (benchmarkingagents.com, 2026).
+- **Machine signature / dívida técnica de IA**: código gerado por agentes é funcionalmente correto mas acumula dívida técnica com "assinatura" distinta (procedural bloat, God Classes); Lei Inversa Volume-Qualidade (ZHU; TSANTALIS; RIGBY, 2026).
+
+## Artigos Científicos e Papers
+- JIMENEZ, Carlos E. et al. *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*. In: ICLR, 2024. Disponível em: https://arxiv.org/abs/2310.06770. Acesso em: 08 ago. 2026.
+- YANG, John et al. *SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering*. In: NeurIPS 38, 2024. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 08 ago. 2026.
+- WANG, Xingyao et al. *OpenHands: An Open Platform for AI Software Developers as Generalist Agents*. Disponível em: https://arxiv.org/abs/2407.16741. Acesso em: 08 ago. 2026.
+- HONG, Sirui et al. *MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework*. In: ICLR, 2024. Disponível em: https://arxiv.org/abs/2308.00352. Acesso em: 08 ago. 2026.
+- GUO, Jiale et al. *A Comprehensive Survey on Benchmarks and Solutions in Software Engineering of LLM-Empowered Agentic System*. Disponível em: https://arxiv.org/abs/2510.09721. Acesso em: 08 ago. 2026.
+- DONG, Yihong et al. *A Survey on Code Generation with LLM-based Agents*. Disponível em: https://arxiv.org/abs/2508.00083. Acesso em: 08 ago. 2026.
+- JIN, Haolin et al. *From LLMs to LLM-based Agents for Software Engineering: A Survey of Current, Challenges and Future*. Disponível em: https://arxiv.org/abs/2408.02479. Acesso em: 08 ago. 2026.
+- LIU, Junwei et al. *Large Language Model-based Agents for Software Engineering: A Survey*. Disponível em: https://arxiv.org/abs/2409.02977. Acesso em: 08 ago. 2026.
+- JIANG, Zhonghao; LO, David; LIU, Zhongxin. *Agentic Software Issue Resolution with Large Language Models: A Survey*. Disponível em: https://arxiv.org/abs/2507.03126. Acesso em: 08 ago. 2026.
+- ZHU, Yuecai; TSANTALIS, Nikolaos; RIGBY, Peter C. *AI-Generated Smells: An Analysis of Code and Architecture in LLM- and Agent-Driven Development*. Disponível em: https://arxiv.org/abs/2605.02741. Acesso em: 08 ago. 2026.
+- SABRA, Abbas; SCHMITT, Olivier; SONAR, Joseph Tyler. *Assessing the Quality and Security of AI-Generated Code: A Quantitative Analysis*. Disponível em: https://arxiv.org/abs/2508.14727. Acesso em: 08 ago. 2026.
+- *Saving SWE-Bench: A Benchmark Mutation Approach for Realistic Agent Evaluation*. Disponível em: https://arxiv.org/abs/2510.08996. Acesso em: 08 ago. 2026.
+- CUI, Kevin Zheyuan et al. *The Effects of Generative AI on High-Skilled Work: Evidence from Three Field Experiments with Software Developers*. In: SSRN 4945566, 2025. Disponível em: https://economics.mit.edu/sites/default/files/inline-files/draft_copilot_experiments.pdf. Acesso em: 08 ago. 2026.
+- PENG, Sida et al. *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*. Disponível em: https://arxiv.org/abs/2302.06590. Acesso em: 08 ago. 2026.
+- TERRAGNI, Valerio; ROOP, Partha; BLINCOE, Kelly. *The Future of Software Engineering in an AI-Driven World*. Disponível em: https://arxiv.org/abs/2406.07737. Acesso em: 08 ago. 2026.
+- SAUVOLA, J. et al. *Future of Software Development with Generative AI*. Disponível em: https://doi.org/10.1016/j.autsoft.2024.102256. Acesso em: 08 ago. 2026.
+- *LLMs: A Game-Changer for Software Engineers?* (ScienceDirect). Disponível em: https://www.sciencedirect.com/science/article/pii/S2772485925000171. Acesso em: 08 ago. 2026.
+- *Security and Quality in LLM-Generated Code: A Multi-Language, Multi-Model Analysis*. Disponível em: https://arxiv.org/abs/2502.01853. Acesso em: 08 ago. 2026.
+- BHATTAHALI, Sandeep Kumar et al. *CyberSecEval 3: Advancing the Evaluation of Cybersecurity Risks and Capabilities in Large Language Models* (Meta). Disponível em: https://arxiv.org/abs/2408.01605. Acesso em: 08 ago. 2026.
+- SCHERMANN, Goran et al. *SeCodePLT: A Security-Oriented Dataset for Code Generation*. Disponível em: https://arxiv.org/abs/2410.11096. Acesso em: 08 ago. 2026.
+- PERRY, Neil et al. *Do Users Write More Insecure Code with AI Assistants?* (Stanford). Disponível em: https://arxiv.org/abs/2211.03622. Acesso em: 08 ago. 2026.
+- STRAY, Viktoria et al. *Human-AI Collaboration in Software Development: A Mixed-Methods Study of Developers' Use of GitHub Copilot and ChatGPT*. In: FSE 2025, p. 1325-1332. Disponível em: https://doi.org/10.1145/3691620.3695556. Acesso em: 08 ago. 2026.
+- STRAY, Viktoria; MOE, Nils Brede; GANESHAN, Nina; KOBBENES, Sebastian. *Generative AI and Developer Workflows: How GitHub Copilot and ChatGPT Influence Solo and Pair Programming*. Disponível em: https://arxiv.org/abs/2503.12131. Acesso em: 08 ago. 2026.
+- VAVEKANAND, R. et al. *LLMs in Web Development: Evaluating LLM-Generated PHP Code Unveiling Vulnerabilities and Limitations*. In: SAFECOMP, 2024. Disponível em: https://doi.org/10.1007/978-3-031-68606-1_3. Acesso em: 08 ago. 2026.
+- XIA, Chunqiu Steven et al. *Agentless: Demystifying LLM-based Software Engineering Agents*. In: Proc. ACM Softw. Eng., 2025. Disponível em: https://arxiv.org/abs/2407.01489. Acesso em: 08 ago. 2026.
+- ALEITHAN, Reem et al. *SWE-bench+: Enhanced Coding Benchmark for LLMs*. Disponível em: https://arxiv.org/abs/2410.06992. Acesso em: 08 ago. 2026.
+- RASHEED, Zeeshan et al. *LLM-Based Multi-Agent Systems for Code Generation: A Multi-Vocal Literature Review*. Disponível em: https://arxiv.org/abs/2504.15241. Acesso em: 08 ago. 2026.
+- NASCIMENTO, Andre F. et al. *A Survey of Agent Interoperability Protocols: Model Context Protocol (MCP), Agent Communication Protocol (ACP), Agent-to-Agent Protocol (A2A), and Agent Network Protocol (ANP)*. Disponível em: https://arxiv.org/abs/2505.02279. Acesso em: 08 ago. 2026.
+- *Inteligência Artificial Generativa baseada em LLM* (SciELO Preprints). Disponível em: https://preprints.scielo.org/index.php/scielo/preprint/download/6105/11736/12289. Acesso em: 08 ago. 2026.
+- STAHNKE, Eduardo; VAHLDICK, Adilson. *Inteligência Artificial Aplicada na Engenharia de Software*. In: Resumos Internos, v. 2, n. 1, 2013. Disponível em: https://www.researchgate.net/publication/392212068. Acesso em: 08 ago. 2026.
+- SANTA MOLISON, Alexandre et al. *Is LLM-Generated Code More Maintainable & Reliable Than Human-Written Code?* Disponível em: https://arxiv.org/abs/2508.00130. Acesso em: 08 ago. 2026.
+- WANG, Tony et al. *CWEval: Outcome-Driven Evaluation on Functionality and Security of LLM Code Generation*. In: IEEE/ACM LLM4Code Workshop, 2025. Disponível em: https://doi.org/10.1109/LLM4Code62311.2025.00013. Acesso em: 08 ago. 2026.
+- MURUGESAN, Thirunaavukkarasu. *Enhancing SWE Bench with Context Engineering: A Comparative Study Against Prompt Engineering in LLM-Based Software Tasks*. In: Journal of Information Systems Engineering & Management, 2026. Disponível em: https://doi.org/10.55267/iadt.07.2026.20. Acesso em: 08 ago. 2026.
+- HASANLI, Tarlan et al. *TDD Governance for Multi-Agent Code Generation via Prompt Engineering*. Disponível em: https://arxiv.org/abs/2504.17294. Acesso em: 08 ago. 2026.
+- HUMLUM, Anders; VESTERGAARD, Emilie. *The Adoption of Generative AI across Large Workplaces: Field Evidence from Denmark*. In: Working paper, 2025. Disponível em: https://humlum.com/ai.pdf. Acesso em: 08 ago. 2026.
+- SCHICK, Timo et al. *Toolformer: Language Models Can Teach Themselves to Use Tools*. Disponível em: https://arxiv.org/abs/2302.04761. Acesso em: 08 ago. 2026.
+- CHEN, Mark et al. *Evaluating Large Language Models Trained on Code*. Disponível em: https://arxiv.org/abs/2107.03374. Acesso em: 08 ago. 2026.
+- YAO, Shunyu et al. *ReAct: Synergizing Reasoning and Acting in Language Models*. In: ICLR, 2023. Disponível em: https://arxiv.org/abs/2210.03629. Acesso em: 08 ago. 2026.
+- SHINN, Noah et al. *Reflexion: Language Agents with Verbal Reinforcement Learning*. In: NeurIPS, 2023. Disponível em: https://arxiv.org/abs/2303.11366. Acesso em: 08 ago. 2026.
+- PAKKANEN, A. et al. *The SWE-Bench Multimodal: Evaluating Language Models on Software Engineering Tasks with Visual Inputs*. Disponível em: https://arxiv.org/abs/2504.18449. Acesso em: 08 ago. 2026.
+
+## Estado da arte / ferramentas de referência
+- **GitHub Copilot**: assistente de autocompletar (2021, modelo Codex original; depois GPT-4o); a partir de fev/2026 aceita seleção de modelos (GPT-5.4, GPT-5.3-Codex, Claude Opus 4.6, Claude Sonnet 4.6, Gemini 2.0 Pro). Diferencial: profundidade de integração no IDE e gestão empresarial (audit logs, políticas). Preço ~$10/mês. Fonte: toolboxkart.tech, 2026; oflight.co.jp, 2026.
+- **OpenAI Codex (novo)**: agente de codificação autônomo em nuvem lançado em maio/2025 (o Codex original de 2021, modelo, foi deprecado em mar/2023). Execução assíncrona paralela em sandbox cloud; cria PRs; suíte desktop/web/CLI. SWE-bench Verified ~78-85% (GPT-5.3-Codex). Fonte: toolboxkart.tech, 2026; benchlm.ai, 2026.
+- **Claude Code**: agente terminal síncrono com janela de contexto profunda (até 1M tokens), MCP nativo, subagentes, execução local; líder SWE-bench Verified (Claude Opus 4.6 ~80,8%; Claude Mythos/Fable 5 ~93,9-95%). Fonte: oflight.co.jp, 2026; llm-stats.com, 2026.
+- **Cursor**: IDE-fork do VS Code (Anysphere) com autocomplete em nível de componente e edição multi-arquivo; ~$20/mês. Fonte: oflight.co.jp, 2026.
+- **Devin (Cognition)**: "engenheiro de software IA" gerenciado, cloud, com editor/navegador/terminal próprios; integrações GitHub, Slack, Jira, Linear; assíncrono. Fonte: aicoolies.com, 2026.
+- **OpenHands (ex-OpenDevin)**: plataforma open-source (60K+ estrelas, Série A $18.8M) com runtime sandbox em Docker/Kubernetes, agentes paralelos, agnóstico de modelo; usado por Apple, Google, Amazon, Netflix, NVIDIA. Fonte: aicoolies.com, 2026.
+- **SWE-agent (Princeton)**: ferramenta acadêmica de referência que estabeleceu as ACIs e o padrão de avaliação; MIT; mantido agora como mini-swe-agent. Fonte: aicoolies.com, 2026.
+- **Aider, AutoCodeRover, Moatless Tools, Agentless**: abordagens open-source de reparo de issues com interfaces e pipelines variados (SWE-bench Lite: 18-27%). Fonte: WANG et al., 2024.
+- **Kiro (spec-driven)**: escreve specs estruturadas (requisitos, critérios de aceite, schemas); a IA gera plano de implementação + código a partir da spec — "specification-driven development". Fonte: Baytech Consulting, 2026.
+- **Prompt-to-app**: v0 (Vercel), Lovable, Bolt.new, Replit — geram apps completos de UI/lógica a partir de descrições textuais (low-code/no-code assistido por IA). Fonte: dev.to/vinicius3w, 2025.
+- **Model Context Protocol (MCP)**: spec aberta (rev. 2025-11-25); JSON-RPC, negociação de capacidades; primitivas Resources/Prompts/Tools/Sampling/Roots; padrão adotado por Anthropic, OpenAI, Salesforce, comunidade; compete com ACP/A2A/ANP em camadas distintas de interoperabilidade. Fonte: modelcontextprotocol.io, 2025; NASCIMENTO et al., 2025.
+- **Copilot Workspace / Copilot Extensions**: movimento do GitHub rumo a agentic (planejamento multi-etapa, extensões de terceiros). Fonte: toolboxkart.tech, 2026.
+- **Modelos open-source de engenharia**: Kimi-Dev-72B (60,4% SWE-bench Verified, SOTA open), Qwen3-Coder-480B-A35B (256K contexto, MoE, agêntico), GLM-4.5-Air (otimizado para tool use). Fonte: SiliconFlow, 2026.
+- **Frameworks de orquestração**: LangChain, LlamaIndex (chains, RAG); MetaGPT (SOPs, papéis PM/Arquiteto/Engenheiro/QA, feedback executável); OpenAI Agents SDK; suíte Claude (Skills, subagentes). Fonte: Hong et al., 2024; Teqnovos, 2025.
+- **Benchmarks de agentes**: SWE-bench (2.294) e Verified (500), SWE-bench Lite, SWE-bench Pro, SWE-bench Multimodal, Terminal-Bench, WebArena, OSWorld, Tau-Bench, Multi-SWE-bench, SaaSBench, ICAE-Bench. Fonte: swebench.com; benchmarkingagents.com, 2026.
+- **Plataformas CI de agentes**: CodeRabbit, GitHub Actions com agentes, revisão automatizada de PRs (CodeRabbit), guardrails de qualidade (SAST/SCA obrigatório para código de IA). Fonte: yixscout.com, 2026; Snyk, 2025.
+
+## Casos de uso corporativos
+- **Stripe Minions**: agentes autônomos em nuvem executando tarefas de código com mínima intervenção humana — caso emblemático de "agent-driven development" em produção. Fonte: Alura (curso IA na engenharia de software), 2026.
+- **Google e Microsoft**: ~30% do código novo já é escrito/assistido por IA. Fonte: Alura, 2026.
+- **Microsoft, Accenture e Fortune 100 (RCTs)**: 4.867 devs randomizados; +26,08% de tarefas concluídas por semana com Copilot (PRs, commits, builds); ganhos maiores para devs menos experientes. Fonte: CUI et al., 2025; InfoQ, 2024.
+- **NAV IT (Noruega, setor público)**: 100 → 250 devs com Copilot (2023-2025); estudo longitudinal mostra adoção heterogênea, ceticismo de devs seniores e custo de verificação das sugestões. Fonte: arXiv:2509.20353.
+- **Amazon**: contém código gerado por IA exigindo revisão obrigatória de dev sênior antes do merge. Fonte: Alura, 2026.
+- **GitHub Octoverse**: parcela expressiva do código novo no GitHub é gerada ou assistida por IA (crescimento ano a ano). Fonte: futurewarns.com, 2026.
+- **Stack Overflow / JetBrains surveys**: adoção ampla (~75% dos devs usam ferramentas de IA) com "adoção-trust gap" — confiança no código gerado abaixo da adoção. Fonte: futurewarns.com, 2026.
+- **McKinsey State of AI**: 88% das organizações usam IA regularmente em pelo menos uma função de negócio (vs. 78% no ano anterior). Fonte: futurewarns.com, 2026.
+- **Stanford HAI AI Index**: uso de IA generativa em funções de negócio saltou de 33% para 71% em 12 meses. Fonte: futurewarns.com, 2026.
+- **Gartner**: projeção de US$ 2,5 trilhões em gastos globais com IA em 2026 (+44% a/a). Fonte: futurewarns.com, 2026.
+- **DORA 2025**: 90% dos respondentes usam IA no trabalho diário; 65% altamente dependentes; 80% se sentem mais produtivos; ~30% têm pouca ou nenhuma confiança no código gerado. Fonte: DORA/Google, 2025.
+- **Microsoft Copilot for Security RCT**: profissionais de segurança mais rápidos com IA, novatos mais beneficiados. Fonte: Microsoft, 2024.
+- **Snyk**: 92% dos devs já usaram ferramentas de IA em pesquisa do GitHub. Fonte: Snyk, 2025.
+
+## Limitações e controvérsias
+- **Código inseguro por padrão**: CyberSecEval 3 (Meta) — modelos líderes produzem código inseguro em 35-40% das vezes; SeCodePLT — 40-65% das amostras contêm vulnerabilidades; falhas recorrentes: falta de validação de entrada (CWE-20), SQLi (CWE-89), command injection (CWE-78), credenciais hardcoded, path traversal, dependências alucinadas. Fonte: Snyk, 2025; arXiv:2508.14727; Endor Labs, 2025.
+- **Paradoxo da confiança**: devs que usam assistente de IA escrevem código menos seguro E acreditam mais que é seguro (Stanford, arXiv:2211.03622). Fonte: Snyk, 2025.
+- **Prompting iterativo piora a segurança**: 5 rodadas de refinamento com IA elevaram vulnerabilidades críticas ~38% a partir de código seguro. Fonte: Snyk, 2025 (arXiv:2506.11022).
+- **Qualidade ≠ corretude funcional**: estudo SonarQube com 4.442 tarefas Java: 5-8% de chance de bug e ~2% de vulnerabilidade mesmo em código que passou nos testes; sem correlação entre Pass@1 e qualidade. Fonte: arXiv:2508.14727.
+- **Dívida técnica com "assinatura de máquina"**: agentes produzem procedural bloat, God Classes, acoplamento cíclico; "Lei Inversa Volume-Qualidade" — volume de código prevê degradação estrutural; nem corretude nem prompt detalhado evitam; agentes atuais = "devs juniores competentes" sem visão de arquiteto. Fonte: ZHU; TSANTALIS; RIGBY, 2026.
+- **DORA: IA é amplificador, não solução**: 2025 correlaciona adoção de IA com maior throughput, MAS também com mais instabilidade, mais falhas de mudança, retrabalho e ciclos de resolução mais longos; sucesso depende de sistemas/processos, não da ferramenta; "trust paradox". Fonte: DORA 2025; InfoQ, 2026.
+- **Benchmark overfitting**: benchmarks públicos superestimam capacidade em 20-50% (mutação de queries realistas derrubou 16-53% o desempenho); SWE-bench sofre de leakage (soluções no histórico git), especificação excessiva e distribuição de tarefas fora do backlog real. Fonte: arXiv:2510.08996; benchmarkingagents.com, 2026.
+- **Gap benchmark-produção**: 70% em SWE-bench Verified não significa 70% do trabalho real de engenharia (coordenação multi-semana, revisão humana, trade-offs de produto não medidos). Fonte: benchmarkingagents.com, 2026.
+- **Custo de verificação**: devs gastam tempo adicional revisando/verificando sugestões da IA; mudança de papel: de criador para supervisor/avaliador de saídas (com limitação de explicabilidade). Fonte: STRAY et al., 2025; arXiv:2509.20353.
+- **Ganhos de produtividade modestos em campo**: RCTs grandes mostram +26%, mas surveys de larga escala (25.000+ trabalhadores, Dinamarca) mostram ~3-6,5% de tempo economizado; efeitos maiores em ambientes controlados do que em campo. Fonte: HUMLUM; VESTERGAARD, 2025; arXiv:2509.20353.
+- **Questões legais e de propriedade intelectual**: litígios sobre treinamento de modelos em código público e licenciamento do código gerado; complexidade crescente para empresas. Fonte: dev.to/vinicius3w, 2025.
+- **Risco de atrofia de habilidades**: dependência de ferramentas pode afetar aprendizado de juniores; ALÉM disso, ganhos de produtividade concentram-se em devs menos experientes. Fonte: CUI et al., 2025; Peng et al., 2023.
+- **Fragilidade organizacional**: equipes com processos fragmentados veem a IA amplificar disfunções; adoção sem estratégia de sistemas piora resultados (DORA AI Capabilities Model). Fonte: DORA 2025.
+- **Observabilidade difícil**: debugging em pipelines de IA (prompt? modelo? ferramenta? orquestração?) exige ferramentas de observabilidade sofisticadas; métricas tradicionais de produtividade perdem significado. Fonte: dev.to/vinicius3w, 2025.
+- **Interoperabilidade fragmentada**: MCP/ACP/A2A/ANP disputam camadas diferentes; padrões ainda nascentes dificultam integração, segurança e escala de workflows multiagente. Fonte: NASCIMENTO et al., 2025.
+
+## Fontes brutas (para Nó 7 — Auditor de Rastreabilidade)
+- JIMENEZ, Carlos E. et al. *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*. Disponível em: https://arxiv.org/abs/2310.06770. Acesso em: 08 ago. 2026.
+- YANG, John et al. *SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering*. Disponível em: https://arxiv.org/abs/2405.15793. Acesso em: 08 ago. 2026.
+- WANG, Xingyao et al. *OpenHands: An Open Platform for AI Software Developers as Generalist Agents*. Disponível em: https://arxiv.org/abs/2407.16741. Acesso em: 08 ago. 2026.
+- HONG, Sirui et al. *MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework*. Disponível em: https://arxiv.org/abs/2308.00352. Acesso em: 08 ago. 2026.
+- GUO, Jiale et al. *A Comprehensive Survey on Benchmarks and Solutions in Software Engineering of LLM-Empowered Agentic System*. Disponível em: https://arxiv.org/abs/2510.09721. Acesso em: 08 ago. 2026.
+- DONG, Yihong et al. *A Survey on Code Generation with LLM-based Agents*. Disponível em: https://arxiv.org/abs/2508.00083. Acesso em: 08 ago. 2026.
+- JIN, Haolin et al. *From LLMs to LLM-based Agents for Software Engineering: A Survey of Current, Challenges and Future*. Disponível em: https://arxiv.org/abs/2408.02479. Acesso em: 08 ago. 2026.
+- LIU, Junwei et al. *Large Language Model-based Agents for Software Engineering: A Survey*. Disponível em: https://arxiv.org/abs/2409.02977. Acesso em: 08 ago. 2026.
+- JIANG, Zhonghao; LO, David; LIU, Zhongxin. *Agentic Software Issue Resolution with Large Language Models: A Survey*. Disponível em: https://arxiv.org/abs/2507.03126. Acesso em: 08 ago. 2026.
+- ZHU, Yuecai; TSANTALIS, Nikolaos; RIGBY, Peter C. *AI-Generated Smells: An Analysis of Code and Architecture in LLM- and Agent-Driven Development*. Disponível em: https://arxiv.org/abs/2605.02741. Acesso em: 08 ago. 2026.
+- SABRA, Abbas; SCHMITT, Olivier; SONAR, Joseph Tyler. *Assessing the Quality and Security of AI-Generated Code: A Quantitative Analysis*. Disponível em: https://arxiv.org/abs/2508.14727. Acesso em: 08 ago. 2026.
+- *Saving SWE-Bench: A Benchmark Mutation Approach for Realistic Agent Evaluation*. Disponível em: https://arxiv.org/abs/2510.08996. Acesso em: 08 ago. 2026.
+- CUI, Kevin Zheyuan et al. *The Effects of Generative AI on High-Skilled Work: Evidence from Three Field Experiments with Software Developers*. Disponível em: https://economics.mit.edu/sites/default/files/inline-files/draft_copilot_experiments.pdf. Acesso em: 08 ago. 2026.
+- PENG, Sida et al. *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*. Disponível em: https://arxiv.org/abs/2302.06590. Acesso em: 08 ago. 2026.
+- TERRAGNI, Valerio; ROOP, Partha; BLINCOE, Kelly. *The Future of Software Engineering in an AI-Driven World*. Disponível em: https://arxiv.org/abs/2406.07737. Acesso em: 08 ago. 2026.
+- SAUVOLA, J. et al. *Future of Software Development with Generative AI*. Disponível em: https://doi.org/10.1016/j.autsoft.2024.102256. Acesso em: 08 ago. 2026.
+- *LLMs: A Game-Changer for Software Engineers?*. Disponível em: https://www.sciencedirect.com/science/article/pii/S2772485925000171. Acesso em: 08 ago. 2026.
+- *Security and Quality in LLM-Generated Code: A Multi-Language, Multi-Model Analysis*. Disponível em: https://arxiv.org/abs/2502.01853. Acesso em: 08 ago. 2026.
+- BHATTAHALI, Sandeep Kumar et al. *CyberSecEval 3: Advancing the Evaluation of Cybersecurity Risks and Capabilities in Large Language Models*. Disponível em: https://arxiv.org/abs/2408.01605. Acesso em: 08 ago. 2026.
+- SCHERMANN, Goran et al. *SeCodePLT: A Security-Oriented Dataset for Code Generation*. Disponível em: https://arxiv.org/abs/2410.11096. Acesso em: 08 ago. 2026.
+- PERRY, Neil et al. *Do Users Write More Insecure Code with AI Assistants?*. Disponível em: https://arxiv.org/abs/2211.03622. Acesso em: 08 ago. 2026.
+- STRAY, Viktoria et al. *Human-AI Collaboration in Software Development: A Mixed-Methods Study of Developers' Use of GitHub Copilot and ChatGPT*. Disponível em: https://doi.org/10.1145/3691620.3695556. Acesso em: 08 ago. 2026.
+- STRAY, Viktoria; MOE, Nils Brede; GANESHAN, Nina; KOBBENES, Sebastian. *Generative AI and Developer Workflows: How GitHub Copilot and ChatGPT Influence Solo and Pair Programming*. Disponível em: https://arxiv.org/abs/2503.12131. Acesso em: 08 ago. 2026.
+- VAVEKANAND, R. et al. *LLMs in Web Development: Evaluating LLM-Generated PHP Code Unveiling Vulnerabilities and Limitations*. Disponível em: https://doi.org/10.1007/978-3-031-68606-1_3. Acesso em: 08 ago. 2026.
+- XIA, Chunqiu Steven et al. *Agentless: Demystifying LLM-based Software Engineering Agents*. Disponível em: https://arxiv.org/abs/2407.01489. Acesso em: 08 ago. 2026.
+- ALEITHAN, Reem et al. *SWE-bench+: Enhanced Coding Benchmark for LLMs*. Disponível em: https://arxiv.org/abs/2410.06992. Acesso em: 08 ago. 2026.
+- RASHEED, Zeeshan et al. *LLM-Based Multi-Agent Systems for Code Generation: A Multi-Vocal Literature Review*. Disponível em: https://arxiv.org/abs/2504.15241. Acesso em: 08 ago. 2026.
+- NASCIMENTO, Andre F. et al. *A Survey of Agent Interoperability Protocols: Model Context Protocol (MCP), Agent Communication Protocol (ACP), Agent-to-Agent Protocol (A2A), and Agent Network Protocol (ANP)*. Disponível em: https://arxiv.org/abs/2505.02279. Acesso em: 08 ago. 2026.
+- *Inteligência Artificial Generativa baseada em LLM* (SciELO Preprints). Disponível em: https://preprints.scielo.org/index.php/scielo/preprint/download/6105/11736/12289. Acesso em: 08 ago. 2026.
+- STAHNKE, Eduardo; VAHLDICK, Adilson. *Inteligência Artificial Aplicada na Engenharia de Software*. Disponível em: https://www.researchgate.net/publication/392212068. Acesso em: 08 ago. 2026.
+- SANTA MOLISON, Alexandre et al. *Is LLM-Generated Code More Maintainable & Reliable Than Human-Written Code?*. Disponível em: https://arxiv.org/abs/2508.00130. Acesso em: 08 ago. 2026.
+- WANG, Tony et al. *CWEval: Outcome-Driven Evaluation on Functionality and Security of LLM Code Generation*. Disponível em: https://doi.org/10.1109/LLM4Code62311.2025.00013. Acesso em: 08 ago. 2026.
+- MURUGESAN, Thirunaavukkarasu. *Enhancing SWE Bench with Context Engineering: A Comparative Study Against Prompt Engineering in LLM-Based Software Tasks*. Disponível em: https://doi.org/10.55267/iadt.07.2026.20. Acesso em: 08 ago. 2026.
+- HASANLI, Tarlan et al. *TDD Governance for Multi-Agent Code Generation via Prompt Engineering*. Disponível em: https://arxiv.org/abs/2504.17294. Acesso em: 08 ago. 2026.
+- HUMLUM, Anders; VESTERGAARD, Emilie. *The Adoption of Generative AI across Large Workplaces: Field Evidence from Denmark*. Disponível em: https://humlum.com/ai.pdf. Acesso em: 08 ago. 2026.
+- SCHICK, Timo et al. *Toolformer: Language Models Can Teach Themselves to Use Tools*. Disponível em: https://arxiv.org/abs/2302.04761. Acesso em: 08 ago. 2026.
+- CHEN, Mark et al. *Evaluating Large Language Models Trained on Code*. Disponível em: https://arxiv.org/abs/2107.03374. Acesso em: 08 ago. 2026.
+- YAO, Shunyu et al. *ReAct: Synergizing Reasoning and Acting in Language Models*. Disponível em: https://arxiv.org/abs/2210.03629. Acesso em: 08 ago. 2026.
+- SHINN, Noah et al. *Reflexion: Language Agents with Verbal Reinforcement Learning*. Disponível em: https://arxiv.org/abs/2303.11366. Acesso em: 08 ago. 2026.
+- PAKKANEN, A. et al. *The SWE-Bench Multimodal: Evaluating Language Models on Software Engineering Tasks with Visual Inputs*. Disponível em: https://arxiv.org/abs/2504.18449. Acesso em: 08 ago. 2026.
+- ANTHROPIC. *Introducing the Model Context Protocol*. Disponível em: https://www.anthropic.com/news/model-context-protocol. Acesso em: 08 ago. 2026.
+- MODEL CONTEXT PROTOCOL. *Specification 2025-11-25*. Disponível em: https://modelcontextprotocol.io/specification/2025-11-25. Acesso em: 08 ago. 2026.
+- PRINCETON UNIVERSITY. *SWE-bench Verified*. Disponível em: https://www.swebench.com/verified.html. Acesso em: 08 ago. 2026.
+- DORA / GOOGLE CLOUD. *2025 State of AI-Assisted Software Development Report*. Disponível em: https://dora.dev/dora-report-2025/. Acesso em: 08 ago. 2026.
+- GITHUB. *Survey Reveals AI's Impact on the Developer Experience*. Disponível em: https://github.blog/news-insights/research/survey-reveals-ais-impact-on-the-developer-experience/. Acesso em: 08 ago. 2026.
+- SNYK. *AI Code Generation: Code Security & Quality, Benefits, Risks & Tools*. Disponível em: https://snyk.io/blog/ai-code-generation-code-security-quality-benefits-risks-top-tools/. Acesso em: 08 ago. 2026.
+- ENDOR LABS. *The Most Common Security Vulnerabilities in AI-Generated Code*. Disponível em: https://www.endorlabs.com/learn/the-most-common-security-vulnerabilities-in-ai-generated-code. Acesso em: 08 ago. 2026.
+- BENCHMARKING AGENTS. *AI Agent Benchmarks: SWE-bench, WebArena, AgentBench, Terminal-Bench, OSWorld, Tau-Bench*. Disponível em: https://benchmarkingagents.com/agent-benchmarks. Acesso em: 08 ago. 2026.
+- TOOLBOXKART. *OpenAI Codex vs GitHub Copilot vs Claude Code (2026)*. Disponível em: https://toolboxkart.tech/blog/codex-vs-github-copilot-vs-claude-code/. Acesso em: 08 ago. 2026.
+- OFLIGHT. *Codex vs Claude Code vs Cursor vs Copilot: 2026 AI Coding Tool Comparison*. Disponível em: https://www.oflight.co.jp/en/columns/codex-vs-claude-code-cursor-copilot-comparison-2026. Acesso em: 08 ago. 2026.
+- AICOOLIES. *OpenHands vs Devin vs SWE-Agent: Autonomous Coding Agent Comparison*. Disponível em: https://aicoolies.com/comparisons/openhands-vs-devin-vs-swe-agent. Acesso em: 08 ago. 2026.
+- CODESOTA. *SWE-bench 2026: Compare Devin, Codex, Claude Code, Cursor, OpenHands, Aider*. Disponível em: https://www.codesota.com/tasks/swe-bench. Acesso em: 08 ago. 2026.
+- LLM-STATS. *SWE-Bench Verified Leaderboard*. Disponível em: https://llm-stats.com/benchmarks/swe-bench-verified. Acesso em: 08 ago. 2026.
+- BENCHLM.AI. *SWE-bench Verified Benchmark 2026: 44 LLM Scores*. Disponível em: https://benchlm.ai/benchmarks/sweVerified. Acesso em: 08 ago. 2026.
+- BAYTECH CONSULTING. *Unlocking 2026: The Future of AI-Driven Software Development*. Disponível em: https://www.baytechconsulting.com/blog/unlocking-ai-software-development-2026. Acesso em: 08 ago. 2026.
+- TEQNOVOS. *Top Trends in Large Language Models (LLMs) for Software Development in 2026*. Disponível em: https://teqnovos.com/blog/top-trends-in-large-language-models-llms-for-software-development-in-2026/. Acesso em: 08 ago. 2026.
+- FUTUREWARNS. *AI in Software Development: 2026*. Disponível em: https://futurewarns.com/ai-in-software-development-2026. Acesso em: 08 ago. 2026.
+- INFOQ. *AI Is Amplifying Software Engineering Performance, Says the 2025 DORA Report*. Disponível em: https://www.infoq.com/news/2026/03/ai-dora-report/. Acesso em: 08 ago. 2026.
+- FORRESTER. *Predictions 2026: Software Development Goes From Jamming To A Full Orchestra*. Disponível em: https://www.forrester.com/blogs/predictions-2026-software-development-goes-from-jamming-to-full-orchestra. Acesso em: 08 ago. 2026.
+- SILICONFLOW. *The Best Open Source LLM for Engineering in 2026*. Disponível em: https://www.siliconflow.com/articles/en/best-open-source-LLM-for-engineering. Acesso em: 08 ago. 2026.
+- VINICIUS3W. *Desenvolvimento de Software Assistido por IA: Princípios, Práticas e o Futuro da Engenharia de Software*. Disponível em: https://dev.to/vinicius3w/desenvolvimento-de-software-assistido-por-ia-principios-praticas-e-o-futuro-da-engenharia-de-hg7. Acesso em: 08 ago. 2026.
+- ALURA. *IA na Engenharia de Software: Guardrails de Qualidade e Estratégias de Adoção*. Disponível em: https://www.alura.com.br/conteudo/ia-engenharia-software-guardrails-qualidade-estrategias-adocao. Acesso em: 08 ago. 2026.
+- STRAY, Viktoria et al. *Developer Productivity With and Without GitHub Copilot: A Longitudinal Mixed-Methods Case Study*. Disponível em: https://arxiv.org/abs/2509.20353. Acesso em: 08 ago. 2026.
+- MICROSOFT. *Randomized Controlled Trial for Copilot for Security*. Disponível em: https://www.microsoft.com/content/dam/microsoft/final/en-us/microsoft-product-and-services/microsoft-dynamics-365/pdf/Microsoft-Copilot-for-Security-productivity-findings-Whitepaper-Jan2024.pdf. Acesso em: 08 ago. 2026.
+- INFOQ. *Study Shows AI Coding Assistant Improves Developer Productivity*. Disponível em: https://www.infoq.com/news/2024/09/copilot-developer-productivity. Acesso em: 08 ago. 2026.
+- OPsera. *DORA Report 2025: How AI Adoption Shapes DevOps and Software Development*. Disponível em: https://opsera.ai/blog/dora-2025-report-ai-software-development/. Acesso em: 08 ago. 2026.
+- FUTURE PROCESSING. *DORA Metrics in the Age of AI-Driven Delivery*. Disponível em: https://www.future-processing.com/blog/dora-devops-metrics/. Acesso em: 08 ago. 2026.
+- MINDSHARE. *Claude Code vs OpenAI Codex: Which AI Coding Agent Is Better?*. Disponível em: https://www.mindstudio.ai/blog/claude-code-vs-openai-codex-comparison. Acesso em: 08 ago. 2026.
+- AGILE LAB. *Enabling Interoperability for Agentic AI with Model Context Protocol*. Disponível em: https://www.agilelab.it/blog/enabling-interoperability-for-agentic-ai-with-model-context-protocol. Acesso em: 08 ago. 2026.
+- GITHUB / PROGRAMMING-HELPER. *SWE-bench and Coding Agent Benchmarks 2026*. Disponível em: https://www.programming-helper.com/tech/swe-bench-coding-agent-benchmarks-2026-software-engineering-ai-evaluation. Acesso em: 08 ago. 2026.
+- YIXSCOUT. *AI Coding Tools Decision Hub*. Disponível em: https://yixscout.com/. Acesso em: 08 ago. 2026.

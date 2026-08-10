@@ -1,0 +1,203 @@
+{
+  "slug": "analista-financeiro-futuro-odontologia-pt/livros/l5-zero-custo",
+  "total_blocos": 20,
+  "resumo": {
+    "nao_aplicavel": 4,
+    "ok": 16
+  },
+  "por_linguagem": {
+    "mermaid": {
+      "total": 4,
+      "ok": 0,
+      "falha": 0
+    },
+    "python": {
+      "total": 6,
+      "ok": 6,
+      "falha": 0
+    },
+    "yaml": {
+      "total": 3,
+      "ok": 3,
+      "falha": 0
+    },
+    "javascript": {
+      "total": 1,
+      "ok": 1,
+      "falha": 0
+    },
+    "bash": {
+      "total": 3,
+      "ok": 3,
+      "falha": 0
+    },
+    "json": {
+      "total": 3,
+      "ok": 3,
+      "falha": 0
+    }
+  },
+  "taxa_aprovacao_pct": 100.0,
+  "blocos": [
+    {
+      "origem": "cap_1",
+      "linha": 39,
+      "linguagem": "mermaid",
+      "linhas_codigo": 11,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_1",
+      "linha": 60,
+      "linguagem": "python",
+      "linhas_codigo": 80,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_1",
+      "linha": 146,
+      "linguagem": "python",
+      "linhas_codigo": 111,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_1",
+      "linha": 261,
+      "linguagem": "yaml",
+      "linhas_codigo": 82,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 39,
+      "linguagem": "mermaid",
+      "linhas_codigo": 11,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_2",
+      "linha": 60,
+      "linguagem": "javascript",
+      "linhas_codigo": 66,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 130,
+      "linguagem": "bash",
+      "linhas_codigo": 28,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 164,
+      "linguagem": "json",
+      "linhas_codigo": 115,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_2",
+      "linha": 283,
+      "linguagem": "python",
+      "linhas_codigo": 89,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 43,
+      "linguagem": "mermaid",
+      "linhas_codigo": 20,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_3",
+      "linha": 71,
+      "linguagem": "yaml",
+      "linhas_codigo": 67,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 140,
+      "linguagem": "bash",
+      "linhas_codigo": 16,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 160,
+      "linguagem": "json",
+      "linhas_codigo": 199,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_3",
+      "linha": 363,
+      "linguagem": "python",
+      "linhas_codigo": 98,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 41,
+      "linguagem": "mermaid",
+      "linhas_codigo": 13,
+      "status": "nao_aplicavel",
+      "detalhe": "linguagem sem validador"
+    },
+    {
+      "origem": "cap_4",
+      "linha": 62,
+      "linguagem": "yaml",
+      "linhas_codigo": 64,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 128,
+      "linguagem": "bash",
+      "linhas_codigo": 29,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 161,
+      "linguagem": "json",
+      "linhas_codigo": 135,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 300,
+      "linguagem": "python",
+      "linhas_codigo": 121,
+      "status": "ok",
+      "detalhe": ""
+    },
+    {
+      "origem": "cap_4",
+      "linha": 425,
+      "linguagem": "python",
+      "linhas_codigo": 94,
+      "status": "ok",
+      "detalhe": ""
+    }
+  ]
+}

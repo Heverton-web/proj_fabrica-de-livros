@@ -1,0 +1,40 @@
+{
+  "titulo_obra": "Playbook — Dashboards Impressionantes - Utilizando Cérebros Criativos (LLMs)",
+  "tipo_obra": "playbook",
+  "slug_livro_mae": "analista-financeiro-futuro-odontologia-pt-l3-dashboards",
+  "motivo_condutor": {
+    "nome": "O Painel de Comando",
+    "descricao": "Todo grande piloto tem um painel de comando — não para ver tudo, mas para ver o que importa em 5 segundos. Seu dashboard financeiro é esse painel: poucos indicadores, máxima clareza, decisão instantânea.",
+    "vocabulario": [
+      "painel",
+      "instrumento",
+      "velocímetro",
+      "altitude",
+      "ponte de comando",
+      "indicador",
+      "claridade",
+      "decisão"
+    ],
+    "persona_leitor": "Piloto Financeiro"
+  },
+  "estagios": [
+    {
+      "indice": 1,
+      "nome": "Painel",
+      "titulo_parte": "Design e Estrutura",
+      "capitulos": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "indice": 2,
+      "nome": "Instrumento",
+      "titulo_parte": "Implementação e KPIs",
+      "capitulos": [
+        "3",
+        "4"
+      ]
+    }
+  ]
+}

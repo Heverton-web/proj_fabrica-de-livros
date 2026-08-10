@@ -1,0 +1,67 @@
+{
+  "titulo_obra": "Dashboards Impressionantes - Utilizando Cérebros Criativos (LLMs)",
+  "tipo_obra": "livro",
+  "tamanho_obra": "P",
+  "motivo_condutor": {
+    "nome": "O Painel de Comando",
+    "descricao": "Todo grande piloto tem um painel de comando — não para ver tudo, mas para ver o que importa em 5 segundos. Seu dashboard financeiro é esse painel: poucos indicadores, máxima clareza, decisão instantânea.",
+    "vocabulario": ["painel", "instrumento", "velocímetro", "altitude", "ponte de comando", "indicador", "claridade", "decisão"],
+    "persona_leitor": "Piloto Financeiro"
+  },
+  "introducao": "Apresentar o problema da poluição de dados nos relatórios financeiros e a promessa de dashboards que a diretoria lê em 5 segundos.",
+  "partes": [
+    {
+      "parte": "I",
+      "titulo_parte": "Design e Estrutura",
+      "capitulos": [
+        {
+          "capitulo": "1",
+          "titulo": "O Design da Clareza Analítica",
+          "objetivo": "Ensinar o leitor a pedir para a IA desenhar o esqueleto perfeito do dashboard, com dados em formato de lista para leitura rápida.",
+          "pilares_previstos": [
+            "Princípio da representação intermediária estruturada (IR): separar análise LLM de renderização determinística",
+            "Anti-padrões: 3D desnecessário, cores sem semântica, legendas complexas",
+            "Formato lista vs. lado a lado: por que um embaixo do outro é mais rápido para o olhar"
+          ]
+        },
+        {
+          "capitulo": "2",
+          "titulo": "Substituindo a Complexidade pela Praticidade",
+          "objetivo": "Eliminar cálculos temporais complexos e substituí-los por cartões visuais diretos mostrando data do primeiro e último pedido.",
+          "pilares_previstos": [
+            "O problema dos cálculos de maturidade: por que números complexos confundem a diretoria",
+            "Cartões visuais diretos: primeiro pedido, último pedido, volume total — dados brutos que Anyone entende",
+            "NOVAID: 94% de acurácia em extração de métricas via linguagem natural"
+          ]
+        }
+      ]
+    },
+    {
+      "parte": "II",
+      "titulo_parte": "Implementação e KPIs",
+      "capitulos": [
+        {
+          "capitulo": "3",
+          "titulo": "Fórmulas Complexas em Segundos",
+          "objetivo": "Ensinar o leitor a pedir para a IA escrever rotinas VBA e fórmulas de Google Sheets (QUERY, VLOOKUP) para consolidar bases de dados.",
+          "pilares_previstos": [
+            "VBA e Google Sheets: o que a IA faz bem e onde o humano precisa validar",
+            "Fórmulas QUERY e VLOOKUP: templates prontos que a IA adapta ao seu caso",
+            "NL2Dashboard, DashChat, Data-to-Dashboard: frameworks LLM para geração de dashboards"
+          ]
+        },
+        {
+          "capitulo": "4",
+          "titulo": "Seu Primeiro Painel de Saúde do Cliente B2B",
+          "objetivo": "Montar um painel de KPIs (Ticket Médio, CAC, Taxa de Recompra) conectando os blocos criados nos capítulos anteriores.",
+          "pilares_previstos": [
+            "KPIs essenciais B2B saúde: Ticket Médio, CAC, LTV, Taxa de Recompra, NPS — fórmulas prontas",
+            "Conexão dos blocos: do dado bruto ao KPI ao dashboard em 4 passos",
+            "MisVisFix: 96% de acurácia em detecção de visualizações enganosas — validação final"
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusao": "O leitor agora monta dashboards que a diretoria lê em 5 segundos. Ponte para o Livro 4: como usar IA para auditar os dados por trás desses dashboards."
+}
