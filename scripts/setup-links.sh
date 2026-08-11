@@ -55,8 +55,17 @@ link ".claude/commands" ".agents/commands"
 link ".claude/mcp-servers" ".agents/mcp-servers"
 
 echo
-echo "== MCP traduzido para VS Code (schema diferente, gerado por script) =="
+echo "== Pastas .opencode/ (symlink para .claude/..., OpenCode) =="
+link ".claude/skills" ".opencode/skills"
+link ".claude/agents" ".opencode/agents"
+link ".claude/commands" ".opencode/commands"
+link ".claude/mcp-servers" ".opencode/mcp-servers"
+link ".claude/settings.json" ".opencode/settings.json"
+
+echo
+echo "== MCP traduzido para VS Code e OpenCode (schemas diferentes, gerados por script) =="
 node "$raiz/scripts/sync-vscode-mcp.mjs"
+node "$raiz/scripts/sync-opencode-mcp.mjs"
 
 echo
 echo "Concluido."

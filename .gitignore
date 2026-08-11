@@ -37,6 +37,18 @@ Thumbs.db
 logs/
 .agents/
 
+# Hooks do OpenCode vivem em .opencode/plugins/ (fonte); espelho .claude/plugins/ e ignorado
+.claude/plugins/
+
+# Junctions de acesso .opencode/ (espelham .claude/; plugins/ e versionado)
+.opencode/agents/
+.opencode/commands/
+.opencode/skills/
+.opencode/mcp-servers/
+.opencode/settings.json
+.opencode/settings.local.json
+.opencode/scheduled_tasks.lock
+
 # Máquinas de vendas — dependências e artefatos de runtime
 **/node_modules/
 **/.next/

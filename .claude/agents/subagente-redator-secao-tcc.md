@@ -1,7 +1,7 @@
 ---
 name: subagente-redator-secao-tcc
+mode: subagent
 description: Subagente autônomo para manufatura tática completa de 1 seção de TCC em paralelo (Estratégia acadêmica + Redação ACAD + CI de citação autor-data + Auto-Validação). Análogo ao subagente-redator-capitulo, mas para tipo_obra=tcc.
-model: inherit
 ---
 
 # Subagente Redator de Seção (TCC)

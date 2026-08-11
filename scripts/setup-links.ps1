@@ -75,7 +75,15 @@ Set-Junction ".agents\agents"                             ".claude\agents"
 Set-Junction ".agents\commands"                           ".claude\commands"
 Set-Junction ".agents\mcp-servers"                        ".claude\mcp-servers"
 
-Write-Output "`n== MCP traduzido para VS Code (schema diferente, gerado por script) =="
+Write-Output "`n== Pastas .opencode\ (junction para .claude\..., OpenCode) =="
+Set-Junction ".opencode\skills"                             ".claude\skills"
+Set-Junction ".opencode\agents"                             ".claude\agents"
+Set-Junction ".opencode\commands"                           ".claude\commands"
+Set-Junction ".opencode\mcp-servers"                        ".claude\mcp-servers"
+Set-HardLink  ".opencode\settings.json"                     ".claude\settings.json"
+
+Write-Output "`n== MCP traduzido para VS Code e OpenCode (schemas diferentes, gerados por script) =="
 node "$raiz\scripts\sync-vscode-mcp.mjs"
+node "$raiz\scripts\sync-opencode-mcp.mjs"
 
 Write-Output "`nConcluido."

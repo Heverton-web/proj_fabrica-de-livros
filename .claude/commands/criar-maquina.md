@@ -1,3 +1,7 @@
+---
+description: Gera uma máquina de vendas deployável (Next.js + FastAPI) a partir de uma obra finalizada da Fábrica — 1 máquina por COLEÇÃO, com snapshot das campanhas e personalização obrigatória por nicho. Uso: /criar-maquina <slug-da-obra> [--tipo completo|parcial|landing|backend]
+---
+
 # Comando: /criar-maquina
 
 Gera uma máquina de vendas deployável a partir de uma obra finalizada.

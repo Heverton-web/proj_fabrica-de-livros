@@ -191,7 +191,7 @@ de entregas. O relatório é commitado e pushado junto com o trabalho da sessão
 
 ## 6. Portabilidade Multi-IDE
 
-Fonte: `.claude/`. Junctions: `agentic/*` e `.agents/*` → `.claude/*`. Hardlinks: `AGENTS.md`→`CLAUDE.md`, `.cursor/rules/`→`CLAUDE.md`, `.cursor/mcp.json`→`.mcp.json`. VS Code: `scripts/sync-vscode-mcp.mjs`.
+Fonte: `.claude/`. Junctions: `agentic/*`, `.agents/*` e `.opencode/{agents,commands,skills,mcp-servers,settings.json}` → `.claude/*`. Hardlinks: `AGENTS.md`→`CLAUDE.md`, `.cursor/rules/`→`CLAUDE.md`, `.cursor/mcp.json`→`.mcp.json`. Schemas MCP que diferem são GERADOS por script (não link): `.vscode/mcp.json` via `scripts/sync-vscode-mcp.mjs`, `opencode.json` via `scripts/sync-opencode-mcp.mjs` (preserva `instructions`/`permission`/chaves manuais por merge; sobrescreve só o bloco `mcp`). Hooks do OpenCode vivem em `.opencode/plugins/fabrica-hooks.ts` (versionado; espelha `.claude/settings.json` — junction de `settings.json` só serve o schema do plugin, que o OpenCode lê além do `settings.json`). Recriar após clone: `scripts/setup-links.ps1` (Win) ou `setup-links.sh` (Mac/Linux).
 
 ## 7. RTK SCRATCHPAD
 

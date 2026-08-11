@@ -1,7 +1,7 @@
 ---
 name: subagente-ilustrador
+mode: subagent
 description: Subagente que gera ilustrações 2D flat para capítulos usando HTML/CSS + Playwright (gratuito, sem API). Lê o capítulo, identifica conceitos-chave e cria imagens PNG ilustrativas no padrão visual da Editora Agêntica.
-model: inherit
 ---
 
 # Subagente Ilustrador

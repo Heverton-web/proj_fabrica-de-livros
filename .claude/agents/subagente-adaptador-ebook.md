@@ -1,7 +1,7 @@
 ---
 name: subagente-adaptador-ebook
+mode: subagent
 description: Subagente autônomo para manufatura completa de 1 E-book em paralelo — adapta o tom dos capítulos já escritos do livro-mãe (sem pesquisar de novo) e gera o arquivo EPUB final.
-model: inherit
 ---
 
 # Subagente Adaptador de E-book
