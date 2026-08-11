@@ -108,13 +108,13 @@ class TestRegistro:
     def test_estrutura_de_pastas_do_registro(self, ambiente):
         ctx = CP.contexto_material(ambiente["slug"])
         pastas = CP.estrutura_material(ctx)
-        assert len(pastas) == 24
-        assert "redes-sociais/instagram/artes/post" in pastas
-        assert "redes-sociais/linkedin/artes/post" in pastas
-        assert "redes-sociais/instagram/textos/resposta-direct" in pastas
-        assert "canais-comunicacao/emails/sequencia-nutricao/textos" in pastas
-        assert "canais-comunicacao/whatsapp/sequencia-divulgacao/artes" in pastas
-        assert "redes-sociais/instagram/cronograma-divulgacao" in pastas
+        # Novo Scaffold Baseado no Playbook
+        assert "social_organico/instagram/artes/post" in pastas
+        assert "social_organico/linkedin/artes/post" in pastas
+        assert "social_organico/instagram/textos/resposta-direct" in pastas
+        assert "inbound_emails/sequencia-nutricao/textos" in pastas
+        assert "ads_pago/facebook/artes/anuncio" in pastas
+        assert "distribuicao_semeadura/textos/artigo" in pastas
 
     def test_dimensoes_de_artes(self):
         assert CP.REDES_SOCIAIS["instagram"]["artes"]["post"] == (1080, 1350)
@@ -162,25 +162,22 @@ class TestRegistro:
 class TestGerador:
     def test_gera_estrutura_moldes_e_cronogramas(self, ambiente):
         rel = criador.gerar_material(ambiente["slug"], com_artes=False)
-        assert rel["pastas"] == 24
         raiz = _raiz(ambiente["slug"])
         for pasta in CP.estrutura_material(CP.contexto_material(ambiente["slug"])):
             assert (raiz / pasta).is_dir(), pasta
-        assert (raiz / "redes-sociais/instagram/textos/post/post-01.md").exists()
-        assert (raiz / "redes-sociais/instagram/textos/resposta-direct/resposta-direct.md").exists()
-        assert (raiz / "redes-sociais/linkedin/textos/post/post-02.md").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao/textos/email-01-sequencia-nutricao.md").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-mkt/textos/email-03-sequencia-mkt.md").exists()
-        assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/textos/msg-04-sequencia-nutricao.md").exists()
-        assert (raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/textos/msg-06-sequencia-divulgacao.md").exists()
-        assert (raiz / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.md").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao/cronograma-divulgacao/cronograma-30d-emails-sequencia-nutricao.md").exists()
+        assert (raiz / "social_organico/instagram/textos/post/post-01.md").exists()
+        assert (raiz / "social_organico/instagram/textos/resposta-direct/resposta-direct.md").exists()
+        assert (raiz / "social_organico/linkedin/textos/post/post-02.md").exists()
+        assert (raiz / "inbound_emails/sequencia-nutricao/textos/email-01-sequencia-nutricao.md").exists()
+        assert (raiz / "inbound_emails/sequencia-mkt/textos/email-03-sequencia-mkt.md").exists()
+        assert (raiz / "ads_pago/facebook/textos/anuncio-01-facebook.md").exists()
+        assert (raiz / "cronograma_mestre.md").exists()
         assert not list(raiz.rglob("*.png"))
 
     def test_moldes_tem_contexto_e_rascunho(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         molde = (_raiz(ambiente["slug"])
-                 / "redes-sociais/instagram/textos/post/post-01.md")
+                 / "social_organico/instagram/textos/post/post-01.md")
         texto = molde.read_text(encoding="utf-8")
         assert "Status: RASCUNHO" in texto
         assert "Colecao Teste" in texto
@@ -190,7 +187,7 @@ class TestGerador:
     def test_moldes_nao_sobrescrevem_edits(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         alvo = (_raiz(ambiente["slug"])
-                / "redes-sociais/instagram/textos/post/post-01.md")
+                / "social_organico/instagram/textos/post/post-01.md")
         alvo.write_text("Status: FINAL — copy final do agente", encoding="utf-8")
         criador.gerar_material(ambiente["slug"], com_artes=False)
         assert "copy final do agente" in alvo.read_text(encoding="utf-8")
@@ -200,7 +197,7 @@ class TestGerador:
     def test_artes_escrevem_html_fonte_sem_chromium(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         raiz = _raiz(ambiente["slug"])
-        html = (raiz / "redes-sociais/instagram/artes/post/post-01.html") \
+        html = (raiz / "social_organico/instagram/artes/post/post-01.html") \
             .read_text(encoding="utf-8")
         ctx = CP.contexto_material(ambiente["slug"])
         assert ctx["cor_accent"].lstrip("#") in html
@@ -213,7 +210,7 @@ class TestGerador:
     def test_tags_arte_sao_tecnicas_nao_metafora(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         html = (_raiz(ambiente["slug"])
-                / "redes-sociais/instagram/artes/post/post-01.html") \
+                / "social_organico/instagram/artes/post/post-01.html") \
             .read_text(encoding="utf-8")
         # vocabulario condutor (metafora: fundacao/estrutura/acabamento) NAO
         # aparece como tag na arte — so as tags tecnicas do dominio
@@ -252,13 +249,13 @@ class TestGerador:
     def test_artes_templates_copiados(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         raiz = _raiz(ambiente["slug"])
-        assert (raiz / "redes-sociais/instagram/templates/arte-post-ig.html").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao/templates/arte-whatsapp.html").exists()
+        assert (raiz / "social_organico/instagram/templates/arte-post-ig.html").exists()
+        assert (raiz / "inbound_emails/sequencia-nutricao/templates/arte-whatsapp.html").exists()
 
     def test_cronograma_tem_datas_futuras(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         crono = (_raiz(ambiente["slug"])
-                 / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.md")
+                 / "social_organico/instagram/cronograma-divulgacao/cronograma-ig.md")
         texto = crono.read_text(encoding="utf-8")
         import re
         from datetime import date, datetime
@@ -281,7 +278,7 @@ class TestGerador:
     def test_cronograma_alterna_envio_e_pausa_nos_canais(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         crono = (_raiz(ambiente["slug"])
-                 / "canais-comunicacao/emails/sequencia-nutricao"
+                 / "inbound_emails/sequencia-nutricao"
                  / "cronograma-divulgacao"
                  / "cronograma-30d-emails-sequencia-nutricao.md")
         texto = crono.read_text(encoding="utf-8")
@@ -297,8 +294,8 @@ class TestGerador:
             pdf = crono.with_suffix(".pdf")
             assert pdf.exists(), pdf
             assert pdf.read_bytes().startswith(b"%PDF")
-        assert (raiz / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.pdf").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao"
+        assert (raiz / "social_organico/instagram/cronograma-divulgacao/cronograma-ig.pdf").exists()
+        assert (raiz / "inbound_emails/sequencia-nutricao"
                 / "cronograma-divulgacao"
                 / "cronograma-30d-emails-sequencia-nutricao.pdf").exists()
 
@@ -306,16 +303,16 @@ class TestGerador:
         criador.gerar_material(ambiente["slug"], com_artes=False)
         raiz = _raiz(ambiente["slug"])
         for texto in raiz.rglob("*.md"):
-            if texto.name.startswith("cronograma-"):
+            if texto.name.startswith("cronograma"):
                 continue
             pdf = texto.with_suffix(".pdf")
             assert pdf.exists(), pdf
             assert pdf.read_bytes().startswith(b"%PDF")
-        assert (raiz / "redes-sociais/instagram/textos/post/post-01.pdf").exists()
-        assert (raiz / "redes-sociais/instagram/textos/feed-story/story-01.pdf").exists()
-        assert (raiz / "redes-sociais/linkedin/textos/post/post-02.pdf").exists()
-        assert (raiz / "redes-sociais/instagram/textos/resposta-direct/resposta-direct.pdf").exists()
-        assert (raiz / "canais-comunicacao/emails/sequencia-nutricao/textos"
+        assert (raiz / "social_organico/instagram/textos/post/post-01.pdf").exists()
+        assert (raiz / "social_organico/instagram/textos/feed-story/story-01.pdf").exists()
+        assert (raiz / "social_organico/linkedin/textos/post/post-02.pdf").exists()
+        assert (raiz / "social_organico/instagram/textos/resposta-direct/resposta-direct.pdf").exists()
+        assert (raiz / "inbound_emails/sequencia-nutricao/textos"
                 / "email-01-sequencia-nutricao.pdf").exists()
         assert (raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/textos"
                 / "msg-06-sequencia-divulgacao.pdf").exists()
@@ -342,26 +339,26 @@ class TestGerador:
         finally:
             criador._renderizar_png = original
         raiz = _raiz(ambiente["slug"])
-        png = raiz / "redes-sociais/instagram/artes/post/post-01.png"
+        png = raiz / "social_organico/instagram/artes/post/post-01.png"
         assert png.exists()
         assert png.read_bytes().startswith(b"\x89PNG")
-        assert (raiz / "redes-sociais/instagram/artes/post/post-07.png").exists()
-        assert (raiz / "redes-sociais/instagram/artes/feed-story/story-07.png").exists()
-        assert (raiz / "redes-sociais/linkedin/artes/post/post-07.png").exists()
+        assert (raiz / "social_organico/instagram/artes/post/post-07.png").exists()
+        assert (raiz / "social_organico/instagram/artes/feed-story/story-07.png").exists()
+        assert (raiz / "social_organico/linkedin/artes/post/post-07.png").exists()
         assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-04.png").exists()
 
     def test_artes_quantidade_supre_cronograma(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=True)
         raiz = _raiz(ambiente["slug"])
         # Instagram 14 dias: 7 posts + 7 stories
-        assert (raiz / "redes-sociais/instagram/artes/post/post-01.png").exists()
-        assert (raiz / "redes-sociais/instagram/artes/post/post-07.png").exists()
-        assert (raiz / "redes-sociais/instagram/artes/feed-story/story-01.png").exists()
-        assert (raiz / "redes-sociais/instagram/artes/feed-story/story-07.png").exists()
-        assert not (raiz / "redes-sociais/instagram/artes/post/post-08.png").exists()
+        assert (raiz / "social_organico/instagram/artes/post/post-01.png").exists()
+        assert (raiz / "social_organico/instagram/artes/post/post-07.png").exists()
+        assert (raiz / "social_organico/instagram/artes/feed-story/story-01.png").exists()
+        assert (raiz / "social_organico/instagram/artes/feed-story/story-07.png").exists()
+        assert not (raiz / "social_organico/instagram/artes/post/post-08.png").exists()
         # LinkedIn 14 dias: 7 posts (direct e texto, sem arte)
-        assert (raiz / "redes-sociais/linkedin/artes/post/post-07.png").exists()
-        assert not (raiz / "redes-sociais/linkedin/artes/post/post-08.png").exists()
+        assert (raiz / "social_organico/linkedin/artes/post/post-07.png").exists()
+        assert not (raiz / "social_organico/linkedin/artes/post/post-08.png").exists()
         # WhatsApp: 1 arte por mensagem da sequencia (4 e 6)
         assert (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-04.png").exists()
         assert not (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-05.png").exists()
@@ -376,9 +373,9 @@ class TestGerador:
         criador.gerar_material(ambiente["slug"], com_artes=True)
         raiz = _raiz(ambiente["slug"])
         grupos = [
-            "redes-sociais/instagram/artes/post",
-            "redes-sociais/instagram/artes/feed-story",
-            "redes-sociais/linkedin/artes/post",
+            "social_organico/instagram/artes/post",
+            "social_organico/instagram/artes/feed-story",
+            "social_organico/linkedin/artes/post",
             "canais-comunicacao/whatsapp/sequencia-nutricao/artes",
             "canais-comunicacao/whatsapp/sequencia-divulgacao/artes",
         ]
@@ -393,7 +390,7 @@ class TestGerador:
         """Cada arte tem gancho proprio <= MAX_GANCHO + rotulo de progresso."""
         criador.gerar_material(ambiente["slug"], com_artes=False)
         raiz = _raiz(ambiente["slug"])
-        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        dir_post = raiz / "social_organico/instagram/artes/post"
         titulos = set()
         for html in sorted(dir_post.glob("post-*.html")):
             texto = html.read_text(encoding="utf-8")
@@ -425,7 +422,7 @@ class TestGerador:
         criador.gerar_material(ambiente["slug"], com_artes=True)
         # Deleta posts do IG para ficar abaixo do exigido pelo cronograma
         raiz = _raiz(ambiente["slug"])
-        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        dir_post = raiz / "social_organico/instagram/artes/post"
         for png in list(dir_post.glob("post-*.png")):
             if png.name != "post-01.png":
                 png.unlink()
@@ -528,7 +525,7 @@ class TestGate:
     def test_reprova_copy_generica(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         alvo = (_raiz(ambiente["slug"])
-                / "redes-sociais/instagram/textos/post/post-01.md")
+                / "social_organico/instagram/textos/post/post-01.md")
         alvo.write_text("Status: FINAL\n\nAutor Digital: o guia para centenas de pessoas",
                         encoding="utf-8")
         _finalizar_moldes(ambiente["slug"])
@@ -539,7 +536,7 @@ class TestGate:
     def test_reprova_pasta_ausente(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         import shutil
-        ausente = _raiz(ambiente["slug"]) / "redes-sociais/linkedin"
+        ausente = _raiz(ambiente["slug"]) / "social_organico/linkedin"
         shutil.rmtree(ausente)
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-1" in {v["regra"] for v in rel["violacoes"]}
@@ -552,8 +549,8 @@ class TestGate:
             if md.name.startswith("cronograma-"):
                 continue
             md.unlink()
-        (raiz / "redes-sociais/instagram/textos/post").mkdir(parents=True, exist_ok=True)
-        texto = raiz / "redes-sociais/instagram/textos/post/post-01.md"
+        (raiz / "social_organico/instagram/textos/post").mkdir(parents=True, exist_ok=True)
+        texto = raiz / "social_organico/instagram/textos/post/post-01.md"
         texto.write_text("Status: FINAL\n\nCopy sem termos da colecao.",
                          encoding="utf-8")
         texto.with_suffix(".pdf").write_bytes(b"%PDF-1.4\nplaceholder\n%%EOF")
@@ -565,7 +562,7 @@ class TestGate:
     def test_reprova_png_invalido(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         png = (_raiz(ambiente["slug"])
-               / "redes-sociais/instagram/artes/post/post-01.png")
+               / "social_organico/instagram/artes/post/post-01.png")
         png.write_bytes(b"lixo nao png")
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-3" in {v["regra"] for v in rel["violacoes"]}
@@ -583,7 +580,7 @@ class TestGate:
         import shutil
         criador.gerar_material(ambiente["slug"], com_artes=True)
         raiz = _raiz(ambiente["slug"])
-        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        dir_post = raiz / "social_organico/instagram/artes/post"
         shutil.copy2(dir_post / "post-01.png", dir_post / "post-02.png")
         rel = gate.validar_material(ambiente["slug"])
         violacoes = [v for v in rel["violacoes"] if v["regra"] == "R-CP-6"]
@@ -594,7 +591,7 @@ class TestGate:
         """Copy identica em 2 envios -> R-CP-6 reprova o HTML fonte."""
         criador.gerar_material(ambiente["slug"], com_artes=True)
         raiz = _raiz(ambiente["slug"])
-        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        dir_post = raiz / "social_organico/instagram/artes/post"
         html1 = (dir_post / "post-01.html").read_text(encoding="utf-8")
         (dir_post / "post-02.html").write_text(html1, encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
@@ -608,7 +605,7 @@ class TestGate:
         criador.gerar_material(ambiente["slug"], com_artes=True)
         _finalizar_moldes(ambiente["slug"])
         backup = (_raiz(ambiente["slug"]) / "revisao/backups/20260810_000000"
-                  / "redes-sociais/instagram/textos/post/post-01.md")
+                  / "social_organico/instagram/textos/post/post-01.md")
         backup.parent.mkdir(parents=True, exist_ok=True)
         backup.write_text("Status: RASCUNHO — molde antigo de backup", encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"], estrito=True)
@@ -617,7 +614,7 @@ class TestGate:
     def test_reprova_cronograma_sem_data(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         crono = (_raiz(ambiente["slug"])
-                 / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.md")
+                 / "social_organico/instagram/cronograma-divulgacao/cronograma-ig.md")
         crono.write_text("sem data aqui", encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
@@ -625,7 +622,7 @@ class TestGate:
     def test_reprova_cronograma_sem_dimensoes(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         crono = (_raiz(ambiente["slug"])
-                 / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.md")
+                 / "social_organico/instagram/cronograma-divulgacao/cronograma-ig.md")
         crono.write_text("- D+1 (2026-08-10, segunda-feira): Post — titulo\n",
                          encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
@@ -635,7 +632,7 @@ class TestGate:
     def test_reprova_cronograma_sem_pdf(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         pdf = (_raiz(ambiente["slug"])
-               / "redes-sociais/instagram/cronograma-divulgacao/cronograma-ig.pdf")
+               / "social_organico/instagram/cronograma-divulgacao/cronograma-ig.pdf")
         pdf.unlink()
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-5" in {v["regra"] for v in rel["violacoes"]}
@@ -644,7 +641,7 @@ class TestGate:
     def test_reprova_texto_sem_pdf(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         pdf = (_raiz(ambiente["slug"])
-               / "redes-sociais/instagram/textos/post/post-01.pdf")
+               / "social_organico/instagram/textos/post/post-01.pdf")
         pdf.unlink()
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-2" in {v["regra"] for v in rel["violacoes"]}

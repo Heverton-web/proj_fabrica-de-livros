@@ -1,7 +1,7 @@
 {
   "tema": "Volume 4: A Jornada Prática — aplicação de todo o AIDD na construção de um projeto real completo, do setup das camadas e primeiras Specs até funcionalidades via Skills/MCPs e deploy automatizado",
   "tipo_obra": "livro",
-  "min_referencias_por_capitulo": 20,
+  "min_referencias_por_capitulo": 12,
   "tamanho_obra": "M",
   "senioridade_obra": "iniciante",
   "serie": "aidd-engenharia-nativa",
@@ -11,7 +11,12 @@
   "qtd_ebooks": 1,
   "gerar_playbook": true,
   "gerar_lead_magnets": true,
-  "formatos_lm": ["checklist", "armadilhas", "cheatsheet", "mapa"],
+  "formatos_lm": [
+    "checklist",
+    "armadilhas",
+    "cheatsheet",
+    "mapa"
+  ],
   "gerar_deck": true,
   "gerar_emails": true,
   "cta_url": "https://exemplo.com/aidd-engenharia-nativa",

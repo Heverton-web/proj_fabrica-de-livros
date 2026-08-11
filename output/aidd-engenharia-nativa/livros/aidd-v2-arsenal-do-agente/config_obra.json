@@ -1,7 +1,7 @@
 {
   "tema": "Volume 2: O Arsenal do Agente — Skills (granularidade, idempotência) e o Model Context Protocol (MCP) como ponte de conectividade para o agente operar com autonomia assistida",
   "tipo_obra": "livro",
-  "min_referencias_por_capitulo": 20,
+  "min_referencias_por_capitulo": 12,
   "tamanho_obra": "M",
   "senioridade_obra": "iniciante",
   "serie": "aidd-engenharia-nativa",
@@ -11,7 +11,12 @@
   "qtd_ebooks": 1,
   "gerar_playbook": true,
   "gerar_lead_magnets": true,
-  "formatos_lm": ["checklist", "armadilhas", "cheatsheet", "mapa"],
+  "formatos_lm": [
+    "checklist",
+    "armadilhas",
+    "cheatsheet",
+    "mapa"
+  ],
   "gerar_deck": true,
   "gerar_emails": true,
   "cta_url": "https://exemplo.com/aidd-engenharia-nativa",

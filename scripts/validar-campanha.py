@@ -111,7 +111,7 @@ def validar_material(slug, estrito=False, base=None):
     if raiz.exists():
         # R-CP-2 — conteudo
         for arquivo in _textos_da_pasta(raiz):
-            eh_cronograma = arquivo.name.startswith("cronograma-")
+            eh_cronograma = arquivo.name.startswith("cronograma")
             try:
                 texto = arquivo.read_text(encoding="utf-8")
             except OSError as exc:
@@ -149,7 +149,7 @@ def validar_material(slug, estrito=False, base=None):
                                   "detalhe": f"PNG invalido: {png.relative_to(raiz)}"})
         for rede, dados in CP.REDES_SOCIAIS.items():
             for formato, n_esperado in CP.n_artes_redes(rede).items():
-                dir_artes = raiz / f"redes-sociais/{rede}/artes/{formato}"
+                dir_artes = raiz / f"social_organico/{rede}/artes/{formato}"
                 n_real = len(list(dir_artes.glob("*.png"))) if dir_artes.exists() else 0
                 if n_real < n_esperado:
                     violacoes.append({"regra": "R-CP-3",
@@ -169,7 +169,7 @@ def validar_material(slug, estrito=False, base=None):
         # R-CP-6 — artes unicas por formato/sequencia (1 arte = 1 envio)
         for rede, dados in CP.REDES_SOCIAIS.items():
             for formato in dados.get("artes", {}):
-                dir_artes = raiz / f"redes-sociais/{rede}/artes/{formato}"
+                dir_artes = raiz / f"social_organico/{rede}/artes/{formato}"
                 pngs_dup, htmls_dup = _artes_duplicadas(dir_artes)
                 if pngs_dup:
                     violacoes.append({"regra": "R-CP-6",

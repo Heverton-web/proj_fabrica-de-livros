@@ -68,6 +68,23 @@ CANAIS_COMUNICACAO = {
     },
 }
 
+# ── Registro: MIDIA PAGA E DISTRIBUICAO ─────────────────────────────────────
+ADS_PAGO = {
+    "facebook": {
+        "rotulo": "Facebook Ads",
+        "artes": {"anuncio": (1080, 1080)},
+        "textos": {"anuncio": 1},
+        "templates": True
+    }
+}
+
+DISTRIBUICAO_SEMEADURA = {
+    "linkedin": {
+        "rotulo": "Artigo Secundário",
+        "textos": {"artigo": 1}
+    }
+}
+
 # Template HTML de arte por formato (dimensoes fixas por arquivo)
 TEMPLATES_ARTE = {
     "feed-story": "arte-feed-story-ig.html",
@@ -507,6 +524,15 @@ def pasta_de_texto(prefixo, sequencia):
     return f"textos/{sequencia}" if sequencia else f"textos/{prefixo}"
 
 
+def n_artes_redes(rede):
+    """(Hardcoded V5): Quantidade fixa exigida pelo cronograma-base por formato."""
+    if rede == "instagram":
+        return {"post": 7, "feed-story": 7}
+    elif rede == "linkedin":
+        return {"post": 7}
+    return {}
+
+
 def cronograma_nome(redes, dias=None):
     """cronograma-ig.md / cronograma-li.md / cronograma-30d-emails.md ..."""
     if redes == "instagram":
@@ -535,8 +561,10 @@ def salvar_estado(chave, estado, base=None):
 def estrutura_material(ctx):
     """Caminhos (relativos a pasta do material) de todas as pastas do registro."""
     pastas = []
+    
+    # 2. Social Organico
     for rede, dados in REDES_SOCIAIS.items():
-        raiz = f"redes-sociais/{rede}"
+        raiz = f"social_organico/{rede}"
         for formato in dados.get("artes", {}):
             pastas.append(f"{raiz}/artes/{formato}")
         for pasta_texto in dados.get("textos", {}):
@@ -544,13 +572,32 @@ def estrutura_material(ctx):
         if dados.get("templates"):
             pastas.append(f"{raiz}/templates")
         pastas.append(f"{raiz}/cronograma-divulgacao")
+        
+    # 3. Canais de Comunicacao (Email Inbound e Whatsapp)
     for canal, dados in CANAIS_COMUNICACAO.items():
         for sequencia, conf in dados.get("sequencias", {}).items():
-            raiz = f"canais-comunicacao/{canal}/{sequencia}"
+            raiz = f"inbound_emails/{sequencia}" if canal == "emails" else f"canais-comunicacao/{canal}/{sequencia}"
             if conf.get("templates"):
                 pastas.append(f"{raiz}/templates")
             pastas.append(f"{raiz}/textos")
             if conf.get("artes"):
                 pastas.append(f"{raiz}/artes")
             pastas.append(f"{raiz}/cronograma-divulgacao")
+            
+    # 4. Tráfego Pago
+    for rede, dados in ADS_PAGO.items():
+        raiz = f"ads_pago/{rede}"
+        for formato in dados.get("artes", {}):
+            pastas.append(f"{raiz}/artes/{formato}")
+        for pasta_texto in dados.get("textos", {}):
+            pastas.append(f"{raiz}/{pasta_de_texto(pasta_texto, None)}")
+        if dados.get("templates"):
+            pastas.append(f"{raiz}/templates")
+            
+    # 5. Distribuicao
+    for rede, dados in DISTRIBUICAO_SEMEADURA.items():
+        raiz = f"distribuicao_semeadura"
+        for pasta_texto in dados.get("textos", {}):
+            pastas.append(f"{raiz}/{pasta_de_texto(pasta_texto, None)}")
+
     return sorted(set(pastas))

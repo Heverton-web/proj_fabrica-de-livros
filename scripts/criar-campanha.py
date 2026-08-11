@@ -185,7 +185,7 @@ def escrever_moldes(ctx, base):
     quando o .md foi editado depois do PDF (reflete a copy final)."""
     escritos = []
     for rede, dados in CP.REDES_SOCIAIS.items():
-        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
+        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"social_organico/{rede}"
         for pasta, quantidade in dados.get("textos", {}).items():
             for i in range(1, quantidade + 1):
                 arquivo = raiz / CP.pasta_de_texto(pasta, None) / CP.texto_nome(pasta, i)
@@ -212,8 +212,8 @@ def escrever_moldes(ctx, base):
         for sequencia, conf in dados.get("sequencias", {}).items():
             prefixo = "email" if canal == "emails" else "msg"
             quantidade = conf.get("textos", 0)
-            raiz = (CP.dir_campanha_material(ctx["slug"], base)
-                    / f"canais-comunicacao/{canal}/{sequencia}/textos")
+            pasta = f"inbound_emails/{sequencia}/textos" if canal == "emails" else f"canais-comunicacao/{canal}/{sequencia}/textos"
+            raiz = CP.dir_campanha_material(ctx["slug"], base) / pasta
             for i in range(1, quantidade + 1):
                 arquivo = raiz / CP.texto_nome(prefixo, i, sequencia)
                 escreveu = False
@@ -232,6 +232,43 @@ def escrever_moldes(ctx, base):
                     _pdf_atualizado(arquivo)
                 if escreveu:
                     escritos.append(arquivo)
+                    
+    # Scaffold Ads Pago
+    for rede, dados in CP.ADS_PAGO.items():
+        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"ads_pago/{rede}"
+        for pasta, quantidade in dados.get("textos", {}).items():
+            for i in range(1, quantidade + 1):
+                arquivo = raiz / "textos" / f"{pasta}-0{i}-{rede}.md"
+                escreveu = False
+                if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    if ctx.get("__regenerar__") and arquivo.exists():
+                        _backup_arquivo(arquivo)
+                    arquivo.parent.mkdir(parents=True, exist_ok=True)
+                    arquivo.write_text(f"# Anuncio {i}\n\n[TEXTO DO ANUNCIO]", encoding="utf-8")
+                    escreveu = True
+                if arquivo.exists():
+                    _pdf_atualizado(arquivo)
+                if escreveu:
+                    escritos.append(arquivo)
+
+    # Scaffold Distribuicao Semeadura
+    for rede, dados in CP.DISTRIBUICAO_SEMEADURA.items():
+        raiz = CP.dir_campanha_material(ctx["slug"], base) / "distribuicao_semeadura"
+        for pasta, quantidade in dados.get("textos", {}).items():
+            for i in range(1, quantidade + 1):
+                arquivo = raiz / "textos" / f"{pasta}-0{i}-{rede}.md"
+                escreveu = False
+                if not (arquivo.exists() and not ctx.get("__regenerar__")):
+                    if ctx.get("__regenerar__") and arquivo.exists():
+                        _backup_arquivo(arquivo)
+                    arquivo.parent.mkdir(parents=True, exist_ok=True)
+                    arquivo.write_text(f"# Distribuicao {i}\n\n[TEXTO DA DISTRIBUICAO]", encoding="utf-8")
+                    escreveu = True
+                if arquivo.exists():
+                    _pdf_atualizado(arquivo)
+                if escreveu:
+                    escritos.append(arquivo)
+
     return escritos
 
 
@@ -269,7 +306,7 @@ def gerar_artes(ctx, base, com_artes=True):
     apoio + rotulo de progresso) — 1 arte = 1 envio, nunca repetida."""
     geradas = []
     for rede, dados in CP.REDES_SOCIAIS.items():
-        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
+        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"social_organico/{rede}"
         quantidades = CP.n_artes_redes(rede)
         for formato, dim in dados.get("artes", {}).items():
             nome_template = CP.TEMPLATES_ARTE[
@@ -327,6 +364,33 @@ def gerar_artes(ctx, base, com_artes=True):
                         geradas.append(png)
                     except Exception as exc:  # noqa: BLE001
                         print(f"[AVISO] arte nao renderizada (whatsapp/{sequencia}-{i:02d}): {exc}")
+
+    # Scaffold Ads Pago
+    for rede, dados in CP.ADS_PAGO.items():
+        raiz = CP.dir_campanha_material(ctx["slug"], base) / f"ads_pago/{rede}"
+        for formato, dim in dados.get("artes", {}).items():
+            nome_template = CP.TEMPLATES_ARTE["post_ig"]
+            quantidade = 1
+            ganchos = CP.ganchos_arte(ctx, formato, quantidade)
+            for i in range(1, quantidade + 1):
+                item = ganchos[i - 1] if ganchos else {"titulo": "Anuncio", "apoio": ""}
+                ctx_variado = ctx.copy()
+                ctx_variado["titulo_arte"] = item["titulo"]
+                ctx_variado["apoio_arte"] = item.get("apoio", "")
+                ctx_variado["rotulo_arte"] = f"Anuncio {i}"
+                html = _interpolar_arte(nome_template, ctx_variado)
+                destino = raiz / f"artes/{formato}"
+                destino.mkdir(parents=True, exist_ok=True)
+                base_html = destino / f"anuncio-{i:02d}.html"
+                png = destino / f"anuncio-{i:02d}.png"
+                base_html.write_text(html, encoding="utf-8")
+                if com_artes:
+                    try:
+                        _renderizar_png(html, png, dim)
+                        geradas.append(png)
+                    except Exception as exc:  # noqa: BLE001
+                        print(f"[AVISO] arte nao renderizada (ads/{formato}-{i:02d}): {exc}")
+
     return geradas
 
 
@@ -423,7 +487,7 @@ def _bloco_pausa(data_quando):
 
 def _bloco_rede(rede, dia, data, semana, formato, contadores, dias, cta):
     """Bloco rico de um dia de rede social, apontando os arquivos exatos."""
-    raiz_rede = f"redes-sociais/{rede}"
+    raiz_rede = f"social_organico/{rede}"
     objetivo = CP.objetivo_do_dia(dia, dias)
     if formato == "post":
         n = contadores["post"] = contadores.get("post", 0) + 1
@@ -508,7 +572,7 @@ def gerar_cronogramas(ctx, base):
                      ctx, dias, resumo)
                  + "\n\n".join(blocos) + "\n")
         destino = (CP.dir_campanha_material(ctx["slug"], base)
-                   / f"redes-sociais/{rede}/cronograma-divulgacao"
+                   / f"social_organico/{rede}/cronograma-divulgacao"
                    / CP.cronograma_nome(rede))
         destino.parent.mkdir(parents=True, exist_ok=True)
         destino.write_text(texto, encoding="utf-8")
@@ -541,8 +605,9 @@ def gerar_cronogramas(ctx, base):
                          f"Cronograma — {canal} — {sequencia} — {ctx['nome']}",
                          ctx, dias, resumo)
                      + "\n\n".join(blocos) + "\n")
+            pasta = f"inbound_emails/{sequencia}" if canal == "emails" else f"canais-comunicacao/{canal}/{sequencia}"
             destino = (CP.dir_campanha_material(ctx["slug"], base)
-                       / f"canais-comunicacao/{canal}/{sequencia}"
+                       / pasta
                        / "cronograma-divulgacao"
                        / CP.cronograma_nome(f"{canal}:{sequencia}", dias))
             destino.parent.mkdir(parents=True, exist_ok=True)
@@ -551,6 +616,13 @@ def gerar_cronogramas(ctx, base):
             pdf = compilar_markdown_pdf(destino)
             if pdf:
                 gerados.append(pdf)
+                
+    # Gerar Cronograma Mestre
+    destino = CP.dir_campanha_material(ctx["slug"], base) / "cronograma_mestre.md"
+    if not (destino.exists() and not ctx.get("__regenerar__")):
+        destino.write_text("# Cronograma Mestre\n\nTodos os envios orquestrados.", encoding="utf-8")
+        gerados.append(destino)
+
     return gerados
 
 
@@ -562,7 +634,7 @@ def copiar_templates_artes(ctx, base):
         if not dados.get("templates"):
             continue
         destino = (CP.dir_campanha_material(ctx["slug"], base)
-                   / f"redes-sociais/{rede}/templates")
+                   / f"social_organico/{rede}/templates")
         destino.mkdir(parents=True, exist_ok=True)
         for nome in ("arte-post-ig.html", "arte-feed-story-ig.html",
                      "arte-post-linkedin.html", "arte-whatsapp.html"):
@@ -575,8 +647,8 @@ def copiar_templates_artes(ctx, base):
         for sequencia, conf in dados.get("sequencias", {}).items():
             if not conf.get("templates"):
                 continue
-            destino = (CP.dir_campanha_material(ctx["slug"], base)
-                       / f"canais-comunicacao/{canal}/{sequencia}/templates")
+            pasta = f"inbound_emails/{sequencia}/templates" if canal == "emails" else f"canais-comunicacao/{canal}/{sequencia}/templates"
+            destino = (CP.dir_campanha_material(ctx["slug"], base) / pasta)
             destino.mkdir(parents=True, exist_ok=True)
             for nome in ("arte-post-ig.html", "arte-feed-story-ig.html",
                          "arte-post-linkedin.html", "arte-whatsapp.html"):
@@ -586,6 +658,20 @@ def copiar_templates_artes(ctx, base):
                     alvo.write_text(fonte.read_text(encoding="utf-8"),
                                     encoding="utf-8")
                     copiados.append(alvo)
+                    
+    # Templates Ads Pago
+    for rede, dados in CP.ADS_PAGO.items():
+        if not dados.get("templates"):
+            continue
+        destino = (CP.dir_campanha_material(ctx["slug"], base) / f"ads_pago/{rede}/templates")
+        destino.mkdir(parents=True, exist_ok=True)
+        for nome in ("arte-post-ig.html", "arte-feed-story-ig.html"):
+            fonte = origem / nome
+            alvo = destino / nome
+            if fonte.exists():
+                alvo.write_text(fonte.read_text(encoding="utf-8"), encoding="utf-8")
+                copiados.append(alvo)
+                
     return copiados
 
 

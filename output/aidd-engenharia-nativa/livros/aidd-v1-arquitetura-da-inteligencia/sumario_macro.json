@@ -114,5 +114,13 @@
       ]
     }
   ],
-  "conclusao": "Conclusão sintética: o leitor consolida o mapa das quatro camadas, entende que o controle absoluto vem da curadoria de contexto e da economia de tokens, e sai pronto para avançar ao arsenal de capacidades do Volume 2."
+  "conclusao": "Conclusão sintética: o leitor consolida o mapa das quatro camadas, entende que o controle absoluto vem da curadoria de contexto e da economia de tokens, e sai pronto para avançar ao arsenal de capacidades do Volume 2.",
+  "metricas_obrigatorias": {
+    "4": [
+      {
+        "metrica": "janela de contexto de modelos modernos",
+        "valor": "200.000 tokens"
+      }
+    ]
+  }
 }
