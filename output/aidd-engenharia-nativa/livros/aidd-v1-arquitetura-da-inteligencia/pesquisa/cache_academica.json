@@ -210,5 +210,406 @@
   "pubmed|AI Driven Development arquitetura camadas harness LLM tools context engineering": {
     "em": "10 ago. 2026",
     "registros": []
+  },
+  "openalex|developer interface IDE CLI chat AI-assisted programming human-computer interaction": {
+    "em": "10 ago. 2026",
+    "registros": [
+      {
+        "titulo": "Leveraging Generative AI Tools to Support the Development of Digital Solutions in Health Care Research: Case Study",
+        "autores": [
+          "Danissa V. Rodriguez",
+          "Katharine Lawrence",
+          "Javier González",
+          "Beatrix Brandfield-Harvey",
+          "Lynn Xu",
+          "Sumaiya Tasneem",
+          "D. Levine",
+          "David Mann"
+        ],
+        "ano": 2023,
+        "doi": "10.2196/52885",
+        "url": "https://doi.org/10.2196/52885",
+        "resumo": "BACKGROUND: Generative artificial intelligence has the potential to revolutionize health technology product development by improving coding quality, efficiency, documentation, quality assessment and review, and troubleshooting. OBJECTIVE: This paper explores the application of a commercially available generative artificial intelligence tool (ChatGPT) to the development of a digital health behavior change intervention designed to support patient engagement in a commercial digital diabetes prevention program. METHODS: We examined the capacity, advantages, and limitations of ChatGPT to support digital product idea conceptualization, intervention content development, and the software engineering process, including software requirement generation, software design, and code production. In total, 11 evaluators, each with at least 10 years of experience in fields of study ranging from medicine and implementation science to computer science, participated in the output review process (ChatGPT vs human-generated output). All had familiarity or prior exposure to the original personalized automatic messaging system intervention. The evaluators rated the ChatGPT-produced outputs in terms of understandability, usability, novelty, relevance, completeness, and efficiency. RESULTS: Most metrics received positive scores. We identified that ChatGPT can (1) support developers to achieve high-quality products faster and (2) facilitate nontechnical communication and system understanding between technical and nontechnical team members around the development goal of rapid and easy-to-build computational solutions for medical technologies. CONCLUSIONS: ChatGPT can serve as a usable facilitator for researchers engaging in the software development life cycle, from product conceptualization to feature identification and user story development to code generation. TRIAL REGISTRATION: ClinicalTrials.gov NCT04049500; https://clinicaltrials.gov/ct2/show/NCT04049500.",
+        "citacoes": 37,
+        "periodico": "JMIR Human Factors",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Mobile Health in Remote Patient Monitoring for Chronic Diseases: Principles, Trends, and Challenges",
+        "autores": [
+          "Nora El-Rashidy",
+          "Shaker El–Sappagh",
+          "S. M. Riazul Islam",
+          "Hazem M. El‐Bakry",
+          "Samir Abdelrazek"
+        ],
+        "ano": 2021,
+        "doi": "10.3390/diagnostics11040607",
+        "url": "https://doi.org/10.3390/diagnostics11040607",
+        "resumo": "Chronic diseases are becoming more widespread. Treatment and monitoring of these diseases require going to hospitals frequently, which increases the burdens of hospitals and patients. Presently, advancements in wearable sensors and communication protocol contribute to enriching the healthcare system in a way that will reshape healthcare services shortly. Remote patient monitoring (RPM) is the foremost of these advancements. RPM systems are based on the collection of patient vital signs extracted using invasive and noninvasive techniques, then sending them in real-time to physicians. These data may help physicians in taking the right decision at the right time. The main objective of this paper is to outline research directions on remote patient monitoring, explain the role of AI in building RPM systems, make an overview of the state of the art of RPM, its advantages, its challenges, and its probable future directions. For studying the literature, five databases have been chosen (i.e., science direct, IEEE-Explore, Springer, PubMed, and science.gov). We followed the (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) PRISMA, which is a standard methodology for systematic reviews and meta-analyses. A total of 56 articles are reviewed based on the combination of a set of selected search terms including RPM, data mining, clinical decision support system, electronic health record, cloud computing, internet of things, and wireless body area network. The result of this study approved the effectiveness of RPM in improving healthcare delivery, increase diagnosis speed, and reduce costs. To this end, we also present the chronic disease monitoring system as a case study to provide enhanced solutions for RPMs.",
+        "citacoes": 258,
+        "periodico": "Diagnostics",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Developer Interaction Patterns with Proactive AI: A Five-Day Field Study",
+        "autores": [
+          "Nadine Kuo",
+          "Agnia Sergeyuk",
+          "Valerie Chen",
+          "Maliheh Izadi"
+        ],
+        "ano": 2026,
+        "doi": "10.1145/3742413.3789148",
+        "url": "https://doi.org/10.1145/3742413.3789148",
+        "resumo": "Current in-IDE AI coding tools typically rely on time-consuming manual prompting and context management, whereas proactive alternatives that anticipate developer needs without explicit invocation remain underexplored. Understanding when humans are receptive to such proactive AI assistance during their daily work remains an open question in human-AI interaction research. We address this gap through a field study of proactive AI assistance in professional developer workflows. We present a five-day in-the-wild study with 15 developers who interacted with a proactive feature of an AI assistant integrated into a production-grade IDE that offers code quality suggestions based on in-IDE developer activity. We examined 229 AI interventions across 5,732 interaction points to understand how proactive suggestions are received across workflow stages, how developers experience them, and their perceived impact. Our findings reveal systematic patterns in human receptivity to proactive suggestions: interventions at workflow boundaries (e.g., post-commit) achieved 52% engagement rates, while mid-task interventions (e.g., on declined edit) were dismissed 62% of the time. Notably, well-timed proactive suggestions required significantly less interpretation time than reactive suggestions (45.4s versus 101.4s, W = 109.00, r = 0.533, p = 0.0016), indicating enhanced cognitive alignment. This study provides actionable implications for designing proactive coding assistants, including how to time interventions, align them with developer context, and strike a balance between AI agency and user control in production IDEs.",
+        "citacoes": 2,
+        "periodico": null,
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "A Complete Survey on LLM-based AI Chatbots",
+        "autores": [
+          "Sumit Kumar Dam",
+          "Choong Seon Hong",
+          "Yu Qiao",
+          "Chaoning Zhang"
+        ],
+        "ano": 2024,
+        "doi": "10.48550/arxiv.2406.16937",
+        "url": "http://arxiv.org/abs/2406.16937",
+        "resumo": "The past few decades have witnessed an upsurge in data, forming the foundation for data-hungry, learning-based AI technology. Conversational agents, often referred to as AI chatbots, rely heavily on such data to train large language models (LLMs) and generate new content (knowledge) in response to user prompts. With the advent of OpenAI's ChatGPT, LLM-based chatbots have set new standards in the AI community. This paper presents a complete survey of the evolution and deployment of LLM-based chatbots in various sectors. We first summarize the development of foundational chatbots, followed by the evolution of LLMs, and then provide an overview of LLM-based chatbots currently in use and those in the development phase. Recognizing AI chatbots as tools for generating new knowledge, we explore their diverse applications across various industries. We then discuss the open challenges, considering how the data used to train the LLMs and the misuse of the generated knowledge can cause several issues. Finally, we explore the future outlook to augment their efficiency and reliability in numerous applications. By addressing key milestones and the present-day context of LLM-based chatbots, our survey invites readers to delve deeper into this realm, reflecting on how their next generation will reshape conversational AI.",
+        "citacoes": 21,
+        "periodico": "arXiv (Cornell University)",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Do LLMs consider security? an empirical study on responses to programming questions",
+        "autores": [
+          "Amirali Sajadi",
+          "Binh Le",
+          "Thu Anh Nguyen",
+          "Kostadin Damevski",
+          "Preetha Chatterjee"
+        ],
+        "ano": 2025,
+        "doi": "10.1007/s10664-025-10658-6",
+        "url": "https://doi.org/10.1007/s10664-025-10658-6",
+        "resumo": "Abstract The widespread adoption of conversational LLMs for software development has raised new security concerns regarding the safety of LLM-generated content. Our motivational study outlines ChatGPT’s potential in volunteering context-specific information to the developers, promoting safe coding practices. Motivated by this finding, we conduct a study to evaluate the degree of security awareness exhibited by three prominent LLMs: Claude 3, GPT-4, and Llama 3. We prompt these LLMs with Stack Overflow questions that contain vulnerable code to evaluate whether they merely provide answers to the questions or if they also warn users about the insecure code, thereby demonstrating a degree of security awareness. Further, we assess whether LLM responses provide information about the causes, exploits, and the potential fixes of the vulnerability, to help raise users’ awareness. Our findings show that all three models struggle to accurately detect and warn users about vulnerabilities, achieving a detection rate of only 12.6% to 40% across our datasets. We also observe that the LLMs tend to identify certain types of vulnerabilities related to sensitive information exposure and improper input neutralization much more frequently than other types, such as those involving external control of file names or paths. Furthermore, when LLMs do issue security warnings, they often provide more information on the causes, exploits, and fixes of vulnerabilities compared to Stack Overflow responses. Finally, we provide an in-depth discussion on the implications of our findings, and demonstrated a CLI-based prompting tool that can be used to produce more secure",
+        "citacoes": 16,
+        "periodico": "Empirical Software Engineering",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Investigating the Impact of Code Generation Tools (ChatGPT &amp; Github CoPilot) on Programming Education",
+        "autores": [
+          "Faisal Nizamudeen",
+          "Lorenzo Gatti",
+          "Nacir Bouali",
+          "Faizan Ahmed"
+        ],
+        "ano": 2024,
+        "doi": "10.5220/0012628000003693",
+        "url": "https://doi.org/10.5220/0012628000003693",
+        "resumo": "In our rapidly evolving technological landscape, AI tools have gained substantial power and integration across various domains. Through interviews and surveys conducted at a University in the Netherlands, we investigated students’ perceptions of AI tools. Our results show that students generally have a positive attitude towards the adoption of AI technologies and feel that it enhances their learning experience. Furthermore, this research project examines the capabilities of AI-powered tools, namely GitHub Copilot and ChatGPT, in solving a variety of university-level assignments. By empirically evaluating the capabilities of these AI tools and offering insights to educators, this research project aims to assist them in designing programming exercises that encompass essential learning processes while accounting for students’ utilization of AI tools. The findings indicate that a majority of the exercises currently utilized by the examined university could be solved partially or entirely with the aid of these tools. This project highlights the importance of educators understanding the capabilities of AI tools, as well as students’ attitudes towards them, to effectively adapt their teaching methods and promote essential learning goals.",
+        "citacoes": 14,
+        "periodico": null,
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "A Review on Vibe Coding: Fundamentals, State-of-the-art, Challenges and Future Directions",
+        "autores": [
+          "Partha Pratim Ray"
+        ],
+        "ano": 2025,
+        "doi": "10.36227/techrxiv.174681482.27435614/v1",
+        "url": "https://doi.org/10.36227/techrxiv.174681482.27435614/v1",
+        "resumo": "Vibe coding-where high-level natural-language directives orchestrate end-to-end software creation-has emerged as a transformative paradigm in modern development. Going beyond token-level autocomplete, vibe coding platforms employ multi-agent pipelines, Retrieval-Augmented Generation (RAG), and dynamic context management to autonomously scaffold entire projects: generating directory structures, Application Programming Interface (API) layers, user interfaces, test suites, and Continuous Integration/Continuous Delivery/Deployment (CI/CD) configurations from conversational prompts. In this review, we first introduce a unified taxonomy of interaction modalities-full delegation, guided delegation, active pairing, and expert consultation-mapped along a delegation-pairing continuum. We then survey leading implementations across IDE extensions, browser-based environments, and Command-Line Interface (CLI) agents, analyzing their architectures, integration strategies, and benchmarked performance. Building on these insights, we articulate the key benefits-accelerated prototyping, democratized software creation, and enriched collaboration-while prescribing best practices for adoption. We identify twelve critical challenges, including model hallucinations, technical debt, security and compliance risks, skill atrophy, and governance concerns. Finally, we propose fourteen concrete research directions, from standardized evaluation frameworks and adaptive \"vibe-aware\" agents to explainable AI, multimodal interfaces, and Development, Security, and Operations (DevSecOps) integration. This comprehensive roadmap equips researchers and practitioners to harness the promise of vibe coding with rigor, security, and inclusivity.",
+        "citacoes": 16,
+        "periodico": null,
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Ten quick tips for harnessing the power of ChatGPT in computational biology",
+        "autores": [
+          "Tiago Lubiana",
+          "Rafael Lopes",
+          "Pedro Medeiros",
+          "Juan Carlo Santos e Silva",
+          "André N. A. Gonçalves",
+          "Vinicius Maracaja‐Coutinho",
+          "Helder I. Nakaya"
+        ],
+        "ano": 2023,
+        "doi": "10.1371/journal.pcbi.1011319",
+        "url": "https://doi.org/10.1371/journal.pcbi.1011319",
+        "resumo": "The rise of advanced chatbots, such as ChatGPT, has stirred excitement and curiosity in the scientific community.Powered by large language models (LLMs) based on generative pretrained transformers (GPTs)-specifically GPT-3.5 and GPT-4-ChatGPT is considered a general-purpose technology with the potential to impact the job market and research endeavors in numerous fields [1].Although similar models have been fine-tuned for biology-specific projects, including text-based analysis and biological sequence decoding [2,3], ChatGPT provides a natural interface for bioinformaticians to begin using LLMs in their activities.This tool is already accelerating various activities undertaken by computational biologists, ranging from data cleaning to interpreting results and publishing.However, with great power comes great responsibility.As scientists, we must harness the full potential of ChatGPT while adhering to ethical guidelines and avoiding pitfalls associated with the technology.Here, we provide 10 insightful tips designed to help computational biologists optimize their workflows with ChatGPT, ranging from basic prompts to more advanced techniques.Although our primary focus is on the current ChatGPT/GPT-4 model, we believe that these tips will remain relevant for future iterations of the technology, as well as other LLMs and chatbots (such as Meta's LLaMa and Google's Bard) [4,5].We invite you to explore our 10 tips (summarized in Fig 1) aimed at effectively utilizing ChatGPT to advance computational biology research while maintaining a strong commitment to research integrity. Tip 1: Embrace the technology and be ready for noveltyChatGPT, a powerful tool for coding and academic writing tasks, is rapidly gaining traction in the scientific community.While exercising critical judgment and not blindly accepting everything it produces is important, incorporating ChatGPT into your workflow can undoubtedly",
+        "citacoes": 67,
+        "periodico": "PLoS Computational Biology",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Evolution and Prospects of Foundation Models: From Large Language Models to Large Multimodal Models",
+        "autores": [
+          "Zheyi Chen",
+          "Liuchang Xu",
+          "Hongting Zheng",
+          "Luyao Chen",
+          "Amr Tolba",
+          "Liang Zhao",
+          "Keping Yu",
+          "Hailin Feng"
+        ],
+        "ano": 2024,
+        "doi": "10.32604/cmc.2024.052618",
+        "url": "https://doi.org/10.32604/cmc.2024.052618",
+        "resumo": "Since the 1950s, when the Turing Test was introduced, there has been notable progress in machine language intelligence. Language modeling, crucial for AI development, has evolved from statistical to neural models over the las... | Find, read and cite all the research you need on Tech Science Press",
+        "citacoes": 81,
+        "periodico": "Computers, materials & continua/Computers, materials & continua (Print)",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      },
+      {
+        "titulo": "Deep learning-based software engineering: progress, challenges, and opportunities",
+        "autores": [
+          "Xiangping Chen",
+          "Xing Hu",
+          "Yuan Huang",
+          "He Jiang",
+          "Weixing Ji",
+          "Yanjie Jiang",
+          "Yanyan Jiang",
+          "Bo Liu",
+          "Hui Liu",
+          "Xiaochen Li",
+          "Xiaoli Lian",
+          "Guozhu Meng",
+          "Peng Xin",
+          "Hailong Sun",
+          "Lin Shi",
+          "Bo Wang",
+          "Chong Wang",
+          "Jiayi Wang",
+          "Tiantian Wang",
+          "Jifeng Xuan",
+          "Xin Xia",
+          "Yibiao Yang",
+          "Yixin Yang",
+          "Yixin Yang",
+          "Yixin Yang",
+          "Lu Zhang",
+          "Zhang Li",
+          "Yuming Zhou",
+          "Lu Zhang",
+          "Lu Zhang"
+        ],
+        "ano": 2024,
+        "doi": "10.1007/s11432-023-4127-5",
+        "url": "https://doi.org/10.1007/s11432-023-4127-5",
+        "resumo": "Abstract Researchers have recently achieved significant advances in deep learning techniques, which in turn has substantially advanced other research disciplines, such as natural language processing, image processing, speech recognition, and software engineering. Various deep learning techniques have been successfully employed to facilitate software engineering tasks, including code generation, software refactoring, and fault localization. Many studies have also been presented in top conferences and journals, demonstrating the applications of deep learning techniques in resolving various software engineering tasks. However, although several surveys have provided overall pictures of the application of deep learning techniques in software engineering, they focus more on learning techniques, that is, what kind of deep learning techniques are employed and how deep models are trained or fine-tuned for software engineering tasks. We still lack surveys explaining the advances of subareas in software engineering driven by deep learning techniques, as well as challenges and opportunities in each subarea. To this end, in this study, we present the first task-oriented survey on deep learning-based software engineering. It covers twelve major software engineering subareas significantly impacted by deep learning techniques. Such subareas spread out through the whole lifecycle of software development and maintenance, including requirements engineering, software development, testing, maintenance, and developer collaboration. As we believe that deep learning may provide an opportunity to revolutionize the whole discipline of software engineering, providing one survey covering as many subareas as possible in software engineering can help future research push forward the frontier of deep learning-based software engineering more systematically. For each of the selected subareas, we highlight the major advances achieved by applying deep learning techniques with pointers to the available datasets in such a subarea. We also discuss the challenges and opportunities concerning each of the surveyed software engineering subareas.",
+        "citacoes": 79,
+        "periodico": "Science China Information Sciences",
+        "fonte": "openalex",
+        "fonte_nome": "OpenAlex",
+        "classe": "A"
+      }
+    ]
+  },
+  "crossref|developer interface IDE CLI chat AI-assisted programming human-computer interaction": {
+    "em": "10 ago. 2026",
+    "registros": [
+      {
+        "titulo": "Human-Centered AI Design in Reality: A Study of Developer Companies’ Practices",
+        "autores": [
+          "Hartikainen, Maria",
+          "Väänänen, Kaisa",
+          "Lehtiö, Anu",
+          "Ala-Luopa, Saara",
+          "Olsson, Thomas"
+        ],
+        "ano": 2022,
+        "doi": "10.1145/3546155.3546677",
+        "url": "https://doi.org/10.1145/3546155.3546677",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Nordic Human-Computer Interaction Conference",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Report Generation Using a Visual Programming Interface",
+        "autores": [
+          "Dudley, Tim"
+        ],
+        "ano": 1987,
+        "doi": "10.1016/b978-0-444-70304-0.50086-8",
+        "url": "https://doi.org/10.1016/b978-0-444-70304-0.50086-8",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Human–Computer Interaction–INTERACT '87",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Brain-Computer Interface and Brain-Computer Fusion",
+        "autores": [
+          "Zhao, Sha",
+          "Wang, Yueming",
+          "Pan, Gang"
+        ],
+        "ano": 2026,
+        "doi": "10.1007/978-981-95-5585-7_6",
+        "url": "https://doi.org/10.1007/978-981-95-5585-7_6",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Human-Centered AI: Advancing Research and Applications in Human-AI Interaction",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Dialogue-oriented interface for linguistic human-computer interaction: A chat-based application",
+        "autores": [
+          "Di Lecce, Vincenzo",
+          "Calabrese, Marco",
+          "Soldo, Domenico",
+          "Quarto, Alessandro"
+        ],
+        "ano": 2010,
+        "doi": "10.1109/vecims.2010.5609354",
+        "url": "https://doi.org/10.1109/vecims.2010.5609354",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "2010 IEEE International Conference on Virtual Environments, Human-Computer Interfaces and Measurement Systems",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Teaching User Interface Design and Programming to Computer Science majors",
+        "autores": [
+          "Kay, Judy",
+          "Kummerfeld, Bob"
+        ],
+        "ano": 1997,
+        "doi": "10.1007/978-0-387-35175-9_32",
+        "url": "https://doi.org/10.1007/978-0-387-35175-9_32",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Human-Computer Interaction INTERACT ’97",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "The User Interface of PSG Programming Environments",
+        "autores": [
+          "Bahlke, Rolf",
+          "Hunkel, Manfred"
+        ],
+        "ano": 1987,
+        "doi": "10.1016/b978-0-444-70304-0.50056-x",
+        "url": "https://doi.org/10.1016/b978-0-444-70304-0.50056-x",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Human–Computer Interaction–INTERACT '87",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Chat-Robot Based Web Content Presentation Interface and Its Evaluation",
+        "autores": [
+          "Kikuchi(Tomioka), Yumi",
+          "Hidaka, Kota",
+          "Nakajima, Shinya",
+          "Kobayashi, Minoru"
+        ],
+        "ano": null,
+        "doi": "10.1007/978-3-540-73111-5_103",
+        "url": "https://doi.org/10.1007/978-3-540-73111-5_103",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Lecture Notes in Computer Science",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "A Comparative Evaluation of User Preferences for Mobile Chat Usable Interface",
+        "autores": [
+          "Su, Daniel Kuen Seong",
+          "Yee, Victoria Siew Yen"
+        ],
+        "ano": null,
+        "doi": "10.1007/978-3-540-70585-7_29",
+        "url": "https://doi.org/10.1007/978-3-540-70585-7_29",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "Lecture Notes in Computer Science",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "myownrobs: AI Coding Agent for 'RStudio'",
+        "autores": [
+          "Rodriguez, Juan Cruz"
+        ],
+        "ano": 2025,
+        "doi": "10.32614/cran.package.myownrobs",
+        "url": "https://doi.org/10.32614/cran.package.myownrobs",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "CRAN: Contributed Packages",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      },
+      {
+        "titulo": "Thinking Outside the [Chat]Box: Bridging Computer Science and Industrial Design for Cognitive-Inclusive Generative AI",
+        "autores": [
+          "Francisco, Virginia",
+          "Guasch, Daniel",
+          "Hervás, Raquel"
+        ],
+        "ano": 2026,
+        "doi": "10.1109/haxd70072.2026.11621022",
+        "url": "https://doi.org/10.1109/haxd70072.2026.11621022",
+        "resumo": null,
+        "citacoes": null,
+        "periodico": "2026 2nd International Conference on Human-AI Interaction and Experience Design (HAXD)",
+        "fonte": "crossref",
+        "fonte_nome": "Crossref",
+        "classe": "A"
+      }
+    ]
+  },
+  "arxiv|developer interface IDE CLI chat AI-assisted programming human-computer interaction": {
+    "em": "10 ago. 2026",
+    "registros": []
+  },
+  "pubmed|developer interface IDE CLI chat AI-assisted programming human-computer interaction": {
+    "em": "10 ago. 2026",
+    "registros": []
   }
 }
