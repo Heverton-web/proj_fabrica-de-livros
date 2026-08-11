@@ -602,6 +602,18 @@ class TestGate:
         assert any("HTML fonte repetido" in v["detalhe"] and "post-02.html" in v["detalhe"]
                    for v in violacoes)
 
+    def test_backup_rascunho_em_revisao_nao_reprova(self, ambiente):
+        """revisao/backups guarda moldes RASCUNHO antigos (--regenerar);
+        sao infra, nao copy de campanha — nao podem reprovar R-CP-2/R-CP-C1."""
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        _finalizar_moldes(ambiente["slug"])
+        backup = (_raiz(ambiente["slug"]) / "revisao/backups/20260810_000000"
+                  / "redes-sociais/instagram/textos/post/post-01.md")
+        backup.parent.mkdir(parents=True, exist_ok=True)
+        backup.write_text("Status: RASCUNHO — molde antigo de backup", encoding="utf-8")
+        rel = gate.validar_material(ambiente["slug"], estrito=True)
+        assert rel["conforme"], rel["violacoes"]
+
     def test_reprova_cronograma_sem_data(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
         crono = (_raiz(ambiente["slug"])

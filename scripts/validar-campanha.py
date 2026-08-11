@@ -51,7 +51,9 @@ def _cronograma_primeira_data(arquivo):
 
 
 def _textos_da_pasta(pasta):
-    return sorted(p for p in pasta.rglob("*.md") if p.is_file())
+    """Moldes .md de campanha — EXCLUI revisao/backups (infra, nao copy)."""
+    return sorted(p for p in pasta.rglob("*.md")
+                  if p.is_file() and "revisao" not in p.parts)
 
 
 def _artes_duplicadas(dir_artes):
@@ -100,8 +102,9 @@ def validar_material(slug, estrito=False, base=None):
     existentes = set()
     if raiz.exists():
         for pasta in raiz.rglob("*"):
-            if pasta.is_dir():
-                existentes.add(str(pasta.relative_to(raiz)).replace("\\", "/"))
+            if not pasta.is_dir() or "revisao" in pasta.parts:
+                continue
+            existentes.add(str(pasta.relative_to(raiz)).replace("\\", "/"))
     for esperada in sorted(esperadas - existentes):
         violacoes.append({"regra": "R-CP-1", "detalhe": f"pasta ausente: {esperada}"})
 
@@ -133,7 +136,8 @@ def validar_material(slug, estrito=False, base=None):
                                                  f"{arquivo.relative_to(raiz)}"})
 
         # R-CP-3 — artes (validez + quantidade que supre o cronograma)
-        for png in sorted(raiz.rglob("*.png")):
+        for png in sorted(p for p in raiz.rglob("*.png")
+                          if "revisao" not in p.parts):
             try:
                 dados = png.read_bytes()
             except OSError as exc:
@@ -190,7 +194,8 @@ def validar_material(slug, estrito=False, base=None):
                                              f"({', '.join(htmls_dup)})"})
 
         # R-CP-5 — cronogramas
-        for crono in sorted(raiz.rglob("cronograma-*.md")):
+        for crono in sorted(p for p in raiz.rglob("cronograma-*.md")
+                            if "revisao" not in p.parts):
             primeira = _cronograma_primeira_data(crono)
             if primeira is None:
                 violacoes.append({"regra": "R-CP-5",
