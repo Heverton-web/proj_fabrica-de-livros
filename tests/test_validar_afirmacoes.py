@@ -42,6 +42,22 @@ class TestTemDisparador:
         """'o mais importante' é ênfase, não dado factual — não dispara."""
         assert not va._tem_disparador("Este é o mais importante dos critérios")
 
+    def test_maioria_nao_dispara(self):
+        """'a maioria' não é superlativo de liderança (substring bug: 'a maior')."""
+        assert not va._tem_disparador("a maioria dos times comete esse erro")
+
+    def test_unico_identificador_nao_dispara(self):
+        """'único' como unicidade técnica (identificador único) não é dado factual."""
+        assert not va._tem_disparador("o identificador deve ser curto e único")
+
+    def test_primeiro_arquivo_nao_dispara(self):
+        """'primeiro arquivo' não é reivindicação de pioneirismo ('primeiro a lançar')."""
+        assert not va._tem_disparador("o README é o primeiro arquivo que se lê")
+
+    def test_primeiro_a_verbo_dispara(self):
+        """'primeiro a lançar' é reivindicação de pioneirismo — dispara."""
+        assert va._tem_disparador("foi o primeiro a lançar agentes autônomos")
+
 
 class TestValidarCapitulo:
     def test_dado_sem_citacao_viola(self):

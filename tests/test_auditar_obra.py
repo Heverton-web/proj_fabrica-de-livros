@@ -73,6 +73,45 @@ class TestRegexPendenciaGenerica:
         assert ao.RE_PENDENCIA_GENERICA.search("Placeholder")
 
 
+class TestDividirSecoesIgnoraCodeFences:
+    """Cabecalhos `## N.` dentro de code fences NAO contam como secao EITA.
+
+    Bug real: cap_2 do V3 governanca embute exemplos de requirements.md com
+    "## 1. Requisitos Funcionais" dentro de ```markdown — o dicionario de
+    secoes era sobrescrito e o capitulo acusado como incompleto (R3/R11/R12).
+    """
+
+    def test_cabecalho_dentro_de_code_fence_ignorado(self):
+        texto = ("## 1. Introdução\n\nTexto da introdução.\n\n"
+                 "## 2. Explica\n\nTexto da explicação.\n\n"
+                 "```markdown\n"
+                 "## 1. Requisitos Funcionais\n"
+                 "## 2. Requisitos Não Funcionais\n"
+                 "## 3. Restrições\n"
+                 "```\n\n"
+                 "## 3. Ilustra\n\nTexto da ilustração.\n")
+        secoes = ao.dividir_secoes(texto)
+        assert set(secoes.keys()) == {1, 2, 3}
+        assert "introdu" in secoes[1]["titulo"].lower()
+        assert "explica" in secoes[2]["titulo"].lower()
+        assert "ilustra" in secoes[3]["titulo"].lower()
+
+    def test_cabecalho_fora_de_code_fence_mantido(self):
+        texto = ("## 1. Introdução\n\nTexto.\n\n"
+                 "## 2. Explica\n\nMais texto.\n")
+        secoes = ao.dividir_secoes(texto)
+        assert "introdu" in secoes[1]["titulo"].lower()
+        assert "explica" in secoes[2]["titulo"].lower()
+
+    def test_corpo_da_secao_preserva_code_fence(self):
+        texto = ("## 1. Introdução\n\nIntro.\n\n"
+                 "## 4. Técnica\n\nAqui um exemplo:\n\n"
+                 "```python\nprint(1)\n```\n")
+        secoes = ao.dividir_secoes(texto)
+        assert "```python" in secoes[4]["corpo"]
+        assert len(ao.RE_CODIGO.findall(secoes[4]["corpo"])) == 1
+
+
 class TestPendenciaMatcher:
     """Testa o combinador _PendenciaMatcher que junta os dois regex."""
 

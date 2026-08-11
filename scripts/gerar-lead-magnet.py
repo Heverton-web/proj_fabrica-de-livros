@@ -59,6 +59,33 @@ def _slugificar(texto, max_len=40):
     return t[:max_len].rstrip("-") or "lm"
 
 
+def _nome_material(formato, mae_simples):
+    """Nome do material desambiguado por volume em hub multi-livro (serie).
+
+    'lm-1-armadilhas' colide quando a colecao tem varios volumes (o 2o
+    sobrescreve o 1o silenciosamente — bug real na serie AIDD). Com varios
+    livros no hub, o codigo curto do volume entra no nome:
+    'lm-1-armadilhas-aidd-arquitetura'. Livro unico mantem o nome curto
+    (contrato dos testes e da colecao single-book)."""
+    from nomes_curtos import codigo_obra
+    obra = TO._obra_raiz(mae_simples, DIR_OUTPUT)
+    if obra is None:
+        return formato
+    mae = str(mae_simples).replace("\\", "/").split("/")[-1]
+    for raiz in TO._raizes_tipo():
+        dir_mae = obra / raiz / mae
+        if dir_mae.exists():
+            irmaos = [d for d in (obra / raiz).iterdir() if d.is_dir()]
+            if len(irmaos) > 1:
+                # Sufixo de UMA palavra: `nome_curto` limita a 3 palavras e
+                # "mini-guia" + "aidd-arsenal" (4 palavras) truncava para
+                # "mini-guia-aidd" — colidindo de novo entre volumes.
+                vol = codigo_obra(mae_simples).split("-")[-1]
+                return f"{formato}-{vol}"
+            return formato
+    return formato
+
+
 def _importar_extrator():
     """Importa o extrator (nome com hifen). Reusa a instancia ja carregada — recarregar
     descartaria qualquer estado ja configurado no modulo."""
@@ -278,7 +305,10 @@ def montar_mapa(cards, ctx, teto=None):
         L.append(f"| {int(c['numero'])} | {_truncar(c['titulo'], 58)} "
                  f"| {_truncar(c.get('estagio') or '—', 22)} |")
     L.append("")
-    return L, len(estagios) or len(cards)
+    # O mapa renderiza as DUAS tabelas (estagios + etapas): o contador tem de
+    # refletir o total de linhas. Contar so `estagios` reprovava R-LM-7 em
+    # obras com 2 estagios e 8 etapas (serie AIDD) — mapa rico, contador raso.
+    return L, len(estagios) + len(cards)
 
 
 def montar_mini_guia(cards, ctx, teto=None):
@@ -343,7 +373,9 @@ def gerar(slug, formato, indice=None, cta_url=None, cta_texto=None, cards=None,
     promessa = spec["promessa"].format(tema=tema, n=n_itens)
 
     mae_simples = ctx["slug_mae_simples"]
-    slug_lm = TO.slug_curto("lead-magnet", mae_simples, sequencia=indice, nome=formato, base=DIR_OUTPUT)
+    slug_lm = TO.slug_curto("lead-magnet", mae_simples, sequencia=indice,
+                            nome=_nome_material(formato, mae_simples),
+                            base=DIR_OUTPUT)
     dir_lm = TO.dir_obra(slug_lm, DIR_OUTPUT)
     for sub in ("imagens", "revisao"):
         (dir_lm / sub).mkdir(parents=True, exist_ok=True)

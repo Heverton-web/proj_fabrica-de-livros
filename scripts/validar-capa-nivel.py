@@ -87,6 +87,14 @@ def main():
     if not dir_obra.exists():
         print(f"[REPROVADO] obra nao encontrada: {slug} (resolvido: {dir_obra})")
         return 1
+    # V5 (HUB POR COLECAO): o prefixo do slug pode ser a colecao, nao o tipo
+    # (output/<colecao>/livros/<slug>). Nesse caso o tipo vem do config_obra,
+    # mesmo padrao do gerar-capa.py.
+    if tipo not in ("livro", "ebook"):
+        config_path = dir_obra / "config_obra.json"
+        if config_path.exists():
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            tipo = config.get("tipo_obra") or tipo
     if tipo not in ("livro", "ebook"):
         print("[REPROVADO] slug deve apontar para livros/ ou ebooks/ "
               "(badge de nivel obrigatorio so em Livro/E-book, REGRA 5)")

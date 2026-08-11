@@ -412,7 +412,20 @@ def _ler_json(caminho, padrao=None):
         return padrao
 
 
-def nome_material(slug):
+def _volume_obra(slug, base=None, chave=None):
+    """Slug do volume-mae quando o material e derivado de um VOLUME (hub
+    multi-volume, ex.: serie AIDD com 4 livros). Vazio para material-raiz
+    (livro) ou colecao de volume unico (obra_mae == chave da colecao)."""
+    if chave is None:
+        chave = chave_colecao(slug, base)
+    config = _ler_json(TO.dir_obra(slug, base) / "config_obra.json", {})
+    volume = config.get("obra_mae") or config.get("livro_mae") or ""
+    if not volume or volume == chave:
+        return ""
+    return str(volume).strip()
+
+
+def nome_material(slug, base=None):
     """'livros/obra-teste' ou 'output/.../livros/obra-teste' -> 'obra-teste'.
 
     V5.1: limita a 20 chars para evitar caminhos que excedem MAX_PATH (260).
@@ -420,19 +433,37 @@ def nome_material(slug):
     repete o slug da colecao ('spec-driven-development--eb-01-...'); sem
     remover esse prefixo, `nome_curto` cortaria as 2 primeiras palavras
     ('spec-driven') e a campanha de TODOS os materiais cairia na mesma pasta
-    do material-raiz (livro). A parte distintiva ('eb-01') vira o nome."""
+    do material-raiz (livro). A parte distintiva ('eb-01') vira o nome.
+    V5.5 (hub MULTI-VOLUME): alem da chave, remove o prefixo do VOLUME
+    (obra_mae) e anexa a palavra distintiva do volume. Sem isso, numa serie
+    de 4 volumes (ex.: AIDD) 'dck-1-volume-2-arsenal' e
+    'dck-1-volume-3-governanca' cortariam ambos para 'dck-1', e o artigo
+    'aidd-v1-arquitetura-da-inteligencia--art-01-...' colidiria com o livro
+    ('aidd-arquitetura')."""
     import nomes_curtos as NC
     nome_completo = Path(str(slug).replace("\\", "/")).name
-    chave = chave_colecao(slug)
+    chave = chave_colecao(slug, base)
+    volume = _volume_obra(slug, base, chave)
     # So desambigua com SEPARADOR explicito ("chave--" ou "chave-"): um
     # material que apenas COMPARTILHE prefixo com a chave (ex.: chave "novo"
-    # e pasta "novos-caminhos") nao pode ser truncado.
-    if chave and nome_completo != chave:
-        if nome_completo.startswith(chave + "--"):
-            nome_completo = nome_completo[len(chave) + 2:].strip("-")
-        elif nome_completo.startswith(chave + "-"):
-            nome_completo = nome_completo[len(chave) + 1:].strip("-")
-    return NC.nome_curto(nome_completo, max_palavras=2, maximo=20)
+    # e pasta "novos-caminhos") nao pode ser truncado. Vale para a chave da
+    # colecao E para o slug do volume (artigos/ebooks repetem o volume).
+    for prefixo in (chave, volume):
+        if prefixo and nome_completo != prefixo:
+            if nome_completo.startswith(prefixo + "--"):
+                nome_completo = nome_completo[len(prefixo) + 2:].strip("-")
+            elif nome_completo.startswith(prefixo + "-"):
+                nome_completo = nome_completo[len(prefixo) + 1:].strip("-")
+    curto = NC.nome_curto(nome_completo, max_palavras=2, maximo=20)
+    if volume:
+        # palavra distintiva do volume (2a palavra significativa do slug do
+        # volume: 'aidd-v2-arsenal-do-agente' -> 'arsenal')
+        ps = NC.palavras(volume)
+        palavra_volume = ps[1] if len(ps) > 1 else (ps[0] if ps else "")
+        if palavra_volume and curto != palavra_volume \
+                and not curto.endswith("-" + palavra_volume):
+            curto = f"{curto}-{palavra_volume}"
+    return curto[:20].rstrip("-")
 
 
 def chave_colecao(slug_material, base=None):
@@ -453,7 +484,7 @@ def dir_campanha_material(slug_material, base=None):
 
     V5.1: valida MAX_PATH antes de retornar."""
     import nomes_curtos as NC
-    caminho = dir_campanhas(slug_material, base) / nome_material(slug_material)
+    caminho = dir_campanhas(slug_material, base) / nome_material(slug_material, base)
     if NC.excede_max_path(caminho):
         print(f"[AVISO] Caminho excede MAX_PATH: {len(str(caminho.resolve()))} chars")
         print(f"  {caminho}")

@@ -76,10 +76,14 @@ def validar(slug):
     # R-DK-1 — cobertura de capitulos
     mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae") or sumario.get("slug_livro_mae")
     dir_mae = None
-    for raiz in ("livros", "tccs"):
-        if mae_simples and (TO.dir_obra(raiz, DIR_OUTPUT) / mae_simples / "capitulos").exists():
-            dir_mae = TO.dir_obra(raiz, DIR_OUTPUT) / mae_simples
-            break
+    if mae_simples:
+        # V5 (HUB POR COLECAO): o livro-mae vive em output/<colecao>/livros/<slug>,
+        # nao em output/livros/<slug>. dir_obra resolve plano, por-obra e hub.
+        for raiz in ("livros", "tccs"):
+            candidato = TO.dir_obra(f"{raiz}/{mae_simples}", DIR_OUTPUT)
+            if (candidato / "capitulos").exists():
+                dir_mae = candidato
+                break
     if dir_mae is not None:
         n_caps = len(list((dir_mae / "capitulos").glob("cap_*.md")))
         # capa + objetivo + mapa + divisores + capitulos + CTA

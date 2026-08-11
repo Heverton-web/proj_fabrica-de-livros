@@ -47,15 +47,28 @@ RE_DADO = re.compile(
     r"R\$\s?\d+(?:[.,]\d+)*|\$\s?\d+(?:[.,]\d+)*",
     re.IGNORECASE,
 )
-SUPERLATIVOS = (
-    "o maior", "a maior", "os maiores", "as maiores",
-    "líder de mercado", "líder do mercado", "lider de mercado", "lider do mercado",
-    "líderes", "lideres", "recorde", "record",
-    "único", "unico", "impossível", "impossivel",
-    "primeiro a", "primeira a",
+# Superlativos: regex com boundary para NAO casar "maioria" ("a maior" ∈ "a maioria")
+# nem unicidade técnica ("único identificador") nem "primeiro arquivo".
+# "primeir[oa] a <verbo-r>" preserva reivindicação de pioneirismo ("primeiro a lançar").
+RE_SUPERLATIVO = re.compile(
+    r"\b(?:o|a|os|as)\s+maior(?:es)?\b|"
+    r"l[íi]der(?:es)?\s+do?\s+mercado|recorde|record|"
+    r"imposs[íi]vel|primeir[oa]\s+a\s+[a-zà-ÿ]+r\b",
+    re.IGNORECASE,
 )
 GARANTIAS = ("garantid", "obrigatoriamente", "100% dos", "100% das")
 RE_CITACAO = re.compile(r"\[\d+(?:\s*,\s*\d+)*(?:\s*-\s*\d+)?\]")
+# Cenas/exercícios do autor: números pertencem ao livro, não a fonte externa.
+# Checklist de exercício, cena narrativa na seção Aplica e lista numerada de
+# instrução são o MESMO caso do "**Desafio" já excluído — dados didáticos, não
+# dado factual a citar. (Ajuste calibrado 2026-08-11 — RTK: "superlativos de
+# ênfase e garantias técnicas não são disparadores factuais (ruído)".)
+RE_CENA_AUTOR = re.compile(
+    r"^(?:-\s*\[\s?\]|\*\*Situa[çc][ãa]o|\*\*Cena|\*\*Desafio|Desafio opcional|"
+    r"Voc[êe]\s+(?:é|está|investiga|percebe|decide|abre|trabalha|descobre)|Em termos práticos)",
+    re.IGNORECASE,
+)
+RE_LISTA_INSTRUCAO = re.compile(r"^\d+\.\s+\*\*[A-ZÁ-Ú]+")
 
 REGRAS = {
     "R-AF-1": "parágrafo com dado factual (%, unidade, superlativo) exige "
@@ -76,7 +89,7 @@ def _paragrafos(texto):
         primeira = p.splitlines()[0].strip()
         if primeira.startswith(("#", "|", ">")):
             continue
-        if primeira.startswith("**Desafio") or primeira.startswith("Desafio opcional"):
+        if RE_CENA_AUTOR.match(primeira) or RE_LISTA_INSTRUCAO.match(primeira):
             continue
         saida.append(p)
     return saida
@@ -85,8 +98,10 @@ def _paragrafos(texto):
 def _tem_disparador(paragrafo):
     if RE_DADO.search(paragrafo):
         return True
+    if RE_SUPERLATIVO.search(paragrafo):
+        return True
     baixo = paragrafo.lower()
-    return any(s in baixo for s in SUPERLATIVOS) or any(g in baixo for g in GARANTIAS)
+    return any(g in baixo for g in GARANTIAS)
 
 
 def validar_capitulo(texto, rotulo):

@@ -119,10 +119,21 @@ def cabecalho_secao(numero, nome):
 
 
 def dividir_secoes(texto):
-    """Retorna dict {numero_secao: corpo} conforme o template EITA-V2."""
+    """Retorna dict {numero_secao: corpo} conforme o template EITA-V2.
+
+    Cabecalhos `## N.` dentro de code fences NAO contam como secao EITA
+    (ex.: cap_2 do V3 governanca embute exemplos de requirements.md com
+    "## 1. Requisitos Funcionais" dentro de ```markdown — sem este filtro,
+    o dicionario de secoes era sobrescrito pelo conteudo do bloco e o capitulo
+    era acusado como incompleto (R3/R11/R12 falsos).
+    """
+    def _mascarar_codigo(m):
+        return "".join("\n" if c == "\n" else " " for c in m.group(0))
+
+    mascara = RE_CODIGO.sub(_mascarar_codigo, texto)
     secoes = {}
     marcas = []
-    for m in re.finditer(r"^##\s*(\d)[\.\)]?\s*(.+)$", texto, re.MULTILINE):
+    for m in re.finditer(r"^##\s*(\d)[\.\)]?\s*(.+)$", mascara, re.MULTILINE):
         marcas.append((int(m.group(1)), m.group(2).strip(), m.start(), m.end()))
     for i, (num, titulo, _ini, fim) in enumerate(marcas):
         prox = marcas[i + 1][2] if i + 1 < len(marcas) else len(texto)

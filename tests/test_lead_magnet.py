@@ -72,7 +72,11 @@ class TestMontadores:
     def test_mapa_usa_estagios_do_motivo_condutor(self, cards_ctx):
         cards, ctx = cards_ctx
         corpo, n = gerador.montar_mapa(cards, ctx)
-        assert n == 1
+        # O mapa renderiza as DUAS tabelas (estagios + etapas): o contador e o
+        # total de linhas — nao so os estagios. Bug real: obra com 2 estagios
+        # e 8 etapas reprovava R-LM-7 (mapa rico, contador raso).
+        assert n == len(ctx.get("estagios", [])) + len(cards)
+        assert n >= 1
         assert any("Fundação" in l for l in corpo)
 
     def test_mini_guia_usa_o_primeiro_card_e_marca_polimento(self, cards_ctx):

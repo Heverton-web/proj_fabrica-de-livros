@@ -156,6 +156,87 @@ class TestRegistro:
         ]
         assert len(set(nomes)) == 3, f"colisao de nomes: {nomes}"
 
+    def test_nome_material_hub_multivolume(self, monkeypatch, tmp_path):
+        """Hub com 4 volumes: prefixos repetidos nao podem colidir.
+
+        Bug real (serie AIDD): 'dck-1-volume-1-arquitetura' e
+        'dck-1-volume-2-arsenal' cortavam ambos para 'dck-1'; o artigo
+        'aidd-v1-arquitetura-da-inteligencia--art-01-...' virava
+        'aidd-arquitetura' (mesma pasta do livro). O fix remove o prefixo do
+        VOLUME (obra_mae) e anexa a palavra distintiva do volume."""
+        import tipos_obra as TO
+        configs = {
+            "livros/aidd-v1-arquitetura-da-inteligencia": {
+                "tipo_obra": "livro", "serie": "aidd-engenharia-nativa"},
+            "decks/dck-1-volume-1-arquitetura": {
+                "tipo_obra": "deck", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v1-arquitetura-da-inteligencia"},
+            "decks/dck-1-volume-2-arsenal": {
+                "tipo_obra": "deck", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v2-arsenal-do-agente"},
+            "emails/eml-1-volume-1-arquitetura": {
+                "tipo_obra": "emails", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v1-arquitetura-da-inteligencia"},
+            "artigos/aidd-v1-arquitetura-da-inteligencia--art-01-do-executor": {
+                "tipo_obra": "artigo", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v1-arquitetura-da-inteligencia"},
+            "ebooks/aidd-v2-arsenal-do-agente--eb-01-o-arsenal": {
+                "tipo_obra": "ebook", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v2-arsenal-do-agente"},
+            "lead-magnets/lm-5-mapa-arquitetura": {
+                "tipo_obra": "lead-magnet", "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v1-arquitetura-da-inteligencia"},
+        }
+
+        def fake_dir_obra(slug, base=None):
+            slug = str(slug).replace("\\", "/")
+            d = tmp_path / slug
+            d.mkdir(parents=True, exist_ok=True)
+            if slug in configs:
+                (d / "config_obra.json").write_text(
+                    json.dumps(configs[slug], ensure_ascii=False), encoding="utf-8")
+            return d
+
+        monkeypatch.setattr(TO, "dir_obra", fake_dir_obra)
+        nomes = {slug: CP.nome_material(slug) for slug in configs}
+        assert len(set(nomes.values())) == len(nomes), \
+            f"colisoes: {nomes}"
+        assert nomes["livros/aidd-v1-arquitetura-da-inteligencia"] == "aidd-arquitetura"
+        assert nomes["decks/dck-1-volume-1-arquitetura"] == "dck-1-arquitetura"
+        assert nomes["decks/dck-1-volume-2-arsenal"] == "dck-1-arsenal"
+        assert nomes["emails/eml-1-volume-1-arquitetura"] == "eml-1-arquitetura"
+        # derivado V4 que repete o VOLUME, nao a chave: fica 'art-01-...' e
+        # NAO colide com o livro ('aidd-arquitetura')
+        assert nomes["artigos/aidd-v1-arquitetura-da-inteligencia--art-01-do-executor"] \
+            == "art-01-arquitetura"
+        assert nomes["ebooks/aidd-v2-arsenal-do-agente--eb-01-o-arsenal"] == "eb-01-arsenal"
+        assert nomes["lead-magnets/lm-5-mapa-arquitetura"] == "lm-5-arquitetura"
+        # invariante V5.1: nome final nunca estoura 20 chars (sufixo do volume
+        # poderia estourar depois do corte interno de nome_curto)
+        assert all(len(n) <= 20 for n in nomes.values()), nomes
+
+    def test_nome_material_basename_igual_volume(self, monkeypatch, tmp_path):
+        """Material cujo basename E o proprio slug do volume (ex.: livro-raiz
+        com obra_mae apontando para si): sem strip, sem sufixo duplicado."""
+        import tipos_obra as TO
+
+        def fake_dir_obra(slug, base=None):
+            slug = str(slug).replace("\\", "/")
+            d = tmp_path / slug
+            d.mkdir(parents=True, exist_ok=True)
+            (d / "config_obra.json").write_text(json.dumps({
+                "tipo_obra": "livro",
+                "serie": "aidd-engenharia-nativa",
+                "obra_mae": "aidd-v1-arquitetura-da-inteligencia",
+            }, ensure_ascii=False), encoding="utf-8")
+            return d
+
+        monkeypatch.setattr(TO, "dir_obra", fake_dir_obra)
+        nome = CP.nome_material("livros/aidd-v1-arquitetura-da-inteligencia")
+        # palavra do volume ('arquitetura') ja esta no nome — nao duplica
+        assert nome == "aidd-arquitetura"
+        assert "-arquitetura-arquitetura" not in nome
+
 
 # ── Gerador ──────────────────────────────────────────────────────────────────
 

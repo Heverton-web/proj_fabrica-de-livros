@@ -118,8 +118,10 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
         sumario.get("slug_livro_mae")
     dir_mae = None
     if slug_mae_simples:
+        # V5 (HUB POR COLECAO): o livro-mae vive em output/<colecao>/livros/<slug>,
+        # nao em output/livros/<slug>. dir_obra resolve plano, por-obra e hub.
         for raiz in ("livros", "tccs"):
-            candidato = TO.dir_obra(raiz, DIR_OUTPUT) / slug_mae_simples
+            candidato = TO.dir_obra(f"{raiz}/{slug_mae_simples}", DIR_OUTPUT)
             if candidato.exists():
                 dir_mae = candidato
                 break
