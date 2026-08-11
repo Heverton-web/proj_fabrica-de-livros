@@ -72,20 +72,24 @@ def nivel_rotulo(senioridade):
 def variaveis_arte(ctx):
     """Variaveis comuns de interpolacao dos templates HTML de arte.
 
-    V5.3: suporta titulo_arte/sufixo_arte para variar conteudo entre artes."""
+    V5.4: suporta titulo_arte (gancho curto de break scroll), apoio_arte
+    (linha de apoio do envio) e rotulo_arte (progresso 'Post 3/7') como
+    elementos SEPARADOS — nunca colados/cortados do titulo. 1 arte = 1 envio."""
     # Tags TECNICAS do dominio (derivadas dos capitulos/tema) primeiro; o
     # vocabulario condutor metaforico (arnes, mosquetao) fica fora das artes.
     vocab = (ctx.get("tags_arte") or ctx.get("vocabulario") or [])
     tags = "".join(f'<span class="tag">{t}</span>' for t in vocab[:4])
     if not tags:
         tags = f'<span class="tag">{ctx["colecao"]}</span>'
-    # Variar titulo se titulo_arte estiver disponivel (arte individuall)
-    titulo = ctx.get("titulo_arte") or (ctx["titulo"] or ctx["colecao"])
-    sufixo = ctx.get("sufixo_arte", "")
-    if sufixo:
-        titulo = f"{titulo} {sufixo}"
+    # Gancho curto da arte (titulo_arte) ou titulo do material como fallback
+    titulo = ctx.get("titulo_arte") or ctx.get("titulo") or ctx["colecao"]
+    # Linha de apoio do envio (apoio_arte) ou subtitulo do material
+    apoio = (ctx.get("apoio_arte") or ctx.get("subtitulo")
+             or ctx.get("projeto_pratico") or ctx["colecao"])
     return {
-        "TITULO": titulo[:64],
+        "TITULO": titulo[:70],
+        "APOIO": apoio[:110],
+        "ROTULO": ctx.get("rotulo_arte") or "",
         "SUBTITULO": (ctx.get("subtitulo") or ctx.get("projeto_pratico")
                       or ctx["colecao"])[:110],
         "NIVEL": nivel_rotulo(ctx.get("senioridade")),
@@ -261,8 +265,8 @@ def gerar_artes(ctx, base, com_artes=True):
     cronograma da rede/canal. HTML interpolado fica ao lado como fonte
     editavel da arte.
 
-    V5.3: cada arte usa o indice para variar o conteudo (titulo + sufixo),
-    evitando artes repetidas com o mesmo texto."""
+    V5.4: cada arte usa UM gancho proprio (titulo curto de break scroll +
+    apoio + rotulo de progresso) — 1 arte = 1 envio, nunca repetida."""
     geradas = []
     for rede, dados in CP.REDES_SOCIAIS.items():
         raiz = CP.dir_campanha_material(ctx["slug"], base) / f"redes-sociais/{rede}"
@@ -274,12 +278,15 @@ def gerar_artes(ctx, base, com_artes=True):
                 else "feed-story" if formato == "feed-story"
                 else "post_ig"]
             prefixo = "post" if formato == "post" else "story"
+            rotulo_base = "Post" if formato == "post" else "Story"
             quantidade = max(1, quantidades.get(formato, 1))
+            ganchos = CP.ganchos_arte(ctx, formato, quantidade)
             for i in range(1, quantidade + 1):
-                # Variar conteudo usando indice: titulo + sufixo
+                item = ganchos[i - 1]
                 ctx_variado = ctx.copy()
-                ctx_variado["titulo_arte"] = f"{ctx['titulo']}"
-                ctx_variado["sufixo_arte"] = f"({i}/{quantidade})"
+                ctx_variado["titulo_arte"] = item["titulo"]
+                ctx_variado["apoio_arte"] = item["apoio"]
+                ctx_variado["rotulo_arte"] = f"{rotulo_base} {i}/{quantidade}"
                 html = _interpolar_arte(nome_template, ctx_variado)
                 destino = raiz / f"artes/{formato}"
                 destino.mkdir(parents=True, exist_ok=True)
@@ -302,8 +309,15 @@ def gerar_artes(ctx, base, com_artes=True):
             raiz = (CP.dir_campanha_material(ctx["slug"], base)
                     / f"canais-comunicacao/whatsapp/{sequencia}/artes")
             raiz.mkdir(parents=True, exist_ok=True)
-            html = _interpolar_arte(CP.TEMPLATES_ARTE["whatsapp"], ctx)
+            ganchos = CP.ganchos_arte(ctx, "whatsapp", quantidade)
             for i in range(1, quantidade + 1):
+                # HTML interpolado DENTRO do loop: 1 copy por envio
+                item = ganchos[i - 1]
+                ctx_variado = ctx.copy()
+                ctx_variado["titulo_arte"] = item["titulo"]
+                ctx_variado["apoio_arte"] = item["apoio"]
+                ctx_variado["rotulo_arte"] = f"Mensagem {i}/{quantidade}"
+                html = _interpolar_arte(CP.TEMPLATES_ARTE["whatsapp"], ctx_variado)
                 destino = raiz / f"arte-{i:02d}.html"
                 png = raiz / f"arte-{i:02d}.png"
                 destino.write_text(html, encoding="utf-8")

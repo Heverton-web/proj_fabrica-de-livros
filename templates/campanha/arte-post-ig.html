@@ -27,6 +27,10 @@
   }
   .topo { display: flex; justify-content: space-between; align-items: center; position: relative; }
   .colecao { font-size: 30px; letter-spacing: .22em; text-transform: uppercase; opacity: .72; }
+  .rotulo {
+    flex: 1; text-align: center; font-size: 26px; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; opacity: .5;
+  }
   .badge {
     font-size: 28px; font-weight: 700; padding: 14px 34px; border-radius: 999px;
     border: 2px solid ${COR}; color: ${COR}; background: rgba(255,255,255,.04);
@@ -51,11 +55,12 @@
   <div class="fundo">
     <div class="topo">
       <div class="colecao">${COLECAO}</div>
+      <div class="rotulo">${ROTULO}</div>
       <div class="badge">${NIVEL}</div>
     </div>
     <div class="meio">
       <h1 class="titulo">${TITULO}</h1>
-      <p class="subtitulo">${SUBTITULO}</p>
+      <p class="subtitulo">${APOIO}</p>
       <div class="tags">${TAGS}</div>
     </div>
     <div class="rodape">

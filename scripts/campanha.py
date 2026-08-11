@@ -266,6 +266,112 @@ def derivar_tags_arte(sumario, config):
     return tags[:4]
 
 
+# ── Ganchos de arte (1 arte = 1 envio, copy propria) ────────────────────────
+# Titulo curto (break scroll) + apoio de 1 linha, derivados do sumario_macro
+# do material. Post usa titulos de capitulos; story/whatsapp usam pilares
+# como dicas curtas. Fallback determinístico: moldes com o tema da obra.
+MAX_GANCHO = 70
+MAX_APOIO = 90
+
+GANCHO_FALLBACK = {
+    "post": [
+        "O erro nº 1 em {tema}",
+        "{tema}: o que ninguém te conta",
+        "Pare de improvisar em {tema}",
+        "O método que falta em {tema}",
+        "Por que {tema} falha sem método",
+        "O caminho certo em {tema}",
+        "Chega de tentativa e erro em {tema}",
+    ],
+    "feed-story": [
+        "Dica rápida de {tema}",
+        "{tema} em 1 minuto",
+        "Faça certo: {tema}",
+        "O essencial de {tema}",
+    ],
+    "whatsapp": [
+        "Sem método, {tema} é aposta?",
+        "A pergunta que muda {tema}",
+        "Chega de {tema} no improviso",
+        "O próximo passo em {tema}",
+    ],
+}
+
+
+def _limpar_gancho(texto, limite=MAX_GANCHO):
+    """Normaliza espacos/pontuacao e corta em palavra completa ate `limite`.
+
+    Preserva a interrogacao final ('?' e o break scroll do fallback whatsapp)."""
+    texto = re.sub(r"\s+", " ", (texto or "")).strip()
+    pergunta = texto.endswith("?")
+    if len(texto) <= limite:
+        limpo = texto.strip(" :;,.!-")
+    else:
+        corte = texto[:limite].rsplit(" ", 1)[0]
+        limpo = corte.strip(" :;,.!-") or texto[:limite].strip()
+    if pergunta and not limpo.endswith("?"):
+        limpo += "?"
+    return limpo
+
+
+def _temas_por_formato(sumario, formato):
+    """(capitulos, pilares) do sumario — post prioriza capitulos (gancho
+    legivel); story/whatsapp priorizam pilares (dica imperativa curta)."""
+    capitulos = []
+    pilares = []
+    for parte in (sumario or {}).get("partes", []):
+        for cap in parte.get("capitulos", []):
+            titulo = (cap.get("titulo") or "").strip()
+            if titulo:
+                capitulos.append(titulo)
+            objetivo = (cap.get("objetivo") or "").strip()
+            if objetivo:
+                capitulos.append(objetivo)
+            for p in (cap.get("pilares_previstos") or []):
+                p = (p or "").strip()
+                if p:
+                    pilares.append(p)
+    return capitulos, pilares
+
+
+def _fallback_gancho(formato, tema, indice):
+    moldes = GANCHO_FALLBACK.get(formato, GANCHO_FALLBACK["post"])
+    return moldes[indice % len(moldes)].format(tema=(tema or "o tema"))
+
+
+def ganchos_arte(ctx, formato, n, base=None):
+    """n ganchos de arte (titulo curto de break scroll + apoio) para o envio i.
+
+    Determinístico e derivado do material: titulos de capitulos e pilares do
+    sumario_macro (post = capitulo; feed-story/whatsapp = pilar-dica). Quando o
+    sumario nao tem conteudo suficiente, completa com moldes do tema da obra.
+    Sempre retorna exatamente `n` itens: {"titulo" (<= 70 chars), "apoio"}."""
+    base = Path(base) if base is not None else DIR_OUTPUT
+    dir_obra = TO.dir_obra(ctx["slug"], base)
+    sumario = _ler_json(dir_obra / "sumario_macro.json", {})
+    config = _ler_json(dir_obra / "config_obra.json", {})
+    capitulos, pilares = _temas_por_formato(sumario, formato)
+    tema = (config.get("tema") or sumario.get("titulo_obra")
+            or ctx.get("colecao") or ctx.get("nome") or "o tema")
+    # post prioriza capitulos (gancho legivel); story/whatsapp priorizam
+    # pilares (dica curta). Combinar capitulos+pilares maximiza variedade e
+    # evita repeticao precoce quando ha muitos envios.
+    if formato == "post":
+        fontes = capitulos + pilares
+    else:
+        fontes = pilares + capitulos
+    apoios = (pilares or capitulos) or [tema]
+    if not fontes:
+        fontes = [_fallback_gancho(formato, tema, i) for i in range(n)]
+    itens = []
+    for i in range(n):
+        itens.append({
+            "titulo": _limpar_gancho(fontes[i % len(fontes)]),
+            "apoio": _limpar_gancho(apoios[i % len(apoios)], MAX_APOIO),
+        })
+    return itens
+
+
 # Frases de CTA padrao por tipo de material (usadas quando o manifesto nao tem cta_url)
 CTA_PADRAO = {
     "livro": "Garanta o livro completo",
@@ -292,9 +398,23 @@ def _ler_json(caminho, padrao=None):
 def nome_material(slug):
     """'livros/obra-teste' ou 'output/.../livros/obra-teste' -> 'obra-teste'.
 
-    V5.1: limita a 20 chars para evitar caminhos que excedem MAX_PATH (260)."""
+    V5.1: limita a 20 chars para evitar caminhos que excedem MAX_PATH (260).
+    V5.4: desambigua dentro da colecao — o nome do diretorio de derivados
+    repete o slug da colecao ('spec-driven-development--eb-01-...'); sem
+    remover esse prefixo, `nome_curto` cortaria as 2 primeiras palavras
+    ('spec-driven') e a campanha de TODOS os materiais cairia na mesma pasta
+    do material-raiz (livro). A parte distintiva ('eb-01') vira o nome."""
     import nomes_curtos as NC
     nome_completo = Path(str(slug).replace("\\", "/")).name
+    chave = chave_colecao(slug)
+    # So desambigua com SEPARADOR explicito ("chave--" ou "chave-"): um
+    # material que apenas COMPARTILHE prefixo com a chave (ex.: chave "novo"
+    # e pasta "novos-caminhos") nao pode ser truncado.
+    if chave and nome_completo != chave:
+        if nome_completo.startswith(chave + "--"):
+            nome_completo = nome_completo[len(chave) + 2:].strip("-")
+        elif nome_completo.startswith(chave + "-"):
+            nome_completo = nome_completo[len(chave) + 1:].strip("-")
     return NC.nome_curto(nome_completo, max_palavras=2, maximo=20)
 
 

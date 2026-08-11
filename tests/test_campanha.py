@@ -1,6 +1,7 @@
 """Testes da camada CAMPANHA (V5.3): registro, gerador, gates R-CP e --completo."""
 
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -68,13 +69,17 @@ def ambiente(livro_falso, monkeypatch):
     monkeypatch.setattr(criador, "compilar_markdown_pdf", _pdf_placeholder)
     monkeypatch.setattr(criador, "compilar_cronograma_pdf", _pdf_placeholder)
 
-    # Renderizacao PNG deterministica: placeholder valido sem Chromium (a
-    # quantidade por formato/sequencia e a mesma do registro — o gate R-CP-3
-    # so exige assinatura + tamanho + contagem).
+    # Renderizacao PNG deterministica sem Chromium: o PNG deriva do conteudo
+    # do HTML (hash), entao artes com copy diferente geram PNGs diferentes —
+    # habilita os testes de unicidade (1 arte = 1 envio) e continua valido
+    # para R-CP-3 (assinatura + tamanho + contagem).
     def _png_placeholder(html, png_path, dim):
+        import hashlib
         png_path = Path(png_path)
         png_path.parent.mkdir(parents=True, exist_ok=True)
-        png_path.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * (MIN_PNG_BYTES - 8))
+        digest = hashlib.sha256(html.encode("utf-8")).digest()
+        corpo = b"\x89PNG\r\n\x1a\n" + digest * (MIN_PNG_BYTES // 32)
+        png_path.write_bytes(corpo[:MIN_PNG_BYTES])
         return png_path
 
     livro_falso["_renderizar_png_real"] = criador._renderizar_png
@@ -123,10 +128,33 @@ class TestRegistro:
         assert CP.texto_nome("email", 3, "sequencia-mkt") == "email-03-sequencia-mkt.md"
         assert CP.texto_nome("msg", 4, "sequencia-divulgacao") == "msg-04-sequencia-divulgacao.md"
 
-    def test_nome_material_pega_ultimo_segmento(self):
+    def test_nome_material_pega_ultimo_segmento(self, monkeypatch):
+        # isola do disco: nome_material consulta a chave da colecao
+        monkeypatch.setattr(CP, "chave_colecao",
+                            lambda slug, base=None: "Colecao Teste")
         assert CP.nome_material("livros/obra-teste") == "obra-teste"
         # V5.1: nome_material limita a 20 chars para evitar caminhos longos
         assert CP.nome_material("ebooks/obra-teste--eb") == "obra-teste"
+
+    def test_nome_material_desambiguado_da_colecao(self, monkeypatch):
+        """Derivados com prefixo do slug da colecao nao colidem com o raiz.
+
+        Bug real: 'spec-driven-development--eb-01-...' cortava para
+        'spec-driven' (mesma pasta de campanha do livro)."""
+        monkeypatch.setattr(CP, "chave_colecao",
+                            lambda slug, base=None: "spec-driven-development")
+        assert CP.nome_material(
+            "spec-driven-development/livros/spec-driven-development") == "spec-driven"
+        assert CP.nome_material(
+            "spec-driven-development/ebooks/spec-driven-development--eb-01-a-planta-baixa-fundamentos") == "eb-01"
+        assert CP.nome_material(
+            "spec-driven-development/ebooks/spec-driven-development--eb-02-o-canteiro-de-obras-o-projeto-do-inicio") == "eb-02"
+        nomes = [
+            CP.nome_material("spec-driven-development/livros/spec-driven-development"),
+            CP.nome_material("spec-driven-development/ebooks/spec-driven-development--eb-01-a-planta-baixa-fundamentos"),
+            CP.nome_material("spec-driven-development/ebooks/spec-driven-development--eb-02-o-canteiro-de-obras-o-projeto-do-inicio"),
+        ]
+        assert len(set(nomes)) == 3, f"colisao de nomes: {nomes}"
 
 
 # ── Gerador ──────────────────────────────────────────────────────────────────
@@ -176,7 +204,9 @@ class TestGerador:
             .read_text(encoding="utf-8")
         ctx = CP.contexto_material(ambiente["slug"])
         assert ctx["cor_accent"].lstrip("#") in html
-        assert "A Obra em Construção" in html
+        # gancho curto do capitulo 1 + rotulo de progresso da sequencia
+        assert "Fundação do Projeto" in html
+        assert "Post 1/7" in html
         # tags TECNICAS (pilares do dominio), nao o vocabulario metaforico
         assert any(t in html for t in ("Contrato", "Schema", "Modelo", "Índice"))
 
@@ -337,6 +367,60 @@ class TestGerador:
         assert not (raiz / "canais-comunicacao/whatsapp/sequencia-nutricao/artes/arte-05.png").exists()
         assert (raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/artes/arte-06.png").exists()
 
+    def test_artes_png_unicos_por_formato(self, ambiente):
+        """1 arte = 1 envio: nenhum PNG repetido dentro de um formato/sequencia.
+
+        A fixture deriva o PNG do conteudo do HTML, entao hashes iguais
+        provariam copy repetida (o bug original)."""
+        import hashlib
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        raiz = _raiz(ambiente["slug"])
+        grupos = [
+            "redes-sociais/instagram/artes/post",
+            "redes-sociais/instagram/artes/feed-story",
+            "redes-sociais/linkedin/artes/post",
+            "canais-comunicacao/whatsapp/sequencia-nutricao/artes",
+            "canais-comunicacao/whatsapp/sequencia-divulgacao/artes",
+        ]
+        for grupo in grupos:
+            pngs = sorted((raiz / grupo).glob("*.png"))
+            assert len(pngs) >= 2, grupo
+            hashes = {hashlib.md5(p.read_bytes()).hexdigest() for p in pngs}
+            assert len(hashes) == len(pngs), \
+                f"artes repetidas em {grupo}: {len(hashes)}/{len(pngs)} unicas"
+
+    def test_artes_html_fonte_distintos_e_titulo_curto(self, ambiente):
+        """Cada arte tem gancho proprio <= MAX_GANCHO + rotulo de progresso."""
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        raiz = _raiz(ambiente["slug"])
+        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        titulos = set()
+        for html in sorted(dir_post.glob("post-*.html")):
+            texto = html.read_text(encoding="utf-8")
+            assert f"Post {int(html.stem.split('-')[1])}/7" in texto, html.name
+            # titulo da arte (bloco <h1 ...>) tem gancho curto
+            m = re.search(r"<h1 class=\"titulo\">([^<]+)</h1>", texto)
+            assert m, html.name
+            assert len(m.group(1)) <= CP.MAX_GANCHO, html.name
+            titulos.add(m.group(1))
+        assert len(titulos) == 7, f"7 ganchos distintos esperados, veio {titulos}"
+
+    def test_artes_whatsapp_interpola_html_dentro_do_loop(self, ambiente):
+        """Bug original: HTML interpolado 1x fora do loop -> artes identicas."""
+        criador.gerar_material(ambiente["slug"], com_artes=False)
+        raiz = _raiz(ambiente["slug"])
+        dir_artes = raiz / "canais-comunicacao/whatsapp/sequencia-divulgacao/artes"
+        textos = {html.read_text(encoding="utf-8")
+                  for html in dir_artes.glob("arte-*.html")}
+        assert len(textos) == 6, f"6 copies distintas esperadas, veio {len(textos)}"
+        # rotulo de progresso presente e distinto em cada envio
+        rotulos = set()
+        for html in dir_artes.glob("arte-*.html"):
+            m = re.search(r"Mensagem (\d/\d)", html.read_text(encoding="utf-8"))
+            assert m
+            rotulos.add(m.group(1))
+        assert rotulos == {"1/6", "2/6", "3/6", "4/6", "5/6", "6/6"}
+
     def test_reprova_artes_insuficientes_para_cronograma(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=True)
         # Deleta posts do IG para ficar abaixo do exigido pelo cronograma
@@ -362,6 +446,68 @@ class TestGerador:
 
     def test_material_inexistente_devolve_none(self, ambiente):
         assert criador.gerar_material("livros/nao-existe") is None
+
+
+# ── Ganchos de arte (1 arte = 1 envio) ───────────────────────────────────────
+
+class TestGanchosArte:
+    def test_devolve_n_itens_com_titulo_curto(self, ambiente):
+        ctx = CP.contexto_material(ambiente["slug"])
+        itens = CP.ganchos_arte(ctx, "post", 7)
+        assert len(itens) == 7
+        for item in itens:
+            assert item["titulo"], "gancho vazio"
+            assert item["apoio"], "apoio vazio"
+            assert len(item["titulo"]) <= CP.MAX_GANCHO
+            assert len(item["apoio"]) <= CP.MAX_APOIO
+
+    def test_post_prioriza_capitulos_do_sumario(self, ambiente):
+        ctx = CP.contexto_material(ambiente["slug"])
+        itens = CP.ganchos_arte(ctx, "post", 4)
+        titulos = [i["titulo"] for i in itens]
+        assert "Fundação do Projeto" in titulos
+        assert "Teoria Pura" in titulos
+        # objetivos dos capitulos entram como fonte extra (variedade)
+        assert "Estabelecer os contratos que sustentam o sistema" in titulos
+
+    def test_story_prioriza_pilares(self, ambiente):
+        ctx = CP.contexto_material(ambiente["slug"])
+        itens = CP.ganchos_arte(ctx, "feed-story", 4)
+        titulos = [i["titulo"] for i in itens]
+        # pilares da fixture: Contrato, Schema, Índice, Modelo
+        assert any(t in ("Contrato", "Schema", "Índice", "Modelo") for t in titulos)
+
+    def test_unicos_quando_fonte_suficiente(self, ambiente):
+        # fonte = capitulos + pilares (6) > n=5 -> todos distintos
+        ctx = CP.contexto_material(ambiente["slug"])
+        itens = CP.ganchos_arte(ctx, "post", 5)
+        titulos = [i["titulo"] for i in itens]
+        assert len(set(titulos)) == len(titulos)
+
+    def test_cicla_sem_quebrar_quando_n_maior_que_fonte(self, ambiente):
+        ctx = CP.contexto_material(ambiente["slug"])
+        itens = CP.ganchos_arte(ctx, "post", 20)
+        assert len(itens) == 20
+        assert all(i["titulo"] and i["apoio"] for i in itens)
+
+    def test_fallback_com_tema_quando_sem_sumario(self, ambiente):
+        sumario = ambiente["dir_livro"] / "sumario_macro.json"
+        backup = sumario.with_suffix(".json.bak")
+        sumario.rename(backup)
+        try:
+            ctx = CP.contexto_material(ambiente["slug"])
+            itens = CP.ganchos_arte(ctx, "whatsapp", 4)
+            assert len(itens) == 4
+            assert any("método" in i["titulo"] or "aposta" in i["titulo"]
+                       for i in itens)
+        finally:
+            backup.rename(sumario)
+
+    def test_mesmo_formato_gera_ganchos_iguais_deterministicos(self, ambiente):
+        ctx = CP.contexto_material(ambiente["slug"])
+        a = CP.ganchos_arte(ctx, "post", 5)
+        b = CP.ganchos_arte(ctx, "post", 5)
+        assert a == b
 
 
 # ── Gate ─────────────────────────────────────────────────────────────────────
@@ -423,6 +569,38 @@ class TestGate:
         png.write_bytes(b"lixo nao png")
         rel = gate.validar_material(ambiente["slug"])
         assert "R-CP-3" in {v["regra"] for v in rel["violacoes"]}
+
+    def test_aprova_artes_unicas_no_cp6(self, ambiente):
+        """Copy por envio: gerador emite artes unicas e R-CP-6 nao acusa."""
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        _finalizar_moldes(ambiente["slug"])
+        rel = gate.validar_material(ambiente["slug"])
+        assert "R-CP-6" not in {v["regra"] for v in rel["violacoes"]}, \
+            rel["violacoes"]
+
+    def test_reprova_pngs_repetidos_no_cp6(self, ambiente):
+        """Mesma imagem em 2 envios (bug original) -> R-CP-6 reprova."""
+        import shutil
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        raiz = _raiz(ambiente["slug"])
+        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        shutil.copy2(dir_post / "post-01.png", dir_post / "post-02.png")
+        rel = gate.validar_material(ambiente["slug"])
+        violacoes = [v for v in rel["violacoes"] if v["regra"] == "R-CP-6"]
+        assert any("PNGs repetidos" in v["detalhe"] and "post-02.png" in v["detalhe"]
+                   for v in violacoes)
+
+    def test_reprova_html_fonte_repetido_no_cp6(self, ambiente):
+        """Copy identica em 2 envios -> R-CP-6 reprova o HTML fonte."""
+        criador.gerar_material(ambiente["slug"], com_artes=True)
+        raiz = _raiz(ambiente["slug"])
+        dir_post = raiz / "redes-sociais/instagram/artes/post"
+        html1 = (dir_post / "post-01.html").read_text(encoding="utf-8")
+        (dir_post / "post-02.html").write_text(html1, encoding="utf-8")
+        rel = gate.validar_material(ambiente["slug"])
+        violacoes = [v for v in rel["violacoes"] if v["regra"] == "R-CP-6"]
+        assert any("HTML fonte repetido" in v["detalhe"] and "post-02.html" in v["detalhe"]
+                   for v in violacoes)
 
     def test_reprova_cronograma_sem_data(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)

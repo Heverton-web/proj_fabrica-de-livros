@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validar-Campanha (V5.3) — gates da camada CAMPANHA (R-CP-1 a R-CP-5).
+Validar-Campanha (V5.3) — gates da camada CAMPANHA (R-CP-1 a R-CP-6).
 
 R-CP-1 estrutura: arvore de pastas do registro existe por material.
 R-CP-2 conteudo: textos nao vazios, sem copy generica (regra 12) e sem molde
@@ -10,6 +10,8 @@ R-CP-3 artes: PNG valido (assinatura + tamanho minimo), HTML fonte ao lado e
 R-CP-4 merito (--estrito): vocabulario condutor da colecao presente na copy.
 R-CP-5 cronogramas: presentes, com datas futuras, PDF ao lado e as 4
     dimensoes de uso por dia (o que/por que/como/quando).
+R-CP-6 artes unicas: dentro de um formato/sequencia, nenhum PNG repetido
+    (MD5) nem HTML fonte identico — 1 arte = 1 envio, copy propria.
 R-CP-C1 (--completo): todo material da colecao tem campanha com status completa.
 
 Uso:
@@ -50,6 +52,40 @@ def _cronograma_primeira_data(arquivo):
 
 def _textos_da_pasta(pasta):
     return sorted(p for p in pasta.rglob("*.md") if p.is_file())
+
+
+def _artes_duplicadas(dir_artes):
+    """(pngs_duplicados, htmls_repetidos) dentro de uma pasta de artes.
+
+    PNG duplicado = mesmo conteudo binario (MD5) em 2+ arquivos — prova de
+    arte repetida. HTML repetido = mesmo fonte (mesma copy) em 2+ arquivos.
+    Ambos violam R-CP-6 (1 arte = 1 envio)."""
+    import hashlib
+    pngs_dup = []
+    if dir_artes.exists():
+        vistos = {}
+        for png in sorted(dir_artes.glob("*.png")):
+            try:
+                h = hashlib.md5(png.read_bytes()).hexdigest()
+            except OSError:
+                continue
+            if h in vistos:
+                pngs_dup.append(png.name)
+            else:
+                vistos[h] = png.name
+    htmls_dup = []
+    if dir_artes.exists():
+        vistos = {}
+        for html in sorted(dir_artes.glob("*.html")):
+            try:
+                texto = html.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            if texto in vistos:
+                htmls_dup.append(html.name)
+            else:
+                vistos[texto] = html.name
+    return pngs_dup, htmls_dup
 
 
 def validar_material(slug, estrito=False, base=None):
@@ -125,6 +161,33 @@ def validar_material(slug, estrito=False, base=None):
                 violacoes.append({"regra": "R-CP-3",
                                   "detalhe": f"whatsapp/{sequencia}: {n_real}/{n_esperado} "
                                              f"artes (cronograma)"})
+
+        # R-CP-6 — artes unicas por formato/sequencia (1 arte = 1 envio)
+        for rede, dados in CP.REDES_SOCIAIS.items():
+            for formato in dados.get("artes", {}):
+                dir_artes = raiz / f"redes-sociais/{rede}/artes/{formato}"
+                pngs_dup, htmls_dup = _artes_duplicadas(dir_artes)
+                if pngs_dup:
+                    violacoes.append({"regra": "R-CP-6",
+                                      "detalhe": f"{rede}/{formato}: PNGs repetidos "
+                                                 f"({', '.join(pngs_dup)})"})
+                if htmls_dup:
+                    violacoes.append({"regra": "R-CP-6",
+                                      "detalhe": f"{rede}/{formato}: HTML fonte repetido "
+                                                 f"({', '.join(htmls_dup)})"})
+        for sequencia in CP.CANAIS_COMUNICACAO["whatsapp"]["sequencias"]:
+            if not CP.n_artes_whatsapp(sequencia):
+                continue
+            dir_artes = raiz / f"canais-comunicacao/whatsapp/{sequencia}/artes"
+            pngs_dup, htmls_dup = _artes_duplicadas(dir_artes)
+            if pngs_dup:
+                violacoes.append({"regra": "R-CP-6",
+                                  "detalhe": f"whatsapp/{sequencia}: PNGs repetidos "
+                                             f"({', '.join(pngs_dup)})"})
+            if htmls_dup:
+                violacoes.append({"regra": "R-CP-6",
+                                  "detalhe": f"whatsapp/{sequencia}: HTML fonte repetido "
+                                             f"({', '.join(htmls_dup)})"})
 
         # R-CP-5 — cronogramas
         for crono in sorted(raiz.rglob("cronograma-*.md")):
