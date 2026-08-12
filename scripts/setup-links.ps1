@@ -18,13 +18,20 @@ function Set-HardLink($linkRelativo, $targetRelativo) {
     $linkDir = Split-Path -Parent $link
     if (-not (Test-Path $linkDir)) { New-Item -ItemType Directory -Force -Path $linkDir | Out-Null }
     if (Test-Path $link) {
-        $item = Get-Item $link -Force
-        if ($item.LinkType -eq "HardLink") {
-            Write-Output "OK (ja e hardlink): $linkRelativo"
+        # LinkType == "HardLink" so diz que o arquivo E um hardlink de ALGUEM - nao
+        # garante que ainda aponta pro TARGET atual. Um editor que salva com
+        # write-novo-arquivo+rename (comum) desvincula o inode em silencio: o
+        # arquivo continua "sendo hardlink" de outros espelhos, so que nao mais
+        # deste CLAUDE.md. Por isso o criterio de verdade e o HASH do conteudo,
+        # nao o LinkType.
+        $hashLink = (Get-FileHash -Path $link -Algorithm SHA256).Hash
+        $hashTarget = (Get-FileHash -Path $target -Algorithm SHA256).Hash
+        if ($hashLink -eq $hashTarget) {
+            Write-Output "OK (conteudo em dia): $linkRelativo"
             return
         }
-        Write-Warning "Ja existe e NAO e hardlink, pulando (apague manualmente se quiser recriar): $linkRelativo"
-        return
+        Write-Warning "Desalinhado do alvo (hardlink quebrado por rewrite externo) - recriando: $linkRelativo"
+        Remove-Item -Path $link -Force
     }
     New-Item -ItemType HardLink -Path $link -Target $target | Out-Null
     Write-Output "Criado hardlink: $linkRelativo -> $targetRelativo"
