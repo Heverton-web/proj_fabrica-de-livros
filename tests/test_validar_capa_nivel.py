@@ -115,3 +115,42 @@ class TestValidarCapaNivel:
             )
             result = vcn.validar_capa_nivel(tmp_path)
             assert result == 0, f"Falhou para senioridade={sen}"
+
+
+class TestMainResolveHub:
+    """Regressao (RTK Scratchpad 2026-08-09): main() so validava o layout plano
+    output/livros/<slug> e nunca resolvia a obra no HUB POR COLECAO
+    output/<colecao>/livros/<slug> — tipo_por_prefixo(slug) devolve None quando
+    o 1o segmento do slug e a colecao, nao o tipo, e main() precisa cair no
+    fallback de ler tipo_obra do config_obra.json (R5: badge so livro/ebook)."""
+
+    def _obra(self, tmp_path, *partes, senioridade="iniciante", tipo_obra="livro",
+              badge="PARA INICIANTES", com_capa=True):
+        dir_obra = tmp_path.joinpath(*partes)
+        dir_obra.mkdir(parents=True)
+        config = {"senioridade_obra": senioridade, "tipo_obra": tipo_obra}
+        (dir_obra / "config_obra.json").write_text(json.dumps(config), encoding="utf-8")
+        if com_capa:
+            (dir_obra / "capa.html").write_text(
+                f'<html><body><div class="badge">{badge}</div></body></html>',
+                encoding="utf-8",
+            )
+        return dir_obra
+
+    def test_resolve_layout_hub_por_colecao(self, tmp_path, monkeypatch):
+        self._obra(tmp_path, "minha-colecao", "livros", "obra-x")
+        monkeypatch.setattr(vcn.TO, "DIR_OUTPUT", tmp_path)
+        monkeypatch.setattr(sys, "argv", ["validar-capa-nivel.py", "minha-colecao/livros/obra-x"])
+        assert vcn.main() == 0
+
+    def test_resolve_layout_plano_continua_funcionando(self, tmp_path, monkeypatch):
+        self._obra(tmp_path, "livros", "obra-x")
+        monkeypatch.setattr(vcn.TO, "DIR_OUTPUT", tmp_path)
+        monkeypatch.setattr(sys, "argv", ["validar-capa-nivel.py", "livros/obra-x"])
+        assert vcn.main() == 0
+
+    def test_escopo_r5_reprova_tipo_fora_de_livro_ebook_no_hub(self, tmp_path, monkeypatch):
+        self._obra(tmp_path, "minha-colecao", "tccs", "tcc-x", tipo_obra="tcc", com_capa=False)
+        monkeypatch.setattr(vcn.TO, "DIR_OUTPUT", tmp_path)
+        monkeypatch.setattr(sys, "argv", ["validar-capa-nivel.py", "minha-colecao/tccs/tcc-x"])
+        assert vcn.main() == 1
