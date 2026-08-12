@@ -4,3 +4,6 @@
 [submodule ".claude/skills/impeccable"]
 	path = .claude/skills/impeccable
 	url = https://github.com/pbakaus/impeccable.git
+[submodule "tooling/kit-fundacao-aidd"]
+	path = tooling/kit-fundacao-aidd
+	url = https://github.com/Heverton-web/kit-fundacao-aidd.git
