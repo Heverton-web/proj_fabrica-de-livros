@@ -68,4 +68,10 @@ node "$raiz/scripts/sync-vscode-mcp.mjs"
 node "$raiz/scripts/sync-opencode-mcp.mjs"
 
 echo
+echo "== Hook pre-commit (R16 - copia, .git/hooks nao aceita link) =="
+cp "$raiz/scripts/hooks/pre-commit" "$raiz/.git/hooks/pre-commit"
+chmod +x "$raiz/.git/hooks/pre-commit"
+echo "Copiado: scripts/hooks/pre-commit -> .git/hooks/pre-commit"
+
+echo
 echo "Concluido."

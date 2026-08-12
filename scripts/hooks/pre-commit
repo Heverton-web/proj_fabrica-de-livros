@@ -1,0 +1,15 @@
+#!/bin/sh
+# R16 (CLAUDE.md): nunca commitar suite vermelha - gate mecanico, nao so promessa.
+# Fonte versionada: scripts/hooks/pre-commit (copiado para .git/hooks/pre-commit
+# por scripts/setup-links.ps1|.sh, pois .git/hooks nao aceita link em todo SO).
+python -m pytest -q
+if [ $? -ne 0 ]; then
+  echo "[BLOQUEADO] suite de testes vermelha - corrija a causa antes de comitar (R16)"
+  exit 1
+fi
+
+# Installed by code-review-graph. Remove this file to disable pre-commit graph checks.
+if command -v code-review-graph >/dev/null 2>&1; then
+    code-review-graph update || true
+    code-review-graph detect-changes --brief || true
+fi

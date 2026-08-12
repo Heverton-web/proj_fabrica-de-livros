@@ -86,4 +86,10 @@ Write-Output "`n== MCP traduzido para VS Code e OpenCode (schemas diferentes, ge
 node "$raiz\scripts\sync-vscode-mcp.mjs"
 node "$raiz\scripts\sync-opencode-mcp.mjs"
 
+Write-Output "`n== Hook pre-commit (R16 - copia, .git\hooks nao aceita link) =="
+$hookSrc = Join-Path $raiz "scripts\hooks\pre-commit"
+$hookDst = Join-Path $raiz ".git\hooks\pre-commit"
+Copy-Item -Path $hookSrc -Destination $hookDst -Force
+Write-Output "Copiado: scripts\hooks\pre-commit -> .git\hooks\pre-commit"
+
 Write-Output "`nConcluido."

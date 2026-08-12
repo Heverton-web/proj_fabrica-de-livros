@@ -4,23 +4,31 @@
       "type": "stdio",
       "command": "node",
       "args": [
-        "C:\\Users\\trcnologia\\Desktop\\proj_livros\\.claude\\mcp-servers\\deps\\node_modules\\mcp-server-sqlite-npx\\dist\\index.js",
-        "C:\\Users\\trcnologia\\Desktop\\proj_livros\\data\\estado_fabrica.db"
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\deps\\node_modules\\mcp-server-sqlite-npx\\dist\\index.js",
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\data\\estado_fabrica.db"
       ]
     },
     "file_writer": {
       "type": "stdio",
       "command": "node",
       "args": [
-        "C:\\Users\\trcnologia\\Desktop\\proj_livros\\.claude\\mcp-servers\\deps\\node_modules\\@modelcontextprotocol\\server-filesystem\\dist\\index.js",
-        "C:\\Users\\trcnologia\\Desktop\\proj_livros"
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\deps\\node_modules\\@modelcontextprotocol\\server-filesystem\\dist\\index.js",
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros"
       ]
     },
     "pdf_gen": {
       "type": "stdio",
       "command": "node",
       "args": [
-        "C:\\Users\\trcnologia\\Desktop\\proj_livros\\.claude\\mcp-servers\\pdf-gen-server\\index.js"
+        "C:\\Users\\trcnologia\\Desktop\\01_Projetos_e_Desenvolvimento\\proj_fabrica-de-livros\\.claude\\mcp-servers\\pdf-gen-server\\index.js"
+      ]
+    },
+    "code-review-graph": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "code-review-graph",
+        "serve"
       ]
     }
   }
