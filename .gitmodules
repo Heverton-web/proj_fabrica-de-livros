@@ -1,0 +1,3 @@
+[submodule ".claude/mcp-servers/code-review-graph"]
+	path = .claude/mcp-servers/code-review-graph
+	url = https://github.com/tirth8205/code-review-graph.git
