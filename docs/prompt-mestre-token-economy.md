@@ -15,16 +15,16 @@ Quando você usa ferramentas de IA para programar, cada interação consome toke
 que são traduzidos em custo real. Sem otimização, os principais desperdícios são:
 
 1. **System prompts gigantescos** — arquivos de instrução com 300+ linhas são
-arregados em CADA sessão, CADA subagente, CADA chamada LLM
+carregados em CADA sessão, CADA subagente, CADA chamada LLM
 2. **Contexto redundante** — mesmas instruções repetidas em múltiplos arquivos para diferentes IDEs (CLAUDE.md + AGENTS.md + .cursor/rules/ + .windsurfrules)
 3. **Leitura desnecessária** — agentes leem arquivos inteiros quando precisam
-penas de um trecho
+apenas de um trecho
 4. **Logs volumosos** — saídas de comandos entram no contexto sem necessidade
 5. **Falta de padronização** — cada projeto reinventa as mesmas regras
 
 ### A Solução
 
-Este prompt mestre implementa **9 técnicas comprovadas** de economia de tokens
+Este prompt mestre implementa **10 técnicas comprovadas** de economia de tokens
 que juntas reduzem o custo em **25-35%** sem perda de qualidade:
 
 
@@ -37,8 +37,19 @@ que juntas reduzem o custo em **25-35%** sem perda de qualidade:
 | **Build isento**  | Pipeline de compilação não é comprimido         | Qualidade preservada |
 | **Fidelidade**    | Dados de output nunca são truncados             | Qualidade preservada |
 | **Portabilidade** | 1 arquivo = 6 IDEs (hardlinks)                  | -80% duplicação      |
-| **Submodule**     | Skills compartilhadas entre projetos            | -90% manutenção      |
+| **Submodule**     | Skills/ferramentas compartilhadas entre projetos | -90% manutenção      |
 | **Grafo**         | code-review-graph para navegação                | -50% buscas          |
+| **Gate de commit**| Pre-commit roda a suíte e bloqueia se vermelho  | Qualidade preservada |
+
+> ⚠️ **Cuidado com hardlink no Windows:** qualquer editor/agente de IA que
+> salve o arquivo via write-novo-arquivo+rename (padrão comum, inclusive do
+> próprio Claude Code) **desvincula o hardlink em silêncio** — o arquivo
+> continua existindo e "parece" igual, só que passa a ser uma cópia
+> desatualizada que não recebe mais os próximos edits. O sintoma só aparece
+> depois, quando alguém percebe que dois arquivos que deviam ser idênticos
+> divergiram. Ver PARTE 1.2 para o mitigador (checagem por hash, não por
+> `LinkType`) e rode o setup de links de novo sempre que editar o arquivo de
+> instruções com uma ferramenta que você não controla o método de escrita.
 
 
 ### Resultado Concreto
@@ -105,6 +116,26 @@ bash .token-economy/setup-links.sh    # macOS/Linux
 powershell -ExecutionPolicy Bypass -File .token-economy\setup-links.ps1  # Windows
 ```
 
+**No Windows, o script de hardlink deve verificar por HASH, não por `LinkType`:**
+`(Get-Item $link).LinkType -eq "HardLink"` só confirma que o arquivo *é* um
+hardlink de alguém — não que ainda aponta pro alvo atual. Um rewrite externo
+(write-novo-arquivo+rename) desvincula o inode em silêncio e o arquivo
+continua reportando `LinkType: HardLink`, só que para um grupo de inode
+diferente. O critério correto é comparar o hash do conteúdo:
+
+```powershell
+$hashLink = (Get-FileHash -Path $link -Algorithm SHA256).Hash
+$hashTarget = (Get-FileHash -Path $target -Algorithm SHA256).Hash
+if ($hashLink -ne $hashTarget) {
+    Remove-Item -Path $link -Force
+    New-Item -ItemType HardLink -Path $link -Target $target | Out-Null
+}
+```
+
+Rode o setup de links de novo após qualquer edição do arquivo de instruções
+feita por um agente de IA/editor — é a forma prática de re-sincronizar caso
+o hardlink tenha se partido.
+
 ### 1.3 Code Review Graph (recomendado)
 
 ```bash
@@ -112,7 +143,34 @@ bash .token-economy/setup-graph.sh    # macOS/Linux
 powershell -ExecutionPolicy Bypass -File .token-economy\setup-graph.ps1  # Windows
 ```
 
-### 1.4 Adicionar ao `.gitignore`
+### 1.4 Pre-commit: nunca commitar vermelho (gate mecânico)
+
+Uma regra escrita ("rode os testes antes de commitar") é uma promessa; um
+hook que bloqueia o commit é um gate. `.git/hooks` não é versionado pelo Git
+— mantenha a fonte de verdade dentro do repositório e copie para lá no setup:
+
+```bash
+#!/bin/sh
+# .token-economy/hooks/pre-commit -> copiado para .git/hooks/pre-commit
+[SUA SUÍTE DE TESTES]   # ex.: python -m pytest -q / npm test / cargo test
+if [ $? -ne 0 ]; then
+  echo "[BLOQUEADO] suite vermelha - corrija antes de comitar"
+  exit 1
+fi
+```
+
+```bash
+cp .token-economy/hooks/pre-commit .git/hooks/pre-commit   # macOS/Linux
+chmod +x .git/hooks/pre-commit
+```
+```powershell
+Copy-Item .token-economy\hooks\pre-commit .git\hooks\pre-commit -Force   # Windows
+```
+
+Inclua essa cópia no mesmo script de `setup-links` — assim `.git/hooks` nunca
+fica desatualizado depois de um clone novo.
+
+### 1.5 Adicionar ao `.gitignore`
 
 ```
 __pycache__/
@@ -122,7 +180,7 @@ output/
 .token-economy/
 ```
 
-### 1.4 Criar arquivo de instruções
+### 1.6 Criar arquivo de instruções
 
 O setup cria hardlinks automaticamente. Para setup manual, crie QUALQUER um destes:
 
@@ -167,6 +225,7 @@ Todos hardlinks — edite um, todos atualizam.
 - **R2:** sem preâmbulos/saudações nos artefatos.
 - **R3:** após definição, roda 100% autônomo.
 - **R4:** desvios corrigidos internamente antes da entrega.
+- **R5 (nunca commitar vermelho):** após toda implementação, rodar a suíte; 100% → commit; <100% → corrigir a causa e testar de novo. Mecanizado pelo hook `.git/hooks/pre-commit` (item 1.4 do setup) — não é só promessa escrita.
 
 ## 2. Skills (via .token-economy/)
 
@@ -186,7 +245,7 @@ Todos hardlinks — edite um, todos atualizam.
 
 Hardlinks: `CLAUDE.md` → `AGENTS.md` → `.cursor/rules/` → `.windsurfrules` → `.clinerules` → `.github/copilot-instructions.md`.
 Junctions: `.agents/*` → `.claude/*`.
-Recriar: `bash .token-economy/setup-links.sh`
+Recriar (e re-sincronizar hardlink quebrado por rewrite externo): `bash .token-economy/setup-links.sh`
 
 ## 4. Stack
 - Linguagem: [INSERIR]
@@ -201,8 +260,10 @@ Recriar: `bash .token-economy/setup-links.sh`
 
 - [ ] `.token-economy/` existe com 9 skills
 - [ ] Junctions/symlinks funcionam
+- [ ] Hardlinks verificados por HASH (não só `LinkType`) — Windows
 - [ ] Arquivo de instruções criado e &lt;100 linhas
 - [ ] Testes rodam
+- [ ] Hook `pre-commit` instalado e bloqueia commit vermelho de verdade (teste: quebre um teste de propósito e tente commitar)
 - [ ] `code-review-graph build` roda (recomendado)
 
 ---
