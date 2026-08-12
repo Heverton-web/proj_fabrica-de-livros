@@ -1,8 +1,14 @@
 # Guia: Replicando Token Economy via Git Submodules
 
-**Data:** 2026-08-07
+**Data:** 2026-08-07 (atualizado em 2026-08-12 — seção 8: caso real aplicado)
 **Objetivo:** Reutilizar skills de compressão, MCPs, hooks, scripts e configs
 de economia de tokens em qualquer projeto novo ou existente.
+
+> As seções 2 a 7 e 9-10 descrevem o padrão em abstrato (repositório
+> hipotético `token-economy-shared`, placeholders `seu-usuario`). A seção 8
+> documenta um submodule **real**, já criado e em produção nesta fábrica —
+> `kit-fundacao-aidd` — que aplica o mesmo padrão com uma regra adicional que
+> os exemplos hipotéticos abaixo não têm: o instalador nunca é destrutivo.
 
 ---
 
@@ -338,7 +344,89 @@ done
 
 ---
 
-## 8. Exemplo Prático: Fabrica → Novo Projeto
+## 8. Caso Real Aplicado: `kit-fundacao-aidd`
+
+Diferente dos exemplos anteriores (hipotéticos, com placeholders
+`seu-usuario`), este é um submodule **real**: criado, testado (21/21 testes
+próprios + validado sem efeitos colaterais nesta fábrica, 665/665) e
+registrado em `tooling/kit-fundacao-aidd`, apontando para o repositório
+privado `github.com/Heverton-web/kit-fundacao-aidd`.
+
+Ele não replica token economy — replica 5 decisões de **engenharia de
+software** já maduras nesta fábrica (origem:
+`docs/manual-replicar-praticas-acima-media.md`), generalizadas para qualquer
+projeto. É citado aqui porque é a aplicação mais recente e mais completa do
+padrão "submodule reutilizável" descrito neste guia.
+
+### 8.1 O que o pacote empacota
+
+| Peça | Caminho no submodule | Função |
+|---|---|---|
+| Builder ≠ Critic | `agents/builder.md.template`, `agents/critic.md.template` | quem gera nunca é quem aprova; critic com `tools: Read` travado |
+| Crítico determinístico | `scripts/validar_template.py.template` | esqueleto de gate por regex/contagem — nunca LLM para checagem de formato |
+| Registro declarativo | `scripts/registro_declarativo_scaffold.py` | gera `TIPOS = {...}` + dispatch (princípio Aberto/Fechado) |
+| Nunca commitar vermelho | `hooks/pre-commit.template` | bloqueia commit se a suíte falhar — gate mecânico, não promessa |
+| Postmortem que vira teste | `templates/POSTMORTEM.md`, `scripts/postmortem_para_teste.py` | toda linha de "Prevenção" nasce com um stub de teste de regressão |
+| Diagnóstico | `analisar-projeto.py` | só leitura — detecta stack, convenção de agentes, hook existente, candidatos a registro declarativo |
+| Instalador | `instalar.py` | aplica as peças escolhidas |
+| Skill interativa | `skills/kit-fundacao-aidd/SKILL.md` | versão conversacional do instalador para uso no Claude Code |
+
+### 8.2 A diferença chave: o instalador nunca é destrutivo
+
+O `setup-token-economy.sh` hipotético da seção 3.3 faz `cp`/`mklink` direto,
+só checando "não existe ainda" para 2 arquivos de config. O `instalar.py` do
+`kit-fundacao-aidd` vai além, por exigência explícita registrada em
+`melhorias/2026-08-12-kit-fundacao-aidd.md`:
+
+1. **Nunca remove ou sobrescreve** nada já configurado no projeto-alvo. Em
+   colisão: mescla não-destrutiva (o hook de pre-commit ganha um bloco extra
+   no final, nunca é substituído) ou se recusa a escrever e explica o motivo.
+2. **Sempre explica antes de aplicar** — cada ação de escrita imprime o que
+   vai ser criado/alterado e por quê, além do preview do conteúdo.
+3. **Dry-run por padrão** — só grava com a flag `--aplicar` explícita.
+4. **Idempotente** — peça já presente é reportada como "já presente, nada a
+   fazer", nunca como "corrigida".
+
+### 8.3 Uso em qualquer projeto (novo ou existente)
+
+```bash
+# 1. Registrar o submodule
+git submodule add https://github.com/Heverton-web/kit-fundacao-aidd.git tooling/kit-fundacao-aidd
+git submodule update --init --recursive
+
+# 2. Diagnóstico — só leitura, nunca grava
+python tooling/kit-fundacao-aidd/analisar-projeto.py .
+
+# 3. Ver o plano (dry-run — nada é gravado ainda)
+python tooling/kit-fundacao-aidd/instalar.py . --peca todas
+
+# 4. Só depois de revisar o plano, aplicar de fato
+python tooling/kit-fundacao-aidd/instalar.py . --peca todas --aplicar
+```
+
+`--peca` aceita `builder-critic`, `gate`, `registro`, `hook`, `postmortem` ou
+`todas` — permite instalar uma peça por vez em vez de tudo de uma vez.
+
+### 8.4 Atualizando o submodule
+
+```bash
+git -C tooling/kit-fundacao-aidd pull origin main
+git add tooling/kit-fundacao-aidd
+git commit -m "chore: sync kit-fundacao-aidd"
+git push
+```
+
+### 8.5 Documentação de origem
+
+- `melhorias/2026-08-12-kit-fundacao-aidd.md` — plano de arquitetura
+- `relatorios/2026-08-12-kit-fundacao-aidd.md`/`.pdf` — relatório da sessão
+  que criou o pacote (testes, commits, validações)
+- `docs/manual-replicar-praticas-acima-media.md` — as 5 práticas na forma
+  original, ainda acopladas ao vocabulário desta fábrica
+
+---
+
+## 9. Exemplo Prático: Fabrica → Novo Projeto
 
 ```bash
 # 1. Criar novo projeto
@@ -368,7 +456,7 @@ git push -u origin main
 
 ---
 
-## 9. Conclusão
+## 10. Conclusão
 
 Usar Git Submodules para compartilhar a infraestrutura de Token Economy é a
 abordagem mais escalável e sustentável. Permite:
