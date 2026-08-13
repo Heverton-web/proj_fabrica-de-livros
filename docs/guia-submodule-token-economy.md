@@ -1,14 +1,16 @@
 # Guia: Replicando Token Economy via Git Submodules
 
-**Data:** 2026-08-07 (atualizado em 2026-08-12 — seção 8: caso real aplicado)
+**Data:** 2026-08-07 (atualizado em 2026-08-12 — seções 8-10: casos reais aplicados)
 **Objetivo:** Reutilizar skills de compressão, MCPs, hooks, scripts e configs
 de economia de tokens em qualquer projeto novo ou existente.
 
-> As seções 2 a 7 e 9-10 descrevem o padrão em abstrato (repositório
-> hipotético `token-economy-shared`, placeholders `seu-usuario`). A seção 8
-> documenta um submodule **real**, já criado e em produção nesta fábrica —
-> `kit-fundacao-aidd` — que aplica o mesmo padrão com uma regra adicional que
-> os exemplos hipotéticos abaixo não têm: o instalador nunca é destrutivo.
+> As seções 2 a 7 e 11-12 descrevem o padrão em abstrato (repositório
+> hipotético `token-economy-shared`, placeholders `seu-usuario`). As seções
+> 8-10 documentam os 3 submodules **reais**, já criados e em produção nesta
+> fábrica — `kit-fundacao-aidd`, `code-review-graph` e `impeccable` — cada um
+> com seu próprio fluxo de instalação real (nem todo submodule é "código que
+> roda"; nos dois últimos, o submodule é só referência, a ferramenta real vem
+> de PyPI/npm).
 
 ---
 
@@ -426,7 +428,132 @@ git push
 
 ---
 
-## 9. Exemplo Prático: Fabrica → Novo Projeto
+## 9. Caso Real Aplicado: `code-review-graph`
+
+Diferente do `kit-fundacao-aidd`, este submodule vendoriza só o
+**código-fonte para referência/leitura** — a ferramenta que roda de fato vem
+do PyPI, não do submodule (`CLAUDE.md`, seção 6).
+
+### 9.1 Instalar a ferramenta (PyPI, não o submodule)
+
+```bash
+pip install code-review-graph      # ou: pipx install code-review-graph
+```
+
+### 9.2 Configurar automaticamente para a IDE/CLI detectada
+
+```bash
+code-review-graph install
+```
+
+Escreve/atualiza o `.mcp.json` do projeto. Manualmente, a entrada é:
+
+```json
+"code-review-graph": {
+  "command": "uvx",
+  "args": ["code-review-graph", "serve"],
+  "cwd": "<caminho-absoluto-do-projeto>",
+  "type": "stdio"
+}
+```
+
+(`uvx` exige a ferramenta `uv` instalada — roda a partir do PyPI sem
+instalação persistente.)
+
+### 9.3 Build inicial do grafo
+
+```bash
+code-review-graph build
+```
+
+### 9.4 Vendorizar o código-fonte como submodule (opcional, só referência)
+
+```bash
+git submodule add https://github.com/tirth8205/code-review-graph.git .claude/mcp-servers/code-review-graph
+git submodule update --init --recursive
+```
+
+### 9.5 Manter o grafo sempre atualizado (opcional, mecânico)
+
+No hook de pre-commit, com `|| true` para nunca bloquear commit por falha de
+ambiente:
+
+```bash
+code-review-graph update || true
+code-review-graph detect-changes --brief || true
+```
+
+### 9.6 Reiniciar e verificar
+
+Reiniciar o Claude Code para carregar o novo MCP server, depois:
+
+```bash
+code-review-graph status
+```
+
+ou usar as tools MCP (`list_graph_stats_tool`, `get_architecture_overview_tool`
+etc.) dentro do próprio Claude Code.
+
+---
+
+## 10. Caso Real Aplicado: `impeccable`
+
+Fluxo oficial documentado pelo próprio pacote (`README.md` do repositório) —
+mais simples que replicar a vendorização manual.
+
+### 10.1 Instalar a partir da raiz do projeto-alvo
+
+```bash
+npx impeccable install
+```
+
+Detecta a ferramenta (Claude Code, Cursor, Windsurf etc.) e escreve o skill +
+hooks nativos daquela plataforma automaticamente. Preserva hooks/configs já
+existentes — não sobrescreve entradas não relacionadas.
+
+### 10.2 Inicializar o contexto de design do projeto
+
+Dentro do Claude Code (ou equivalente):
+
+```
+/impeccable init
+```
+
+Gera `PRODUCT.md` (e oferece `DESIGN.md`) com público, marca, voz, cores,
+tipografia e componentes — contexto que os comandos seguintes usam.
+
+### 10.3 Vendorizar o código-fonte como submodule (opcional, mesmo padrão do `code-review-graph`)
+
+Foi o que foi feito nesta fábrica:
+
+```bash
+git submodule add https://github.com/pbakaus/impeccable.git .claude/skills/impeccable
+git submodule update --init --recursive
+```
+
+Guarda uma cópia read-only do repositório para referência/auditoria — **não
+substitui** o passo 10.1 (`npx impeccable install`), que é o que de fato
+ativa o skill/hooks na ferramenta.
+
+### 10.4 Usar
+
+```
+/impeccable detect src/          # varre um diretório por antipadrões de design
+/impeccable audit                # auditoria completa
+```
+
+ou os comandos equivalentes documentados em `reference/*.md` do pacote
+(`craft`, `polish`, `harden`, `document` etc.).
+
+### 10.5 Manter atualizado
+
+```bash
+npx impeccable update
+```
+
+---
+
+## 11. Exemplo Prático: Fabrica → Novo Projeto
 
 ```bash
 # 1. Criar novo projeto
@@ -456,7 +583,7 @@ git push -u origin main
 
 ---
 
-## 10. Conclusão
+## 12. Conclusão
 
 Usar Git Submodules para compartilhar a infraestrutura de Token Economy é a
 abordagem mais escalável e sustentável. Permite:
