@@ -42,6 +42,8 @@ Uso como CLI:
 
 import argparse
 import json
+import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -710,6 +712,39 @@ def matriz_reescrita():
         for origem in d.get("reescrever_de", ()) or ():
             linhas.append((origem, destino, d["natureza"], d["custo_llm"]))
     return linhas
+
+
+# ── Versionamento (R17 — CAMPANHA/MAQUINA sao opcionais e versionaveis) ────
+
+def proxima_versao_arquivada(dir_versoes, prefixo):
+    """1 + maior N ja em `dir_versoes/<prefixo>-vN` (1 se nao houver nenhuma)."""
+    maior = 0
+    padrao = re.compile(rf"^{re.escape(prefixo)}-v(\d+)$")
+    dir_versoes = Path(dir_versoes)
+    if dir_versoes.exists():
+        for p in dir_versoes.iterdir():
+            m = padrao.match(p.name)
+            if m:
+                maior = max(maior, int(m.group(1)))
+    return maior + 1
+
+
+def arquivar_para_versoes(origem, dir_versoes, prefixo):
+    """Move a pasta `origem` para `dir_versoes/<prefixo>-v{N}/` (N seguinte).
+
+    Usado pelo `--versionar` de criar-campanha.py/criar-maquina-vendas.py: a
+    pasta canonica (campanhas/, maquina/) sai do caminho antes da nova
+    criacao, sem que nenhum outro script precise saber sobre versionamento.
+    Devolve o caminho da versao arquivada, ou None se `origem` nao existe."""
+    origem = Path(origem)
+    if not origem.exists():
+        return None
+    dir_versoes = Path(dir_versoes)
+    n = proxima_versao_arquivada(dir_versoes, prefixo)
+    dir_versoes.mkdir(parents=True, exist_ok=True)
+    destino = dir_versoes / f"{prefixo}-v{n}"
+    shutil.move(str(origem), str(destino))
+    return destino
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────────

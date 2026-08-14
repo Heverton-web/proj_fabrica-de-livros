@@ -239,9 +239,14 @@ Siga o procedimento abaixo passo a passo:
 4. Gere o **Sumário dinâmico**: lista de Partes/Capítulos com títulos exatos.
 
 ### Nó 7 — Auditor de Rastreabilidade
-5. Colete todas as seções "Fontes brutas" de todos os
-   `output/<livro>/pesquisa/dossie_*.md`, elimine duplicatas por URL normalizada, e
-   ordene alfabeticamente por título.
+5. Execute `python scripts/compilar-referencias.py <slug>` — o script lê todas
+   as seções "Fontes brutas" de `output/<livro>/pesquisa/dossie_*.md`, elimina
+   duplicatas por URL normalizada e ordena alfabeticamente por autor/título
+   (zero julgamento: é normalização de string, não decisão editorial). Use o
+   arquivo `<dir_obra>/referencias_compiladas.md` gerado como a seção de
+   Referências Bibliográficas do livro. Se o script reportar linhas "não
+   parseadas" (fora do formato ABNT do pesquisador), resolva-as manualmente
+   antes de seguir — não descarte fonte silenciosamente.
 
 ### Nó 8 — Selo de Conformidade (ABNT)
 6. Aplique formatação ABNT:
