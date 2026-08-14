@@ -1,0 +1,25 @@
+{
+  "segmento": "engenharia-de-software",
+  "rotulo": "Engenharia de Software / Plataforma",
+  "termos_match": [
+    "arquitetura", "agente", "agentico", "devops", "sistema", "distribuido",
+    "codigo", "software", "engenharia", "plataforma", "infraestrutura",
+    "protocolo", "orquestracao", "pipeline"
+  ],
+  "nome_produto_pilar": "Guia Definitivo de Arquitetura para Sistemas Agênticos",
+  "publico": "engenheiros e arquitetos de software",
+  "persona": {
+    "nome": "Engenheiro de Plataforma",
+    "descricao": "Profissional que projeta e mantém sistemas em produção e quer dominar as novas arquiteturas de IA agêntica",
+    "dor_principal": "Vê os concorrentes lançando features com agentes de IA e não sabe por onde começar a arquitetura",
+    "desejo_principal": "Projetar sistemas agênticos confiáveis, com padrões testados em produção",
+    "objecoes": [
+      "Isso é só hype, vai passar",
+      "Minha stack atual não suporta isso",
+      "Não tenho tempo para aprender mais um paradigma"
+    ],
+    "canais_preferidos": ["linkedin", "email"],
+    "tom_comunicacao": "técnico, direto, orientado a evidência"
+  },
+  "hashtags": ["engenhariadesoftware", "devops", "arquiteturadesoftware", "sistemasdistribuidos", "iaagentica"]
+}

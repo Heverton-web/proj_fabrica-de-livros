@@ -1,0 +1,24 @@
+{
+  "segmento": "negocios-e-produtividade",
+  "rotulo": "Negócios Digitais / Produtividade",
+  "termos_match": [
+    "produtividade", "negocio", "empreendedor", "vendas", "marketing",
+    "lideranca", "gestao", "estrategia", "resultado", "crescimento", "cliente"
+  ],
+  "nome_produto_pilar": "Guia Definitivo de Produtividade para Quem Decide",
+  "publico": "empreendedores e gestores",
+  "persona": {
+    "nome": "Gestor de Resultado",
+    "descricao": "Empreendedor ou gestor que sente que o dia não tem horas suficientes e quer método, não motivação",
+    "dor_principal": "Trabalha mais que todo mundo mas os resultados não acompanham o esforço",
+    "desejo_principal": "Ter um sistema replicável de decisão e execução que escale sem depender só dele",
+    "objecoes": [
+      "Já tentei métodos de produtividade e não funcionaram",
+      "Minha rotina é imprevisível demais para um sistema",
+      "Não tenho equipe para delegar"
+    ],
+    "canais_preferidos": ["instagram", "email", "linkedin"],
+    "tom_comunicacao": "direto, orientado a resultado, prova social"
+  },
+  "hashtags": ["produtividade", "gestao", "empreendedorismo", "negociosdigitais", "lideranca"]
+}

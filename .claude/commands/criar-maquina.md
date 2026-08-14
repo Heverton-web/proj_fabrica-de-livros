@@ -26,6 +26,18 @@ Gera uma máquina de vendas deployável a partir de uma obra finalizada.
 ## Personalização por nicho (OBRIGATÓRIA após gerar)
 
 O template nasce com **copy genérica** ("Autor Digital", "centenas de pessoas").
+
+**Antes de reescrever manualmente, rode o banco de nichos:**
+```bash
+python scripts/personalizar-nicho.py <slug-da-obra>                      # casa automaticamente pelo vocabulário
+python scripts/personalizar-nicho.py <slug-da-obra> --nicho <segmento>   # força um nicho
+python scripts/personalizar-nicho.py --listar-nichos                     # ver o banco (config/nichos/*.json)
+```
+Ele já substitui produto-pilar, prova social, adiciona persona e hashtags do
+nicho — 100% script, sem LLM. O que ele reporta como "ainda genérico" (ou
+quando nenhum nicho do banco casa com o vocabulário da obra) é o que
+realmente precisa de reescrita manual/LLM abaixo.
+
 Antes de publicar, substitua em todos os pontos abaixo pelos termos do nicho da obra:
 
 ### 1. Configs de negócio (`config/*.json`)

@@ -27,6 +27,11 @@ DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 DIR_TEMPLATES = DIR_PROJETO / "templates" / "campanha"
 
+# Copy generica que a maquina de vendas/campanha NUNCA deve deixar passar
+# (regra 12) — fonte unica: criar-campanha.py usa para auto-aprovacao de
+# rascunho, validar-campanha.py usa para o gate R-CP-2.
+COPY_GENERICA = re.compile(r"Autor Digital|centenas de pessoas")
+
 # ── Registro: REDES SOCIAIS ─────────────────────────────────────────────────
 # artes: formato -> (largura, altura) em px
 # textos: pasta de texto -> quantidade de arquivos (rascunho)

@@ -105,15 +105,60 @@ def variaveis_arte(ctx):
 
 # ── Moldes de texto ──────────────────────────────────────────────────────────
 
-def _molde_cabecalho(ctx, formato, extra=""):
-    """Cabecalho de contexto do molde de texto."""
+LIMIAR_CHARS_APROVACAO = 100
+
+STATUS_RASCUNHO = (
+    "Status: RASCUNHO — reescreva a copy final com LLM (tom de divulgacao,"
+    " vocabulario da colecao) antes de validar."
+)
+STATUS_FINAL_AUTO = (
+    "Status: FINAL (auto-aprovado deterministico — tamanho, CTA+URL e"
+    " vocabulario da colecao presentes, sem placeholder). Revise o tom antes"
+    " de publicar; reescreva com LLM se quiser um texto mais autoral."
+)
+
+
+def avaliar_rascunho(ctx, corpo):
+    """Heurística objetiva: True se o rascunho já atende ao gate R-CP-2 sem
+    precisar de reescrita por LLM (tamanho mínimo, CTA+URL citados,
+    vocabulário/título da coleção presentes, sem copy genérica/placeholder).
+    Nunca aprova sozinha — é só a base para decidir o `Status` do cabeçalho;
+    o operador pode sempre reescrever manualmente."""
+    texto = (corpo or "").strip()
+    if len(texto) < LIMIAR_CHARS_APROVACAO:
+        return False
+    if CP.COPY_GENERICA.search(texto):
+        return False
+    if "[TEXTO DO ANUNCIO]" in texto or "_(a completar)_" in texto:
+        return False
+
+    texto_lower = texto.lower()
+    cta = (ctx.get("cta") or "").strip().lower()
+    if cta and cta not in texto_lower:
+        return False
+    cta_url = ctx.get("cta_url")
+    if cta_url and cta_url not in texto:
+        return False
+
+    termos_alvo = [t.lower() for t in (ctx.get("vocabulario") or []) if t]
+    if ctx.get("titulo"):
+        termos_alvo.append(ctx["titulo"].lower())
+    if termos_alvo and not any(t in texto_lower for t in termos_alvo):
+        return False
+    return True
+
+
+def _molde_cabecalho(ctx, formato, corpo="", extra=""):
+    """Cabecalho de contexto do molde de texto. O `Status` é decidido por
+    heurística objetiva (`avaliar_rascunho`) — só cai para RASCUNHO quando o
+    corpo realmente precisa de reescrita por LLM."""
     vocabulario = ", ".join(ctx.get("vocabulario") or [])
+    status = STATUS_FINAL_AUTO if avaliar_rascunho(ctx, corpo) else STATUS_RASCUNHO
     return (
         "<!--\n"
         "CAMPANHA {colecao} — material {nome} ({tipo})\n"
         "Formato: {formato}\n"
-        "Status: RASCUNHO — reescreva a copy final com LLM (tom de divulgacao,"
-        " vocabulario da colecao) antes de validar.\n"
+        "{status}\n"
         "Contexto: titulo={titulo}\n"
         "Subtítulo: {subtitulo}\n"
         "Vocabulário: {vocabulario}\n"
@@ -122,7 +167,7 @@ def _molde_cabecalho(ctx, formato, extra=""):
         "-->\n\n"
     ).format(
         colecao=ctx["colecao"], nome=ctx["nome"], tipo=ctx["tipo"],
-        formato=formato, titulo=ctx["titulo"], subtitulo=ctx.get("subtitulo"),
+        formato=formato, status=status, titulo=ctx["titulo"], subtitulo=ctx.get("subtitulo"),
         vocabulario=vocabulario, cta=ctx.get("cta"),
         cta_url=ctx.get("cta_url") or "", extra=extra,
     ).rstrip() + "\n"
@@ -195,13 +240,13 @@ def escrever_moldes(ctx, base):
                     if ctx.get("__regenerar__") and arquivo.exists():
                         _backup_arquivo(arquivo)
                     formato = "feed-story" if pasta == "feed-story" else pasta
-                    corpo = ("# Post {i} — {titulo}\n\n" if pasta == "post"
+                    corpo_titulo = ("# Post {i} — {titulo}\n\n" if pasta == "post"
                              else "# Story {i} — {titulo}\n\n" if pasta == "feed-story"
-                             else "# Resposta Direct\n\n")
+                             else "# Resposta Direct\n\n").format(i=i, titulo=ctx["titulo"])
+                    texto_corpo = corpo_titulo + _rascunho(ctx, formato)
                     arquivo.parent.mkdir(parents=True, exist_ok=True)
                     arquivo.write_text(
-                        _molde_cabecalho(ctx, f"{rede}/{pasta}") + corpo.format(
-                            i=i, titulo=ctx["titulo"]) + _rascunho(ctx, formato) + "\n",
+                        _molde_cabecalho(ctx, f"{rede}/{pasta}", texto_corpo) + texto_corpo + "\n",
                         encoding="utf-8")
                     escreveu = True
                 if arquivo.exists():
@@ -221,11 +266,11 @@ def escrever_moldes(ctx, base):
                     # Backup antes de sobrescrever (GAP 1: proteção contra perda de copy)
                     if ctx.get("__regenerar__") and arquivo.exists():
                         _backup_arquivo(arquivo)
+                    titulo_bloco = f"# {prefixo.title()} {i} — {sequencia.replace('-', ' ')}\n\n"
+                    texto_corpo = titulo_bloco + _rascunho(ctx, f"{prefixo}-{i}")
                     arquivo.parent.mkdir(parents=True, exist_ok=True)
                     arquivo.write_text(
-                        _molde_cabecalho(ctx, f"{canal}/{sequencia}") +
-                        f"# {prefixo.title()} {i} — {sequencia.replace('-', ' ')}\n\n"
-                        + _rascunho(ctx, f"{prefixo}-{i}") + "\n",
+                        _molde_cabecalho(ctx, f"{canal}/{sequencia}", texto_corpo) + texto_corpo + "\n",
                         encoding="utf-8")
                     escreveu = True
                 if arquivo.exists():

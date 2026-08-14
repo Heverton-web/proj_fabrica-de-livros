@@ -152,6 +152,56 @@ def _validar_pos_replace(destino: Path) -> list:
     return problemas
 
 
+def _vocabulario_da_obra(slug: str) -> list:
+    """Vocabulário condutor da obra (`sumario_macro.json.motivo_condutor.vocabulario`),
+    ou [] se a obra não tiver esse campo (retrocompatibilidade)."""
+    try:
+        caminho = TO.dir_obra(slug) / "sumario_macro.json"
+        if not caminho.exists():
+            return []
+        dados = json.loads(caminho.read_text(encoding="utf-8"))
+        return [v for v in (dados.get("motivo_condutor") or {}).get("vocabulario") or [] if v]
+    except Exception:
+        return []
+
+
+def _validar_vocabulario_nicho(destino: Path, vocabulario: list) -> list:
+    """Reforço da regra 12: ausência de string genérica não é suficiente —
+    substituir 'Autor Digital' por qualquer string aleatória passava o gate
+    antigo sem garantir personalização real. Exige que as páginas centrais
+    (landing, checkout, e-mails) citem ao menos 1 termo do vocabulário do
+    nicho/coleção. Retorna [] se a obra não tiver vocabulário declarado (não
+    bloqueia obras antigas sem esse campo)."""
+    if not vocabulario:
+        return []
+    paginas_centrais = []
+    frontend = destino / "frontend"
+    if frontend.exists():
+        for candidato in ("app/page.tsx", "app/checkout/page.tsx"):
+            caminho = frontend / candidato
+            if caminho.exists():
+                paginas_centrais.append(caminho)
+    for extra in destino.rglob("*email*"):
+        if extra.is_file() and extra.suffix in (".tsx", ".ts", ".html", ".md"):
+            paginas_centrais.append(extra)
+    if not paginas_centrais:
+        return []
+
+    termos = [v.lower() for v in vocabulario]
+    problemas = []
+    for pagina in paginas_centrais:
+        try:
+            conteudo = pagina.read_text(encoding="utf-8", errors="ignore").lower()
+        except Exception:
+            continue
+        if not any(termo in conteudo for termo in termos):
+            problemas.append(
+                f"{pagina.relative_to(destino)}: nenhum termo do vocabulário do "
+                f"nicho ({', '.join(vocabulario[:3])}...) encontrado"
+            )
+    return problemas
+
+
 def _hex_para_rgb(hex_cor):
     """Converte hex (#rrggbb) para tuple (r, g, b)."""
     hex_cor = str(hex_cor or "").strip().lstrip("#")
@@ -347,6 +397,15 @@ def criar_maquina(slug: str, tipo: str = "completo"):
         if len(problemas) > 5:
             print(f"     ... e mais {len(problemas) - 5} problemas")
         print("  (A maquina pode ter copy generica - revise manualmente)")
+
+    # 1.1.1 Reforço da regra 12: vocabulário do nicho citado nas páginas centrais
+    vocabulario_obra = _vocabulario_da_obra(slug)
+    problemas_vocab = _validar_vocabulario_nicho(destino, vocabulario_obra)
+    if problemas_vocab:
+        print(f"  ⚠️  [Regra 12] Vocabulário do nicho ausente nas páginas centrais:")
+        for p in problemas_vocab[:5]:
+            print(f"     - {p}")
+        print("  (ausência de copy genérica não basta — cite o vocabulário da coleção)")
 
     # 1.2 Propagar identidade visual do manifesto (GAP 5)
     config_obra = obra_info.get("meta", {})

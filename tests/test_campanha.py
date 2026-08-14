@@ -238,6 +238,72 @@ class TestRegistro:
         assert "-arquitetura-arquitetura" not in nome
 
 
+# ── Auto-aprovação de rascunho ────────────────────────────────────────────────
+
+class TestAvaliarRascunho:
+    def _ctx(self, **extra):
+        base = {
+            "titulo": "Meu Livro", "cta": "Garanta o livro completo",
+            "cta_url": "https://exemplo.com/livro", "vocabulario": ["fundação", "estrutura"],
+        }
+        base.update(extra)
+        return base
+
+    def test_aprova_rascunho_completo(self):
+        ctx = self._ctx()
+        corpo = (
+            "Meu Livro traz fundação e estrutura explicadas na prática, com "
+            "exemplos reais para você aplicar hoje mesmo. Garanta o livro "
+            "completo — https://exemplo.com/livro."
+        )
+        assert criador.avaliar_rascunho(ctx, corpo) is True
+
+    def test_reprova_texto_curto(self):
+        assert criador.avaliar_rascunho(self._ctx(), "Garanta o livro completo.") is False
+
+    def test_reprova_sem_cta(self):
+        ctx = self._ctx()
+        corpo = "Meu Livro fala de fundação e estrutura " * 3
+        assert criador.avaliar_rascunho(ctx, corpo) is False
+
+    def test_reprova_copy_generica(self):
+        ctx = self._ctx()
+        corpo = ("Autor Digital ensina centenas de pessoas sobre fundação e "
+                 "estrutura. Garanta o livro completo — https://exemplo.com/livro.")
+        assert criador.avaliar_rascunho(ctx, corpo) is False
+
+    def test_reprova_placeholder(self):
+        ctx = self._ctx()
+        corpo = "[TEXTO DO ANUNCIO] " * 10
+        assert criador.avaliar_rascunho(ctx, corpo) is False
+
+    def test_reprova_quando_nao_cita_vocabulario_nem_titulo(self):
+        ctx = self._ctx()  # tem titulo "Meu Livro" e vocabulario ["fundação", "estrutura"]
+        corpo = ("Texto generico sem nenhum termo da colecao, so para "
+                 "preencher espaco. Garanta o livro completo — https://exemplo.com/livro.")
+        assert criador.avaliar_rascunho(ctx, corpo) is False
+
+    def test_molde_cabecalho_usa_status_final_quando_aprova(self):
+        ctx = self._ctx(colecao="Colecao X", nome="material-x", tipo="livro")
+        corpo = (
+            "Meu Livro traz fundação e estrutura explicadas na prática, com "
+            "exemplos reais para você aplicar hoje mesmo. Garanta o livro "
+            "completo — https://exemplo.com/livro."
+        )
+        cabecalho = criador._molde_cabecalho(ctx, "instagram/post", corpo)
+        assert criador.STATUS_FINAL_AUTO in cabecalho
+
+    def test_molde_cabecalho_usa_status_rascunho_quando_reprova(self):
+        ctx = self._ctx(colecao="Colecao X", nome="material-x", tipo="livro")
+        cabecalho = criador._molde_cabecalho(ctx, "instagram/post", "curto")
+        assert criador.STATUS_RASCUNHO in cabecalho
+
+    def test_molde_cabecalho_sem_corpo_fica_rascunho(self):
+        ctx = self._ctx(colecao="Colecao X", nome="material-x", tipo="livro")
+        cabecalho = criador._molde_cabecalho(ctx, "instagram/post")
+        assert criador.STATUS_RASCUNHO in cabecalho
+
+
 # ── Gerador ──────────────────────────────────────────────────────────────────
 
 class TestGerador:
@@ -260,7 +326,9 @@ class TestGerador:
         molde = (_raiz(ambiente["slug"])
                  / "social_organico/instagram/textos/post/post-01.md")
         texto = molde.read_text(encoding="utf-8")
-        assert "Status: RASCUNHO" in texto
+        # Rascunho passa a heurística objetiva (tamanho, CTA+URL, vocabulário,
+        # sem placeholder) -> auto-aprovado, não força reescrita por LLM.
+        assert criador.STATUS_FINAL_AUTO in texto
         assert "Colecao Teste" in texto
         assert "fundação" in texto  # vocabulario condutor no rascunho
         assert "A Obra em Construção" in texto
@@ -273,7 +341,7 @@ class TestGerador:
         criador.gerar_material(ambiente["slug"], com_artes=False)
         assert "copy final do agente" in alvo.read_text(encoding="utf-8")
         criador.gerar_material(ambiente["slug"], com_artes=False, regenerar=True)
-        assert "Status: RASCUNHO" in alvo.read_text(encoding="utf-8")
+        assert criador.STATUS_FINAL_AUTO in alvo.read_text(encoding="utf-8")
 
     def test_artes_escrevem_html_fonte_sem_chromium(self, ambiente):
         criador.gerar_material(ambiente["slug"], com_artes=False)
@@ -592,7 +660,14 @@ class TestGanchosArte:
 
 class TestGate:
     def test_reprova_molde_rascunho_pendente(self, ambiente):
+        """Isola o gate: mesmo com auto-aprovação no gerador, um molde que
+        AINDA está marcado RASCUNHO (heurística não bateu, ou reescrita
+        manual incompleta) tem que reprovar R-CP-2."""
         criador.gerar_material(ambiente["slug"], com_artes=False)
+        alvo = (_raiz(ambiente["slug"])
+                / "social_organico/instagram/textos/post/post-01.md")
+        alvo.write_text("Status: RASCUNHO — pendente de reescrita\n\nConteúdo qualquer.",
+                         encoding="utf-8")
         rel = gate.validar_material(ambiente["slug"])
         assert not rel["conforme"]
         assert "R-CP-2" in {v["regra"] for v in rel["violacoes"]}

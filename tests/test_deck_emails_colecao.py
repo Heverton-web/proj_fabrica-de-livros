@@ -183,8 +183,21 @@ class TestEmails:
         assert rel["conforme"] is False
         assert "R-EM-3" in {v["regra"] for v in rel["violacoes"]}
 
-    def test_marcador_de_polimento_vira_aviso(self, ambiente):
+    def test_frase_de_ligacao_nasce_sem_marcador_pendente(self, ambiente):
+        """A frase de ligação agora sai por rodízio determinístico — sequência
+        recém-gerada não deve ter nenhum `POLIMENTO-LLM` pendente."""
         meta = gerador_eml.gerar(ambiente["slug"], cta_url=CTA)
+        rel = gate_eml.validar(meta["slug"])
+        assert not any("polimento" in a for a in rel["avisos"])
+
+    def test_marcador_de_polimento_manual_ainda_vira_aviso(self, ambiente):
+        """Caso raro de reescrita manual difícil: se alguém inserir o marcador
+        de volta à mão, o gate continua reportando o pendente."""
+        meta = gerador_eml.gerar(ambiente["slug"], cta_url=CTA)
+        dir_emails = gerador_eml.TO.dir_obra(meta["slug"], gerador_eml.DIR_OUTPUT) / "emails"
+        arquivo = sorted(dir_emails.glob("email_*.md"))[0]
+        arquivo.write_text(arquivo.read_text(encoding="utf-8") + "\n<!-- POLIMENTO-LLM: revisar tom -->",
+                            encoding="utf-8")
         rel = gate_eml.validar(meta["slug"])
         assert any("polimento" in a for a in rel["avisos"])
 

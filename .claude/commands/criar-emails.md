@@ -15,10 +15,14 @@ python scripts/gerar-sequencia-emails.py <prefixo>/<slug> --cta-url <url> --inte
 
 Gera `emails/email_NN.md`, `sequencia.md` e `plano.json` (índice, tipo, dia).
 
-## Passo 2 — Polimento de copy (em lote, não um a um)
+## Passo 2 — Polimento de copy (opcional — a frase de ligação já nasce pronta)
 
-Busque `POLIMENTO-LLM` nos arquivos e reescreva **em lotes de 5 e-mails por
-chamada**. Restrições duras:
+A frase de ligação (promessa do lead magnet / armadilha → passo prático /
+recapitulação) já sai por rodízio determinístico de template
+(`FRASES_LIGACAO_*` em `gerar-sequencia-emails.py`) — não há mais marcador
+`POLIMENTO-LLM` pendente por default. Só reescreva a mão se o tom ficar
+repetitivo entre sequências da mesma coleção (risco documentado do rodízio
+fixo). Se precisar reescrever, restrições duras:
 
 - máx. 250 palavras por e-mail (R-EM-4)
 - **exatamente 1** link por e-mail — não acrescente um segundo (R-EM-2)

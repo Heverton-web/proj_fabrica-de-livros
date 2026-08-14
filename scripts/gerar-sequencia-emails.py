@@ -3,9 +3,12 @@
 V5 — Gerador da SEQUENCIA DE E-MAILS (nutricao pos-lead-magnet).
 
 Fecha o funil que o lead magnet abre: 1 e-mail por card do playbook, mais o
-e-mail de entrega (abertura) e o de oferta (fechamento). O esqueleto sai
-deterministico dos cards; o polimento de copy fica marcado com
-`<!-- POLIMENTO-LLM -->` para a skill de redacao tratar em lote.
+e-mail de entrega (abertura) e o de oferta (fechamento). O esqueleto e a
+frase de ligacao (promessa/armadilha/entrega) saem deterministicos via
+rodizio de template (`FRASES_LIGACAO_*`) — nao ha mais marcador
+`POLIMENTO-LLM` por default. Se o tom ficar repetitivo entre sequencias
+(risco documentado: template fixo pode soar robotico), reescreva a mao o
+paragrafo de ligacao do e-mail especifico.
 
 Saida: output/emails/<slug-mae>--eml/emails/email_NN.md + sequencia.md + plano.json
 
@@ -68,6 +71,44 @@ def _url_utm(base, campanha, indice):
             f"&utm_campaign={campanha}&utm_content=email-{indice:02d}")
 
 
+# Frases de ligação: rodízio determinístico (índice do e-mail na sequência,
+# nunca aleatório) sobre os mesmos dados que o marcador `POLIMENTO-LLM`
+# pedia para a LLM conectar — promessa/armadilha/entrega já vêm do
+# lead-magnet/card, então a interpolação de template já cobre o "polimento
+# de ligação" na maioria dos casos. Continua marcado como ponto de melhoria
+# de tom: se o texto ficar repetitivo entre sequências, revise manualmente.
+FRASES_LIGACAO_ABERTURA = [
+    "Antes de mais nada: este material entrega o que você buscava sobre "
+    "**{titulo}** — e é exatamente por aí que vamos seguir. Nos próximos dias, "
+    "um e-mail por etapa leva você até o fim do caminho.",
+    "Você pediu o material sobre **{titulo}**, e é isso que ele traz. A partir "
+    "de hoje, cada e-mail avança uma etapa até o fim da sequência.",
+    "**{titulo}** é o tema deste material — e ele já está nas suas mãos. Nos "
+    "próximos e-mails, cada etapa chega no seu ritmo, uma por vez.",
+]
+
+FRASES_LIGACAO_CARD = [
+    "{base} é onde a maioria trava — não por falta de esforço, mas por falta "
+    "do passo certo na hora certa. É exatamente isso que a etapa de hoje resolve.",
+    "Se você já tentou avançar em **{titulo}** antes e sentiu que não saiu do "
+    "lugar, a causa provável é {base}. A etapa de hoje existe para fechar essa lacuna.",
+    "{base} parece pequeno, mas é o que separa quem só lê sobre **{titulo}** de "
+    "quem de fato aplica. Vamos direto ao ponto.",
+]
+
+FRASES_LIGACAO_FECHAMENTO = [
+    "Você percorreu cada etapa desta sequência e viu **{titulo}** deixar de "
+    "ser teoria. A obra completa entrega a base por trás de cada passo — "
+    "sem os atalhos de um resumo.",
+    "Nos últimos dias, você aplicou etapa por etapa a base de **{titulo}**. A "
+    "obra completa fecha essa base com a teoria e os exemplos completos por trás de cada passo.",
+]
+
+
+def _frase_ligacao(banco, indice, **campos):
+    return banco[(indice - 1) % len(banco)].format(**campos)
+
+
 def _email_abertura(ctx, url, indice):
     titulo = ctx.get("titulo_obra", "")
     L = [f"# E-mail {indice:02d} — Entrega do material", "",
@@ -75,8 +116,7 @@ def _email_abertura(ctx, url, indice):
          "**Momento:** imediato (dupla confirmação)", "",
          "---", "",
          f"Aqui está o material que você pediu sobre **{titulo}**.", "",
-         "<!-- POLIMENTO-LLM: 2 frases lembrando a promessa do lead magnet e "
-         "dizendo o que vem nos próximos e-mails. -->", ""]
+         _frase_ligacao(FRASES_LIGACAO_ABERTURA, indice, titulo=titulo), ""]
     L.append(f"[Baixar o material]({url})" if url else "[Baixar o material](CTA_URL)")
     L += ["", "---", ""]
     return "\n".join(L)
@@ -85,6 +125,7 @@ def _email_abertura(ctx, url, indice):
 def _email_card(card, ctx, url, indice, total):
     armadilha = (card.get("armadilhas") or [""])[0]
     entrega = (card.get("entregas") or [""])[0]
+    titulo_obra = ctx.get("titulo_obra", "")
     base = armadilha or card.get("titulo", "")
     L = [f"# E-mail {indice:02d} — {card.get('titulo', '')}", "",
          f"**Assunto:** {_assunto(base)}",
@@ -94,8 +135,8 @@ def _email_card(card, ctx, url, indice, total):
         L += [f"A armadilha desta etapa: **{armadilha}**", ""]
     if card.get("objetivo"):
         L += [card["objetivo"], ""]
-    L += ["<!-- POLIMENTO-LLM: 1 parágrafo conectando a armadilha ao passo prático. "
-          "Máx. 90 palavras, segunda pessoa. -->", ""]
+    L += [_frase_ligacao(FRASES_LIGACAO_CARD, indice, base=base or "esta etapa",
+                          titulo=titulo_obra), ""]
     if card.get("gate"):
         L += ["O teste de uma linha que confirma que deu certo:", "",
               f"```bash\n{card['gate']}\n```", ""]
@@ -112,8 +153,7 @@ def _email_fechamento(ctx, url, indice):
          f"**Assunto:** {_assunto('A obra completa de ' + titulo)}",
          f"**Momento:** dia {(indice - 1) * INTERVALO_PADRAO}", "",
          "---", "",
-         "<!-- POLIMENTO-LLM: 1 parágrafo de recapitulação do que a pessoa já "
-         "executou + 1 parágrafo de oferta. Máx. 140 palavras. -->", "",
+         _frase_ligacao(FRASES_LIGACAO_FECHAMENTO, indice, titulo=titulo), "",
          f"**{titulo}** traz a teoria por trás de cada passo, os exemplos "
          "comentados e as referências completas.", ""]
     L.append(f"[Quero a obra completa]({url})" if url else "[Quero a obra completa](CTA_URL)")

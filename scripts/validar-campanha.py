@@ -31,7 +31,7 @@ import tipos_obra as TO
 DIR_PROJETO = Path(__file__).resolve().parent.parent
 DIR_OUTPUT = DIR_PROJETO / "output"
 
-COPY_GENERICA = re.compile(r"Autor Digital|centenas de pessoas")
+COPY_GENERICA = CP.COPY_GENERICA  # fonte unica em campanha.py
 RASCUNHO = re.compile(r"Status:\s*RASCUNHO")
 MIN_PNG = 5 * 1024
 
