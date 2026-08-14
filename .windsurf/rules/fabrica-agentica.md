@@ -415,3 +415,29 @@ Fonte: `.claude/`. Junctions: `agentic/*`, `.agents/*` e `.opencode/{agents,comm
   Arquivos: `scripts/criar-maquina-vendas.py`, `scripts/colecao.py`,
   `scripts/empacotar-colecao.py`, `tests/test_maquina_colecao.py`,
   spec em `melhorias/09-08-2026-maquina-1por-colecao-usa-campanhas.md`.
+
+## RTK SCRATCHPAD
+
+### [2026-08-13] RUNTIME: Subagente de expansão travou em 48 turns
+- **Causa**: spawnar 1 subagente para expandir 8 capítulos (de ~12k para ~25k chars cada = ~100k chars de expansão total) estourou o limite de turns. Tarefa monolítica demais para um único subagente geral.
+- **Fix**: cancelado (actor cancel). Expansão ficou pendente.
+- **Arquivo**: actor general-10 (expansão de conteúdo livros/orca-ide)
+- **Prevenção**: em expansion tasks, dividir em lotes de 2-3 capítulos por subagente, nunca 8 de uma vez. Se a tarefa envolver rewrite de múltiplos arquivos grandes, usar subagentes paralelos com escopo delimitado.
+
+### [2026-08-13] PADRÃO: Playbook extraído de capítulos com refs faltantes
+- **Causa**: `extrair-passos-praticos.py` extrai dados dos capítulos, mas 3 capítulos (2,3,7) tinham seção 7 (Referências) vazia. O gate R4 (mín 8 refs) falhou na auditoria.
+- **Fix**: subagente revisor adicionou 3 refs ABNT a cada capítulo afetado.
+- **Arquivo**: output/livros/orca-ide/capitulos/cap_{2,3,7}.md
+- **Prevenção**: validar refs na seção 7 DEPOIS da escrita de cada capítulo (auto-validação do subagente-redator-capitulo deve checar contagem de refs, não apenas existência). Rodar `auditar-obra.py` imediatamente após cada lote, não só no final.
+
+### [2026-08-13] CONFIG: Livro M ficou com 99k chars (mínimo 200k)
+- **Causa**: capítulos escritos com ~12k chars em média, mas o mínimo para tamanho M (~80 páginas) é ~25k chars por capítulo. Subagentes produziram conteúdo válido mas curto demais.
+- **Fix**: pendente — conteúdo precisa ser expandido.
+- **Arquivo**: output/orca-ide/livros/orca-ide/capitulos/cap_*.md
+- **Prevenção**: no prompt do subagente-redator-capitulo, incluir meta explícita de tamanho mínimo por seção (ex.: "seção Explica: mínimo 3000 caracteres"). Incluir contagem de caracteres no relatório de auto-validação.
+
+### [2026-08-13] ESTRUTURA: Diretórios soltos fora do hub da coleção
+- **Causa**: `fatiar-obra.py --playbook` gravou em `output/playbooks/` e o minerador acadêmico gravou em `output/orca-ide/pesquisa/` — ambos fora do hub `output/orca-ide/`. O orquestrador não validou a localização antes de prosseguir. Além disso, `colecao.py --sincronizar` criou `output/colecoes/` como fallback quando o hub não existia.
+- **Fix**: movido manualmente para `output/orca-ide/livros/orca-ide/` e `output/orca-ide/playbooks/pbk-1-orca-ide-manual/`. Limpos diretórios órfãos `output/livros/`, `output/playbooks/` e `output/colecoes/`.
+- **Arquivo**: output/orca-ide/ (hub), output/livros/ (removido), output/playbooks/ (removido), output/colecoes/ (removido)
+- **Prevenção**: SEMPRE usar `tipos_obra.dir_obra(slug)` para resolver caminhos — nunca criar diretórios manualmente. Após `fatiar-obra.py`, validar que os artefatos ficaram dentro do hub com `ls output/<hub>/<tipo>/`. Se estiverem soltos, MOVER antes de qualquer operação seguinte. Rodar `colecao.py --sincronizar` após cada movimentação. O fallback `output/colecoes/` do `colecao.py` é legado — NÃO deve ser usado; o manifesto sempre vai em `<hub>/colecoes/<slug>.json`.
