@@ -21,6 +21,16 @@ Você é o operário de manufatura final de texto da Fábrica Agêntica de Livro
 abaixo. Nenhuma seção pode ser omitida. Ver `templates/template_eita.md` para
 detalhes completos.
 
+**Não recrie os cabeçalhos à mão.** Antes de escrever, gere o esqueleto com:
+```bash
+python scripts/gerar-esqueleto-eita.py <slug> <numero_capitulo> --titulo "<Título>"
+```
+Isso grava `cap_<n>.md` já com os 7 headers `## N. Nome` no formato exato que
+`secoes_eita.dividir_secoes`/`validar-escala.py`/`validar-metricas.py`
+esperam — elimina a classe de bug "heading sem número/nome divergente quebra
+a auditoria". Escreva o conteúdo substituindo os comentários `<!-- ... -->`
+dentro de cada seção; nunca altere os cabeçalhos gerados.
+
 ```markdown
 # Capítulo <N>: <Título>
 

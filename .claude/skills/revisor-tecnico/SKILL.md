@@ -75,16 +75,23 @@ Divergência de dado = defeito bloqueante (corrija o número ou remova a afirma�
 
 ### Passo 2 — Correção por classe de defeito
 
+**Antes de corrigir manualmente R9, R14 (bijeção sem órfã) e grafia
+inconsistente, execute `python scripts/corrigir-mecanico.py <slug>`** — as
+três são mecânicas (zero julgamento: normalização de string/renumeração/forma
+mais frequente) e o script já aplica e grava. Ele NUNCA toca em órfãs/não
+citadas reais nem em sobreposição semântica — essas continuam exigindo você.
+Rode de novo `auditar-obra.py` depois para ver o que restou.
+
 | Defeito detectado | Ação obrigatória |
 |---|---|
 | Seção EITA-V2 ausente (R3) | Escreva a seção faltante no padrão do capítulo |
 | Menos de 3 referências ABNT (R4) | Consulte o dossiê via RAG e complete as referências |
-| `---` dentro de capítulo (R9) | Remova a horizontal rule, preservando a quebra semântica |
+| `---` dentro de capítulo (R9) | `corrigir-mecanico.py` já remove — se persistir, remova manualmente preservando a quebra semântica |
 | Menos de 3 citações `[N]` (R10) | Vincule afirmações factuais a fontes reais do dossiê |
 | Seção Ilustra sem Mermaid (R11) | Escreva o diagrama que representa o conceito do capítulo |
 | Seção Técnica sem código (R12) | Escreva o bloco de código faltante |
 | Truncamento / TODO / placeholder (R13) | Complete o trecho; nunca apenas apague o marcador |
-| Citação `[N]` órfã (R14) | Ou crie a referência, ou renumere as citações |
+| Citação `[N]` órfã de verdade (sem correspondência) (R14) | `corrigir-mecanico.py` só renumera bijeções exatas — órfã real exige você: crie a referência ou remova a citação |
 | Bloco de código com erro de sintaxe | Corrija o código e revalide com `--capitulo N` |
 | Bloco de código que falha na execução (smoke) | Corrija o código até `--executar` passar |
 | Fonte com 404/DNS (R-RF-2) | Substitua por fonte real do dossiê ou remova o dado |
@@ -95,7 +102,7 @@ Divergência de dado = defeito bloqueante (corrija o número ou remova a afirma�
 | Proporção de fontes A/B < 70% (R-FT-1) | Troque fontes C por A/B; reclassifique o dossiê |
 | Diagrama Mermaid inválido | Corrija a sintaxe e revalide |
 | Sobreposição entre capítulos (similaridade ≥ 0,45) | Reescreva o trecho do capítulo POSTERIOR, transformando repetição em referência cruzada ("como visto no Capítulo N, ...") |
-| Grafia inconsistente de termo | Escolha a forma canônica (a mais frequente ou a oficial do fornecedor) e padronize em toda a obra |
+| Grafia inconsistente de termo | `corrigir-mecanico.py` já canonicaliza para a forma mais frequente fora de código; se a forma oficial do fornecedor for outra, ajuste manualmente |
 
 ### Passo 3 — Uniformização de tom (revisão cruzada)
 Amostre 3 capítulos distantes entre si (início, meio, fim) e verifique:

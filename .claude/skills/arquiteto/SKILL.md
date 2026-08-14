@@ -18,15 +18,18 @@ Você é o operário de planejamento estrutural da Fábrica Agêntica de Livros
 
 ### Se `tipo_obra = "livro"`
 Siga o procedimento normal abaixo (Partes/Capítulos, Arco Transformacional), mas os
-mínimos de capítulos/páginas vêm de `tamanho_obra` (P/M/G/GG/XG), não mais de um valor fixo:
+mínimos de capítulos/páginas vêm de `tamanho_obra` (P/M/G/GG/XG) — fonte única em
+`scripts/parametros_obra.py` (`TAMANHOS`), nunca reafirme esses números de memória.
 
-| Tamanho | Partes | Capítulos | Páginas alvo |
-|---|---|---|---|
-| P | 1 | 4 | ~40 |
-| M | 2 | 8 | ~80 |
-| G | 3 | 12 | ~120 |
-| GG | 4 | 16 | ~160 |
-| XG | 5 | 20 | ~200 |
+**Não monte Partes/Capítulos à mão.** Gere o esqueleto com:
+```bash
+python scripts/gerar-esqueleto-macro.py <slug>
+```
+Isso lê `tamanho_obra` do `config_obra.json` e grava `sumario_macro.json` já
+com o número certo de partes/capítulos (numeração sequencial, distribuição
+equilibrada) — títulos/objetivo/pilares e `motivo_condutor` ficam vazios para
+você preencher (isso é criação editorial, não regra fixa). Use `--tamanho X`
+para sobrescrever o tamanho e `--forcar` para regravar um sumário existente.
 
 ### Se `tipo_obra = "tcc"`
 **Não use** Partes/Capítulos comerciais nem o Arco Transformacional abaixo — TCC segue

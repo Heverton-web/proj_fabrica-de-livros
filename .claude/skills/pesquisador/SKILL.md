@@ -109,6 +109,13 @@ Cada fonte termina com o marcador de classe `(A)`, `(B)` ou `(C)`:
 
 **Regra crítica:** Toda fonte citada em qualquer seção do dossiê DEVE aparecer na seção "Fontes brutas". Não cite algo no corpo sem incluir a fonte completa abaixo. O `Skill_Compilador_ABNT` no Nó 7 consome esta seção integralmente — se faltar uma fonte, ela não aparecerá nas referências finais do livro.
 
+**Classificação assistida por script:** depois de gravar o dossiê, execute
+`python scripts/classificar-fonte.py --aplicar <slug>` — ele preenche
+automaticamente `(A)/(B)/(C)` nas linhas sem classe cujo domínio é
+inequívoco (ex.: `arxiv.org`→A, `docs.*`/`.gov`→B, `/blog/`→C) e reporta
+quantas ficaram ambíguas. Só decida manualmente a classe das fontes
+reportadas como ambíguas.
+
 7. Persista o dossiê em `output/<livro>/pesquisa/dossie_<slug-do-tema>.md`.
 8. Entregue a lista de fontes brutas também de forma isolada e sem duplicatas — ela
    será consumida integralmente pelo `Skill_Compilador_ABNT` no Nó 7.
