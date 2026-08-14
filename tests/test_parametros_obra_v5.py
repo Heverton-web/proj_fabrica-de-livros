@@ -71,6 +71,26 @@ class TestCarregarConfig:
         a["formatos_lm"].append("checklist")
         assert b["formatos_lm"] == []
 
+    def test_gerar_campanha_e_gerar_maquina_default_false(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(PO, "DIR_OUTPUT", tmp_path)
+        cfg = PO.carregar_config("livros/inexistente")
+        assert cfg["gerar_campanha"] is False
+        assert cfg["gerar_maquina"] is False
+
+    def test_gerar_campanha_e_gerar_maquina_explicitos_sao_preservados(
+            self, tmp_path, monkeypatch):
+        monkeypatch.setattr(PO, "DIR_OUTPUT", tmp_path)
+        dir_obra = tmp_path / "livros" / "obra"
+        dir_obra.mkdir(parents=True)
+        dados = config_livro()
+        dados["gerar_campanha"] = True
+        dados["gerar_maquina"] = True
+        (dir_obra / "config_obra.json").write_text(
+            json.dumps(dados), encoding="utf-8")
+        cfg = PO.carregar_config("livros/obra")
+        assert cfg["gerar_campanha"] is True
+        assert cfg["gerar_maquina"] is True
+
 
 class TestValidarConfig:
     def test_config_v4_continua_valido(self):

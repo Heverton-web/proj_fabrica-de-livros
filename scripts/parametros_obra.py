@@ -64,6 +64,8 @@ DERIVADOS_V5 = {
     "formatos_lm": [],
     "gerar_deck": False,
     "gerar_emails": False,
+    "gerar_campanha": False,
+    "gerar_maquina": False,
     "cta_url": "",
     "cta_texto": "",
     "modo_producao": "obra-unica",   # obra-unica | cascata
