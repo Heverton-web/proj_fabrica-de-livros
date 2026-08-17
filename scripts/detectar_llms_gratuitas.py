@@ -9,7 +9,11 @@ import os
 import sys
 import json
 import urllib.request
-
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv não instalado, usa apenas os.environ
 # Configuração de Provedores Gratuitos e de Baixo Custo / Free Trial
 PROVIDERS_GRATUITOS = {
     "google": {
