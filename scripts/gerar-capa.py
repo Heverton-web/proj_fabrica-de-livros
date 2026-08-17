@@ -258,7 +258,7 @@ def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
     png_file = dir_saida / "imagens" / (
         nome_arquivo or ("card_social.png" if variante == "social" else "capa.png"))
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = p.chromium.launch(executable_path=_executavel_chromium())
         page = browser.new_page(viewport={"width": largura, "height": altura})
         page.goto(f"file:///{html_file.resolve().as_posix()}")
         page.wait_for_timeout(1500)
@@ -267,6 +267,26 @@ def gerar_capa(titulo, subtitulo, dir_saida, tipo="livro", cor_acento="#58a6ff",
 
     print(f"[OK] {png_file.relative_to(DIR_PROJETO)} ({png_file.stat().st_size // 1024} KB)")
     return png_file
+
+
+def _executavel_chromium():
+    """Caminho de um Chrome/Chromium do sistema, ou None (playwright baixa o seu).
+
+    Fallback para maquinas onde o playwright nao tem browsers instalados
+    (erro 'Executable doesn't exist at ... playwright install'): usar o Chrome
+    do sistema evita baixar ~150MB e funciona em qualquer maquina com Chrome."""
+    candidatos = [
+        "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+        str(Path.home() / "AppData/Local/Google/Chrome/Application/chrome.exe"),
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/usr/bin/google-chrome",
+        "/snap/bin/chromium",
+    ]
+    for caminho in candidatos:
+        if Path(caminho).exists():
+            return str(caminho)
+    return None
 
 
 def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):

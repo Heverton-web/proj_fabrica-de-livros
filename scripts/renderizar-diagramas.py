@@ -71,9 +71,36 @@ def achar_mmdc():
     return None
 
 
+def _achar_chrome():
+    """Localiza um Chrome/Chromium do sistema (fallback quando o puppeteer nao
+    tem o chrome-headless-shell no cache). None se nao houver."""
+    candidatos = [
+        shutil.which("chrome"),
+        shutil.which("chromium"),
+        shutil.which("chromium-browser"),
+        "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+        str(Path.home() / "AppData/Local/Google/Chrome/Application/chrome.exe"),
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/usr/bin/google-chrome",
+        "/snap/bin/chromium",
+    ]
+    for caminho in candidatos:
+        if caminho and Path(caminho).exists():
+            return str(caminho)
+    return None
+
+
 def config_puppeteer():
-    """Config de puppeteer com --no-sandbox (necessario em CI/containers)."""
+    """Config de puppeteer com --no-sandbox (necessario em CI/containers).
+
+    Inclui executablePath do Chrome do sistema quando disponivel: sem isso, o
+    mmdc aborta quando o puppeteer nao tem o chrome-headless-shell no cache
+    (erro 'Could not find chrome-headless-shell')."""
     cfg = {"args": ["--no-sandbox", "--disable-dev-shm-usage"]}
+    chrome = _achar_chrome()
+    if chrome:
+        cfg["executablePath"] = chrome
     tmp = Path(tempfile.gettempdir()) / "fabrica_puppeteer.json"
     tmp.write_text(json.dumps(cfg), encoding="utf-8")
     return tmp
