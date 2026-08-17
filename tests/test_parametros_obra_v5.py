@@ -131,6 +131,14 @@ class TestValidarConfig:
         erros = PO.validar_config(config_livro(modo_producao="turbo"))
         assert any("modo_producao" in e for e in erros)
 
+    def test_estilo_tecnica_invalido_reprova(self):
+        erros = PO.validar_config(config_livro(estilo_tecnica="caveman"))
+        assert any("estilo_tecnica" in e for e in erros)
+
+    def test_estilo_tecnica_validos_passam(self):
+        for modo in ("codigo", "hibrido", "operacional"):
+            assert PO.validar_config(config_livro(estilo_tecnica=modo)) == []
+
     def test_cascata_exige_obra_raiz_valida(self):
         erros = PO.validar_config(config_livro(modo_producao="cascata"))
         assert any("obra_raiz" in e for e in erros)

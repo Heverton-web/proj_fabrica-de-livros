@@ -132,3 +132,47 @@ class TestPendenciaMatcher:
         texto = "Este capitulo esta completo e bem escrito."
         matches = list(ao.RE_PENDENCIA.finditer(texto))
         assert len(matches) == 0
+
+
+def _cap_dict(**kwargs):
+    base = {
+        "capitulo": "1", "arquivo": "cap_1.md", "caracteres": 25000,
+        "palavras": 4000, "secoes_faltantes": [], "referencias": 20,
+        "citacoes_inline": 5, "diagramas_ilustra": 1, "diagramas_total": 2,
+        "blocos_codigo_tecnica": 0, "artefatos_tecnica": 0,
+        "horizontal_rules": 0, "pendencias": [], "truncado": False,
+        "ultima_linha": "fim.", "refs_orfas": [], "refs_nao_citadas": [],
+        "refs_ordem_correta": True, "citacoes_empilhadas": [],
+        "vocabulario_fora_ilustra": None, "callback_presente": True,
+        "ritmo": None, "sobreposicao": 0.0, "terminologia": [],
+    }
+    base.update(kwargs)
+    return base
+
+
+class TestR12EstiloTecnica:
+    """R12 modular por estilo_tecnica: codigo/hibrido exigem bloco; operacional
+    aceita artefato (bloco, diagrama ou passos numerados)."""
+
+    def _requisito_r12(self, capitulos, estilo):
+        reqs = ao.montar_requisitos_livro(
+            capitulos, caracteres_obra=25000, min_capitulos=1,
+            min_caracteres=25000, min_refs=1, estilo_tecnica=estilo)
+        return next(r for r in reqs if r["id"] == "R12")
+
+    def test_operacional_aceita_artefato_sem_bloco(self):
+        # Tecnica com tabela de decisao (passos/artefato), sem bloco de codigo
+        caps = [_cap_dict(blocos_codigo_tecnica=0, artefatos_tecnica=1)]
+        assert self._requisito_r12(caps, "operacional")["conforme"]
+
+    def test_codigo_reprova_sem_bloco_mas_com_artefato(self):
+        caps = [_cap_dict(blocos_codigo_tecnica=0, artefatos_tecnica=1)]
+        assert not self._requisito_r12(caps, "codigo")["conforme"]
+
+    def test_codigo_aceita_bloco(self):
+        caps = [_cap_dict(blocos_codigo_tecnica=1, artefatos_tecnica=1)]
+        assert self._requisito_r12(caps, "codigo")["conforme"]
+
+    def test_operacional_reprova_sem_artefato(self):
+        caps = [_cap_dict(blocos_codigo_tecnica=0, artefatos_tecnica=0)]
+        assert not self._requisito_r12(caps, "operacional")["conforme"]

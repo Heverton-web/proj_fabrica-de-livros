@@ -244,6 +244,13 @@ def auditar_capitulo(caminho, vocabulario=None):
     secao_tecnica = secoes.get(4, {}).get("corpo", "")
     blocos_codigo = len([m for m in RE_CODIGO.finditer(secao_tecnica)])
 
+    # V5.6 — modo operacional: a Tecnica aceita artefatos nao-programaticos
+    # (config yaml/json, sessao console, diagrama, passos numerados).
+    diagramas_tecnica = len(RE_MERMAID.findall(secao_tecnica))
+    passos_tecnica = len(re.findall(
+        r"^[ \t]*\d{1,2}[\.\)][ \t]+[A-ZÀ-Ýa-zà-ý]", secao_tecnica, re.MULTILINE))
+    artefatos_tecnica = blocos_codigo + diagramas_tecnica + (1 if passos_tecnica >= 2 else 0)
+
     # Horizontal rules fora de frontmatter (R9)
     sem_frontmatter = re.sub(r"\A---\n.*?\n---\n", "", texto, flags=re.DOTALL)
     hrs = len(RE_HR.findall(RE_CODIGO.sub("", sem_frontmatter)))
@@ -298,6 +305,7 @@ def auditar_capitulo(caminho, vocabulario=None):
         "diagramas_ilustra": diagramas_ilustra,
         "diagramas_total": diagramas_total,
         "blocos_codigo_tecnica": blocos_codigo,
+        "artefatos_tecnica": artefatos_tecnica,
         "horizontal_rules": hrs,
         "pendencias": pendencias,
         "truncado": truncado,
@@ -524,7 +532,8 @@ def detectar_inconsistencia_terminologica(capitulos, minimo_ocorrencias=4):
     return achados[:25]
 
 
-def montar_requisitos_livro(capitulos, caracteres_obra, min_capitulos, min_caracteres, min_refs):
+def montar_requisitos_livro(capitulos, caracteres_obra, min_capitulos, min_caracteres, min_refs,
+                            estilo_tecnica="codigo"):
     def falhas(pred):
         return [c["capitulo"] for c in capitulos if pred(c)]
 
@@ -550,9 +559,14 @@ def montar_requisitos_livro(capitulos, caracteres_obra, min_capitulos, min_carac
         {"id": "R11", "nome": f"Minimo {MIN_DIAGRAMAS_CAPITULO} diagrama Mermaid na secao Ilustra",
          "conforme": not falhas(lambda c: c["diagramas_ilustra"] < MIN_DIAGRAMAS_CAPITULO),
          "detalhe": "capitulos sem diagrama: " + (", ".join(falhas(lambda c: c["diagramas_ilustra"] < MIN_DIAGRAMAS_CAPITULO)) or "nenhum")},
-        {"id": "R12", "nome": "Bloco de codigo na secao Tecnica",
-         "conforme": not falhas(lambda c: c["blocos_codigo_tecnica"] < MIN_BLOCOS_CODIGO_CAPITULO),
-         "detalhe": "capitulos sem codigo: " + (", ".join(falhas(lambda c: c["blocos_codigo_tecnica"] < MIN_BLOCOS_CODIGO_CAPITULO)) or "nenhum")},
+        {"id": "R12", "nome": "Artefato tecnico na secao Tecnica",
+         "conforme": not falhas(lambda c: (c["blocos_codigo_tecnica"] < 1
+                                            if estilo_tecnica in ("codigo", "hibrido")
+                                            else c["artefatos_tecnica"] < 1)),
+         "detalhe": "capitulos sem artefato: " + (", ".join(falhas(
+             lambda c: (c["blocos_codigo_tecnica"] < 1 if estilo_tecnica in ("codigo", "hibrido")
+                        else c["artefatos_tecnica"] < 1))) or "nenhum") + \
+             f" (estilo_tecnica={estilo_tecnica})"},
         {"id": "R13", "nome": "Sem truncamento nem pendencias (TODO/placeholder)",
          "conforme": not falhas(lambda c: c["truncado"] or c["pendencias"]),
          "detalhe": "capitulos suspeitos: " + (", ".join(falhas(lambda c: c["truncado"] or c["pendencias"])) or "nenhum")},
@@ -730,7 +744,8 @@ def main():
         min_capitulos = minimos["capitulos"] if minimos else MIN_CAPITULOS
         min_caracteres = minimos["caracteres"] if minimos else MIN_CARACTERES
         requisitos = montar_requisitos_livro(capitulos, caracteres_obra,
-                                             min_capitulos, min_caracteres, min_refs)
+                                             min_capitulos, min_caracteres, min_refs,
+                                             estilo_tecnica=config.get("estilo_tecnica", "codigo"))
     else:
         requisitos = montar_requisitos_academico(capitulos, tipo, min_refs, caracteres_obra)
 

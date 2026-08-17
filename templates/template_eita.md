@@ -130,23 +130,41 @@ podem (e devem) usar o vocabulário do motivo condutor da obra, e ajudam a
 variar o ritmo de leitura em blocos técnicos densos. A seção "Aplica" pode
 usar o mesmo recurso quando for longa.
 
-**Regras:**
-- Código real, executável (não pseudocódigo, a menos que justificado).
+**Regras gerais (todas as obras):**
 - Arquiteturas e esquemas de dados reais.
 - Passos numerados ou sequenciais.
-- Mínimo de 60% do conteúdo do capítulo deve estar nesta seção.
 - Citações `[N]` obrigatórias para técnicas, benchmarks e estatísticas.
-- **OBRIGATÓRIO (R12): no mínimo 1 bloco de código** nesta seção.
-- **Todo bloco de código DEVE declarar a linguagem** na cerca
-  (```python, ```javascript, ```typescript, ```bash, ```json, ```yaml, ```sql...).
+- **Todo bloco cercado DEVE declarar a linguagem** na cerca
+  (```python, ```typescript, ```bash, ```json, ```yaml, ```sql, ```console...).
   Bloco sem linguagem não é validável e reprova na auditoria.
-- **CI de código (R12):** o código passa por validação de sintaxe automática
-  (`python scripts/validar-codigo.py <slug> --capitulo <n>`). Escreva código que
-  compila de verdade — sem `...` no meio da lógica, sem chaves desbalanceadas,
-  sem imports fantasma. Trechos deliberadamente parciais devem ser fechados como
-  função/classe completa, com corpo mínimo válido (`pass`, `return null`).
+- **CI de artefatos (R12):** blocos passam por validação automática de sintaxe
+  (`python scripts/validar-codigo.py <slug> --capitulo <n>`). Escreva conteúdo que
+  é válido de verdade — JSON parseável, YAML com indentação correta, comandos
+  reais. Trechos deliberadamente parciais devem ser fechados como bloco
+  completo e válido.
 - Placeholders de credencial são permitidos como string literal
   (`API_KEY = "<seu-token>"`), nunca como sintaxe solta.
+- Mínimo de 60% do conteúdo do capítulo deve estar nesta seção (sub-títulos
+  `###` para blocos longos, como acima).
+
+**Modulação por `estilo_tecnica` (campo do `config_obra.json`):**
+
+| Modo | Quando usar | A TÉCNICA é composta por | Exigência R12 |
+|---|---|---|---|
+| `codigo` (padrão) | público técnico / avancado | código de programação real e executável | ≥1 bloco de código |
+| `hibrido` | intermediario | código curto **ou** artefatos reais (yaml/json/bash/sql) | ≥1 bloco (qualquer linguagem) |
+| `operacional` | iniciante / não-programador | configs reais (yaml/json/env), sessões `console`, passos numerados, tabelas de decisão, diagramas — **código de programação opcional** | ≥1 artefato técnico (bloco, diagrama ou passos) |
+
+**No modo `operacional`** (recomendado para iniciantes e públicos não
+técnicos): a TÉCNICA segue o padrão do material-fonte — configure a ferramenta
+real do domínio (ex.: `docker-compose.yml`, workflow do n8n, variável de
+ambiente do Evolution API, roteiro de VPS/Traefik) em blocos `yaml`/`json`/`env`
+validáveis; mostre a operação em sessão `console` (comando → saída); feche com
+uma **tabela de decisão** (condição → ação) e passos numerados. Evite Python
+quando o artefato real do domínio for config/operação; se precisar de código,
+prefira trechos mínimos com `console`/`bash` que o leitor cola no terminal.
+Para comandos de terminal com efeito, use ```console (sessão ilustrativa); use
+```bash apenas para comandos puros e sem side effects (a CI executa bash).
 
 **Transformação implícita:** o leitor passa de "não sei fazer" para "consigo
 implementar".

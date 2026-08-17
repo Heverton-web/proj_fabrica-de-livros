@@ -36,6 +36,16 @@ TIPOS_VALIDOS = TO.tipos_validos()
 TIPOS_PERGUNTAVEIS = tuple(t for t in TIPOS_VALIDOS if TO.campo(t, "perguntavel_na_fase0"))
 SENIORIDADES_VALIDAS = ("iniciante", "intermediario", "avancado", "tecnico")
 
+# V5.6 — modo de composicao da secao 4 (Tecnica) do EITA:
+#   codigo       -> bloco de codigo de programacao obrigatorio (padrao historico)
+#   hibrido      -> codigo curto OU config/artefato tecnico (yaml/json/bash/sql)
+#   operacional  -> artefato tecnico (config real, comando console, tabela de
+#                   decisao, diagrama, passos numerados); codigo opcional.
+# Ideal p/ publicos iniciantes e nao-programadores: a Tecnica deixa de exigir
+# Python e passa a usar configs/operacoes reais do dominio (ex.: n8n, VPS,
+# docker-compose) — ver templates/template_eita.md secao 4.
+ESTILOS_TECNICA = ("codigo", "hibrido", "operacional")
+
 # Tabela de tamanhos de LIVRO (Fase 0, pergunta Q5). Caracteres ~2.500/pagina ABNT.
 TAMANHOS = {
     "P": {"partes": 1, "capitulos": 4, "paginas": 40, "caracteres": 100_000},
@@ -136,6 +146,7 @@ def carregar_config(slug):
                      DEFAULTS_POR_TIPO.get(dados["tipo_obra"], {}).get("min_refs", MIN_REFS_V3))
     dados.setdefault("tamanho_obra", TAMANHO_PADRAO if dados["tipo_obra"] == "livro" else None)
     dados.setdefault("senioridade_obra", "tecnico" if dados["tipo_obra"] in ("tcc", "artigo") else "intermediario")
+    dados.setdefault("estilo_tecnica", "codigo")
     dados.setdefault("gerar_artigos", False)
     dados.setdefault("qtd_artigos", 0)
     dados.setdefault("gerar_ebooks", False)
@@ -183,6 +194,10 @@ def validar_config(config):
     sen = config.get("senioridade_obra")
     if sen not in SENIORIDADES_VALIDAS:
         erros.append(f"senioridade_obra deve ser 'iniciante', 'intermediario', 'avancado' ou 'tecnico', recebido: {sen!r}")
+
+    estilo = config.get("estilo_tecnica")
+    if estilo is not None and estilo not in ESTILOS_TECNICA:
+        erros.append(f"estilo_tecnica deve ser 'codigo', 'hibrido' ou 'operacional', recebido: {estilo!r}")
 
     if tipo == "livro":
         tam = config.get("tamanho_obra")
