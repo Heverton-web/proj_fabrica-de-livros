@@ -71,6 +71,36 @@ PROVIDERS_GRATUITOS = {
         "keys": ["MISTRAL_API_KEY"],
         "modelos": ["mistral-tiny", "codestral-mamba"],
         "info_url": "https://console.mistral.ai/"
+    },
+    "opencode_zen": {
+        "nome": "OpenCode Zen (Free Models)",
+        "keys": ["OPENCODE_ZEN_API_KEY"],
+        "modelos": ["deepseek-v4-flash", "mimo-v2.5", "qwen-3.6-plus", "minimax-m3", "big-pickle"],
+        "info_url": "https://opencode.ai/zen"
+    },
+    "cloudflare": {
+        "nome": "Cloudflare Workers AI (Free)",
+        "keys": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"],
+        "modelos": ["llama-3.1-8b", "llama-3.1-70b", "qwen-2.5", "deepseek"],
+        "info_url": "https://dash.cloudflare.com"
+    },
+    "siliconflow": {
+        "nome": "SiliconFlow (Free Models)",
+        "keys": ["SILICONFLOW_API_KEY"],
+        "modelos": ["qwen3-8b", "deepseek-r1-distill-qwen-7b", "glm-4"],
+        "info_url": "https://cloud.siliconflow.com"
+    },
+    "nvidia_nim": {
+        "nome": "NVIDIA NIM (Developer Program)",
+        "keys": ["NVIDIA_API_KEY"],
+        "modelos": ["llama-3", "nemotron", "mistral-hosted", "qwen-hosted"],
+        "info_url": "https://build.nvidia.com"
+    },
+    "fireworks": {
+        "nome": "Fireworks AI (AMD Developer Program)",
+        "keys": ["FIREWORKS_API_KEY"],
+        "modelos": ["llama-3.3", "deepseek-v4", "qwen-3"],
+        "info_url": "https://fireworks.ai"
     }
 }
 
