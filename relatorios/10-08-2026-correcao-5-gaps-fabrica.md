@@ -7,7 +7,7 @@
 
 ## 1. Contexto
 
-Sessão de correção de 5 gaps identificados no documento melhorias/2026-08-10-analise-fluxos-fabrica.md. Cada gap foi implementado seguindo ciclo IMPLEMENTAÇÃO->TESTE->VALIDAÇÃO.
+Sessão de correção de 5 gaps identificados no documento melhorias/10-08--analise-fluxos-fabrica.md. Cada gap foi implementado seguindo ciclo IMPLEMENTAÇÃO->TESTE->VALIDAÇÃO.
 
 ---
 

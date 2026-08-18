@@ -684,5 +684,5 @@ Sim. Delete ou comente as linhas de `_registrar_uso` e `_provider_bloqueado` no 
 | Chaves dos provedores | `.env` | 13 chaves de provedores gratuitos |
 | Quotas | `~/.task_router/quota.json` | Estado de quotas por provedor |
 | Log de uso | `~/.task_router/usage.log` | Histórico de chamadas |
-| Plano de implementação | `melhorias/2026-08-17-roteador-inteligente-llm.md` | Documento de design |
+| Plano de implementação | `melhorias/17-08--roteador-inteligente-llm.md` | Documento de design |
 | Este manual | `docs/manual-roteador-inteligente-llm.md` | Este arquivo |

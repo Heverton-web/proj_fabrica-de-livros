@@ -23,7 +23,7 @@ Extracao e generalizacao das decisoes de engenharia documentadas em docs/plano-a
 
 ## 3. Arquivos Alterados
 
-- `melhorias/2026-08-12-kit-fundacao-aidd.md`
+- `melhorias/12-08--kit-fundacao-aidd.md`
 - `.gitmodules`
 - `tooling/kit-fundacao-aidd (submodule novo, repo https://github.com/Heverton-web/kit-fundacao-aidd)`
 

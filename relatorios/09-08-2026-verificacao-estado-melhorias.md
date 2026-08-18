@@ -60,7 +60,7 @@ Nenhuma melhoria está em 0%. O caso mais atrasado é a `maquina-autonoma-de-ven
 ## 5. Notas
 
 - `docs/superpowers/specs|plans/2026-08-06-*` ainda citam `output/_series.json` (nome antigo): mantidos de propósito como registro histórico de superpowers, sem edição.
-- As melhorias `09-08-2026-*.md` foram planejadas e implementadas na mesma data (plano → código no dia), por isso aparecem como implementadas — os relatórios em `relatorios/2026-08-09-*.md` registram as sessões correspondentes.
+- As melhorias `09-08-2026-*.md` foram planejadas e implementadas na mesma data (plano → código no dia), por isso aparecem como implementadas — os relatórios em `relatorios/09-08--*.md` registram as sessões correspondentes.
 - Trabalho não commitado detectado na verificação: AGENTS.md + 4 espelhos + 2 docs de `docs/` (Fase 1 da padronização hub-por-colecao) — aguardando `pytest` e commit (R16).
 
 ## 6. Próximos passos sugeridos

@@ -35,7 +35,7 @@ Produção da coleção completa do tema **Harness Engineering** (V5): livro (8 
 - `output/distribuicao/harness/` — pacote de distribuição (18 arquivos, 4.1 MB, LEIA-ME + LICENCA)
 - `LOTE 01/harness-engineering/` — entrega versionada (artigos, ebooks, playbooks, lead-magnets, decks, emails, livros, colecoes, campanhas, maquina)
 - `output/harness-engineering/maquina/` — máquina de vendas 1:1 da coleção (frontend Next.js + backend FastAPI, 46 MB)
-- `relatorios/2026-08-09-producao-completa-colecao-harness-engineering.md/.pdf`
+- `relatorios/09-08--producao-completa-colecao-harness-engineering.md/.pdf`
 
 ## 4. Validações
 

@@ -45,7 +45,7 @@ testes a cada etapa, e ao final commit + push + regenerar toda a campanha.
   `arte-post-linkedin.html`, `arte-whatsapp.html` — `.rotulo` + `${APOIO}`.
 - `scripts/validar-campanha.py` — gate R-CP-6 + `_artes_duplicadas`.
 - `tests/test_campanha.py` — 12 testes novos/ajustados.
-- `melhorias/2026-08-10-artes-campanha-unicas-por-envio.md` + `.pdf` (plano).
+- `melhorias/10-08--artes-campanha-unicas-por-envio.md` + `.pdf` (plano).
 
 ## Validações rodadas
 
