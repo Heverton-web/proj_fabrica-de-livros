@@ -680,7 +680,7 @@ Sim. Delete ou comente as linhas de `_registrar_uso` e `_provider_bloqueado` no 
 | Arquivo | Caminho | Descrição |
 |---------|---------|-----------|
 | Script principal | `scripts/task_router.py` | O roteador em si |
-| Detector de provedores | `scripts/detectar_llms_gratuitas.py` | Mapeia provedores ativos (anterior) |
+| Detector de provedores | `scripts/detectar-llms-gratuitas.py` | Mapeia provedores ativos (anterior) |
 | Chaves dos provedores | `.env` | 13 chaves de provedores gratuitos |
 | Quotas | `~/.task_router/quota.json` | Estado de quotas por provedor |
 | Log de uso | `~/.task_router/usage.log` | Histórico de chamadas |

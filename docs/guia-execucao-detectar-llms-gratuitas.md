@@ -2,7 +2,7 @@
 
 ## 1. O que é
 
-O **Detector Universal de LLMs Gratuitas** (`detectar_llms_gratuitas.py`) é uma ferramenta standalone (zero dependências externas) que:
+O **Detector Universal de LLMs Gratuitas** (`detectar-llms-gratuitas.py`) é uma ferramenta standalone (zero dependências externas) que:
 
 1. **Detecta todos os harnesses** instalados na máquina (OMP, Claude Code, Grok, Gemini, Cursor, Windsurf, Codex, Continue, Antigravity, Kiro).
 2. **Lê os provedores** configurados no harness atual (via `opencode.json`, `auth.json`, env vars).
@@ -16,8 +16,8 @@ O **Detector Universal de LLMs Gratuitas** (`detectar_llms_gratuitas.py`) é uma
 
 | Local | Caminho |
 |---|---|
-| **Submodule (fonte canônica)** | `.token-economy/scripts/detectar_llms_gratuitas.py` |
-| **No projeto (via setup)** | `scripts/token-economy/detectar_llms_gratuitas.py` (junction/symlink) |
+| **Submodule (fonte canônica)** | `.token-economy/scripts/detectar-llms-gratuitas.py` |
+| **No projeto (via setup)** | `scripts/token-economy/detectar-llms-gratuitas.py` (junction/symlink) |
 
 ## 3. Pré-requisitos
 
@@ -48,7 +48,7 @@ powershell -ExecutionPolicy Bypass -File .token-economy\setup.ps1
 ### 4.3 Execução direta (sem setup)
 
 ```bash
-python /caminho/para/.token-economy/scripts/detectar_llms_gratuitas.py
+python /caminho/para/.token-economy/scripts/detectar-llms-gratuitas.py
 ```
 
 ## 5. Uso
@@ -56,19 +56,19 @@ python /caminho/para/.token-economy/scripts/detectar_llms_gratuitas.py
 ### 5.1 Relatório completo (com teste real)
 
 ```bash
-python scripts/token-economy/detectar_llms_gratuitas.py
+python scripts/token-economy/detectar-llms-gratuitas.py
 ```
 
 ### 5.2 Só mapear (sem rede, rápido)
 
 ```bash
-python scripts/token-economy/detectar_llms_gratuitas.py --sem-teste
+python scripts/token-economy/detectar-llms-gratuitas.py --sem-teste
 ```
 
 ### 5.3 Com timeout customizado
 
 ```bash
-python scripts/token-economy/detectar_llms_gratuitas.py --timeout 15
+python scripts/token-economy/detectar-llms-gratuitas.py --timeout 15
 ```
 
 ## 6. Saída esperada
@@ -208,7 +208,7 @@ O script varre caminhos conhecidos de config de cada harness (HOME + CWD + env v
 
 | Comando | Função |
 |---|---|
-| `python scripts/token-economy/detectar_llms_gratuitas.py` | Relatório completo |
+| `python scripts/token-economy/detectar-llms-gratuitas.py` | Relatório completo |
 | `--sem-teste` | Só mapear, sem chamadas |
 | `--timeout 15` | Timeout de 15s |
 

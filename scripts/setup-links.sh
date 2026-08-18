@@ -64,8 +64,8 @@ link ".claude/settings.json" ".opencode/settings.json"
 
 echo
 echo "== MCP traduzido para VS Code e OpenCode (schemas diferentes, gerados por script) =="
-node "$raiz/scripts/sync-vscode-mcp.mjs"
-node "$raiz/scripts/sync-opencode-mcp.mjs"
+node "$raiz/scripts/sincronizar-mcp-vscode.mjs"
+node "$raiz/scripts/sincronizar-mcp-opencode.mjs"
 
 echo
 echo "== Hook pre-commit (R16 - copia, .git/hooks nao aceita link) =="

@@ -30,7 +30,7 @@ As pastas de ferramentas e subagentes são espelhadas para fora do diretório oc
 ### 1.4 Sincronização de MCP do VSCode
 Como o VSCode utiliza um formato de configuração de MCP diferente das IDEs agênticas modernas (baseado em `servers` em vez de `mcpServers`), o arquivo `.vscode/mcp.json` é um arquivo traduzido de verdade. Ele é gerado automaticamente a partir do `.mcp.json` raiz através do script:
 ```bash
-node scripts/sync-vscode-mcp.mjs
+node scripts/sincronizar-mcp-vscode.mjs
 ```
 
 ---

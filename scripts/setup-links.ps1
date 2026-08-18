@@ -90,8 +90,8 @@ Set-Junction ".opencode\mcp-servers"                        ".claude\mcp-servers
 Set-HardLink  ".opencode\settings.json"                     ".claude\settings.json"
 
 Write-Output "`n== MCP traduzido para VS Code e OpenCode (schemas diferentes, gerados por script) =="
-node "$raiz\scripts\sync-vscode-mcp.mjs"
-node "$raiz\scripts\sync-opencode-mcp.mjs"
+node "$raiz\scripts\sincronizar-mcp-vscode.mjs"
+node "$raiz\scripts\sincronizar-mcp-opencode.mjs"
 
 Write-Output "`n== Hook pre-commit (R16 - copia, .git\hooks nao aceita link) =="
 $hookSrc = Join-Path $raiz "scripts\hooks\pre-commit"
