@@ -9,9 +9,9 @@ if [ $? -ne 0 ]; then
 fi
 
 # Installed by code-review-graph. Remove this file to disable pre-commit graph checks.
-# PYTHONIOENCODING=utf-8: sem isso o panel Unicode quebra no Windows cp1252
-# (UnicodeEncodeError em cli.py print(panel)).
+# Regra 11: o painel do code-review-graph imprime unicode e quebra no console
+# cp1252 (UnicodeEncodeError). Forca UTF-8 nas chamadas — nao depende do terminal.
 if command -v code-review-graph >/dev/null 2>&1; then
-    PYTHONIOENCODING=utf-8 code-review-graph update || true
-    PYTHONIOENCODING=utf-8 code-review-graph detect-changes --brief || true
+    PYTHONIOENCODING=utf-8 PYTHONUTF8=1 code-review-graph update || true
+    PYTHONIOENCODING=utf-8 PYTHONUTF8=1 code-review-graph detect-changes --brief || true
 fi

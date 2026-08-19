@@ -198,6 +198,25 @@ Fonte: `.claude/`. Junctions: `agentic/*`, `.agents/*` e `.opencode/{agents,comm
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
+- **2026-08-17 TÉCNICA operacional (V5.6) — R12 não pode exigir Python cegamente:**
+  causa: o gate R12 exigia ≥1 bloco de código na TÉCNICA em TODO livro, mesmo
+  Iniciante/não-programador (o material-fonte usa configs/operações, não Python).
+  Fix: campo `estilo_tecnica` no config_obra (`codigo`|`hibrido`|`operacional`;
+  default `codigo` preserva obras existentes), R12 condicional em
+  `auditar-obra.py` (operacional aceita ≥1 artefato = bloco | diagrama | passos
+  numerados via novo contador `artefatos_tecnica`), template_eita.md + skill
+  redator-eita documentam os modos. Prova real: obra `fabrica-agentica` reescrita
+  com 0 blocos python/ts na TÉCNICA (96 blocos yaml/json/env/console/sql/cypher +
+  tabelas de decisão) mantendo CONFORME (R2 500k, gates 5/5). Prevenção: ao
+  reescrever a TÉCNICA, converter blocos IN-PLACE (prosa/citações [N] preservadas)
+  e re-checar R2 (corpos novos ficaram ~40% menores; recuperar com seções extras
+  e fechamento por capítulo); comandar terminal com efeito usa ```console
+  (nao_aplicavel na CI), ```bash só para comandos puros; no R12 o predicado de
+  `conforme` é a condição de FALHA (não inverter — bug real que fez FALHA com
+  "capitulos sem artefato: nenhum"). Arquivos: `scripts/auditar-obra.py`,
+  `scripts/parametros_obra.py`, `templates/template_eita.md`,
+  `templates/capitulo_eita.md`, `.claude/skills/redator-eita/SKILL.md`,
+  `tests/test_auditar_obra.py`, `tests/test_parametros_obra_v5.py`.
 - **2026-08-11 Produção completa série 5 (coleção `agentic-design-patterns`):**
   causa: série 5 da proposta (Agentic Design Patterns — o "Gang of Four" dos
   fluxos agênticos) exigia fluxo FULL com livro, derivados, campanhas e máquina;

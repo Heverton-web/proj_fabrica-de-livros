@@ -404,7 +404,10 @@ def compilar_livro(slug):
     if resultado_proprio is not None:
         return resultado_proprio
 
-    dir_livro = DIR_RAIZ / slug
+    # V5: resolve no HUB POR COLECAO via tipos_obra.dir_obra (layout plano era
+    # output/<tipo>/<slug>; o hub e output/<colecao>/<tipo>/<slug>).
+    dir_livro = (tipos_obra.dir_obra(slug, DIR_RAIZ)
+                 if tipos_obra is not None else DIR_RAIZ / slug)
     dir_caps = dir_livro / "capitulos"
     dir_imagens = dir_livro / "imagens"
 
@@ -562,10 +565,13 @@ def main():
     if slugs_alvo:
         slugs = [s for s in SLUGS if s in slugs_alvo]
         # Obras novas (criadas por /criar-livro) ainda nao estao no catalogo
-        # estatico: aceita qualquer slug que exista em output/.
+        # estatico: aceita qualquer slug que exista em output/ (plano ou hub).
         for alvo in slugs_alvo:
-            if alvo not in slugs and (DIR_RAIZ / alvo).is_dir():
-                slugs.append(alvo)
+            if alvo not in slugs:
+                if (DIR_RAIZ / alvo).is_dir():
+                    slugs.append(alvo)
+                elif tipos_obra is not None and tipos_obra.dir_obra(alvo, DIR_RAIZ).exists():
+                    slugs.append(alvo)
         if not slugs:
             print(f"Slug(s) nao encontrado(s) no catalogo nem em {DIR_RAIZ}")
             sys.exit(1)

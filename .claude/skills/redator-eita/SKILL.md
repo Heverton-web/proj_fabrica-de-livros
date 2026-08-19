@@ -109,7 +109,10 @@ O redator-eita DEVE modular dinamicamente o estilo de redação das 7 seções c
 1. **Iniciante**:
    - **Tom**: Extremamente amigável, acolhedor e dialógico. Evitar jargões densos; explicar todo termo técnico no momento em que surge ("tim-tim por tim-tim").
    - **Ilustra**: Use metáforas do cotidiano geral (ex.: fila de banco, correios).
-   - **Técnica**: Forneça scripts extremamente curtos, explicados linha por linha, com foco em demonstrar a sintaxe sem complicação.
+   - **Técnica**: MODULADA pelo campo `"estilo_tecnica"` do `config_obra.json` (default `codigo`).
+     - `codigo`: scripts curtos explicados linha por linha (padrão histórico).
+     - `hibrido`: trechos curtos OU configs reais (yaml/json/bash), com cada bloco explicado.
+     - `operacional` (recomendado p/ iniciante/não-programador): a TÉCNICA usa **artefatos reais do domínio** — configs (`docker-compose.yml`, workflow do n8n, `.env`, JSON schema), sessões `console` (comando → saída), **tabelas de decisão** (condição → ação) e passos numerados; **código de programação é opcional**. Blocos cercados SEMPRE com linguagem declarada (`yaml`, `json`, `env`, `console`, `bash` p/ comandos puros). Comandos com efeito/side effects usam `console` (a CI executa apenas python/js/bash).
    - **Aplica**: Focar em automações pequenas e melhorias de produtividade diária do leitor.
 2. **Intermediário**:
    - **Tom**: Profissional de mentoria equilibrado. Jargões de mercado aceitos (ex.: "CI/CD", "deploy") com breves contextualizações.
