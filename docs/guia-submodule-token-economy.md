@@ -378,7 +378,7 @@ padrão "submodule reutilizável" descrito neste guia.
 O `setup-token-economy.sh` hipotético da seção 3.3 faz `cp`/`mklink` direto,
 só checando "não existe ainda" para 2 arquivos de config. O `instalar.py` do
 `kit-fundacao-aidd` vai além, por exigência explícita registrada em
-`melhorias/2026-08-12-kit-fundacao-aidd.md`:
+`melhorias/12-08--kit-fundacao-aidd.md`:
 
 1. **Nunca remove ou sobrescreve** nada já configurado no projeto-alvo. Em
    colisão: mescla não-destrutiva (o hook de pre-commit ganha um bloco extra
@@ -420,8 +420,8 @@ git push
 
 ### 8.5 Documentação de origem
 
-- `melhorias/2026-08-12-kit-fundacao-aidd.md` — plano de arquitetura
-- `relatorios/2026-08-12-kit-fundacao-aidd.md`/`.pdf` — relatório da sessão
+- `melhorias/12-08--kit-fundacao-aidd.md` — plano de arquitetura
+- `relatorios/12-08--kit-fundacao-aidd.md`/`.pdf` — relatório da sessão
   que criou o pacote (testes, commits, validações)
 - `docs/manual-replicar-praticas-acima-media.md` — as 5 práticas na forma
   original, ainda acopladas ao vocabulário desta fábrica

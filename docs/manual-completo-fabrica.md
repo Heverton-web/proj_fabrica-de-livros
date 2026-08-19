@@ -496,7 +496,7 @@ FLUXO 3 — MÁQUINA DE VENDAS (obrigatório):
 | `sincronizar-capas-distribuicao.py` | Capas para distribuição |
 | `converter-md-pdf.ps1` | Conversor PowerShell Pandoc+Typst |
 | `setup-links.ps1` / `.sh` | Junctions/hardlinks multi-IDE |
-| `sync-vscode-mcp.mjs` | MCP do VS Code |
+| `sincronizar-mcp-vscode.mjs` | MCP do VS Code |
 | `gerar-relatorio-sessao.py` | Relatório MD+PDF (V5.2) |
 | `migrar-slug.py` | Migra slug longo para código curto |
 | `migrar-derivados.py` | Migra materiais derivados |

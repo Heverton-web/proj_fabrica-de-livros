@@ -13,7 +13,7 @@ Decisão: **manter o agrupamento "HUB POR COLEÇÃO"** como padrão único da pa
 | `output/livros/`, `output/tccs/`, `output/colecoes/` | Pastas **vazias** (sem symlinks de compatibilidade prometidos) | Remover |
 | AGENTS.md §"Estrutura de Séries (V5.1)" | Descreve `output/series/<slug-serie>/` + symlinks — **nunca implementado** | Diretriz ultrapassada → reescrever como HUB POR COLEÇÃO |
 | AGENTS.md §"COLEÇÃO" e §"Output" | Manifesto em `output/colecoes/<nome>.json` e raízes em `output/livros/` etc. | Desatualizado → manifestos vivem em `<obra>/colecoes/`; raízes vivem dentro dos hubs |
-| `docs/superpowers/specs/2026-08-06-capas-padronizadas-design.md` e `plans/2026-08-06-padronizacao-capas.md` | Referenciam `output/_series.json` (nome migrado p/ `series.json`) | Docs históricos de superpowers → manter como registro histórico, não editar |
+| `docs/superpowers/specs/06-08-specs-capas-padronizadas-design.md` e `plans/2026-08-06-padronizacao-capas.md` | Referenciam `output/_series.json` (nome migrado p/ `series.json`) | Docs históricos de superpowers → manter como registro histórico, não editar |
 | `docs/manual-completo-fabrica.md` (L125/147/438) | Descreve `series.json` como cores das séries | Corrigir semântica: "cores da coleção" |
 | `scripts/gerar-capa.py` (L8), `scripts/nomes_curtos.py` (L131) | Comentários citando `output/_series.json` | Atualizar para `series.json` |
 | `scripts/colecao.py` (docstring L11) | "grava output/colecoes/<colecao>.json" | Atualizar: grava em `<obra>/colecoes/` quando o hub existe |
