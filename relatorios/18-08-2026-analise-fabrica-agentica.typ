@@ -160,15 +160,15 @@
   v(0.3cm)
 }
 
-#let capa-grafica-ativa = "" != "1"
+#let capa-grafica-ativa = "0" != "1"
 
 // ── CAPA GRAFICA (Upgrade 5) ──────────────────────────────────────
 #if capa-grafica-ativa {
-    // Capa em imagem PNG (padrao visual da serie): pagina inteira, sem margens
+  // Capa em imagem PNG (padrao visual da serie): pagina inteira, sem margens
   page(fill: rgb("#0b1020"), margin: 0cm, header: none, footer: none, numbering: none)[
     #image("imagens/capa-livro-analise-agentica.png", width: 100%, height: 100%, fit: "cover")
   ]
-  }
+}
 
 // ── FOLHA DE ROSTO (ABNT NBR 6029) ────────────────────────────────
 #page(header: none, footer: none, numbering: none)[
