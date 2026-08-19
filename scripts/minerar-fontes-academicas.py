@@ -140,6 +140,7 @@ def main():
     else:
         dir_obra = TO.dir_obra(args.slug, TO.DIR_OUTPUT)
         dir_pesquisa = dir_obra / "pesquisa"
+        TO._assert_dentro_do_hub(dir_pesquisa, args.slug, TO.DIR_OUTPUT)
         base = dir_pesquisa / f"mineracao_academica_{Path(args.slug).name}"
     dir_pesquisa.mkdir(parents=True, exist_ok=True)
 

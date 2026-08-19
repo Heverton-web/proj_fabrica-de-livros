@@ -310,7 +310,7 @@ def gerar_capa_da_obra(slug, tipo_forcado=None, variante=None):
     nivel = (config_obra.get("senioridade_obra") or "").strip()
     # V5.3: fallback para senioridade do livro-mae (ebooks podem nao ter)
     if not nivel:
-        livro_mae = config_obra.get("livro_mae") or config_obra.get("obra_mae")
+        livro_mae = TO.resolver_slug_mae(config_obra)
         if livro_mae:
             dir_mae = TO.dir_obra(livro_mae, DIR_OUTPUT)
             config_mae = _ler_json(dir_mae / "config_obra.json")

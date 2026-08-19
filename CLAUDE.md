@@ -140,6 +140,19 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
    testar `POST /api/checkout` (rota nasce no template — verificar que o lead
    chega em `/api/leads/`) + deploy. Legadas em `output/<hub>/marketing/` são
    sinalizadas como `maquinas_legadas` no manifesto da coleção.
+   **Checklist mínimo de segurança antes de qualquer deploy em produção**
+   (a máquina é o único artefato da fábrica que vira aplicação web exposta —
+   os demais são documentos estáticos): (a) **rate limiting** em `/api/checkout`
+   e `/api/leads/` (proteção contra spam/abuso do formulário); (b) **não logar
+   payload de lead em claro** (nome/e-mail/telefone) em stdout/arquivo de log;
+   (c) **HTTPS obrigatório** em produção (nunca servir o checkout em HTTP puro);
+   (d) **autenticação no painel de leads/admin** (`/api/leads/` e telas
+   administrativas não podem ficar públicas sem login); (e) **política de
+   retenção documentada** para `backend/data/vendas.db` (por quanto tempo os
+   dados de lead ficam armazenados, e como são expurgados). É responsabilidade
+   do operador aplicar essas proteções no momento do deploy — a fábrica não as
+   impõe automaticamente, só avisa. Checklist completo em
+   `.claude/commands/criar-maquina.md`.
 10. **Campanha (V5.3):** `/campanha <slug>` (1 material) ou `/campanha-completa
     [colecao]` (todos os membros do manifesto) → `criar-campanha.py` (estrutura +
     moldes de copy + artes HTML→Chromium + cronogramas; custo zero) → agente

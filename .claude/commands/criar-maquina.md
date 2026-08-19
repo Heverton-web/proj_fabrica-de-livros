@@ -63,6 +63,31 @@ Antes de publicar, substitua em todos os pontos abaixo pelos termos do nicho da 
 - `grep -rn 'Autor Digital\|centenas de pessoas' frontend/app frontend/components templates/ campanhas/ README.md` deve retornar **vazio**
 - Testar `POST /api/checkout` (rota já nasce no template — não remover)
 
+## Checklist de segurança de deploy (OBRIGATÓRIO antes de produção)
+
+A máquina de vendas é o único artefato da fábrica que vira uma **aplicação web
+exposta de verdade** (livros/e-books/decks são documentos estáticos). Isso muda
+o perfil de risco: ela coleta dados pessoais (nome, e-mail) de visitantes reais.
+Antes de publicar a máquina para o público, confirme:
+
+1. **Rate limiting** em `/api/checkout` e `/api/leads/` — sem isso, o formulário
+   vira alvo trivial de spam/scraping de leads falsos.
+2. **Não logar payload de lead em claro** — nome/e-mail/telefone não devem
+   aparecer em `console.log`/stdout/arquivos de log em produção.
+3. **HTTPS obrigatório** — nunca servir `/api/checkout` ou a página de captura
+   em HTTP puro; formulário de dados pessoais sem TLS é vazamento garantido em
+   redes não confiáveis.
+4. **Autenticação no painel de leads/admin** — `/api/leads/` e qualquer tela
+   administrativa (`app/admin/`) precisam de login; painel de leads público é
+   vazamento de dados de terceiros.
+5. **Política de retenção documentada** — decidir e documentar por quanto
+   tempo os dados de `backend/data/vendas.db` ficam armazenados e como são
+   expurgados (LGPD/GDPR conforme a jurisdição do operador).
+
+Isso é responsabilidade do **operador** no momento do deploy — o template não
+aplica essas proteções sozinho, este comando só avisa. Ver também `CLAUDE.md`
+§5, item 9.
+
 ## Exemplos
 
 ```

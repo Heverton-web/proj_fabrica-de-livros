@@ -33,6 +33,33 @@ class TestDetectarLinguagem:
         assert vc.detectar_linguagem("x = 1") == "python"
 
 
+class TestPadraoPerigoso:
+    def test_detecta_caminho_absoluto_windows(self):
+        assert vc.padrao_perigoso(r"open('C:\Windows\win.ini')") is not None
+
+    def test_detecta_caminho_absoluto_unix(self):
+        assert vc.padrao_perigoso("open('/etc/passwd')") is not None
+
+    def test_detecta_socket(self):
+        assert vc.padrao_perigoso("import socket\nsocket.socket()") is not None
+
+    def test_detecta_subprocess(self):
+        assert vc.padrao_perigoso("import subprocess\nsubprocess.run(['ls'])") is not None
+
+    def test_detecta_requests(self):
+        assert vc.padrao_perigoso("import requests\nrequests.get('x')") is not None
+
+    def test_detecta_rmtree(self):
+        assert vc.padrao_perigoso("import shutil\nshutil.rmtree('/tmp/x')") is not None
+
+    def test_codigo_limpo_nao_dispara(self):
+        assert vc.padrao_perigoso("x = 1 + 1\nassert x == 2") is None
+
+    def test_open_relativo_nao_dispara(self):
+        # open() com caminho relativo e inofensivo dentro do tempdir do sandbox
+        assert vc.padrao_perigoso("with open('arquivo.txt', 'w') as f:\n    f.write('x')") is None
+
+
 class TestExecutarBloco:
     def test_python_ok(self):
         ok, detalhe = vc.executar_bloco("x = 1 + 1\nassert x == 2", "python")
@@ -59,6 +86,11 @@ class TestExecutarBloco:
         ok, detalhe = vc.executar_bloco("x", "powershell")
         assert ok is None
         assert "sem executor" in detalhe
+
+    def test_bloco_perigoso_nao_executa(self):
+        ok, detalhe = vc.executar_bloco("import socket\nsocket.socket()", "python")
+        assert ok is None
+        assert "bloqueado por seguranca" in detalhe
 
 
 class TestValidarPlaybook:

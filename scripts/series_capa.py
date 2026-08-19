@@ -61,13 +61,18 @@ def salvar_registro(registro):
 
 
 def resolver_serie_key(config_obra, slug):
-    """config_obra: dict de config_obra.json (ou {} se ausente/nao encontrado)."""
+    """config_obra: dict de config_obra.json (ou {} se ausente/nao encontrado).
+
+    Prioridade: `serie` (colecao declarada pelo operador) -> vinculo pai-filho
+    tecnico (`livro_mae`/`obra_mae`, via TO.resolver_slug_mae — fonte unica,
+    ver tipos_obra.py) -> nome-base do proprio slug (standalone).
+    """
     serie = (config_obra or {}).get("serie")
     if serie:
         return serie
-    livro_mae = (config_obra or {}).get("livro_mae")
-    if livro_mae:
-        return livro_mae
+    slug_mae = TO.resolver_slug_mae(config_obra)
+    if slug_mae:
+        return slug_mae
     return Path(slug).name
 
 

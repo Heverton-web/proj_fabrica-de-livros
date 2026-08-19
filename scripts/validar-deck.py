@@ -74,7 +74,7 @@ def validar(slug):
     slides = _slides(texto)
 
     # R-DK-1 — cobertura de capitulos
-    mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae") or sumario.get("slug_livro_mae")
+    mae_simples = TO.resolver_slug_mae(cfg) or sumario.get("slug_livro_mae")
     dir_mae = None
     if mae_simples:
         # V5 (HUB POR COLECAO): o livro-mae vive em output/<colecao>/livros/<slug>,

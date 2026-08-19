@@ -107,7 +107,7 @@ def resolver_fonte(slug):
         dir_pbk = TO.dir_obra(slug, DIR_OUTPUT)
         cards = [_ler_json(p) for p in sorted((dir_pbk / "passos").glob("passo_*.json"))]
         cfg = _ler_json(dir_pbk / "config_obra.json")
-        mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae")
+        mae_simples = TO.resolver_slug_mae(cfg)
         slug_mae = None
         for raiz in ("livros", "tccs"):
             if mae_simples and TO.dir_obra(f"{raiz}/{mae_simples}", DIR_OUTPUT).exists():

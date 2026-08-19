@@ -225,6 +225,40 @@ EXECUTAVEIS = ("python", "javascript", "bash")
 
 EXEC_TIMEOUT = 20  # segundos por bloco executado
 
+# Defesa em profundidade para --executar: o sandbox e cwd-isolation (tempdir +
+# env minimo), NAO um sandbox de verdade (sem container/seccomp) — o processo
+# ainda enxerga qualquer binario do PATH e qualquer caminho absoluto do disco.
+# Esta allowlist recusa blocos com padroes que escapam do tempdir (caminho
+# absoluto), abrem rede ou spawnam/removem coisas fora do escopo de um smoke
+# test de codigo de capitulo/playbook. Nao bloqueia `open(` relativo: dentro
+# do tempdir isso ja e inofensivo (cwd=td), e bloquear geral derrubaria
+# exemplos legitimos de leitura/escrita de arquivo nos capitulos.
+PADROES_PERIGOSOS = [
+    (re.compile(r"[A-Za-z]:[\\/]"), "caminho absoluto do Windows (unidade:\\)"),
+    (re.compile(r"(?<![\w./-])/(?:etc|root|home|usr|var|proc|sys|boot|Users)(?:/|\b)"),
+     "caminho absoluto do sistema"),
+    (re.compile(r"\bsocket\b"), "modulo/objeto de rede 'socket'"),
+    (re.compile(r"\brequests\b"), "biblioteca de rede 'requests'"),
+    (re.compile(r"\burllib\b"), "biblioteca de rede 'urllib'"),
+    (re.compile(r"\bhttp\.client\b"), "biblioteca de rede 'http.client'"),
+    (re.compile(r"\bftplib\b|\bsmtplib\b"), "biblioteca de rede ftp/smtp"),
+    (re.compile(r"\bsubprocess\b"), "spawn de processo 'subprocess'"),
+    (re.compile(r"\bos\.(system|popen|exec\w*)\b"), "spawn de processo via os.*"),
+    (re.compile(r"\bchild_process\b"), "spawn de processo Node 'child_process'"),
+    (re.compile(r"\bshutil\.rmtree\b"), "remocao recursiva 'shutil.rmtree'"),
+    (re.compile(r"\bos\.(remove|unlink)\b"), "remocao de arquivo via os.*"),
+    (re.compile(r"\brm\s+-rf\b"), "remocao recursiva 'rm -rf'"),
+    (re.compile(r"\b(curl|wget)\s"), "chamada de rede via curl/wget"),
+]
+
+
+def padrao_perigoso(codigo):
+    """Descricao do primeiro padrao perigoso encontrado, ou None se limpo."""
+    for regex, descricao in PADROES_PERIGOSOS:
+        if regex.search(codigo):
+            return descricao
+    return None
+
 
 def detectar_linguagem(codigo):
     """Fallback heurístico para blocos sem tag de linguagem (cards do playbook)."""
@@ -242,9 +276,13 @@ def executar_bloco(codigo, linguagem, timeout=EXEC_TIMEOUT):
     """Executa o bloco em sandbox leve: cwd temporaria, env minimo, timeout.
 
     Retorna (True, "") em sucesso, (False, detalhe) em falha de execucao e
-    (None, detalhe) quando a ferramenta de execucao nao existe.
+    (None, detalhe) quando a ferramenta de execucao nao existe OU quando o
+    bloco e recusado pela allowlist de padroes perigosos (ver PADROES_PERIGOSOS).
     """
     import os
+    perigo = padrao_perigoso(codigo)
+    if perigo:
+        return None, f"bloqueado por seguranca: {perigo} (nao executado)"
     env = {
         "PATH": os.environ.get("PATH", ""),
         "PYTHONNOUSERSITE": "1",
@@ -406,8 +444,12 @@ def validar_playbook(dir_pbk, ignorar_fragmentos, executar=False):
             if not executar:
                 registro.update(status="ok", detalhe="gate presente (nao executado)")
             else:
+                perigo = padrao_perigoso(gate)
                 bash = shutil.which("bash")
-                if not bash:
+                if perigo:
+                    registro.update(status="nao_verificado",
+                                    detalhe=f"bloqueado por seguranca: {perigo} (nao executado)")
+                elif not bash:
                     registro.update(status="nao_verificado", detalhe="bash ausente")
                 else:
                     env = {"PATH": os.environ.get("PATH", ""),

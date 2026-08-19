@@ -387,8 +387,7 @@ def _contexto_derivado(slug, dir_livro=None):
         "config": config,
         "sumario": sumario,
         "titulo": sumario.get("titulo_obra") or config.get("tema") or slug,
-        "livro_mae": config.get("obra_mae") or config.get("livro_mae")
-        or sumario.get("slug_livro_mae", ""),
+        "livro_mae": TO.resolver_slug_mae(config) or sumario.get("slug_livro_mae", ""),
         "capa_imagem": capa,
         "cor_acento": cor,
         "badge_nivel": ROTULOS_NIVEL.get(nivel, nivel.upper()),

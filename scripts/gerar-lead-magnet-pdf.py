@@ -55,8 +55,7 @@ def _url_com_utm(config, sumario):
     url = (config.get("cta_url") or "").strip()
     if not url:
         return ""
-    campanha = config.get("obra_mae") or config.get("livro_mae") \
-        or sumario.get("slug_livro_mae", "")
+    campanha = TO.resolver_slug_mae(config) or sumario.get("slug_livro_mae", "")
     formato = config.get("formato_lm") or sumario.get("formato_lm", "")
     sep = "&" if "?" in url else "?"
     return (f"{url}{sep}utm_source=lead-magnet&utm_medium=pdf"
@@ -160,7 +159,7 @@ def compilar(slug, manter_html=False):
         "cor_acento": cor,
         "promessa": dados.get("promessa") or sumario.get("subtitulo", ""),
         "badge_nivel": dados.get("badge_nivel", ""),
-        "livro_mae": dados.get("livro_mae") or config.get("obra_mae", ""),
+        "livro_mae": dados.get("livro_mae") or TO.resolver_slug_mae(config) or "",
         "author": dados.get("autor") or "Heverton Eduardo Peres",
     }
 

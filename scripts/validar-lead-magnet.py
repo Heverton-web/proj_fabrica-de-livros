@@ -144,7 +144,7 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
         falha("R-LM-3", f"{paginas} paginas {origem}, teto do formato {formato} e {teto}")
 
     # R-LM-4 — zero teoria
-    mae_simples = cfg.get("obra_mae") or cfg.get("livro_mae") or sumario.get("slug_livro_mae")
+    mae_simples = TO.resolver_slug_mae(cfg) or sumario.get("slug_livro_mae")
     if mae_simples:
         teoria = _teoria_do_livro_mae(mae_simples)
         if teoria:

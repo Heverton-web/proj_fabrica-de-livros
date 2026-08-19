@@ -146,6 +146,7 @@ def gerar_artigos(slug, qtd, min_refs):
     obra_raiz = TO._obra_raiz(slug_mae_simples, DIR_OUTPUT)
     dir_artigos_topo = (obra_raiz / "artigos" if obra_raiz is not None
                         else DIR_OUTPUT / "artigos")
+    TO._assert_dentro_do_hub(dir_artigos_topo, slug, DIR_OUTPUT)
     dir_artigos_topo.mkdir(parents=True, exist_ok=True)
 
     derivados = carregar_derivados(dir_mae, slug_mae_simples)
@@ -228,6 +229,7 @@ def gerar_ebooks(slug, qtd):
     obra_raiz = TO._obra_raiz(slug_mae_simples, DIR_OUTPUT)
     dir_ebooks_topo = (obra_raiz / "ebooks" if obra_raiz is not None
                        else DIR_OUTPUT / "ebooks")
+    TO._assert_dentro_do_hub(dir_ebooks_topo, slug, DIR_OUTPUT)
     dir_ebooks_topo.mkdir(parents=True, exist_ok=True)
 
     derivados = carregar_derivados(dir_mae, slug_mae_simples)
@@ -311,6 +313,7 @@ def gerar_playbook(slug):
     titulo_obra = sumario.get("titulo_obra", slug_mae_simples)
     slug_pbk = TO.slug_curto("playbook", slug_mae_simples, nome=titulo_obra, base=DIR_OUTPUT)
     dir_pbk = TO.dir_obra(slug_pbk, DIR_OUTPUT)
+    TO._assert_dentro_do_hub(dir_pbk, slug, DIR_OUTPUT)
     for sub in ("passos", "imagens", "revisao"):
         (dir_pbk / sub).mkdir(parents=True, exist_ok=True)
 

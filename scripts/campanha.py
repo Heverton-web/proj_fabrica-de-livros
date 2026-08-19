@@ -424,7 +424,7 @@ def _volume_obra(slug, base=None, chave=None):
     if chave is None:
         chave = chave_colecao(slug, base)
     config = _ler_json(TO.dir_obra(slug, base) / "config_obra.json", {})
-    volume = config.get("obra_mae") or config.get("livro_mae") or ""
+    volume = TO.resolver_slug_mae(config) or ""
     if not volume or volume == chave:
         return ""
     return str(volume).strip()

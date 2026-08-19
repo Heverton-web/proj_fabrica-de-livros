@@ -206,7 +206,7 @@ def compilar(slug, com_pdf=True):
         "autor": dados.get("autor") or "Heverton Eduardo Peres",
         "cor_acento": dados.get("cor_acento") or "#2ecc9a",
         "badge_nivel": dados.get("badge_nivel", ""),
-        "livro_mae": dados.get("livro_mae") or config.get("obra_mae", ""),
+        "livro_mae": dados.get("livro_mae") or TO.resolver_slug_mae(config) or "",
     }
 
     try:

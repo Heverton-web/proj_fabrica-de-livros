@@ -114,8 +114,7 @@ def validar(slug, limiar_teoria=LIMIAR_TEORIA):
     total = len(cards)
 
     # ── Contexto do livro-mae (para R-PBK-0 e R-PBK-7) ────────────────────────
-    slug_mae_simples = config.get("obra_mae") or config.get("livro_mae") or \
-        sumario.get("slug_livro_mae")
+    slug_mae_simples = TO.resolver_slug_mae(config) or sumario.get("slug_livro_mae")
     dir_mae = None
     if slug_mae_simples:
         # V5 (HUB POR COLECAO): o livro-mae vive em output/<colecao>/livros/<slug>,

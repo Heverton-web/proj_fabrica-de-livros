@@ -19,83 +19,42 @@ Opcoes:
 
 import os
 import re
+import shutil
 import sys
 import subprocess
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "scripts"))
-try:
-    import metadados_livro
-except ImportError:  # pragma: no cover
-    metadados_livro = None
-try:
-    import parametros_obra
-except ImportError:  # pragma: no cover
-    parametros_obra = None
-try:
-    import tipos_obra
-except ImportError:  # pragma: no cover
-    tipos_obra = None
 
-# ── CARREGAR 50 LIVROS DAS SÉRIES E-N ──────────────────────────
-try:
-    from dados_series import SLUGS_EXTRA
-except ImportError:
-    SLUGS_EXTRA = []
 
-# ── CARREGAR 50 LIVROS DAS SÉRIES DE PERFUMARIA (P1-P5) ────────
-try:
-    from dados_series_perfumaria import SLUGS_PERFUMARIA
-except ImportError:
-    SLUGS_PERFUMARIA = []
+def import_opcional(nome_modulo):
+    """Importa um modulo opcional de scripts/; devolve None se ausente.
 
-# ── CARREGAR 50 LIVROS DAS SÉRIES DE WEB FULLSTACK (W1-W5) ─────
-try:
-    from dados_series_web import SLUGS_WEB
-except ImportError:
-    SLUGS_WEB = []
+    Reduz o boilerplate `try: import X except ImportError: X = None` repetido
+    para cada dependencia opcional deste script.
+    """
+    try:
+        return __import__(nome_modulo)
+    except ImportError:  # pragma: no cover
+        return None
 
-# ── CARREGAR 50 LIVROS DAS SÉRIES DE IA E AGENTES (IA1-IA5) ────
-try:
-    from dados_series_ia import SLUGS_IA
-except ImportError:
-    SLUGS_IA = []
 
-# ── CARREGAR 50 LIVROS DAS SÉRIES DA STACK FULLSTACK (FE/BE/BD/AP/DV) ──
-try:
-    from dados_series_stack import SLUGS_STACK
-except ImportError:
-    SLUGS_STACK = []
+metadados_livro = import_opcional("metadados_livro")
+parametros_obra = import_opcional("parametros_obra")
+tipos_obra = import_opcional("tipos_obra")
 
-# ── CARREGAR LIVRO DE MARKETING DIGITAL (MK-01) ───────────────
-try:
-    from dados_livro_marketing import SLUGS_MARKETING
-except ImportError:
-    SLUGS_MARKETING = []
-
-# ── CARREGAR 100 LIVROS DAS 5 SÉRIES DE PLANEJAMENTO (MK1-MK5) ─
-try:
-    from dados_series_planejamento import SLUGS_PLANEJAMENTO
-except ImportError:
-    SLUGS_PLANEJAMENTO = []
-
-# ── CARREGAR LIVRO DOS SEGREDOS TÉCNICOS DO DEEPSEEK ──────────
-try:
-    from dados_livro_deepseek import SLUGS_DEEPSEEK
-except ImportError:
-    SLUGS_DEEPSEEK = []
-
-# ── CARREGAR 80 LIVROS DAS 4 SÉRIES DO ZERO AO PROFISSIONAL (ZP1-ZP4) ─
-try:
-    from dados_series_zp import SLUGS_ZP
-except ImportError:
-    SLUGS_ZP = []
+# Catalogo estatico de livros da fabrica (serie principal, ver SLUGS abaixo).
+# Obras derivadas via /criar-livro sao aceitas dinamicamente em main() mesmo
+# sem estar nesta lista, desde que existam em output/.
 
 DIR_RAIZ = Path(__file__).parent / "output"
 DIR_PROJETO = Path(__file__).parent
 
-PANDOC = r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages\JohnMacFarlane.Pandoc_Microsoft.Winget.Source_8wekyb3d8bbwe\pandoc-3.10\pandoc.exe"
-TYPST = r"C:\Users\trcnologia\AppData\Local\Microsoft\WinGet\Packages\Typst.Typst_Microsoft.Winget.Source_8wekyb3d8bbwe\typst-x86_64-pc-windows-msvc\typst.exe"
+# Pandoc/Typst: resolvidos via PATH (shutil.which); com fallback para variavel
+# de ambiente quando o binario nao esta no PATH (instalacao fora do padrao).
+# Mesmo padrao ja usado em scripts/gerar-relatorio-sessao.py.
+PANDOC = shutil.which("pandoc") or os.environ.get("FABRICA_PANDOC_BIN", "pandoc")
+TYPST = shutil.which("typst") or os.environ.get("FABRICA_TYPST_BIN", "typst")
 TEMPLATE = DIR_PROJETO / "templates" / "template.typ"
 TEMPLATE_TCC = DIR_PROJETO / "templates" / "template_tcc.typ"
 TEMPLATE_ARTIGO = DIR_PROJETO / "templates" / "template_artigo.typ"
@@ -179,20 +138,6 @@ SLUGS = [
     "C4-camada-operarios",
     "C5-camada-llm-core",
 ]
-
-# Estender com as 10 series (50 livros), as 5 series de perfumaria (50 livros),
-# as 5 series de desenvolvimento web (50 livros), as 5 series de IA (50 livros),
-# as 5 series da stack fullstack (50 livros) e o livro de marketing digital
-SLUGS.extend(SLUGS_EXTRA)
-SLUGS.extend(SLUGS_PERFUMARIA)
-SLUGS.extend(SLUGS_WEB)
-SLUGS.extend(SLUGS_IA)
-SLUGS.extend(SLUGS_STACK)
-SLUGS.extend(SLUGS_MARKETING)
-SLUGS.extend(SLUGS_PLANEJAMENTO)
-SLUGS.extend(SLUGS_DEEPSEEK)
-SLUGS.extend(SLUGS_ZP)
-
 
 def copiar_pdf_com_nome_slug(slug, dir_livro):
     """Copia livro_final.pdf para <nome>.pdf no mesmo diretorio.
@@ -309,6 +254,25 @@ def variaveis_visuais(slug, dir_livro, paginas=None, tipo=None):
     return args
 
 
+AUTOR_PADRAO = "Heverton Eduardo Peres"
+
+
+def resolver_autor(dir_livro):
+    """Autor do PDF: config_obra.json["autor"] tem prioridade; sem o campo,
+    usa AUTOR_PADRAO (compatibilidade com obras que nao declararam autor)."""
+    caminho = dir_livro / "config_obra.json"
+    if caminho.exists():
+        import json
+        try:
+            config = json.loads(caminho.read_text(encoding="utf-8"))
+        except ValueError:
+            config = {}
+        autor = config.get("autor")
+        if autor:
+            return autor
+    return AUTOR_PADRAO
+
+
 def comando_pandoc(md_path, saida, dir_livro, titulo, extras, tipo=None):
     """Comando Pandoc que gera o Typst intermediario (sem --pdf-engine: ver
     converter_via_typst para o motivo)."""
@@ -333,7 +297,7 @@ def comando_pandoc(md_path, saida, dir_livro, titulo, extras, tipo=None):
         "--from", "markdown-citations",
         "--wrap", "preserve",
         "-V", f"title={titulo}",
-        "-V", "author=Heverton Eduardo Peres",
+        "-V", f"author={resolver_autor(dir_livro)}",
         "-V", "subtitle=",
         "--resource-path", str(dir_livro),
     ]
@@ -521,7 +485,7 @@ def compilar_livro(slug):
     # Criar frontmatter YAML completo para o Pandoc
     frontmatter = f"""---
 title: "{titulo}"
-author: "Heverton Eduardo Peres"
+author: "{resolver_autor(dir_livro)}"
 date: "Julho 2026"
 lang: pt-BR
 ---

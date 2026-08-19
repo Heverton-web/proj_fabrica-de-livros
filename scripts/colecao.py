@@ -203,7 +203,7 @@ def varrer():
                 "tipo": tipo_real,
                 "rotulo": TO.campo(tipo_real, "rotulo", tipo_real),
                 "titulo": sumario.get("titulo_obra") or config.get("tema") or dir_obra.name,
-                "obra_mae": config.get("obra_mae") or config.get("livro_mae"),
+                "obra_mae": TO.resolver_slug_mae(config),
                 "natureza": TO.campo(tipo_real, "natureza", "?"),
                 "custo_llm": TO.campo(tipo_real, "custo_llm", "?"),
                 "senioridade": config.get("senioridade_obra", ""),
