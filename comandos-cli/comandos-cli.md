@@ -113,6 +113,37 @@ python scripts/gerar-relatorio-consumo.py --sem-rate-limit
 
 ---
 
+## Rate-limit multi-provedor (OpenRouter, OpenAI, Anthropic, Groq, HF, Cerebras, NVIDIA, Grok/xAI, ZenMux, Gemini, Cloudflare, OpenCode Zen)
+
+Verifica rate-limit/quota atual de cada provedor configurado (via variável
+de ambiente com a chave). Provedor sem chave configurada é pulado com aviso,
+não trava o script.
+
+```bash
+python scripts/verificar-rate-limits.py
+```
+
+```bash
+python scripts/verificar-rate-limits.py --json
+```
+
+Variáveis de ambiente (todas opcionais):
+
+```
+OPENROUTER_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY, GROQ_API_KEY,
+HF_TOKEN, CEREBRAS_API_KEY, NVIDIA_API_KEY, XAI_API_KEY,
+ZENMUX_MANAGEMENT_API_KEY (chave de MANAGEMENT do ZenMux, não a de inferência)
+```
+
+Cobertura por provedor:
+- **Endpoint dedicado de quota** (dado estruturado): OpenRouter (`GET /api/v1/key`), Hugging Face (`GET /api/whoami-v2`, headers `RateLimit`/`RateLimit-Policy` padrão IETF)
+- **Headers de rate-limit documentados oficialmente** (lidos via `GET /v1/models`): OpenAI (`x-ratelimit-*`), Anthropic (`anthropic-ratelimit-*`), Groq (`x-ratelimit-*`, igual OpenAI)
+- **Best-effort** (compatível com OpenAI mas sem nomes de header confirmados — script captura qualquer header com `ratelimit` no nome): Cerebras, NVIDIA, Grok/xAI
+- **Sem API pública de quota** (script reporta `indisponivel_via_api` + link do painel manual, sem tentar adivinhar): Google Gemini/AI Studio (quota é por projeto, não por chave), Cloudflare Workers AI (analytics existe mas não devolve neurons restantes), OpenCode Zen (sem doc de rate-limit)
+- **ZenMux**: tem endpoint de saldo (`GET /api/v1/management/payg/balance`), mas exige uma Management API Key separada da chave normal de inferência (gerar em zenmux.ai console > Management)
+
+---
+
 ## Observações
 
 - `ccusage` (pip, autor wakamex) e `ccusage` (npm, autor ryoppippi) são projetos

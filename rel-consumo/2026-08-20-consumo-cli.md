@@ -8,8 +8,8 @@
 ## 1. Rate Limit Atual (Anthropic API)
 
 - **Plano:** default_raven
-- **Sessão atual:** 10% usado (reset em 2026-08-20T14:50:00.229607+00:00)
-- **Janela 7 dias:** 21% usado (reset em 2026-08-25T08:00:00.229625+00:00)
+- **Sessão atual:** 17% usado (reset em 2026-08-20T14:49:59.738921+00:00)
+- **Janela 7 dias:** 22% usado (reset em 2026-08-25T07:59:59.738942+00:00)
 
 
 ```{=typst}
@@ -25,7 +25,7 @@
 | 2026-05   | all      |           8 | 369.884.911    |      2.7773 |
 | 2026-06   | all      |           5 | 857.192.992    |     10.9208 |
 | 2026-07   | all      |          16 | 1.664.220.329  |    325.769  |
-| 2026-08   | all      |          16 | 3.744.151.719  |   1035.12   |
+| 2026-08   | all      |          16 | 3.775.911.714  |   1038.88   |
 
 
 ```{=typst}
@@ -67,7 +67,7 @@
 | 2026-08-17 | all      |           3 | 32.565.283     |      0.9655 |
 | 2026-08-18 | all      |           5 | 135.329.227    |     16.9531 |
 | 2026-08-19 | all      |           2 | 63.403.506     |     25.2681 |
-| 2026-08-20 | all      |           2 | 32.166.201     |      4.4508 |
+| 2026-08-20 | all      |           2 | 64.093.274     |      8.2089 |
 
 > Lista completa (80 dias) no arquivo `.xlsx` anexo.
 
@@ -145,7 +145,7 @@
 | 2026-08-19T1... | all      |           1 | 41.343.974     |     17.8443 |
 | 2026-08-19T2... | all      |           1 | 8.922.337      |      4.0796 |
 | gap-2026-08-... | all      |           0 | 0              |      0      |
-| 2026-08-20T1... | all      |           1 | 15.370.559     |      4.4508 |
+| 2026-08-20T1... | all      |           1 | 31.458.303     |      8.2992 |
 
 > Lista completa (71 blocos) no arquivo `.xlsx` anexo.
 
@@ -156,8 +156,8 @@
 
 ## 6. Totais Consolidados
 
-- **Tokens totais (todo o período diário):** 6.958.041.377
-- **Custo total estimado (todo o período diário):** US$ 1378.64
+- **Tokens totais (todo o período diário):** 6.989.968.450
+- **Custo total estimado (todo o período diário):** US$ 1382.4
 
 ---
 

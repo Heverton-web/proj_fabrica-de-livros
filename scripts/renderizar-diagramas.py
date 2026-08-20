@@ -85,6 +85,15 @@ def _achar_chrome():
         "/usr/bin/google-chrome",
         "/snap/bin/chromium",
     ]
+    # Cache do puppeteer (macOS/Linux) e do playwright (usado nesta maquina)
+    for cache_raiz in (Path.home() / ".cache" / "puppeteer",
+                       Path(os.environ.get("LOCALAPPDATA", str(Path.home() / "AppData" / "Local")))
+                       / "ms-playwright"):
+        if not cache_raiz.exists():
+            continue
+        for exe in cache_raiz.rglob("chrome-headless-shell.exe"):
+            if exe.exists():
+                candidatos.insert(0, str(exe))
     for caminho in candidatos:
         if caminho and Path(caminho).exists():
             return str(caminho)
