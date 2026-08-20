@@ -1,15 +1,35 @@
 # RELATÓRIO DE CONSUMO — CLIs de Agente
 
 > **Data de geração:** 2026-08-20
-> **Fontes:** `npx ccusage@latest` (tokens/custo) + `ccusage` pip (rate limit Anthropic)
+> **Escopo:** todos os agentes detectados
+> **Fontes:** `npx ccusage@latest` (tokens/custo) + `ccusage` pip + verificador multi-provedor (rate limit)
 
 ---
 
-## 1. Rate Limit Atual (Anthropic API)
+## 1. Rate Limit Atual
+
+### Anthropic (via ccusage pip)
 
 - **Plano:** default_raven
-- **Sessão atual:** 17% usado (reset em 2026-08-20T14:49:59.738921+00:00)
-- **Janela 7 dias:** 22% usado (reset em 2026-08-25T07:59:59.738942+00:00)
+- **Sessão atual:** 34% usado (reset em 2026-08-20T14:50:00.011054+00:00)
+- **Janela 7 dias:** 24% usado (reset em 2026-08-25T08:00:00.011073+00:00)
+
+### Outros Provedores
+
+| provedor                  | status       | detalhe                                                                |
+|:--------------------------|:-------------|:-----------------------------------------------------------------------|
+| OpenRouter                | sem chave    | Variavel de ambiente OPENROUTER_API_KEY nao configurada — pulado.      |
+| Hugging Face              | sem chave    | Variavel de ambiente HF_TOKEN nao configurada — pulado.                |
+| OpenAI                    | sem chave    | Variavel de ambiente OPENAI_API_KEY nao configurada — pulado.          |
+| Anthropic                 | sem chave    | Variavel de ambiente ANTHROPIC_API_KEY nao configurada — pulado.       |
+| Groq                      | sem chave    | Variavel de ambiente GROQ_API_KEY nao configurada — pulado.            |
+| Cerebras                  | sem chave    | Variavel de ambiente CEREBRAS_API_KEY nao configurada — pulado.        |
+| NVIDIA                    | sem chave    | Variavel de ambiente NVIDIA_API_KEY nao configurada — pulado.          |
+| Grok (xAI)                | sem chave    | Variavel de ambiente XAI_API_KEY nao configurada — pulado.             |
+| ZenMux                    | sem chave    | Variavel de ambiente ZENMUX_MANAGEMENT_API_KEY nao configurada — pu... |
+| Google Gemini (AI Studio) | indisponível | Verificar manualmente: https://aistudio.google.com/ (quota e por PR... |
+| Cloudflare Workers AI     | indisponível | Verificar manualmente: https://dash.cloudflare.com/ > Workers AI > ... |
+| OpenCode Zen              | indisponível | Verificar manualmente: sem API publica de rate-limit/quota document... |
 
 
 ```{=typst}
@@ -25,7 +45,7 @@
 | 2026-05   | all      |           8 | 369.884.911    |      2.7773 |
 | 2026-06   | all      |           5 | 857.192.992    |     10.9208 |
 | 2026-07   | all      |          16 | 1.664.220.329  |    325.769  |
-| 2026-08   | all      |          16 | 3.775.911.714  |   1038.88   |
+| 2026-08   | all      |          16 | 3.807.730.321  |   1045.94   |
 
 
 ```{=typst}
@@ -67,7 +87,7 @@
 | 2026-08-17 | all      |           3 | 32.565.283     |      0.9655 |
 | 2026-08-18 | all      |           5 | 135.329.227    |     16.9531 |
 | 2026-08-19 | all      |           2 | 63.403.506     |     25.2681 |
-| 2026-08-20 | all      |           2 | 64.093.274     |      8.2089 |
+| 2026-08-20 | all      |           2 | 96.290.367     |     15.3652 |
 
 > Lista completa (80 dias) no arquivo `.xlsx` anexo.
 
@@ -108,7 +128,7 @@
 | affe63cb-b73... | claude   |           1 | 50.967.054     |     19.7629 |
 | d2ecd614-ffd... | claude   |           1 | 57.047.858     |     17.6011 |
 
-> Lista completa (926 sessões) no arquivo `.xlsx` anexo.
+> Lista completa (927 sessões) no arquivo `.xlsx` anexo.
 
 
 ```{=typst}
@@ -145,7 +165,7 @@
 | 2026-08-19T1... | all      |           1 | 41.343.974     |     17.8443 |
 | 2026-08-19T2... | all      |           1 | 8.922.337      |      4.0796 |
 | gap-2026-08-... | all      |           0 | 0              |      0      |
-| 2026-08-20T1... | all      |           1 | 31.458.303     |      8.2992 |
+| 2026-08-20T1... | all      |           1 | 55.636.480     |     15.5043 |
 
 > Lista completa (71 blocos) no arquivo `.xlsx` anexo.
 
@@ -156,8 +176,8 @@
 
 ## 6. Totais Consolidados
 
-- **Tokens totais (todo o período diário):** 6.989.968.450
-- **Custo total estimado (todo o período diário):** US$ 1382.4
+- **Tokens totais:** 7.022.165.543
+- **Custo total estimado:** US$ 1389.56
 
 ---
 
