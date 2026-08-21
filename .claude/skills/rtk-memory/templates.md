@@ -4,7 +4,7 @@
 
 **Cenário:** Usuário resolveu erro TS2345 em service.ts
 
-**Entrada no AGENTS.md:**
+**Entrada no RTK-SCRATCHPAD.md:**
 ```markdown
 ## RTK SCRATCHPAD
 
@@ -21,7 +21,7 @@
 
 **Cenário:** Usuário descobriu que queries sem empresa_id são bloqueadas
 
-**Entrada no AGENTS.md:**
+**Entrada no RTK-SCRATCHPAD.md:**
 ```markdown
 ### [2025-07-22] RLS: empresa_id obrigatório em INSERT
 - **Causa**: política RLS do Supabase bloqueia INSERT sem empresa_id
@@ -36,7 +36,7 @@
 
 **Cenário:** Descoberta de que `npm run test:safe` roda com filtro headroom
 
-**Entrada no AGENTS.md:**
+**Entrada no RTK-SCRATCHPAD.md:**
 ```markdown
 ### [2025-07-22] CONFIG: test:safe usa filtro headroom
 - **Causa**: script test:safe filtra output do vitest automaticamente
@@ -51,7 +51,7 @@
 
 **Cenário:** Usuário percebeu que todos os módulos seguem mesma estrutura
 
-**Entrada no AGENTS.md:**
+**Entrada no RTK-SCRATCHPAD.md:**
 ```markdown
 ### [2025-07-22] PADRAO: estrutura de módulo padrão
 - **Causa**: todos os módulos seguem mesma convenção
@@ -66,7 +66,7 @@
 
 **Cenário:** Bug onde hora era cortada incorretamente
 
-**Entrada no AGENTS.md:**
+**Entrada no RTK-SCRATCHPAD.md:**
 ```markdown
 ### [2025-07-22] RUNTIME: .slice(0,5) corrompe horário
 - **Causa**: `dados.hora.slice(0, 5)` aceita "12:3" e gera "12:3" (inválido)
@@ -81,7 +81,7 @@
 
 **Cenário:** Nova descoberta sobre registro já existente
 
-**Entrada no AGENTS.md (atualização):**
+**Entrada no RTK-SCRATCHPAD.md (atualização):**
 ```markdown
 ### [2025-07-22] RLS: empresa_id obrigatório em INSERT
 - **Causa**: política RLS do Supabase bloqueia INSERT sem empresa_id

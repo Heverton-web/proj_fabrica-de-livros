@@ -16,17 +16,25 @@ erro ou re-descobrir o mesmo padrão.
 
 | Situação | O que registrar | Onde |
 |----------|----------------|------|
-| Bug de compilação resolvido | Causa raiz + fix | RTK SCRATCHPAD (AGENTS.md) |
+| Bug de compilação resolvido | Causa raiz + fix | RTK SCRATCHPAD (`RTK-SCRATCHPAD.md`) |
 | Padrão arquitetural descoberto | Regra + exemplo | RTK SCRATCHPAD |
 | Configuração não óbvia | Chave + valor + por quê | RTK SCRATCHPAD |
 | Erro de runtime recorrente | Sintoma + solução | RTK SCRATCHPAD |
 | Decisão de design tomada | Opção escolhida + rejeitada + motivo | Notas da sessão |
 
+> **Nota (21-08-2026):** neste projeto, o RTK SCRATCHPAD vive em
+> `RTK-SCRATCHPAD.md` (arquivo externo na raiz), NÃO em `AGENTS.md`/`CLAUDE.md`.
+> Manter as duas gravando no mesmo arquivo lido automaticamente em toda sessão
+> quebra a estabilidade do prefixo de cache (ver
+> `melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md`, item D). Se este
+> projeto for usado como base para outro sem esse arquivo, criar
+> `RTK-SCRATCHPAD.md` antes de registrar a primeira entrada.
+
 ## Passo a passo
 
 1. **Detectar**: erros resolvidos, padrões novos, configurações surpresa.
 2. **Avaliar**: é duradouro? Vai aparecer de novo? Outro agente precisaria saber?
-3. **Registrar**: adicionar ao `## RTK SCRATCHPAD` do `AGENTS.md`.
+3. **Registrar**: adicionar (append) ao `RTK-SCRATCHPAD.md`.
 4. **Formatar**: usar o template abaixo.
 5. **Verificar**: não duplicar entradas existentes.
 
@@ -51,7 +59,8 @@ erro ou re-descobrir o mesmo padrão.
 
 ## Local de escrita
 
-**Sempre** adicionar ao `## RTK SCRATCHPAD` no `AGENTS.md` na raiz do projeto.
+**Sempre** adicionar (append no final) do `RTK-SCRATCHPAD.md` na raiz do projeto
+— nunca em `AGENTS.md`/`CLAUDE.md` (ver nota acima).
 
 ```markdown
 ## RTK SCRATCHPAD

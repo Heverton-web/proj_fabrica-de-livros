@@ -98,6 +98,23 @@ apenas); `RTK-SCRATCHPAD.md` contém 100% das entradas antigas sem perda; hardli
 continuam funcionando (`.cursor/rules/fabrica-agentica.mdc` reflete o novo
 `CLAUDE.md` menor).
 
+**Implementado e validado em 21-08-2026**: `CLAUDE.md` caiu de ~51.000 para 18.296
+caracteres (-64%); confirmado que existiam de fato DUAS seções RTK SCRATCHPAD
+duplicadas (`## 7. RTK SCRATCHPAD` numerada + `## RTK SCRATCHPAD` solta, gerada
+pela skill `rtk-memory` por não reconhecer o heading numerado); todo o conteúdo
+migrado para `RTK-SCRATCHPAD.md` sem perda. **Achado não previsto no plano**: a
+edição de `CLAUDE.md` via ferramenta de edição quebrou o hardlink com
+`AGENTS.md`/`.cursor/rules/fabrica-agentica.mdc` (o editor recria o arquivo em vez
+de escrever no mesmo inode) — o próprio `scripts/setup-links.ps1` já previa esse
+caso ("hardlink quebrado por rewrite externo - recriando") e recriou os 6
+hardlinks automaticamente. Confirmado depois: mesmo inode e mesmo tamanho
+(18.296 bytes) em `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/fabrica-agentica.mdc`,
+`.windsurfrules`, `.windsurf/rules/fabrica-agentica.md`, `.clinerules`,
+`.github/copilot-instructions.md`. Suíte 797/797 verde após a migração — nenhum
+teste depende do conteúdo de `CLAUDE.md`/`AGENTS.md` (confirmado via grep).
+**Lição para o passo 5 deste plano**: sempre rodar `setup-links.ps1` logo após
+QUALQUER edição em `CLAUDE.md`, não só ao migrar o scratchpad.
+
 **Risco:** se alguma automação (hook, skill) ler `CLAUDE.md` esperando encontrar as
 entradas RTK inline (ex.: para grep de aprendizados passados), ela vai parar de
 encontrar — buscar por `grep -rn "RTK SCRATCHPAD\|RTK-SCRATCHPAD" .claude scripts`
