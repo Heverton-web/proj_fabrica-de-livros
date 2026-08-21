@@ -96,7 +96,10 @@ TIPOS = {
             "validar-escala.py",        # R-ES: limites/contorno na secao Aplica
             "validar-afirmacoes.py",    # R-AF: dado factual sem [N] no paragrafo
             "validar-fontes.py",        # R-FT: hierarquia A/B/C do dossier >= 70%
+            "validar-comandos-cli.py",  # R-CLI: comandos/flags em livros tecnicos (condicional)
         ),
+        # Categoria tecnica: ativa gate de comandos/CLI (livros sobre ferramentas/CLIs/frameworks)
+        "categoria_tecnica_default": False,
         # Transmutacao (reescrita entre tipos) — origens aceitas para nascer
         # como livro a partir de um material existente (expansao com custo).
         # `validar_reescrita()` confere; `transmutar-obra.py` recorta e registra.
