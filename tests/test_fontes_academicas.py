@@ -285,3 +285,62 @@ class TestFetchArxiv:
         urls = self._capturar(monkeypatch)
         FA._fetch_arxiv("de e em", 3)
         assert "search_query=all:de+e+em" in urls[0]
+
+
+class TestHttpGetRetry:
+    """Retry com backoff+jitter (melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md,
+    item C) — so para falha transitoria (HTTP 429/502/503/504 ou URLError);
+    erro definitivo (404 etc.) propaga na primeira tentativa, sem esperar."""
+
+    class _RespostaFake:
+        def read(self):
+            return b'{"ok": true}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def test_retry_ate_sucesso_em_erro_transitorio(self, monkeypatch):
+        monkeypatch.setattr(FA.time, "sleep", lambda s: None)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            if chamadas["n"] < 2:
+                raise FA.urllib.error.HTTPError(req.full_url, 503, "Service Unavailable", None, None)
+            return self._RespostaFake()
+
+        monkeypatch.setattr(FA.urllib.request, "urlopen", _urlopen)
+        resultado = FA._http_get("https://exemplo.org/api")
+        assert resultado == b'{"ok": true}'
+        assert chamadas["n"] == 2
+
+    def test_erro_definitivo_nao_retenta_nem_dorme(self, monkeypatch):
+        def _sleep_proibido(_s):
+            raise AssertionError("nao deveria dormir em erro definitivo (404)")
+        monkeypatch.setattr(FA.time, "sleep", _sleep_proibido)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            raise FA.urllib.error.HTTPError(req.full_url, 404, "Not Found", None, None)
+
+        monkeypatch.setattr(FA.urllib.request, "urlopen", _urlopen)
+        with pytest.raises(FA.FonteIndisponivel, match="404"):
+            FA._http_get("https://exemplo.org/inexistente")
+        assert chamadas["n"] == 1
+
+    def test_esgota_tentativas_em_falha_persistente(self, monkeypatch):
+        monkeypatch.setattr(FA.time, "sleep", lambda s: None)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            raise FA.urllib.error.HTTPError(req.full_url, 503, "Service Unavailable", None, None)
+
+        monkeypatch.setattr(FA.urllib.request, "urlopen", _urlopen)
+        with pytest.raises(FA.FonteIndisponivel, match="503"):
+            FA._http_get("https://exemplo.org/instavel")
+        assert chamadas["n"] == FA.MAX_TENTATIVAS_REDE

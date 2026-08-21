@@ -166,6 +166,21 @@ primeira tentativa, sucesso na segunda) é absorvida sem quebrar o resultado fin
 tempo de execução da mineração/validação em uma obra de referência (múltiplas
 fontes/URLs) reduz de forma mensurável.
 
+**Implementado e validado em 21-08-2026**: `fontes_academicas._http_get` e
+`validar-referencias._checar_url` agora retentam (2-3 tentativas, backoff
+`0.3-0.5 * 2^tentativa` + jitter de até 0.2-0.3s) apenas em falha transitória
+(HTTP 429/502/503/504 ou `URLError`) — erro definitivo (404 etc.) propaga na
+primeira tentativa, sem dormir. `minerar-fontes-academicas.minerar()` passou a
+rodar as 6 fontes em `ThreadPoolExecutor(max_workers=3)`, agregando
+cache/cobertura/registros de volta na thread principal (sem mutação
+concorrente) e preservando a ordem original de `fontes`. 8 testes novos
+adicionados (3 em `test_fontes_academicas.py`, 3 em `test_validar_referencias.py`,
+2 em `test_minerar_fontes.py`) cobrindo: retry até sucesso, erro definitivo não
+retenta nem dorme, esgotamento de tentativas, e — mais importante — um teste de
+**tempo de parede real** (`test_tempo_de_parede_menor_que_soma_sequencial`) que
+prova o paralelismo de fato (6 fontes × 0,2s simulado ficam abaixo de 70% do
+tempo sequencial). Suíte completa: 805/805 verde (797 + 8 novos).
+
 **Risco:** paralelismo pode disparar rate limit se `max_workers` for alto demais —
 manter conservador (2-3) e documentar no próprio código por quê.
 

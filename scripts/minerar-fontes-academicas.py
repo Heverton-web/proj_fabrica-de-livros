@@ -26,36 +26,68 @@ Uso:
 import argparse
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import fontes_academicas as FA
 import tipos_obra as TO
 from tipos_obra import console_utf8
 
+# Paralelismo com teto de concorrencia (melhorias/21-08-2026-plano-acao-tokens-
+# sob-pericia.md, item C): 6 fontes academicas consultadas ao mesmo tempo em
+# vez de sequencialmente. Teto baixo (3) por serem APIs publicas com rate
+# limit proprio, sem chave — nao vale a pena arriscar 429 por concorrencia
+# alta demais.
+MAX_CONCORRENCIA_FONTES = 3
 
-def minerar(tema, fontes, max_por_fonte, sem_rede, cache):
-    """Roda as fontes e devolve (registros_dedup, cobertura, cache_atualizado)."""
+
+def _consultar_fonte(fonte, tema, max_por_fonte, sem_rede, cache):
+    """Consulta 1 fonte; NAO muta `cache` (roda em thread) — so devolve o
+    resultado para a agregacao acontecer de volta na thread principal."""
+    chave = f"{fonte}|{tema}"
+    if sem_rede:
+        if chave in cache:
+            regs = cache[chave].get("registros", [])
+            status, erro, cache_novo = "cache", None, None
+        else:
+            regs, status, erro, cache_novo = [], "sem-rede", "sem cache local", None
+    else:
+        try:
+            regs = FA.buscar(fonte, tema, max_por_fonte)
+            cache_novo = {"em": FA.data_hoje_abnt(), "registros": regs}
+            status, erro = "ok", None
+        except FA.FonteIndisponivel as exc:
+            regs, status, erro, cache_novo = [], "erro", str(exc), None
+        except Exception as exc:  # noqa: BLE001 — minerador nunca aborta por fonte
+            regs, status, erro, cache_novo = [], "erro", str(exc), None
+    return fonte, chave, regs, status, erro, cache_novo
+
+
+def minerar(tema, fontes, max_por_fonte, sem_rede, cache,
+            max_concorrencia=MAX_CONCORRENCIA_FONTES):
+    """Roda as fontes em paralelo (teto de concorrencia) e devolve
+    (registros_dedup, cobertura, cache_atualizado).
+
+    Cada fonte roda em thread propria via `_consultar_fonte`, sem mutar
+    `cache`/`cobertura`/`todos` dentro da thread — a agregacao acontece na
+    thread principal, apos todas as fontes concluirem, na MESMA ordem de
+    `fontes` (preserva reprodutibilidade do dossie e da suite de testes).
+    """
     cobertura = {}
     todos = []
-    for fonte in fontes:
-        chave = f"{fonte}|{tema}"
-        if sem_rede:
-            if chave in cache:
-                regs = cache[chave].get("registros", [])
-                status, erro = "cache", None
-            else:
-                regs, status, erro = [], "sem-rede", "sem cache local"
-        else:
-            try:
-                regs = FA.buscar(fonte, tema, max_por_fonte)
-                cache[chave] = {"em": FA.data_hoje_abnt(), "registros": regs}
-                status, erro = "ok", None
-            except FA.FonteIndisponivel as exc:
-                regs, status, erro = [], "erro", str(exc)
-            except Exception as exc:  # noqa: BLE001 — minerador nunca aborta por fonte
-                regs, status, erro = [], "erro", str(exc)
+    with ThreadPoolExecutor(max_workers=max_concorrencia) as executor:
+        futures = [
+            executor.submit(_consultar_fonte, fonte, tema, max_por_fonte, sem_rede, cache)
+            for fonte in fontes
+        ]
+        resultados = [f.result() for f in futures]
+
+    for fonte, chave, regs, status, erro, cache_novo in resultados:
+        if cache_novo is not None:
+            cache[chave] = cache_novo
         cobertura[fonte] = {"status": status, "erro": erro, "n": len(regs)}
         todos.extend(regs)
+
     return FA.deduplicar(todos), cobertura, cache
 
 

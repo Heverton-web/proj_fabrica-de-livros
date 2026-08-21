@@ -104,3 +104,42 @@ class TestEscreverArtefatos:
         classes, linhas = VF.classificar_dossie(md_alvo.read_text(encoding="utf-8"))
         assert classes == {"A": 1, "B": 0, "C": 0}
         assert linhas == 1
+
+
+class TestMinerarParalelismo:
+    """Confirma que as fontes rodam em paralelo de fato (nao so 'nao quebrou')
+    — melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md, item C."""
+
+    def test_tempo_de_parede_menor_que_soma_sequencial(self, monkeypatch):
+        import time as time_mod
+
+        atraso_por_fonte = 0.2
+
+        def _buscar_lento(fonte, tema, max_por=None):
+            time_mod.sleep(atraso_por_fonte)
+            return [_registro(f"{fonte}-obra")]
+
+        monkeypatch.setattr(FA, "buscar", _buscar_lento)
+
+        fontes = ["openalex", "crossref", "arxiv", "semantic_scholar",
+                  "scielo", "pubmed"]
+        inicio = time_mod.perf_counter()
+        unicos, cobertura, _ = MIN.minerar("tema", fontes, None, False, {})
+        duracao = time_mod.perf_counter() - inicio
+
+        soma_sequencial = len(fontes) * atraso_por_fonte
+        assert duracao < soma_sequencial * 0.7, (
+            f"esperava paralelismo real (~{soma_sequencial/3:.2f}s), "
+            f"levou {duracao:.2f}s (sequencial seria {soma_sequencial:.2f}s)")
+        assert len(unicos) == len(fontes)
+        assert all(c["status"] == "ok" for c in cobertura.values())
+
+    def test_ordem_de_cobertura_preservada(self, monkeypatch):
+        """Mesmo em paralelo, cobertura/dedup mantem a ordem de `fontes`."""
+        def _buscar(fonte, tema, max_por=None):
+            return [_registro(f"{fonte}-obra")]
+        monkeypatch.setattr(FA, "buscar", _buscar)
+
+        fontes = ["scielo", "arxiv", "openalex"]
+        _, cobertura, _ = MIN.minerar("tema", fontes, None, False, {})
+        assert list(cobertura.keys()) == fontes

@@ -100,3 +100,63 @@ class TestValidarTexto:
         _, falhas = vr.validar_texto(texto, "cap_2", sem_rede=True, cache=cache)
         assert len(falhas) == 1
         assert falhas[0]["tipo"] == "doi"
+
+
+class TestCheckUrlRetry:
+    """Retry com backoff+jitter (melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md,
+    item C) — so para HTTP_NAO_CONCLUSIVO ou URLError; 404 propaga sem retry."""
+
+    class _RespostaFake:
+        def __init__(self, status):
+            self.status = status
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def test_retry_ate_sucesso_apos_503(self, monkeypatch):
+        monkeypatch.setattr(vr.time, "sleep", lambda s: None)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            if chamadas["n"] < 2:
+                raise vr.urllib.error.HTTPError(req.full_url, 503, "Service Unavailable", None, None)
+            return self._RespostaFake(200)
+
+        monkeypatch.setattr(vr.urllib.request, "urlopen", _urlopen)
+        status, detalhe = vr._checar_url("https://exemplo.org/api", sem_rede=False, cache={})
+        assert status == "ok"
+        assert "200" in detalhe
+        assert chamadas["n"] == 2
+
+    def test_404_nao_retenta_nem_dorme(self, monkeypatch):
+        def _sleep_proibido(_s):
+            raise AssertionError("nao deveria dormir em erro definitivo (404)")
+        monkeypatch.setattr(vr.time, "sleep", _sleep_proibido)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            raise vr.urllib.error.HTTPError(req.full_url, 404, "Not Found", None, None)
+
+        monkeypatch.setattr(vr.urllib.request, "urlopen", _urlopen)
+        status, detalhe = vr._checar_url("https://exemplo.org/inexistente", sem_rede=False, cache={})
+        assert status == "falha"
+        assert "404" in detalhe
+        assert chamadas["n"] == 1
+
+    def test_esgota_tentativas_vira_nao_verificado(self, monkeypatch):
+        monkeypatch.setattr(vr.time, "sleep", lambda s: None)
+        chamadas = {"n": 0}
+
+        def _urlopen(req, timeout=None):
+            chamadas["n"] += 1
+            raise vr.urllib.error.HTTPError(req.full_url, 503, "Service Unavailable", None, None)
+
+        monkeypatch.setattr(vr.urllib.request, "urlopen", _urlopen)
+        status, _ = vr._checar_url("https://exemplo.org/instavel", sem_rede=False, cache={})
+        assert status == "nao_verificado"
+        assert chamadas["n"] == vr.MAX_TENTATIVAS_URL
