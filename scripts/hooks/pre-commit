@@ -2,6 +2,31 @@
 # R16 (CLAUDE.md): nunca commitar suite vermelha - gate mecanico, nao so promessa.
 # Fonte versionada: scripts/hooks/pre-commit (copiado para .git/hooks/pre-commit
 # por scripts/setup-links.ps1|.sh, pois .git/hooks nao aceita link em todo SO).
+
+# === GATE DE SEGREDOS (Item E — 2026-08-21) ===
+# Bloqueia commit automático se o diff staged contiver padrão de segredo.
+# Padrões: chaves OpenAI (sk-*), AWS (AKIA*), PEM privada, token GitHub (ghp_*), Slack (xox*).
+
+PADROES_SEGREDO=(
+    'sk-[a-zA-Z0-9_-]{20,}'
+    'AKIA[0-9A-Z]{16}'
+    '-----BEGIN [A-Z ]*PRIVATE KEY'
+    'ghp_[a-zA-Z0-9]{36}'
+    'xox[baprs]-[0-9a-zA-Z-]+'
+)
+
+for padrao in "${PADROES_SEGREDO[@]}"; do
+    if git diff --cached | grep -E "$padrao" > /dev/null 2>&1; then
+        echo "[BLOQUEADO] possível segredo no diff staged"
+        echo ""
+        echo "Padrão detectado: $padrao"
+        git diff --cached | grep -n -E "$padrao" | head -5
+        echo ""
+        echo "Se é falso positivo, revise manualmente ou use 'git commit --no-verify' (com cuidado)."
+        exit 1
+    fi
+done
+
 python -m pytest -q
 if [ $? -ne 0 ]; then
   echo "[BLOQUEADO] suite de testes vermelha - corrija a causa antes de comitar (R16)"
