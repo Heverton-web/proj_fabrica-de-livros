@@ -4,6 +4,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 import sys
+from pathlib import Path
 
 # Configuração da capa — padrão visual da Fábrica Agêntica
 LARGURA = 1600
@@ -15,7 +16,9 @@ COR_PRIMAria = (124, 58, 237, 255)  # #7c3aed
 COR_TEXTO_BRANCO = (240, 246, 252, 255)
 COR_TEXTO_GRAY = (139, 148, 158, 255)
 
-DIR_RELATORIOS = "relatorios"
+# Ancorado na raiz do projeto (nunca na CWD) — evita criar `relatorios/`
+# solto onde quer que o script seja invocado (ex.: de dentro de output/<hub>/).
+DIR_RELATORIOS = str(Path(__file__).resolve().parent.parent / "relatorios")
 os.makedirs(f"{DIR_RELATORIOS}/imagens", exist_ok=True)
 
 # Criar imagem base

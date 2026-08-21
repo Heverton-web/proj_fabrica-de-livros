@@ -408,6 +408,23 @@ def compilar_livro(slug):
     # output/<tipo>/<slug>; o hub e output/<colecao>/<tipo>/<slug>).
     dir_livro = (tipos_obra.dir_obra(slug, DIR_RAIZ)
                  if tipos_obra is not None else DIR_RAIZ / slug)
+
+    # Gap 8: se dir_livro aponta para o HUB (output/<colecao>/) mas nao tem
+    # capitulos/ nem livro_final.md, tenta o subdir do tipo (single-book layout:
+    # output/<obra>/<tipo>/ — ex.: output/gratis-open-source/livros/).
+    if not (dir_livro / "capitulos").exists() and not (dir_livro / "livro_final.md").exists():
+        for raiz_tipo in ("livros", "tccs", "artigos", "ebooks", "playbooks",
+                          "lead-magnets", "decks", "emails"):
+            cand = dir_livro / raiz_tipo
+            if cand.exists() and ((cand / "capitulos").exists() or (cand / "livro_final.md").exists()):
+                dir_livro = cand
+                break
+        # Ou: o slug sem prefixo resolve se anexarmos livros/ (layout plano)
+        if not (dir_livro / "capitulos").exists() and not (dir_livro / "livro_final.md").exists():
+            cand = DIR_RAIZ / "livros" / slug
+            if cand.exists() and ((cand / "capitulos").exists() or (cand / "livro_final.md").exists()):
+                dir_livro = cand
+
     dir_caps = dir_livro / "capitulos"
     dir_imagens = dir_livro / "imagens"
 

@@ -65,6 +65,18 @@ série: qualquer texto livre (ou `null` se "Não, standalone").
 Com o `tipo_obra` já respondido no Passo 1, defina `prefixo = "livros"` (tipo_obra=livro)
 ou `prefixo = "tccs"` (tipo_obra=tcc) e crie `output/<prefixo>/<slug>/`.
 
+**Capa (Gap 3):** Antes de gravar o config, pergunte em até 4 perguntas, ainda na Rodada 1 ou 2:
+
+| Header | Pergunta | Condição | Opções |
+|---|---|---|---|
+| Cor | Cor primária da capa (hex) | sempre | Other (#rrggbb) |
+| Subtítulo | Subtítulo da obra | sempre | Other (texto livre) |
+| Edição | Tag de edição (ex.: v1.0) | sempre | Other (ex.: v1.0) |
+
+No config, os campos `cor_primaria`, `subtitulo`, `edition_tag` são **obrigatórios**
+para `tipo_obra=livro` (Gap 3). Sem eles o `gerar-capa.py` usa fallback errado
+(cor da série, subtítulo genérico) e a capa sai visualmente divergente do padrão.
+
 Grave `output/<prefixo>/<slug>/config_obra.json` (raiz da obra, sem subpasta `esboco/`)
 no schema:
 ```json
@@ -75,6 +87,10 @@ no schema:
   "tamanho_obra": "P | M | G | GG | XG | null",
   "senioridade_obra": "iniciante | intermediario | avancado | tecnico",
   "serie": "<nome-da-serie> | null",
+  "cor_primaria": "#rrggbb",
+  "subtitulo": "<subtitulo da obra>",
+  "edition_tag": "v1.0",
+  "estilo_tecnica": "codigo | hibrido | operacional",
   "gerar_artigos": true,
   "qtd_artigos": 3,
   "gerar_ebooks": true,
@@ -111,18 +127,26 @@ Se inválido, corrija os valores fora de faixa antes de prosseguir (nunca pergun
    sumário macro gerado deve respeitar os mínimos de `scripts/parametros_obra.py`
    (tabela `TAMANHOS` para livro; TCC usa 1 "parte" com as seções do framework ACAD
    como "capítulos" — ver `SPEC_TCC.md`).
-6. Se `gerar_artigos=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --artigos --qtd <qtd_artigos>`
+6. **Validar título do sumário contra quebra de capa (Gap 4):** Após gerar o `sumario_macro.json`,
+   rode `validar-capa-texto.py` com o `titulo_obra` e `subtitulo` do sumário:
+   ```bash
+   python scripts/validar-capa-texto.py --titulo "<titulo_obra>" --subtitulo "<subtitulo>" --tipo livro
+   ```
+   Se reprovado (>2 linhas ou linha com 1 palavra), encurte o título no `sumario_macro.json`
+   (mantenha o título completo em `titulo_obra`; crie/corrija `titulo_capa` se necessário) e
+   revalide. Máximo 3 tentativas. **Previne capa com 3 linhas que falha na compilação final.**
+7. Se `gerar_artigos=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --artigos --qtd <qtd_artigos>`
    — particiona o sumário macro em `qtd_artigos` recortes temáticos (1-2 capítulos
    cada, sem sobreposição), cria cada `output/artigos/<slug>--art-NN-<titulo>/` e
    grava `output/<prefixo>/<slug>/derivados.json` (seção `artigos`).
-7. Se `gerar_ebooks=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --ebooks --qtd <qtd_ebooks>`
+8. Se `gerar_ebooks=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --ebooks --qtd <qtd_ebooks>`
    — mesmo princípio, cria cada `output/ebooks/<slug>--eb-NN-<titulo>/` e grava a
    seção `ebooks` do mesmo `derivados.json` (preserva a seção `artigos` já gravada).
-8. Se `gerar_playbook=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --playbook`
+9. Se `gerar_playbook=true`: `python scripts/fatiar-obra.py <prefixo>/<slug> --playbook`
    — cria o esqueleto em `output/playbooks/<slug>--pbk/`. A extração dos cards só
    roda depois que os capítulos existirem (`/criar-playbook`).
-9. `python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>` — registra a
-   obra e seus derivados no manifesto `output/colecoes/<serie>.json`.
+10. `python scripts/colecao.py --sincronizar --slug <prefixo>/<slug>` — registra a
+    obra e seus derivados no manifesto `output/colecoes/<serie>.json`.
 
 > Lead magnets, deck e e-mails **não** são fatiados aqui: dependem dos capítulos
 > prontos. Ficam registrados no `config_obra.json` e são disparados na Fase 3

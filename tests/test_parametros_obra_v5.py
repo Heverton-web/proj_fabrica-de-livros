@@ -21,6 +21,9 @@ def config_livro(**sobrepor):
         "tema": "Obra", "tipo_obra": "livro",
         "min_referencias_por_capitulo": 8, "tamanho_obra": "M",
         "senioridade_obra": "intermediario",
+        "cor_primaria": "#58a6ff",
+        "subtitulo": "Subtítulo da obra",
+        "edition_tag": "v1.0",
     }
     base.update(sobrepor)
     return base

@@ -73,13 +73,20 @@ de concorrência (`scripts/pool-capitulos.py`), nunca todos de uma vez.
      monótono como alerta de estilo não bloqueante).
 5. Se encontrar desvios, corrija autonomamente o capítulo (REGRA 4) e revalide. Máximo de
    3 rodadas internas.
-6. Registre o desfecho no pool de concorrência:
+6. **Auto-validação de referências (Gap 5 — R4/R14 antes de registrar):** Antes de chamar
+   `pool-capitulos.py --registrar`, confirme deterministicamente:
+   - Extraia todos os `[N]` do corpo (fora da seção 7) e todos os `[N]` da seção 7.
+   - **R4:** `len(refs_secao7) >= min_referencias_por_capitulo` (do `config_obra.json`).
+   - **R14:** nenhum `[N]` do corpo é órfão (todo `[N]` aparece na seção 7).
+   - Se falhar, corrija (adicionar refs, mapear citações globais para locais) ANTES de
+     registrar. Nunca registre `--sucesso` com R4/R14 pendente.
+7. Registre o desfecho no pool de concorrência:
    ```bash
    python scripts/pool-capitulos.py <slug> --registrar <n> --sucesso
    # ou, se não conseguiu fechar o capítulo:
    python scripts/pool-capitulos.py <slug> --registrar <n> --falha "<motivo objetivo>"
    ```
-7. Transicione o estado do capítulo em `output/<slug>/capitulos/cap_<n>_estado.json` para
+8. Transicione o estado do capítulo em `output/<slug>/capitulos/cap_<n>_estado.json` para
    `concluido_autonomo` e devolva ao Orquestrador um resumo telegráfico (capítulo, caracteres,
    diagramas, blocos de código, referências, status da validação). Sem preâmbulo (REGRA 2).
 

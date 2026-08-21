@@ -105,13 +105,23 @@ def config_puppeteer():
 
     Inclui executablePath do Chrome do sistema quando disponivel: sem isso, o
     mmdc aborta quando o puppeteer nao tem o chrome-headless-shell no cache
-    (erro 'Could not find chrome-headless-shell')."""
+    (erro 'Could not find chrome-headless-shell').
+
+    Fix Gap 2: Remove BOM UTF-8 do arquivo de config para evitar
+    'SyntaxError: Unexpected token' no lilconfig."""
     cfg = {"args": ["--no-sandbox", "--disable-dev-shm-usage"]}
     chrome = _achar_chrome()
     if chrome:
         cfg["executablePath"] = chrome
     tmp = Path(tempfile.gettempdir()) / "fabrica_puppeteer.json"
-    tmp.write_text(json.dumps(cfg), encoding="utf-8")
+    # Garante UTF-8 sem BOM (json.dumps nao adiciona BOM, mas write_text pode em alguns ambientes)
+    conteudo = json.dumps(cfg, ensure_ascii=False)
+    tmp.write_text(conteudo, encoding="utf-8")
+    # Sanity check: le de volta e valida que nao tem BOM
+    lido = tmp.read_text(encoding="utf-8")
+    if lido.startswith("\ufeff"):
+        # Se tiver BOM, reescreve sem BOM
+        tmp.write_text(lido[1:], encoding="utf-8")
     return tmp
 
 

@@ -147,6 +147,9 @@ def carregar_config(slug):
     dados.setdefault("tamanho_obra", TAMANHO_PADRAO if dados["tipo_obra"] == "livro" else None)
     dados.setdefault("senioridade_obra", "tecnico" if dados["tipo_obra"] in ("tcc", "artigo") else "intermediario")
     dados.setdefault("estilo_tecnica", "codigo")
+    dados.setdefault("cor_primaria", "")
+    dados.setdefault("subtitulo", "")
+    dados.setdefault("edition_tag", "")
     dados.setdefault("gerar_artigos", False)
     dados.setdefault("qtd_artigos", 0)
     dados.setdefault("gerar_ebooks", False)
@@ -203,6 +206,12 @@ def validar_config(config):
         tam = config.get("tamanho_obra")
         if tam not in TAMANHOS:
             erros.append(f"tamanho_obra deve ser P, M, G, GG ou XG quando tipo_obra=livro, recebido: {tam!r}")
+        
+        # Gap 3: campos obrigatorios de capa para livro
+        for campo_obrig, nome in [("cor_primaria", "cor_primaria"), ("subtitulo", "subtitulo"), ("edition_tag", "edition_tag")]:
+            val = config.get(campo_obrig)
+            if not val or (isinstance(val, str) and not val.strip()):
+                erros.append(f"{nome} eh obrigatorio para tipo_obra=livro (Gap 3: capa sem fallback errado)")
 
     if config.get("gerar_artigos"):
         qtd = config.get("qtd_artigos")

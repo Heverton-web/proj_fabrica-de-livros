@@ -140,6 +140,19 @@ automaticamente (`nomes_curtos.migrar_prefixo_underscore`).
    testar `POST /api/checkout` (rota nasce no template — verificar que o lead
    chega em `/api/leads/`) + deploy. Legadas em `output/<hub>/marketing/` são
    sinalizadas como `maquinas_legadas` no manifesto da coleção.
+   **Checklist mínimo de segurança antes de qualquer deploy em produção**
+   (a máquina é o único artefato da fábrica que vira aplicação web exposta —
+   os demais são documentos estáticos): (a) **rate limiting** em `/api/checkout`
+   e `/api/leads/` (proteção contra spam/abuso do formulário); (b) **não logar
+   payload de lead em claro** (nome/e-mail/telefone) em stdout/arquivo de log;
+   (c) **HTTPS obrigatório** em produção (nunca servir o checkout em HTTP puro);
+   (d) **autenticação no painel de leads/admin** (`/api/leads/` e telas
+   administrativas não podem ficar públicas sem login); (e) **política de
+   retenção documentada** para `backend/data/vendas.db` (por quanto tempo os
+   dados de lead ficam armazenados, e como são expurgados). É responsabilidade
+   do operador aplicar essas proteções no momento do deploy — a fábrica não as
+   impõe automaticamente, só avisa. Checklist completo em
+   `.claude/commands/criar-maquina.md`.
 10. **Campanha (V5.3):** `/campanha <slug>` (1 material) ou `/campanha-completa
     [colecao]` (todos os membros do manifesto) → `criar-campanha.py` (estrutura +
     moldes de copy + artes HTML→Chromium + cronogramas; custo zero) → agente
@@ -198,25 +211,6 @@ Fonte: `.claude/`. Junctions: `agentic/*`, `.agents/*` e `.opencode/{agents,comm
 
 *(Espaço para registro de aprendizados pela skill `rtk-memory`)*
 
-- **2026-08-17 TÉCNICA operacional (V5.6) — R12 não pode exigir Python cegamente:**
-  causa: o gate R12 exigia ≥1 bloco de código na TÉCNICA em TODO livro, mesmo
-  Iniciante/não-programador (o material-fonte usa configs/operações, não Python).
-  Fix: campo `estilo_tecnica` no config_obra (`codigo`|`hibrido`|`operacional`;
-  default `codigo` preserva obras existentes), R12 condicional em
-  `auditar-obra.py` (operacional aceita ≥1 artefato = bloco | diagrama | passos
-  numerados via novo contador `artefatos_tecnica`), template_eita.md + skill
-  redator-eita documentam os modos. Prova real: obra `fabrica-agentica` reescrita
-  com 0 blocos python/ts na TÉCNICA (96 blocos yaml/json/env/console/sql/cypher +
-  tabelas de decisão) mantendo CONFORME (R2 500k, gates 5/5). Prevenção: ao
-  reescrever a TÉCNICA, converter blocos IN-PLACE (prosa/citações [N] preservadas)
-  e re-checar R2 (corpos novos ficaram ~40% menores; recuperar com seções extras
-  e fechamento por capítulo); comandar terminal com efeito usa ```console
-  (nao_aplicavel na CI), ```bash só para comandos puros; no R12 o predicado de
-  `conforme` é a condição de FALHA (não inverter — bug real que fez FALHA com
-  "capitulos sem artefato: nenhum"). Arquivos: `scripts/auditar-obra.py`,
-  `scripts/parametros_obra.py`, `templates/template_eita.md`,
-  `templates/capitulo_eita.md`, `.claude/skills/redator-eita/SKILL.md`,
-  `tests/test_auditar_obra.py`, `tests/test_parametros_obra_v5.py`.
 - **2026-08-11 Produção completa série 5 (coleção `agentic-design-patterns`):**
   causa: série 5 da proposta (Agentic Design Patterns — o "Gang of Four" dos
   fluxos agênticos) exigia fluxo FULL com livro, derivados, campanhas e máquina;
@@ -461,3 +455,9 @@ Fonte: `.claude/`. Junctions: `agentic/*`, `.agents/*` e `.opencode/{agents,comm
 - **Fix**: movido manualmente para `output/orca-ide/livros/orca-ide/` e `output/orca-ide/playbooks/pbk-1-orca-ide-manual/`. Limpos diretórios órfãos `output/livros/`, `output/playbooks/` e `output/colecoes/`.
 - **Arquivo**: output/orca-ide/ (hub), output/livros/ (removido), output/playbooks/ (removido), output/colecoes/ (removido)
 - **Prevenção**: SEMPRE usar `tipos_obra.dir_obra(slug)` para resolver caminhos — nunca criar diretórios manualmente. Após `fatiar-obra.py`, validar que os artefatos ficaram dentro do hub com `ls output/<hub>/<tipo>/`. Se estiverem soltos, MOVER antes de qualquer operação seguinte. Rodar `colecao.py --sincronizar` após cada movimentação. O fallback `output/colecoes/` do `colecao.py` é legado — NÃO deve ser usado; o manifesto sempre vai em `<hub>/colecoes/<slug>.json`.
+
+### [2026-08-20] ESTRUTURA: `relatorios/` órfã e vazia dentro de 2 hubs (recorrência do bug de pasta solta)
+- **Causa**: durante a manufatura do Capítulo 8 de `livros/otimizacao-tokens-ide-agentica`, o operador sinalizou recorrência do bug de "pasta solta fora do hub" (ver entrada 2026-08-13 acima). Auditoria de `output/` mostrou que os 2 hubs existentes (`output/otimizacao-tokens-ide-agentica/`, `output/gratis-open-source/`) tinham uma subpasta `relatorios/` **vazia** e **fora do schema documentado** da seção "Estrutura de Coleções (HUB)" deste arquivo (que só lista `livros/ tccs/ artigos/ ebooks/ playbooks/ lead-magnets/ decks/ emails/ campanhas/ distribuicao/ maquina/ colecoes/`). Causa raiz identificada em `scripts/gerar-capa-relatorio.py`: `DIR_RELATORIOS = "relatorios"` era um caminho **relativo à CWD**, não ancorado na raiz do projeto — se o script roda com o diretório de trabalho dentro de `output/<hub>/` (comum em sessões de subagente que navegam para lá), ele cria `output/<hub>/relatorios/imagens/` silenciosamente em vez de `<raiz-do-projeto>/relatorios/imagens/`. **Importante**: nem toda estrutura "atípica" em `output/` é bug — `tipos_obra.dir_obra()` suporta oficialmente 2 layouts (multi-book: `<hub>/<tipo>/<slug>`; single-book raiz: `<hub>/<tipo>` quando `hub == slug`, caso de `output/gratis-open-source/livros/`), então não confundir layout single-book raiz válido com pasta solta.
+- **Fix**: `gerar-capa-relatorio.py` corrigido para `DIR_RELATORIOS = str(Path(__file__).resolve().parent.parent / "relatorios")` (ancorado na raiz do projeto, como já fazia `gerar-relatorio-sessao.py`). Removidas as 2 pastas vazias `output/otimizacao-tokens-ide-agentica/relatorios/` e `output/gratis-open-source/relatorios/` (confirmado 0 arquivos antes de `rmdir`).
+- **Arquivo**: `scripts/gerar-capa-relatorio.py` (linha `DIR_RELATORIOS`), `output/<hub>/relatorios/` (removidas, x2).
+- **Prevenção**: nunca usar caminho relativo (`"relatorios"`, `"output"`, etc.) para diretório de escrita em script Python da fábrica — sempre `Path(__file__).resolve().parent.parent / "<pasta>"` (âncora na raiz do projeto), igual ao padrão já usado em `gerar-relatorio-sessao.py` e em `tipos_obra.DIR_OUTPUT`. Antes de declarar "pasta solta = bug", confirmar contra o schema documentado da seção "Estrutura de Coleções (HUB)" e contra os layouts suportados em `tipos_obra.dir_obra()` (docstring da função) — só remover/mover se a pasta não corresponder a nenhum layout válido.

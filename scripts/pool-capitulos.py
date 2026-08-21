@@ -209,6 +209,34 @@ def imprimir_lote(indice, lote):
             extra = f" | tentativa {c['tentativas'] + 1}/{MAX_TENTATIVAS}, aguardar {c.get('backoff_s', 0)}s"
         print(f"  cap {c['capitulo']:>2} [{c['estado']}] {c['titulo'][:64]}{extra}")
 
+def contar_drafts_pendentes(slug):
+    """Conta drafts criados (_draft.json) sem .md final correspondente."""
+    dir_caps = TO.dir_obra(slug, DIR_OUTPUT) / "capitulos"
+    if not dir_caps.exists():
+        return 0
+    drafts = list(dir_caps.glob("*_draft.json"))
+    mds = {p.stem for p in dir_caps.glob("cap_*.md") if not p.stem.startswith("_")}
+    pendentes = 0
+    for d in drafts:
+        # cap_N_draft.json -> cap_N
+        base = d.stem.replace("_draft", "")
+        if base not in mds:
+            pendentes += 1
+    return pendentes
+
+def tempo_medio_escrita(estado):
+    """Estima tempo medio de escrita baseado em tentativas registradas."""
+    tempos = []
+    for reg in estado.get("capitulos", {}).values():
+        if reg.get("tentativas", 0) > 0 and reg.get("estado") == "concluido_autonomo":
+            # Heuristica: 15 min base + backoff por tentativa
+            base = 900  # 15 min
+            backoff = sum(BACKOFF_BASE_S * (2 ** max(0, t)) for t in range(reg["tentativas"]))
+            tempos.append(base + backoff)
+    if tempos:
+        return round(sum(tempos) / len(tempos) / 60, 1)  # minutos
+    return 0
+
 
 def main():
     ap = argparse.ArgumentParser(description="Pool de execucao paralela por lotes")
@@ -317,14 +345,21 @@ def main():
         return 1 if (args.estrito and (pendentes or esgotados)) else 0
 
     if args.status or not (args.plano or args.proximo_lote or args.pendentes):
-        print(f"POOL - {args.slug} (lote={args.lote}, max_tentativas={MAX_TENTATIVAS})")
-        print(f"  total      : {len(capitulos)}")
-        print(f"  concluidos : {len(concluidos)}")
-        print(f"  pendentes  : {len(pendentes)}")
-        print(f"  esgotados  : {len(esgotados)}")
-        if esgotados:
-            print("  capitulos esgotados: " + ", ".join(c["capitulo"] for c in esgotados))
-        return 0
+            estado = carregar_estado(args.slug)
+            drafts = contar_drafts_pendentes(args.slug)
+            tmedio = tempo_medio_escrita(estado)
+            print(f"POOL — {args.slug} (lote={args.lote}, max_tentativas={MAX_TENTATIVAS})")
+            print(f"  total              : {len(capitulos)}")
+            print(f"  concluidos         : {len(concluidos)}")
+            print(f"  pendentes          : {len(pendentes)}")
+            print(f"  esgotados          : {len(esgotados)}")
+            if drafts:
+                print(f"  drafts sem .md     : {drafts} (Gap 7: subagente criou draft mas não finalizou)")
+            if tmedio:
+                print(f"  tempo médio escrita: ~{tmedio} min")
+            if esgotados:
+                print("  capitulos esgotados: " + ", ".join(c["capitulo"] for c in esgotados))
+            return 0
 
     if args.plano:
         lotes = em_lotes(capitulos, args.lote)
