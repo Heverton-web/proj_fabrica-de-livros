@@ -34,6 +34,7 @@ Relatório: output/<slug>/validacao/relatorio_referencias.json
 
 import argparse
 import json
+import random
 import re
 import sys
 import time
@@ -95,7 +96,7 @@ def extrair_referencias(texto_secao):
 
 
 def _checar_url(url, sem_rede, cache):
-    """Consulta cache e rede; retorna (status, detalhe). Nunca levanta.
+    """Consulta cache e rede com retry; retorna (status, detalhe). Nunca levanta.
 
     O cache so e conclusivo para status ok/falha — um registro 'nao_verificado'
     gravado em modo offline nao bloqueia a checagem real posterior.
@@ -104,25 +105,36 @@ def _checar_url(url, sem_rede, cache):
         return cache[url]["status"], cache[url].get("detalhe", "cache")
     if sem_rede:
         return "nao_verificado", "sem-rede (sem cache)"
-    req = urllib.request.Request(
-        url, method="HEAD",
-        headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
-    try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT_SEGUNDOS) as resp:
-            codigo = resp.status
-    except urllib.error.HTTPError as exc:
-        codigo = exc.code
-    except urllib.error.URLError as exc:
-        razao = getattr(exc, "reason", exc)
-        return "nao_verificado", f"rede/DNS indisponível ({razao})"
-    except Exception:  # noqa: BLE001  — timeout etc. contam como não verificado
-        return "nao_verificado", "falha de conexão (timeout?)"
 
-    if 200 <= codigo < 400:
-        return "ok", f"HTTP {codigo}"
-    if codigo in HTTP_NAO_CONCLUSIVO:
-        return "nao_verificado", f"HTTP {codigo} (anti-bot/limite — não conclusivo)"
-    return "falha", f"HTTP {codigo}"
+    max_tentativas = 3
+    for tentativa in range(max_tentativas):
+        req = urllib.request.Request(
+            url, method="HEAD",
+            headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT_SEGUNDOS) as resp:
+                codigo = resp.status
+        except urllib.error.HTTPError as exc:
+            codigo = exc.code
+            # Retry em erros transitórios (429, 502, 503)
+            if tentativa < max_tentativas - 1 and codigo in (429, 502, 503):
+                espera = 0.5 * (2 ** tentativa) + random.uniform(0, 0.3)
+                time.sleep(espera)
+                continue
+        except urllib.error.URLError as exc:
+            razao = getattr(exc, "reason", exc)
+            return "nao_verificado", f"rede/DNS indisponível ({razao})"
+        except Exception:  # noqa: BLE001  — timeout etc. contam como não verificado
+            return "nao_verificado", "falha de conexão (timeout?)"
+
+        if 200 <= codigo < 400:
+            return "ok", f"HTTP {codigo}"
+        if codigo in HTTP_NAO_CONCLUSIVO:
+            return "nao_verificado", f"HTTP {codigo} (anti-bot/limite — não conclusivo)"
+        return "falha", f"HTTP {codigo}"
+
+    # Se chegou aqui, esgotou tentativas em erro transitório
+    return "nao_verificado", f"HTTP {codigo} (após {max_tentativas} tentativas com retry)"
 
 
 def checar_referencia(tipo, valor, sem_rede, cache):

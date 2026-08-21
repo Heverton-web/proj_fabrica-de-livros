@@ -26,6 +26,7 @@ Uso:
 import argparse
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import fontes_academicas as FA
@@ -33,29 +34,46 @@ import tipos_obra as TO
 from tipos_obra import console_utf8
 
 
+def _buscar_fonte_worker(idx, fonte, tema, max_por_fonte, sem_rede, cache):
+    """Worker para paralelismo: busca uma fonte e retorna (idx, registros)."""
+    chave = f"{fonte}|{tema}"
+    if sem_rede:
+        if chave in cache:
+            regs = cache[chave].get("registros", [])
+            status, erro = "cache", None
+        else:
+            regs, status, erro = [], "sem-rede", "sem cache local"
+    else:
+        try:
+            regs = FA.buscar(fonte, tema, max_por_fonte)
+            cache[chave] = {"em": FA.data_hoje_abnt(), "registros": regs}
+            status, erro = "ok", None
+        except FA.FonteIndisponivel as exc:
+            regs, status, erro = [], "erro", str(exc)
+        except Exception as exc:  # noqa: BLE001
+            regs, status, erro = [], "erro", str(exc)
+    return idx, fonte, status, erro, len(regs), regs
+
+
 def minerar(tema, fontes, max_por_fonte, sem_rede, cache):
-    """Roda as fontes e devolve (registros_dedup, cobertura, cache_atualizado)."""
+    """Roda as fontes em paralelo (max 3 workers) e devolve (registros_dedup, cobertura, cache_atualizado)."""
     cobertura = {}
     todos = []
-    for fonte in fontes:
-        chave = f"{fonte}|{tema}"
-        if sem_rede:
-            if chave in cache:
-                regs = cache[chave].get("registros", [])
-                status, erro = "cache", None
-            else:
-                regs, status, erro = [], "sem-rede", "sem cache local"
-        else:
-            try:
-                regs = FA.buscar(fonte, tema, max_por_fonte)
-                cache[chave] = {"em": FA.data_hoje_abnt(), "registros": regs}
-                status, erro = "ok", None
-            except FA.FonteIndisponivel as exc:
-                regs, status, erro = [], "erro", str(exc)
-            except Exception as exc:  # noqa: BLE001 — minerador nunca aborta por fonte
-                regs, status, erro = [], "erro", str(exc)
-        cobertura[fonte] = {"status": status, "erro": erro, "n": len(regs)}
-        todos.extend(regs)
+    max_workers = min(3, len(fontes))
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [
+            executor.submit(_buscar_fonte_worker, idx, fonte, tema, max_por_fonte, sem_rede, cache)
+            for idx, fonte in enumerate(fontes)
+        ]
+        # Agregar resultados mantendo ordem original
+        resultados = [(f.result(), idx) for idx, f in enumerate(futures)]
+        resultados.sort(key=lambda x: x[0][0])  # Ordenar pelo índice original
+
+        for (idx, fonte, status, erro, n, regs), _ in resultados:
+            cobertura[fonte] = {"status": status, "erro": erro, "n": n}
+            todos.extend(regs)
+
     return FA.deduplicar(todos), cobertura, cache
 
 

@@ -56,6 +56,7 @@ Uso como CLI:
 
 import argparse
 import json
+import random
 import re
 import sys
 import time
@@ -163,19 +164,28 @@ def descritor(fonte):
 # ── Helpers de rede ─────────────────────────────────────────────────────────
 
 def _http_get(url, timeout=TIMEOUT_SEGUNDOS):
-    """Retorna bytes da URL; levanta FonteIndisponivel em qualquer falha."""
-    req = urllib.request.Request(
-        url, headers={"User-Agent": USER_AGENT, "Accept": "application/json,*/*"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.read()
-    except urllib.error.HTTPError as exc:
-        raise FonteIndisponivel(f"{url[:80]} -> HTTP {exc.code}") from exc
-    except urllib.error.URLError as exc:
-        razao = getattr(exc, "reason", exc)
-        raise FonteIndisponivel(f"{url[:80]} -> rede/DNS ({razao})") from exc
-    except Exception as exc:  # noqa: BLE001 — timeout/parse contam como indisponivel
-        raise FonteIndisponivel(f"{url[:80]} -> {exc}") from exc
+    """Retorna bytes da URL com retry em erros transitórios; levanta FonteIndisponivel em qualquer falha permanente."""
+    max_tentativas = 3
+    for tentativa in range(max_tentativas):
+        req = urllib.request.Request(
+            url, headers={"User-Agent": USER_AGENT, "Accept": "application/json,*/*"})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as exc:
+            # Retry em erros transitórios (429, 502, 503)
+            if tentativa < max_tentativas - 1 and exc.code in (429, 502, 503):
+                espera = 0.5 * (2 ** tentativa) + random.uniform(0, 0.3)
+                print(f"[Retry {tentativa+1}/{max_tentativas}] {url[:60]} em {espera:.2f}s")
+                time.sleep(espera)
+                continue
+            # Erro permanente ou última tentativa
+            raise FonteIndisponivel(f"{url[:80]} -> HTTP {exc.code}") from exc
+        except urllib.error.URLError as exc:
+            razao = getattr(exc, "reason", exc)
+            raise FonteIndisponivel(f"{url[:80]} -> rede/DNS ({razao})") from exc
+        except Exception as exc:  # noqa: BLE001 — timeout/parse contam como indisponivel
+            raise FonteIndisponivel(f"{url[:80]} -> {exc}") from exc
 
 
 def _http_get_json(url):
