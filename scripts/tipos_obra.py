@@ -96,6 +96,8 @@ TIPOS = {
             "validar-escala.py",        # R-ES: limites/contorno na secao Aplica
             "validar-afirmacoes.py",    # R-AF: dado factual sem [N] no paragrafo
             "validar-fontes.py",        # R-FT: hierarquia A/B/C do dossier >= 70%
+            "validar-comandos-cli.py",  # R-CLI: comando/CLI fabricado (opt-in
+                                        # via config_obra.json:categoria_tecnica)
         ),
         # Transmutacao (reescrita entre tipos) — origens aceitas para nascer
         # como livro a partir de um material existente (expansao com custo).

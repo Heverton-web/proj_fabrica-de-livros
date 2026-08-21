@@ -246,6 +246,32 @@ citados num capítulo como CONFIRMADO / PARCIALMENTE_CORRETO / FABRICADO / NÃO_
 confirmado e 1 fabricado (marcado manualmente `confere=false`); `--estrito` reprova
 a obra com o comando fabricado e aprova a versão corrigida; suíte 100% verde.
 
+**Implementado e validado em 21-08-2026**: `scripts/validar-comandos-cli.py`
+criado seguindo o template de `validar-afirmacoes.py` (extrai blocos de código
+via `secoes_eita.RE_BLOCO_LING`, procura marcação
+`<!-- cli-check: fonte=A|B|C; confere=true|false -->` imediatamente após o
+fechamento do bloco). Opt-in via novo campo `categoria_tecnica: false`
+(default retrocompatível) em `DERIVADOS_V5` de `parametros_obra.py`; registrado
+no `gates_conteudo` do tipo `livro` em `tipos_obra.py` — `auditar-obra.py` não
+precisou de nenhuma mudança (o loop existente já dispara qualquer script
+listado ali). `revisor-tecnico` (SKILL.md) atualizado com o passo de
+verificação manual (rodar `--help`/doc oficial antes de marcar `confere=true`)
+e o novo gate no re-audit final. 15 testes novos em
+`test_validar_comandos_cli.py`, incluindo integração completa via `main()`
+(monkeypatch de `sys.argv` + `DIR_OUTPUT` de **ambos** `gate` e
+`parametros_obra` — achado real: `obra_e_categoria_tecnica` lê o config via
+`PO.carregar_config`, que resolve o caminho pelo `DIR_OUTPUT` do módulo
+`parametros_obra`, não do `gate` — os dois precisam apontar para o mesmo
+`tmp_path` no teste, senão o gate lê o `config_obra.json` real do projeto e
+sempre pula). **Bug real corrigido durante o teste**: `main()` usava
+`caminho.relative_to(DIR_PROJETO)` sem tratamento de exceção para imprimir o
+caminho do relatório — quebrava com `ValueError` sempre que `DIR_OUTPUT`
+apontava para fora de `DIR_PROJETO` (o cenário exato de um teste com
+`tmp_path`); corrigido com a mesma função `_exibir()` tolerante já usada em
+`minerar-fontes-academicas.py`. Smoke test contra uma obra real do projeto
+(`otimizacao-tokens-ide-agentica`, sem `categoria_tecnica`) confirma o SKIP
+limpo, sem crash. Suíte completa: 820/820 verde (805 + 15 novos).
+
 **Risco:** exigir marcação manual de todo comando pode ser trabalho extra para o
 redator/revisor em capítulos com muito código — mitigar tornando o gate
 não-bloqueante por padrão (só bloqueia o que foi explicitamente marcado como

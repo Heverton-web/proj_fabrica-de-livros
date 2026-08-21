@@ -1,6 +1,6 @@
 ---
 name: revisor-tecnico
-description: Fase 2.5 (Nó 4.5) da Fábrica Agêntica de Livros — revisor técnico autônomo (peer review) que roda DEPOIS de todos os capítulos ficarem prontos e ANTES da compilação ABNT. Audita a obra inteira com evidência determinística (scripts/auditar-obra.py + validar-codigo.py + validar-referencias.py + validar-metricas.py + validar-escala.py + validar-afirmacoes.py + validar-fontes.py + renderizar-diagramas.py --validar), corrige inconsistências terminológicas, sobreposição de conteúdo entre capítulos, capítulos truncados, código com erro de sintaxe/execução, fontes 404, dados factuais sem citação e métricas ausentes. Use quando todos os capítulos estiverem em concluido_autonomo.
+description: Fase 2.5 (Nó 4.5) da Fábrica Agêntica de Livros — revisor técnico autônomo (peer review) que roda DEPOIS de todos os capítulos ficarem prontos e ANTES da compilação ABNT. Audita a obra inteira com evidência determinística (scripts/auditar-obra.py + validar-codigo.py + validar-referencias.py + validar-metricas.py + validar-escala.py + validar-afirmacoes.py + validar-fontes.py + validar-comandos-cli.py + renderizar-diagramas.py --validar), corrige inconsistências terminológicas, sobreposição de conteúdo entre capítulos, capítulos truncados, código com erro de sintaxe/execução, fontes 404, dados factuais sem citação, métricas ausentes e comandos/CLI fabricados (livros técnicos). Use quando todos os capítulos estiverem em concluido_autonomo.
 ---
 
 # Skill_Revisor_Tecnico
@@ -43,6 +43,7 @@ python scripts/validar-escala.py <slug>               # R-ES: limites na seção
 python scripts/validar-afirmacoes.py <slug>           # R-AF: dado factual sem [N] no parágrafo
 python scripts/validar-fontes.py <slug>               # R-FT: hierarquia A/B/C do dossiê >= 70%
 python scripts/validar-codigo.py <slug> --executar    # aplicáveis de verdade (smoke test)
+python scripts/validar-comandos-cli.py <slug>          # R-CLI: comando/CLI fabricado (só livro técnico)
 ```
 - **Referências** (`relatorio_referencias.json`): `falha` = fonte 404/DNS — substitua
   a referência por outra real do dossiê ou remova o dado que dependia dela.
@@ -61,6 +62,22 @@ python scripts/validar-codigo.py <slug> --executar    # aplicáveis de verdade (
   proporção A+B abaixo de 70% — troque fontes C por A/B do mesmo assunto.
 - **Código executado** (`relatorio_codigo.json` com `"executado": true`): `falha_execucao`
   = bloco que roda mas quebra — corrija o código até o smoke test passar.
+- **Comandos/CLI** (`relatorio_comandos_cli.json`, só quando `config_obra.json`
+  declara `categoria_tecnica: true` — livro sobre ferramentas/CLIs/frameworks/
+  DevOps/IA; caso contrário o gate imprime `[SKIP]` e não gera relatório):
+  aplique o protocolo pericial do livro "Tokens Sob Perícia" a CADA bloco de
+  código que cita um comando/CLI/config real — antes de marcar
+  `confere=true`, rode `<comando> --help` ou abra a documentação oficial da
+  ferramenta e confira a sintaxe exata (nome do verbo, flags, caminho de
+  arquivo). Marque logo após o fechamento do bloco:
+  `<!-- cli-check: fonte=A|B|C; confere=true|false -->` (A = doc oficial do
+  fornecedor; B = repositório/pacote oficial; C = terceiros — nunca decide
+  sozinho um `confere=true`). `fabricado` (R-CLI-1) = comando que você já
+  confirmou não bater com a fonte — corrija a sintaxe no capítulo antes de
+  marcar `confere=true`. Bloco sem marcação vira pendência no relatório —
+  NÃO é reprovação automática, mas não deixe pendências acumularem: é
+  exatamente o padrão que o livro descreve como mais perigoso (nome real da
+  ferramenta desarma a checagem).
 
 ### Passo 1.2 — Conferência por amostra (fontes reabertas)
 Para cada capítulo, abra 1 fonte citada e confira se a afirmação associada procede:
@@ -100,6 +117,7 @@ Rode de novo `auditar-obra.py` depois para ver o que restou.
 | Aplica sem limite/contorno (R-ES-1/2) | Declare até onde escala e onde quebra |
 | Dado factual sem `[N]` no parágrafo (R-AF-1) | Vincule ao dossiê ou marque como opinião do autor |
 | Proporção de fontes A/B < 70% (R-FT-1) | Troque fontes C por A/B; reclassifique o dossiê |
+| Comando/CLI marcado `confere=false` (R-CLI-1, só livro técnico) | Corrija a sintaxe no capítulo contra a fonte primária e remarque `confere=true` |
 | Diagrama Mermaid inválido | Corrija a sintaxe e revalide |
 | Sobreposição entre capítulos (similaridade ≥ 0,45) | Reescreva o trecho do capítulo POSTERIOR, transformando repetição em referência cruzada ("como visto no Capítulo N, ...") |
 | Grafia inconsistente de termo | `corrigir-mecanico.py` já canonicaliza para a forma mais frequente fora de código; se a forma oficial do fornecedor for outra, ajuste manualmente |
@@ -141,6 +159,7 @@ python scripts/validar-escala.py <slug> --estrito
 python scripts/validar-afirmacoes.py <slug> --estrito
 python scripts/validar-fontes.py <slug> --estrito
 python scripts/validar-codigo.py <slug> --executar --estrito
+python scripts/validar-comandos-cli.py <slug> --estrito
 ```
 - **Exit 0 nos dois:** grave o parecer e libere a Fase 3.
 - **Exit 1:** repita o Passo 2 apenas para os itens remanescentes. Máximo de 3 rodadas;

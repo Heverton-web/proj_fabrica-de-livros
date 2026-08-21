@@ -80,6 +80,12 @@ DERIVADOS_V5 = {
     "cta_texto": "",
     "modo_producao": "obra-unica",   # obra-unica | cascata
     "obra_raiz": None,               # preenchido quando modo_producao=cascata
+    # V5.7 (melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md, item A):
+    # opt-in do operador na entrevista para livros TECNICOS (ferramentas/CLIs/
+    # frameworks/DevOps/IA) — ativa validar-comandos-cli.py (R-CLI-1) no
+    # auditar-obra --estrito. Retrocompativel: obras sem o campo => False,
+    # gate pulado sem falhar.
+    "categoria_tecnica": False,
 }
 
 # Citacao numerica (livro/ebook): [1], [23]...
