@@ -1,0 +1,3 @@
+Validação do gate de segredos:
+- Este arquivo contém um padrão sk-abc123def456ghi789jklmno que deve ser bloqueado.
+- Se commit passar, o gate não está funcionando.
