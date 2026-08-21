@@ -328,3 +328,29 @@ nunca um gate que impede commit/push.
 
 **Estimativa:** 30 min para o teste do pré-requisito; 1-2h para a implementação
 completa, somente se o pré-requisito passar.
+
+**Implementado e validado em 21-08-2026 — pré-requisito CONFIRMADO**:
+`npx ccusage@latest --version` funciona (v20.0.20) e `npx ccusage@latest
+daily --json` de fato lê o histórico real do Claude Code nesta máquina
+(`"agent": "claude"`, `"modelName": "claude-sonnet-5"`, custo real de
+dezenas de dólares/dia) — ao lado de outros agentes (opencode, hermes).
+Implementado `scripts/token-guard.py` (Python, não PowerShell/bash — mais
+portátil e testável com pytest como o resto do projeto): `custo_ccusage_do_dia`
+chama `npx ccusage@latest daily --json --since/--until` via subprocess
+(nunca levanta exceção — ausência de `npx`/rede/JSON inválido vira
+`NAO_VERIFICAVEL`, não erro fatal); `custo_autorrelato_do_dia` soma o campo
+`cost` de `.agents/session-cost.jsonl` filtrado por data; `comparar()` cruza
+os dois e sinaliza `diverge: true` acima de 20% de divergência relativa —
+puramente informativo, nunca bloqueia. 13 testes novos em
+`test_token_guard.py`, todos com mock de `subprocess.run` (nenhum teste
+depende de rede real). **Smoke test contra o ccusage real** (sem mock)
+revelou um achado genuíno: o auto-relato de `.agents/session-cost.jsonl`
+estava em **0 ações registradas** enquanto o ccusage mediu **$65,09** de
+gasto real em 2026-08-20 e **$22,66** em 2026-08-21 — confirma na prática a
+tese do item B (auto-relato diverge da fonte real) e por que o cross-check
+tem valor. Documentado como passo opcional na skill `gerar-relatorio-sessao`
+(5.1) e na skill `calcular-gastos-sessao` (seção "Cross-check com ccusage").
+**Correção lateral**: a skill `gerar-relatorio-sessao` ainda instruía gravar
+o RTK scratchpad em `AGENTS.md` seção 7 — desatualizado pelo item D; corrigido
+para apontar a `RTK-SCRATCHPAD.md`. Suíte completa: 833/833 verde (820 + 13
+novos).

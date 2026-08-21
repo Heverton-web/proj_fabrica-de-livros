@@ -115,3 +115,25 @@ and created_at >= current_date;
 5. Se não conseguir calcular custo real, usar fallback da tabela acima COM o modelo da sessão
 6. Se não conseguir acesso ao Supabase, manter tracking local via JSONL
 7. Valor monetário sempre em BRL (R$), 4 casas decimais
+
+## Cross-check com ccusage (item B — melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md)
+
+O auto-relato acima depende de cada agente lembrar de appendar `.agents/
+session-cost.jsonl` — na prática, ele fica desatualizado (0 ações
+registradas em dias com dezenas de dólares de gasto real, confirmado em
+21-08-2026). `scripts/token-guard.py` cruza esse auto-relato com a fonte
+independente `ccusage` (lê o histórico REAL gravado localmente pelo Claude
+Code — Capítulo 6 do livro "Tokens Sob Perícia"):
+
+```bash
+python scripts/token-guard.py                  # hoje
+python scripts/token-guard.py --data 2026-08-20
+python scripts/token-guard.py --json
+```
+
+É **aditivo/best-effort, nunca bloqueante** — a fábrica não tem fallback
+multiprovedor para desviar tráfego (R6 usa `model: inherit`), então não há
+circuit breaker de verdade para abrir; o script só sinaliza divergência
+>20% para o operador decidir. Se `ccusage`/`npx` não estiver disponível no
+ambiente, o resultado vira `NAO_VERIFICAVEL` — nunca trava o fechamento de
+sessão. Rodar opcionalmente como parte da skill `gerar-relatorio-sessao`.

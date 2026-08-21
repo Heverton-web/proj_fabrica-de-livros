@@ -72,8 +72,17 @@ publicado no repositório.
    bug no relatório (regenerar com `--md-apenas` + `--pdf-only`).
 
 5. **Atualizar o RTK scratchpad** (se a sessão gerou aprendizado novo): registrar
-   no `AGENTS.md` seção 7 no formato telegráfico `causa/fix/prevenção/arquivo`
-   (os 6 hardlinks sincronizam sozinhos por serem o mesmo inode).
+   em `RTK-SCRATCHPAD.md` (raiz do projeto, arquivo EXTERNO ao `CLAUDE.md` desde
+   21-08-2026 — item D de `melhorias/21-08-2026-plano-acao-tokens-sob-pericia.md`)
+   no formato telegráfico `causa/fix/prevenção/arquivo`. NUNCA gravar de volta
+   no `CLAUDE.md`/`AGENTS.md` — isso reintroduz o prefixo instável que a
+   migração corrigiu.
+
+5.1. **(Opcional) Cross-check de gasto** — se `npx`/`ccusage` estiverem
+   disponíveis no ambiente, rode `python scripts/token-guard.py` e inclua o
+   resultado no relatório se houver divergência (`diverge: true`) entre o
+   auto-relato de `.agents/session-cost.jsonl` e o `ccusage` real. Best-effort,
+   nunca bloqueia o fechamento da sessão.
 
 6. **Commit + push** (da raiz do projeto):
    ```bash
